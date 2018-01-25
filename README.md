@@ -1,4 +1,4 @@
-# weixin
+# vke_app
 
 > A Vue.js project
 

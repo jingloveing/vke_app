@@ -18,10 +18,12 @@
 		<swiper auto :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" loop></swiper>
 		<div style=" margin-top: -.3rem;z-index: 99999;position: relative;">
 			<ul class="nav-small">
-				<li>
+				<router-link tag="li" to="/home/assortment">
+					<!--<li>-->
 					<img src="static/images/taoBao.png" :onerror="defaultImg">
 					<span>淘宝</span>
-				</li>
+					<!--</li>-->
+				</router-link>
 				<li>
 					<img src="static/images/JD.png" :onerror="defaultImg">
 					<span>京东</span>

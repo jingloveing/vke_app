@@ -1,11 +1,11 @@
 <template>
   <div id="app">
   	<x-header :left-options="{backText: ''}" :title="$route.meta.title" v-show="$route.meta.showHeader"></x-header>
-      <div style="height: .89rem;" v-show="$route.meta.showHeader"></div>
+      <div style="height: .88rem;" v-show="$route.meta.showHeader"></div>
       <router-view></router-view>
       <app-footer v-show="$route.meta.showFooter"></app-footer>
     <div class="toTop" @click="toTop()">
-      <img src="static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;">
+      <img src="../static/images/top.png" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;">
       <span>顶部</span>
     </div>
   </div>

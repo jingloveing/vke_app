@@ -2,7 +2,9 @@
 	<div>
 		<div>
 			<div class="header">
-				<img src="static/images/personCenter/setting_icon.png" class="setting"/>
+				<router-link to="/personCenter/setting">
+					<img src="static/images/personCenter/setting_icon.png" class="setting"/>
+				</router-link>
 				<div>
 				    <div class="user_pic">
 				    	<img src="static/images/personCenter/pic.jpg" class="user_icon"/>
@@ -290,7 +292,7 @@
 		height: .22rem;
 		margin-right: .06rem;
 	}
-	..header_list_num>small{
+	.header_list_num>small{
 		font-size: .24rem;
 	}
 	.jewel{

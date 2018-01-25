@@ -7,10 +7,17 @@ import BrandSite from '@/components/brandSite/brandSite'
 import PersonCenter from '@/components/personCenter/personCenter'
 import Info from '@/components/personCenter/info'
 import MyOrder from '@/components/personCenter/myOrder'
-import OrderList from '@/components/personCenter/OrderList'
+import OrderList from '@/components/personCenter/orderList'
 import OrderDeatail from '@/components/personCenter/orderDeatail'
-import Refund from '@/components/personCenter/Refund'
-
+import Refund from '@/components/personCenter/refund'
+import InfoList from '@/components/personCenter/infoList'
+import AcerStorage from '@/components/personCenter/acerStorage'
+import EmailList from '@/components/personCenter/emailList'
+import Setting from '@/components/personCenter/setting'
+import Accredit from '@/components/personCenter/accredit'
+import BindTel from '@/components/personCenter/bindTel'
+import Assortment from '@/components/home/assortment'
+import Search from '@/components/home/search'
 Vue.use(Router)
 Router.prototype.goBack = function() {
 	this.isBack = true
@@ -48,6 +55,14 @@ routes: [{
 		}
 	},
 	{
+		path: '/home/assortment',
+		component: Assortment
+	},
+	{
+		path: '/home/assortment/search',
+		component: Search
+	},
+	{
 		path: '/liveRoom',
 		component: LiveRoom,
 		meta: {
@@ -76,6 +91,60 @@ routes: [{
 		meta: {
 			showHeader: true,
 			title:"江湖邮局"
+		}
+	},
+	{
+		path: '/personCenter/setting',
+		name: 'Setting',
+		component: Setting,
+		meta: {
+			showHeader: true,
+			title:"掌事堂"
+		}
+	},
+	{
+		path: '/personCenter/setting/accredit',
+		name: 'Accredit',
+		component: Accredit,
+		meta: {
+			showHeader: true,
+			title:"宝库设防"
+		}
+	},
+	{
+		path: '/personCenter/setting/bindTel',
+		name: 'BindTel',
+		component: BindTel,
+		meta: {
+			showHeader: true,
+			title:"手机绑定"
+		}
+	},
+	{
+		path: '/personCenter/info/infoList',
+		name: 'InfoList',
+		component: InfoList,
+		meta: {
+			showHeader: true,
+			title:"商品发货"
+		}
+	},
+	{
+		path: '/personCenter/info/acerStorage',
+		name: 'AcerStorage',
+		component: AcerStorage,
+		meta: {
+			showHeader: true,
+			title:"财宝入库"
+		}
+	},
+	{
+		path: '/personCenter/info/emailList',
+		name: 'EmailList',
+		component: EmailList,
+		meta: {
+			showHeader: true,
+			title:"官方信件"
 		}
 	},
 	{
@@ -114,6 +183,7 @@ routes: [{
 			title:"申请退款"
 		}
 	},
+	
 ]
 })
 

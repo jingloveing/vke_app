@@ -7,6 +7,12 @@
 .f28{
 	font-size: .28rem;
 }
+.f32{
+	font-size: .32rem;
+}
+.f36{
+	font-size: .36rem;
+}
 .c3{
 	color: #333;
 }
@@ -15,6 +21,9 @@
 }
 .c_m{
 	color: #F51D46;
+}
+.c_f{
+	color: #9A7BFF;
 }
 .toTop {
   position: fixed;
@@ -57,7 +66,7 @@
 .vux-header .vux-header-title {
     line-height: .88rem;
     text-align: center;
-    font-size: .36rem;
+    font-size: .32rem;
     font-weight: 400;
     color: #333!important;
 }
@@ -80,7 +89,13 @@
 	box-sizing: border-box;
 }
 .myOrder .weui-cells:before{
-	border: 0;
+	border: none;
+}
+.myOrder .weui-cell:before{
+	border: none;
+}
+.myOrder .weui-cell{
+	border-bottom: .01rem solid #e5e5e5;
 }
 .btn {
 		display: inline-block;
@@ -98,3 +113,16 @@
 		color: #9a7bff;
 		border-color: #9a7bff;
 	}
+	
+	
+	/*XButton按钮样式*/
+	.weui-btn {
+		background: #9A7BFF;
+		line-height: .8rem;
+		color: white;
+		border-radius: .06rem;
+	}
+	.weui-switch:checked, .weui-switch-cp__input:checked ~ .weui-switch-cp__box {
+    border-color: #9A7BFF;
+    background-color: #9A7BFF;
+}

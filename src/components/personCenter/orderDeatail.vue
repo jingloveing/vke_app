@@ -39,9 +39,9 @@
 			</div>
 		</div>
 	    <div class="f24 c9 order-des">
-	    	<p>订单编号：2334543</p>
-	    	<p>创建时间：2013-12-11</p>
-	    	<p>成交时间：2012-11-11</p>
+	    	<p>订单编号：<span style="font-family: arial;">2334543</span></p>
+	    	<p style="font-family: arial;">创建时间：2013-12-11</p>
+	    	<p style="font-family: arial;">成交时间：2012-11-11</p>
 	    </div>
 	    <div class="footer">
 	    	<span class="btn btn1" style="margin-right: .26rem;">确认收货</span>

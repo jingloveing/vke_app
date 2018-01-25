@@ -1,6 +1,6 @@
 <template>
 	 <div>
-	 	<router-link class="list" to="">
+	 	<router-link class="list" to="/personCenter/info/infoList">
 	 		<div class="list_left">
 	 			<img src="../../../static/images/notify.png" alt="" />
 	 		</div>
@@ -9,7 +9,7 @@
 	 		    <p class="name">您的淘宝订单已发货 <span class="origin"></span></p>
 	 		</div>
 	 	</router-link>
-	 	<router-link class="list" to="">
+	 	<router-link class="list" to="/personCenter/info/acerStorage">
 	 		<div class="list_left">
 	 			<img src="../../../static/images/acerStore.png" alt="" />
 	 		</div>
@@ -18,7 +18,7 @@
 	 		    <p class="name">您的淘宝订单已发货 <span class="origin"></span></p>
 	 		</div>
 	 	</router-link>
-	 	<router-link class="list" to="">
+	 	<router-link class="list" to="/personCenter/info/emailList">
 	 		<div class="list_left">
 	 			<img src="../../../static/images/email.png" alt="" />
 	 		</div>
