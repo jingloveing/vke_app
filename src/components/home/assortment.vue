@@ -314,17 +314,6 @@
   }
 </style>
 <style>
-	 .header.vux-header .vux-header-title {
-    line-height: .88rem;
-    text-align: center;
-    font-size: .32rem;
-    font-weight: 400;
-    color: white!important;
-}
-.header.vux-header .vux-header-left .left-arrow:before{
-	border: 1px solid white;
-	border-width: 1px 0 0 1px;
-}
   .vux-slider > .vux-indicator > a > .vux-icon-dot.active {
     background-color: #ff425f !important;
   }

@@ -2,7 +2,7 @@
   <div>
   	<x-header :left-options="{backText: ''}" title="智搜" class="header"></x-header>
     <div class="search">
-     <router-link to="/search/searchPage">
+     <router-link to="/home/assortment/searchPage">
        <img src="../../../static/images/search_img.png" alt="">
      </router-link>
     </div>

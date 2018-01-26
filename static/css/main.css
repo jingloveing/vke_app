@@ -1,3 +1,6 @@
+.f20{
+	font-size: .2rem;
+}
 .f24{
 	font-size: .24rem;
 }
@@ -125,4 +128,17 @@
 	.weui-switch:checked, .weui-switch-cp__input:checked ~ .weui-switch-cp__box {
     border-color: #9A7BFF;
     background-color: #9A7BFF;
+}
+
+
+.header.vux-header .vux-header-title {
+    line-height: .88rem;
+    text-align: center;
+    font-size: .32rem;
+    font-weight: 400;
+    color: white!important;
+}
+.header.vux-header .vux-header-left .left-arrow:before{
+	border: 1px solid white;
+	border-width: 1px 0 0 1px;
 }

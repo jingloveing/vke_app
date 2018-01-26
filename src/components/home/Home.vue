@@ -69,7 +69,7 @@
 				<nav>
 					<img src="static/images/goods.png" style="width: 100%;height: 100%;" :onerror="defaultImg">
 					<div class="nav_name">
-						<img src="static/images/mogu.png" class="nav_pic"/>
+						<img src="static/images/mogu.png" class="nav_pic" />
 						<span class="break">店铺名称店铺名称店铺名称</span>
 					</div>
 					<div class="bd"></div>
@@ -81,10 +81,11 @@
 							<img src="static/images/goods.png" alt="" :onerror="defaultImg">
 							<span class="dess">
             <p class="des_name break">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
-            <p class="des_price"><span class="new_price">￥11<span>.99</span></span>
-							<span class="old_price">￥12<span>.12</span></span>
+            <p class="des_price"><span class="new_price"><span class="f20">￥</span>11<span>.99</span></span>
+							<!--<span class="old_price">￥12<span>.12</span></span>-->
 							</p>
 							</span>
+							<div class="ticket">券100元</div>
 						</div>
 						<div class="box_content more">
 							<span>查看全部</span>
@@ -434,7 +435,7 @@
 		overflow: hidden;
 	}
 	
-	.news_pic{
+	.news_pic {
 		width: 1.8rem;
 		height: 1.1rem;
 		float: right;
@@ -450,12 +451,13 @@
 		height: 3.58rem;
 		position: relative;
 	}
-	.nav_name{
+	
+	.nav_name {
 		font-size: .24rem;
 		color: #fff;
 		height: .5rem;
 		position: absolute;
-		background:rgba(255,255,255,0.3);
+		background: rgba(255, 255, 255, 0.3);
 		border-radius: .5rem;
 		top: .2rem;
 		left: .2rem;
@@ -465,26 +467,30 @@
 		align-items: center;
 		padding: 0 0 0 .05rem;
 	}
-	.nav_name>span{
-		max-width:2.38rem;
+	
+	.nav_name>span {
+		max-width: 2.38rem;
 		float: right;
 		white-space: nowrap;
 		overflow: hidden;
 		margin: 0 .2rem 0 .1rem;
 	}
-	.nav_pic{
+	
+	.nav_pic {
 		width: .42rem;
 		height: .42rem;
 		border-radius: 50%;
 	}
-	.bd{
+	
+	.bd {
 		width: 100%;
 		height: 100%;
-		background: rgba(0,0,0,.3);
+		background: rgba(0, 0, 0, .3);
 		position: absolute;
 		top: 0;
 		left: 0;
 	}
+	
 	.box {
 		height: 2.8rem;
 		min-width: 21.3rem;
@@ -498,7 +504,8 @@
 		margin: 0 0 0 .18rem;
 		width: 2.18rem;
 		box-sizing: border-box;
-    float: left;
+		float: left;
+		position: relative;
 	}
 	
 	.box_content img {
@@ -515,7 +522,7 @@
 	.des_name {
 		height: .3rem;
 		color: #333;
-		padding: 0 .1rem .1rem;		
+		padding: 0 .1rem .1rem;
 	}
 	
 	.des_price {
@@ -525,13 +532,15 @@
 	.new_price {
 		color: #ff425f;
 		margin-right: .1rem;
+		font-size: .26rem;
 	}
 	
 	.old_price {
 		color: #999;
 		font-size: .2rem;
 	}
-	.more{
+	
+	.more {
 		display: table;
 		font-size: .24rem;
 		color: #333;
@@ -539,10 +548,25 @@
 		height: 2rem;
 		border-radius: .08rem;
 	}
-	.more>span{
+	
+	.more>span {
 		display: table-cell;
 		text-align: center;
 		vertical-align: middle;
+	}
+	.ticket{
+	   position: absolute;
+		display: inline-block;
+		padding: 0 .2rem;
+		line-height: .32rem;
+		height: .32rem;
+		background: #f51d46;
+		font-size: .2rem;
+		color: white;
+		border-top-right-radius:.5rem;
+		border-bottom-right-radius: .5rem;
+		bottom: .95rem;
+        left: -.1rem;
 	}
 </style>
 <style>

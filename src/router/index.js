@@ -18,6 +18,13 @@ import Accredit from '@/components/personCenter/accredit'
 import BindTel from '@/components/personCenter/bindTel'
 import Assortment from '@/components/home/assortment'
 import Search from '@/components/home/search'
+import SearchPage from '@/components/home/searchPage'
+import SearchResult from '@/components/home/searchResult'
+import Bill from '@/components/personCenter/bill'
+import UserInfo from '@/components/personCenter/userInfo'
+import ChangeName from '@/components/personCenter/changeName'
+import MyPrerogative from '@/components/personCenter/myPrerogative'
+import GoldStore from '@/components/personCenter/goldStore'
 Vue.use(Router)
 Router.prototype.goBack = function() {
 	this.isBack = true
@@ -63,6 +70,16 @@ routes: [{
 		component: Search
 	},
 	{
+		path: '/home/assortment/searchPage',
+		name:"searchPage",
+		component: SearchPage
+	},
+	{
+		path: '/home/assortment/searchResult',
+		name:"searchResult",
+		component: SearchResult
+	},
+	{
 		path: '/liveRoom',
 		component: LiveRoom,
 		meta: {
@@ -94,12 +111,57 @@ routes: [{
 		}
 	},
 	{
+		path: '/personCenter/myPrerogative',
+		name: 'MyPrerogative',
+		component: MyPrerogative,
+		meta: {
+//			showHeader: true,
+//			title:""
+		}
+	},
+	{
+		path: '/personCenter/userInfo/changeName',
+		name: 'ChangeName',
+		component: ChangeName,
+		meta: {
+			showHeader: true,
+			title:"修改昵称"
+		}
+	},
+	{
+		path: '/personCenter/bill',
+		name: 'Bill',
+		component: Bill,
+		meta: {
+			showHeader: true,
+			title:"消费账单"
+		}
+	},
+	{
 		path: '/personCenter/setting',
 		name: 'Setting',
 		component: Setting,
 		meta: {
 			showHeader: true,
 			title:"掌事堂"
+		}
+	},
+	{
+		path: '/personCenter/userInfo',
+		name: 'UserInfo',
+		component: UserInfo,
+		meta: {
+			showHeader: true,
+			title:"我的身份"
+		}
+	},
+	{
+		path: '/personCenter/goldStore',
+		name: 'GoldStore',
+		component: GoldStore,
+		meta: {
+			showHeader: true,
+			title:"小金库"
 		}
 	},
 	{
