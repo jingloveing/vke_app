@@ -4,7 +4,7 @@
 		<group class="myOrder" style="margin-bottom: .4rem;">
 			<x-input title="" mask="999 9999 9999" v-model="tel" :max="13" is-type="china-mobile" placeholder="输入手机号"></x-input>
 			<div style="position: relative;">
-				<x-input title="" mask="999 9999 9999" v-model="code" type="number" placeholder="验证码"></x-input>
+				<x-input :max="6" v-model="code" type="number" placeholder="验证码" style="width: 60%;"></x-input>
 				<span class="f36 c_f code_btn">获取验证码</span>
 			</div>
 		</group>

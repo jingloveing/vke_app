@@ -25,11 +25,16 @@ import UserInfo from '@/components/personCenter/userInfo'
 import ChangeName from '@/components/personCenter/changeName'
 import MyPrerogative from '@/components/personCenter/myPrerogative'
 import GoldStore from '@/components/personCenter/goldStore'
+import Feedback from '@/components/personCenter/feedback'
+import Realize from '@/components/personCenter/realize'
+import RealizeList from '@/components/personCenter/realizeList'
+import SelectDate from '@/components/personCenter/selectDate'
+import Introduce from '@/components/personCenter/introduce'
 Vue.use(Router)
-Router.prototype.goBack = function() {
-	this.isBack = true
-	window.history.go(-1)
-}
+//Router.prototype.goBack = function() {
+//	this.isBack = true
+//	window.history.go(-1)
+//}
 //export default new Router({
 ////mode:'history',
 //routes: [
@@ -165,6 +170,39 @@ routes: [{
 		}
 	},
 	{
+		path: '/personCenter/goldStore/realize',
+		name: 'Realize',
+		component: Realize,
+		
+	},
+	{
+		path: '/personCenter/goldStore/introduce',
+		name: 'Introduce',
+		component: Introduce,
+		meta: {
+			showHeader: true,
+			title:"查看二维码"
+		}
+	},
+	{
+		path: '/personCenter/goldStore/realizeList',
+		name: 'RealizeList',
+		component: RealizeList,
+		meta: {
+			showHeader: true,
+			title:"挂单记录"
+		}
+	},
+	{
+		path: '/personCenter/goldStore/selectDate',
+		name: 'SelectDate',
+		component: SelectDate,
+//		meta: {
+//			showHeader: true,
+//			title:"日期选择"
+//		}
+	},
+	{
 		path: '/personCenter/setting/accredit',
 		name: 'Accredit',
 		component: Accredit,
@@ -181,6 +219,11 @@ routes: [{
 			showHeader: true,
 			title:"手机绑定"
 		}
+	},
+	{
+		path: '/personCenter/setting/feedback',
+		name: 'Feedback',
+		component: Feedback
 	},
 	{
 		path: '/personCenter/info/infoList',

@@ -8,7 +8,7 @@
 			<x-switch title="非wifi网络不自动播放" :value-map="['0', '1']" v-model="value"></x-switch>
 		</group>
 		<group class="myOrder" style="margin-bottom: .4rem;border-top: .01rem solid #e5e5e5;">
-			<cell title="上书弹劾" is-link></cell>
+			<cell title="上书弹劾" is-link link="/personCenter/setting/feedback"></cell>
 			<cell title="江湖规矩" is-link></cell>
 			<cell title="自报家门" is-link></cell>
 		</group>

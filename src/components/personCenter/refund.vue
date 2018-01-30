@@ -41,7 +41,7 @@
 				</div>
 			</div>
 		</div>
-		<x-button @click.native="click()" action-type="reset" class="xbtn">提交</x-button>
+		<x-button @click.native="click()" class="xbtn">提交</x-button>
 	</div>
 </template>
 
@@ -272,6 +272,13 @@
 		font-size: .28rem;
 		color: #333;
 	}
+	.xbtn{
+		background-color: #9a7bff;color: white;font-size: .32rem;width: 100%;line-height: .96rem;
+		position: fixed;
+		bottom: 0;
+		border-radius: 0;
+	}
+	
 	/*上传图片样式*/
 	
 	.up_img {
@@ -390,12 +397,7 @@
 	.vue-uploader>input[type="file"] {
 		display: none;
 	}
-	.xbtn{
-		background-color: #9a7bff;color: white;font-size: .32rem;width: 100%;line-height: .96rem;
-		position: fixed;
-		bottom: 0;
-		border-radius: 0;
-	}
+	
 </style>
 <style type="text/css">
 	.weui-cell {
