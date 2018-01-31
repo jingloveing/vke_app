@@ -30,6 +30,11 @@ import Realize from '@/components/personCenter/realize'
 import RealizeList from '@/components/personCenter/realizeList'
 import SelectDate from '@/components/personCenter/selectDate'
 import Introduce from '@/components/personCenter/introduce'
+import FansOffer from '@/components/personCenter/fansOffer'
+import UnderWay from '@/components/personCenter/underWay'
+import Share from '@/components/personCenter/Share'
+import Pay from '@/components/personCenter/pay'
+import SelectAddress from '@/components/personCenter/selectAddress'
 Vue.use(Router)
 //Router.prototype.goBack = function() {
 //	this.isBack = true
@@ -170,6 +175,33 @@ routes: [{
 		}
 	},
 	{
+		path: '/personCenter/underWay',
+		name: 'UnderWay',
+		component: UnderWay,
+		meta: {
+			showHeader: true,
+			title:"镖局押运"
+		}
+	},
+	{
+		path: '/personCenter/share',
+		name: 'Share',
+		component: Share,
+		meta: {
+			showHeader: true,
+			title:"分享夺宝"
+		}
+	},
+	{
+		path: '/personCenter/goldStore/fansOffer',
+		name: 'FansOffer',
+		component: FansOffer,
+		meta: {
+			showHeader: true,
+			title:"帮众贡献"
+		}
+	},
+	{
 		path: '/personCenter/goldStore/realize',
 		name: 'Realize',
 		component: Realize,
@@ -269,6 +301,20 @@ routes: [{
 			showHeader: true,
 			title:"享利客订单"
 		}
+	},
+	{
+		path: '/personCenter/myOrder/pay',
+		name: 'Pay',
+		component: Pay,
+		meta: {
+			showHeader: true,
+			title:"确认订单"
+		}
+	},
+	{
+		path: '/personCenter/myOrder/selectAddress',
+		name: 'SelectAddress',
+		component: SelectAddress
 	},
 	{
 		path: '/personCenter/myOrder/orderDeatail',

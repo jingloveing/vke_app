@@ -50,16 +50,9 @@
 		},
 		data() {
 			return {
-				reason:[['第一','第二','第三']],
-				value:[],
-				showPopupPicker: false,
-				index01: 0,
 				list2: list(),
-				demo2: '美食',
+				demo2: '累计消费',
 				index: 0,
-				getBarWidth: function(index) {
-					return(index + 1) * 22 + 'px'
-				}
 			}
 		},
 		methods: {

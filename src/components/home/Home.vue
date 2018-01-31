@@ -10,10 +10,10 @@
 					<span>搜索商品</span>
 				</div>
 			</div>
-			<div class="right">
+			<router-link class="right" to="/personCenter/info">
 				<img src="static/images/info.png" alt="" class="info" />
 				<span class="info_num">12</span>
-			</div>
+			</router-link>
 		</div>
 		<swiper auto :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" loop></swiper>
 		<div style=" margin-top: -.3rem;z-index: 99999;position: relative;">

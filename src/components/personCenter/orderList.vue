@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<div class="right">
+		<router-link class="right" to="/personCenter/info">
 			<img src="../../../static/images/info_black.png" alt="" class="info" />
 			<span class="info_num">12</span>
-		</div>
+		</router-link>
 		<div>
 			<tab :line-width=2 active-color='#9a7bff' v-model="index">
 				<tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @click="demo2 = item" :key="index">{{item}}</tab-item>
@@ -35,7 +35,9 @@
 							<div class="order_btns">
 								<span class="btn" @click="showPopupPicker=true" v-if="value.length==0">取消订单</span>
 								<span class="btn" @click="showPopupPicker=true" v-if="value.length!==0">删除订单</span>
-								<span class="btn btn1" v-if="value.length==0">去付款</span>
+								<router-link to='/personCenter/myOrder/pay'>
+									<span class="btn btn1" v-if="value.length==0">去付款</span>
+								</router-link>
 							</div>
 							<popup-picker :data="reason" v-model="value" :show.sync="showPopupPicker" :show-cell="false" ></popup-picker>
 						</div>
@@ -234,7 +236,6 @@
 	
 	.order_btns {
 		border-top: .01rem solid #e5e5e5;
-		border-bottom: .01rem solid #e5e5e5;
 		font-size: .26rem;
 		padding: 0 .26rem;
 		height: .9rem;

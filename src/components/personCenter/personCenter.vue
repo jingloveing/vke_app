@@ -22,10 +22,10 @@
 					</div>
 				</router-link>
 				<router-link to="/personCenter/myPrerogative">
-				<div class="level_btn">
-					<img src="static/images/personCenter/vip0.png" alt="" class="level" />
-					<span>享有特权</span>
-				</div>
+					<div class="level_btn">
+						<img src="static/images/personCenter/vip0.png" alt="" class="level" />
+						<span>享有特权</span>
+					</div>
 				</router-link>
 			</div>
 			<div class="header_list">
@@ -52,7 +52,7 @@
                 	       8.86
                 	     </div>-->
 					</router-link>
-					<li>
+					<router-link tag="li" to="/personCenter/underWay">
 						<p class="header_list_title">镖局押运</p>
 						<!--<div class="header_list_num jewel">
                 	   	   <img src="../../../static/images/personCenter/jewel.png" alt="" />
@@ -69,17 +69,20 @@
                 	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
                 	       8.86
                 	     </div>-->
-					</li>
+					</router-link>
 				</ul>
 			</div>
 		</div>
 		<div class="sort">
 			<h4>我的享利</h4>
 			<div style="border-top:.01rem solid #f4f4f4;">
-				<figure class="list1">
-					<img src="../../../static/images/personCenter/share.png" alt="" />
-					<figcaption>分享夺宝</figcaption>
-				</figure>
+				<router-link to='/personCenter/share'>
+					<figure class="list1">
+						<img src="../../../static/images/personCenter/share.png" alt="" />
+						<figcaption>分享夺宝</figcaption>
+					</figure>
+				</router-link>
+
 				<router-link to="/personCenter/myOrder">
 					<figure class="list1">
 						<img src="../../../static/images/personCenter/myOrder.png" alt="" />

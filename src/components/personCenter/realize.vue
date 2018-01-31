@@ -5,7 +5,7 @@
 		</x-header>
 		<div style="height: .88rem;"></div>
 		<div class="header">
-			<p class="f24">财宝总值</p>
+			<p class="f24">可挂单财宝</p>
 			<p style="font-size: .52rem;display: flex;justify-content: center;align-items: center;">1.081<span style="font-size: .4rem;">钻</span></p>
 		</div>
 		<div class="account">
@@ -32,7 +32,7 @@
 						</div>
 						<input type="radio" name="type" value="0" id="alipay" class="typeList" checked="checked" v-model="type"/>
 						<div class="all">
-							<icon type="success" class="success" v-show="type==0"></icon>
+							<img class="success" v-show="type==0" src="../../../static/images/checked.png">
 							<label for="alipay" class="radio"></label>
 						</div>
 					</div>
@@ -52,7 +52,7 @@
 						</div>
 						<input type="radio" name="type" value="1" id="weChat" v-model="type"/>
 						<div class="all">
-							<icon type="success" class="success" v-show="type==1"></icon>
+							<img class="success" v-show="type==1" src="../../../static/images/checked.png">
 							<label for="weChat" class="radio"></label>
 						</div>
 					</div>
@@ -69,7 +69,7 @@
 						</div>
 						<input type="radio" name="type" value="2" id="card" v-model="type"/>
 						<div class="all">
-							<icon type="success" class="success" v-show="type==2"></icon>
+							<img class="success" v-show="type==2" src="../../../static/images/checked.png">
 							<label for="card" class="radio"></label>
 						</div>
 					</div>
@@ -89,15 +89,14 @@
 </template>
 
 <script>
-	import { XHeader, XInput, XButton, Group, Icon } from 'vux'
+	import { XHeader, XInput, XButton, Group} from 'vux'
 	export default {
 		name: 'Realize',
 		components: {
 			XHeader,
 			XInput,
 			XButton,
-			Group,
-			Icon
+			Group
 		},
 		data() {
 			return {
@@ -319,8 +318,8 @@
 	
 	.all {
 		position: relative;
-		width: .4rem;
-		height: .4rem;
+		width: .36rem;
+		height: .36rem;
 		border-radius: 50%;
 		border: .01rem solid #e5e5e5;
 	}
@@ -351,10 +350,9 @@
 	}
 	
 	.success {
-		font-size: .4rem;
-		color: #9a7bff;
+		width: .36rem;
+		height: .36rem;
 		position: absolute;
-		right: -.07rem;
 	}
 </style>
 <style>
