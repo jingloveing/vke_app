@@ -223,7 +223,7 @@
 	
 	.refund {
 		font-size: .26rem;
-		color: #9a7bff;
+		color: #F51D46;
 	}
 	
 	.order_total {

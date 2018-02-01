@@ -89,7 +89,7 @@
 						<figcaption>我的订单</figcaption>
 					</figure>
 				</router-link>
-				<router-link to="">
+				<router-link to="/personCenter/myWorld">
 					<figure class="list1">
 						<img src="../../../static/images/personCenter/myWorld.png" alt="" />
 						<figcaption>我的江湖</figcaption>
@@ -104,10 +104,12 @@
 		<div class="sort">
 			<h4>其它工具</h4>
 			<div style="border-top:.01rem solid #f4f4f4;">
+				<router-link to="/personCenter/shoppingCart">
 				<figure class="list1 list2">
 					<img src="../../../static/images/personCenter/cart.png" alt="" />
 					<figcaption>购物车</figcaption>
 				</figure>
+				</router-link>
 				<figure class="list1 list2">
 					<img src="../../../static/images/personCenter/express.png" alt="" />
 					<figcaption>快递查询</figcaption>

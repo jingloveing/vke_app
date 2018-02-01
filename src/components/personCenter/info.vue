@@ -58,10 +58,16 @@
 		width: -moz-calc(100% - 1.18rem);
 		width: -webkit-calc(100% - 1.18rem);
 	}
+	.list_left{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 	.list_left>img{
 		width: 1rem;
 		height: 1rem;
 		margin-right: .18rem;
+		border-radius: 50%;
 	}
 	.list .title{
 		font-size: .32rem;
@@ -77,7 +83,6 @@
 	.list .name{
 		font-size: .26rem;
 		color: #999;
-		margin-top: .1rem;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;

@@ -35,6 +35,11 @@ import UnderWay from '@/components/personCenter/underWay'
 import Share from '@/components/personCenter/Share'
 import Pay from '@/components/personCenter/pay'
 import SelectAddress from '@/components/personCenter/selectAddress'
+import AddressList from '@/components/personCenter/AddressList'
+import AddAddress from '@/components/personCenter/addAddress'
+import MyWorld from '@/components/personCenter/myWorld'
+import Member from '@/components/personCenter/member'
+import ShoppingCart from '@/components/personCenter/shoppingCart'
 Vue.use(Router)
 //Router.prototype.goBack = function() {
 //	this.isBack = true
@@ -193,6 +198,25 @@ routes: [{
 		}
 	},
 	{
+		path: '/personCenter/myWorld',
+		name: 'MyWorld',
+		component: MyWorld,
+		meta: {
+			showHeader: true,
+			title:"我的江湖"
+		}
+	},
+	{
+		path: '/personCenter/shoppingCart',
+		name: 'ShoppingCart',
+		component: ShoppingCart
+	},
+	{
+		path: '/personCenter/myWorld/member/:type',
+		name: 'Member',
+		component: Member
+	},
+	{
 		path: '/personCenter/goldStore/fansOffer',
 		name: 'FansOffer',
 		component: FansOffer,
@@ -315,6 +339,24 @@ routes: [{
 		path: '/personCenter/myOrder/selectAddress',
 		name: 'SelectAddress',
 		component: SelectAddress
+	},
+	{
+		path: '/personCenter/myOrder/addressList',
+		name: 'AddressList',
+		component: AddressList,
+		meta: {
+			showHeader: true,
+			title:"总坛位置"
+		}
+	},
+	{
+		path: '/personCenter/myOrder/addAddress',
+		name: 'AddAddress',
+		component: AddAddress,
+		meta: {
+			showHeader: true,
+			title:"收货地址"
+		}
 	},
 	{
 		path: '/personCenter/myOrder/orderDeatail',
