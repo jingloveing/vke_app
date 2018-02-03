@@ -40,6 +40,11 @@ import AddAddress from '@/components/personCenter/addAddress'
 import MyWorld from '@/components/personCenter/myWorld'
 import Member from '@/components/personCenter/member'
 import ShoppingCart from '@/components/personCenter/shoppingCart'
+import HelpCenter from '@/components/personCenter/HelpCenter'
+import Code from '@/components/personCenter/code'
+import ShareList from '@/components/personCenter/shareList'
+import ToShowList from '@/components/personCenter/toShowList'
+import CollectList from '@/components/personCenter/collectList'
 Vue.use(Router)
 //Router.prototype.goBack = function() {
 //	this.isBack = true
@@ -212,7 +217,48 @@ routes: [{
 		component: ShoppingCart
 	},
 	{
-		path: '/personCenter/myWorld/member/:type',
+		path: '/personCenter/helpCenter',
+		name: 'HelpCenter',
+		component: HelpCenter,
+		meta: {
+			showHeader: true,
+			title:"白鹭书院"
+		}
+	},
+	{
+		path: '/personCenter/code',
+		name: 'Code',
+		component: Code,
+		meta: {
+			showHeader: true,
+			title:"启蒙码"
+		}
+	},
+	{
+		path: '/personCenter/shareList',
+		name: 'ShareList',
+		component: ShareList
+	},
+	{
+		path: '/personCenter/shareList/toShowList',
+		name: 'ToShowList',
+		component: ToShowList,
+		meta: {
+			showHeader: true,
+			title:"包打听"
+		}
+	},
+	{
+		path: '/personCenter/collectList',
+		name: 'CollectList',
+		component: CollectList,
+		meta: {
+			showHeader: true,
+			title:"藏宝阁"
+		}
+	},
+	{
+		path: '/personCenter/myWorld/member',
 		name: 'Member',
 		component: Member
 	},

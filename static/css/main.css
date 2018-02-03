@@ -90,6 +90,10 @@ ul{
 	top: .16rem;
 	left: .14rem;
 }
+.vux-header .vux-header-right{
+	line-height: .88rem;
+	top: 0;
+}
 .myOrder .weui-cells{
 	margin-top: 0;
 	font-size: .32rem;

@@ -15,9 +15,9 @@
 							<p class="order_num">订单号：1224324325432543
 								<span class="order_class" v-if="value.length==0">待付款</span>
 								<span v-if="value.length!==0" class="order_class">交易关闭</span>
-							<!--<span>已发货</span>
-							<span>交易成功</span>
-							<span>待发货</span>-->
+							    <!--<span>已发货</span>
+							    <span>交易成功</span>
+							    <span>待发货</span>-->
 							</p>
 							<router-link class="order_des" to="/personCenter/myOrder/orderDeatail">
 								<img src="../../../dist/static/images/default_img.png" alt="" class="order_pic" />

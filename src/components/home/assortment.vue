@@ -2,7 +2,7 @@
   <div>
   	<x-header :left-options="{backText: ''}" title="淘宝领券" class="header"><a slot="right">
   		<router-link to="/home/assortment/search">
-  			<img src="../../../static/images/search_icon.png" alt="" style="width: .4rem;height: .4rem;"/>
+  			<img src="../../../static/images/search_icon.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;"/>
   		</router-link>
   		
   	</a></x-header>

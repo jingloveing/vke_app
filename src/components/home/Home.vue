@@ -47,14 +47,16 @@
 				<img src="static/images/vke_news.png" />
 			</div>
 			<div class="news_right">
-				<swiper auto style="width:100%;" height="55px" loop direction="vertical" :interval=2000 :show-desc-mask="false" :show-dots="false">
+				<swiper style="width:100%;" height="55px" loop direction="vertical" :interval=2000 :show-desc-mask="false" :show-dots="false">
 					<swiper-item class="news" v-for="i in 5" :key="i">
-						<div class="news_title">
-							<p>新手购买必看</p>
-							<p>这个冬天不太冷，冬装搭配</p>
-						</div>
-						<div class="news_pic">
-							<img src="static/images/mogu.png" />
+						<div style="display: flex;justify-content: space-between;">
+							<div class="news_title">
+								<p>新手购买必看</p>
+								<p>这个冬天不太冷，冬装搭配</p>
+							</div>
+							<div class="news_pic">
+								<img src="static/images/mogu.png" />
+							</div>
 						</div>
 					</swiper-item>
 				</swiper>
@@ -419,10 +421,13 @@
 	}
 	
 	.news_title {
-		float: left;
-		padding: .2rem;
+		padding: 0 .2rem;
 		box-sizing: border-box;
 		width: 4.4rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		
 	}
 	
 	.news_title>p {
@@ -554,8 +559,9 @@
 		text-align: center;
 		vertical-align: middle;
 	}
-	.ticket{
-	   position: absolute;
+	
+	.ticket {
+		position: absolute;
 		display: inline-block;
 		padding: 0 .2rem;
 		line-height: .32rem;
@@ -563,10 +569,10 @@
 		background: #f51d46;
 		font-size: .2rem;
 		color: white;
-		border-top-right-radius:.5rem;
+		border-top-right-radius: .5rem;
 		border-bottom-right-radius: .5rem;
 		bottom: .95rem;
-        left: -.1rem;
+		left: -.1rem;
 	}
 </style>
 <style>

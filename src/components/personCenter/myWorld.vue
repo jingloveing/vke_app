@@ -27,7 +27,7 @@
 					<img src="../../../static/images/personCenter/pic.jpg" alt="" />
 				</div>
 				<div class="list_right">
-					<p class="title">姓名<span class="leve f24">推荐人</span></p>
+					<p class="title">姓名<span class="leve">推荐人</span></p>
 					<p class="name">身份（帮主,长老,帮众）</p>
 				</div>
 			</div>
@@ -140,6 +140,7 @@
 	}
 	
 	.leve {
+		font-size: .22rem;
 		color: #F51D46;
 		border: .01rem solid #F51D46;
 		border-radius: .06rem;

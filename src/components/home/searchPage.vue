@@ -116,7 +116,8 @@
       },
       onCancel() {
 //  应该返回到智搜首页
-        this.$router.push({path:'/home/assortment/Search'})
+//      this.$router.push({path:'/home/assortment/Search'})
+        window.history.go(-1)
       },
       change(e){
         console.log(e)

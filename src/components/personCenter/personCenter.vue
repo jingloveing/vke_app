@@ -118,28 +118,38 @@
 					<img src="../../../static/images/personCenter/liveTV.png" alt="" />
 					<figcaption>视频直播</figcaption>
 				</figure>
+				<router-link to="/personCenter/helpCenter">
 				<figure class="list1 list2">
 					<img src="../../../static/images/personCenter/college.png" alt="" />
 					<figcaption>白鹭书院</figcaption>
 				</figure>
+				</router-link>
 			</div>
 			<div style="border-top:.01rem solid #f4f4f4;">
+				<router-link to='/personCenter/code'>
 				<figure class="list1 list2">
 					<img src="../../../static/images/personCenter/code.png" alt="" />
 					<figcaption>启蒙码</figcaption>
 				</figure>
+				</router-link>
+				<router-link to="/personCenter/shareList">
 				<figure class="list1 list2">
 					<img src="../../../static/images/personCenter/listen.png" alt="" />
 					<figcaption>包打听</figcaption>
 				</figure>
+				</router-link>
+				<router-link to="/personCenter/collectList">
 				<figure class="list1 list2">
 					<img src="../../../static/images/personCenter/collect.png" alt="" />
 					<figcaption>藏宝阁</figcaption>
 				</figure>
+				</router-link>
+				<router-link to="/personCenter/myOrder/addressList">
 				<figure class="list1 list2">
 					<img src="../../../static/images/personCenter/address.png" alt="" />
 					<figcaption>总坛位置</figcaption>
 				</figure>
+				</router-link>
 			</div>
 			<div style="border-top:.01rem solid #f4f4f4;">
 				<figure class="list1 list2">
