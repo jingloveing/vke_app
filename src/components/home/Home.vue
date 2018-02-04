@@ -4,12 +4,12 @@
 			<div class="left">
 				<img src="static/images/logo.png" class="logo" alt="" />
 			</div>
-			<div>
+			<router-link to="/home/indexSearch">
 				<div class="search">
 					<img src="static/images/search_icon.png" alt="" class="search_icon" />
 					<span>搜索商品</span>
 				</div>
-			</div>
+			</router-link>
 			<router-link class="right" to="/personCenter/info">
 				<img src="static/images/info.png" alt="" class="info" />
 				<span class="info_num">12</span>

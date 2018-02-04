@@ -45,6 +45,8 @@ import Code from '@/components/personCenter/code'
 import ShareList from '@/components/personCenter/shareList'
 import ToShowList from '@/components/personCenter/toShowList'
 import CollectList from '@/components/personCenter/collectList'
+import IndexSearch from '@/components/home/indexSearch'
+import StoreIndex from '@/components/brandSite/storeIndex'
 Vue.use(Router)
 //Router.prototype.goBack = function() {
 //	this.isBack = true
@@ -82,6 +84,10 @@ routes: [{
 		}
 	},
 	{
+		path: '/home/indexSearch',
+		component: IndexSearch
+	},
+	{
 		path: '/home/assortment',
 		component: Assortment
 	},
@@ -112,6 +118,11 @@ routes: [{
 		meta: {
 			showFooter: true
 		}
+	},
+	{
+		path: '/brandSite/storeIndex',
+		name:'StoreIndex',
+		component: StoreIndex,
 	},
 	{
 		path: '/personCenter',

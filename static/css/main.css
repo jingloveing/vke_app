@@ -173,6 +173,12 @@ ul{
 		box-shadow:0rem .06rem .32rem 0 #e0dfdb;
 	}
 	
-
+input::-webkit-input-placeholder{
+		color: #C7C7C7;
+	}
+	
+input:-moz-placeholder{
+		color: #C7C7C7;
+	}
 
 
