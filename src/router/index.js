@@ -47,6 +47,7 @@ import ToShowList from '@/components/personCenter/toShowList'
 import CollectList from '@/components/personCenter/collectList'
 import IndexSearch from '@/components/home/indexSearch'
 import StoreIndex from '@/components/brandSite/storeIndex'
+import StoreClassify from '@/components/brandSite/storeClassify'
 Vue.use(Router)
 //Router.prototype.goBack = function() {
 //	this.isBack = true
@@ -123,6 +124,15 @@ routes: [{
 		path: '/brandSite/storeIndex',
 		name:'StoreIndex',
 		component: StoreIndex,
+	},
+	{
+		path: '/brandSite/storeIndex/storeClassify',
+		name:'StoreClassify',
+		component: StoreClassify,
+		meta: {
+			showHeader: true,
+			title:"店铺分类"
+		}
 	},
 	{
 		path: '/personCenter',

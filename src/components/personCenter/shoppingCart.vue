@@ -3,8 +3,7 @@
 		<x-header :left-options="{backText: ''}" title="购物车" style="background-color: #f9f9f9;">
 			<a slot="right" style="color: #9A7BFF;font-size: .32rem;" href="/personCenter/myOrder/addressList">编辑</a>
 		</x-header>
-		<div style="height: .88rem;"></div>
-		
+		<div style="height: .88rem;"></div>	
 		<div class="delete">
 			<div class="slider">
 				<div class="content" @touchstart='touchStart' @touchmove='touchMove' @touchend='touchEnd' :style="deleteSlider">

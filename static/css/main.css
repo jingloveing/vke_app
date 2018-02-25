@@ -98,7 +98,9 @@ ul{
 	margin-top: 0;
 	font-size: .32rem;
 	color: #333;
-	
+}
+.myOrder .vux-label{
+	color: #333;
 }
 .myOrder .vux-tap-active{
 	height: .9rem;

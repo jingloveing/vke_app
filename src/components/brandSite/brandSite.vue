@@ -71,7 +71,7 @@
 <script>
 	import { XHeader, Swiper, Scroller, } from 'vux'
 	export default {
-		name: 'Home',
+		name: 'BrandSite',
 		components: {
 			XHeader,
 			Swiper,
