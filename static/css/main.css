@@ -78,7 +78,7 @@ ul{
 .vux-header .vux-header-title {
     line-height: .88rem;
     text-align: center;
-    font-size: .32rem;
+    font-size: .36rem;
     font-weight: 400;
     color: #333!important;
 }
@@ -149,7 +149,7 @@ ul{
 .header.vux-header .vux-header-title {
     line-height: .88rem;
     text-align: center;
-    font-size: .32rem;
+    font-size: .36rem;
     font-weight: 400;
     color: white!important;
 }
@@ -184,3 +184,14 @@ input:-moz-placeholder{
 	}
 
 
+
+/*列表为空的样式*/
+.empty{
+	color: #bbbbbb;
+	text-align: center;
+	margin-top: 3rem;
+}
+.empty img{
+  	width: 2.5rem;
+  	height: 1.4rem;
+  }

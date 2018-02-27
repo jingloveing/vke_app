@@ -17,6 +17,7 @@ import Setting from '@/components/personCenter/setting'
 import Accredit from '@/components/personCenter/accredit'
 import BindTel from '@/components/personCenter/bindTel'
 import Assortment from '@/components/home/assortment'
+import Classify from '@/components/home/classify'
 import Search from '@/components/home/search'
 import SearchPage from '@/components/home/searchPage'
 import SearchResult from '@/components/home/searchResult'
@@ -40,6 +41,7 @@ import AddAddress from '@/components/personCenter/addAddress'
 import MyWorld from '@/components/personCenter/myWorld'
 import Member from '@/components/personCenter/member'
 import ShoppingCart from '@/components/personCenter/shoppingCart'
+import EditShoppingCart from '@/components/personCenter/EditShoppingCart'
 import HelpCenter from '@/components/personCenter/HelpCenter'
 import Code from '@/components/personCenter/code'
 import ShareList from '@/components/personCenter/shareList'
@@ -48,6 +50,7 @@ import CollectList from '@/components/personCenter/collectList'
 import IndexSearch from '@/components/home/indexSearch'
 import StoreIndex from '@/components/brandSite/storeIndex'
 import StoreClassify from '@/components/brandSite/storeClassify'
+import StoreGoods from '@/components/brandSite/storeGoods'
 Vue.use(Router)
 //Router.prototype.goBack = function() {
 //	this.isBack = true
@@ -93,6 +96,15 @@ routes: [{
 		component: Assortment
 	},
 	{
+		path: '/home/assortment/Classify',
+		name:'Classify',
+		component: Classify,
+		meta: {
+			showHeader: true,
+			title:"淘宝领券"
+		}
+	},
+	{
 		path: '/home/assortment/search',
 		component: Search
 	},
@@ -133,6 +145,11 @@ routes: [{
 			showHeader: true,
 			title:"店铺分类"
 		}
+	},
+	{
+		path: '/brandSite/storeIndex/storeGoods',
+		name:'StoreGoods',
+		component: StoreGoods
 	},
 	{
 		path: '/personCenter',
@@ -236,6 +253,15 @@ routes: [{
 		path: '/personCenter/shoppingCart',
 		name: 'ShoppingCart',
 		component: ShoppingCart
+	},
+	{
+		path: '/personCenter/shoppingCart/editShoppingCart',
+		name: 'EditShoppingCart',
+		component: EditShoppingCart,
+		meta: {
+			showHeader: true,
+			title:"购物车"
+		}
 	},
 	{
 		path: '/personCenter/helpCenter',

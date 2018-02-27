@@ -1,23 +1,6 @@
 <template>
 	<div>
-		<x-header :left-options="{backText: ''}" title="购物车" style="background-color: #f9f9f9;">
-			<a slot="right" style="color: #9A7BFF;font-size: .32rem;" href="/personCenter/shoppingCart/editShoppingCart">编辑</a>
-		</x-header>
-		<div style="height: .88rem;"></div>
-<!--		
-				<tr v-for="(item,index) in list">
-					<td><input type="checkbox" v-model="selectList" :id="item.id" :value="index" name="selectList"></td>
-					<td>{{ item.name }}</td>
-					<td>{{ item.price }}</td>
-					<td>
-						<button @click="handleReduce(index)" :disabled="item.count === 1">-</button> {{ item.count }}
-						<button @click="handleAdd(index)">+</button>
-					</td>
-					<td><button @click="handleRemove(index)">移除</button></td>
-				</tr>
-		<div>总价：￥ {{ totalPrice }}</div>-->
-		
-		
+		<span class="f32 c_f done-btn">完成</span>
 		<div class="main">
 			<figure class="empty" v-show="list.lenght==0">
 					<img src="../../../static/images/empty/shop.png" alt="" />
@@ -30,8 +13,8 @@
 				<div class="right">
 					<img src="../../../dist/static/images/default_img.png" alt=""  class="pic"/>
 					<div class="des">
-						<p class="name f26 c3">商品名称 名称名称商品名称 名称名称商品名称 名称名称商品名称 名称名称商品名称 名称名称</p>
-						<p class="f24 c9" style="margin-top: .1rem;">标签型号颜色等</p>
+						<!--<p class="name f26 c3">商品名称 名称名称商品名称 名称名称商品名称 名称名称商品名称 名称名称商品名称 名称名称</p>
+						<p class="f24 c9" style="margin-top: .1rem;">标签型号颜色等</p>-->
 						<div class="num">
 							<span class="f28 c_m">
 								<span class="f24">￥</span><span>88</span><span>.3</span>
@@ -65,11 +48,10 @@
 </template>
 
 <script>
-	import { XHeader} from 'vux'
 	export default {
 		name: 'Realize',
 		components: {
-			XHeader
+			
 		},
 		data() {
 			return {
@@ -162,6 +144,12 @@
 </script>
 
 <style scoped="scoped">
+	.done-btn{
+		position: fixed;
+		top: .2rem;
+		right: .26rem;
+		z-index: 999999;
+	}
 	.goods_list{
 		height: 2.28rem;
 		display: flex;
@@ -184,17 +172,20 @@
 		padding-right: .46rem;
 		box-sizing: border-box;
 	}
-	.goods_list .right .name{
+	/*.goods_list .right .name{
 		word-wrap: break-word;
     -webkit-line-clamp: 2;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
-	}
+	}*/
   .goods_list .pic{
   	width: 1.6rem;
   	height: 1.6rem;
   	margin-right: .2rem;
+  }
+  .des{
+  	width: calc(100% - 1.86rem);
   }
   .des .num{
   	display: flex;
@@ -231,6 +222,6 @@
 }
 input[type="checkbox"]:checked {
   background: url(../../../static/images/checked.png) no-repeat; 
-   background-size: 100% 100%;
+  background-size: 100% 100%;
 }
 </style>

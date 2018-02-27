@@ -11,7 +11,7 @@
               dots-position="center" :show-desc-mask="false"></swiper>
       <div>
         <ul class="nav-small">
-          <router-link tag="li" v-for="(type,index) in typeList" to="" :key="index">
+          <router-link tag="li" v-for="(type,index) in typeList" :to="{name:'Classify',query:{id:type.id}}" :key="index">
             <img :src="type.image_url" :onerror="defaultImg">
             <span>{{type.cate_name}}</span>
           </router-link>

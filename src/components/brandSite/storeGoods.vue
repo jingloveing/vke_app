@@ -1,58 +1,25 @@
 <template>
 	<div>
-		<div class="header">
-			<div class="nav-header">
+		<div class="nav-header">
 				<!--<img src="../../../static/images/lt_white.png" alt="" />-->
-				<x-icon type="ios-arrow-left" size="30" style="fill: white;width: .91rem;" @click="goback()"></x-icon>
-				<router-link class="serach_p" to="/home/assortment/searchPage">
+				<x-icon type="ios-arrow-left" size="30" style="fill: #333;width: .91rem;" @click="goback()"></x-icon>
 				<div class="search">
 					<img src="../../../static/images/personCenter/search_img.png" alt="" class="search_icon" />
 					<span>搜索店内商品</span>
 				</div>
-				</router-link>
 				<div class="nav-header-right">
 					<router-link to="/brandSite/storeIndex/storeClassify" class="classify">
-						<img src="../../../static/images/classify_icon.png" alt="" />
-						<span style="font-size: .18rem;color: white;">分类</span>
+						<img src="../../../static/images/classify_black_icon.png" alt="" />
+						<span style="font-size: .18rem;color: #333;">分类</span>
 					</router-link>
 					<router-link to="" class="share">
-						<img src="../../../static/images/share_icon.png" alt="" />
-						<span style="font-size: .18rem;color: white;">分享</span>
+						<img src="../../../static/images/share_black_icon.png" alt="" />
+						<span style="font-size: .18rem;color: #333;">分享</span>
 					</router-link>
 				</div>
 			</div>
-			<div class="shop">
-				<div class="shop-info">
-					<img src="../../../dist/static/images/default_img.png" alt="" />
-					<div class="shop-des">
-						<p class="f28">店铺名称adsaRF哈哈哈哈哈哈哈哈撒范德萨高度</p>
-						<p class="f20">商品1243件 收藏15人</p>
-					</div>
-				</div>
-				<div class="collect">
-					<x-icon type="ios-heart-outline" size="15" style="fill: white;"></x-icon>
-					<span style="margin-left: .1rem;">收藏</span>
-				</div>
-			</div>
-		</div>
-		<div>
-			<tab :line-width=2 active-color='#9a7bff' v-model="index1" custom-bar-width="1.3rem" class="storeTab">
-				<tab-item class="vux-center" :selected="demo1 === item" v-for="(item, index) in list1" @click="demo1 = item" :key="index">{{item}}</tab-item>
-			</tab>
-			<swiper v-model="index1" height="1000px" :show-dots="false">
-				<swiper-item>
-					<div class="tab-swiper">
-						<video id="myVideo" width="100%" controls style="height: 4.2rem;background: black;" poster="../../../static/images/default_img.png">
-							<source src="" type="video/mp4">
-							<source src="" type="video/ogg">
-						</video>
-						<swiper auto loop :list="demoList" style="width:100%;margin: .14rem 0;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
-						<img src="../../../static/images/store_bd.jpeg" class="img"/>
-					</div>
-				</swiper-item>
-				<swiper-item>
-					<div class="tab-swiper">
-						<tab :line-width=0 active-color='#9a7bff' v-model="index2" custom-bar-width="1.3rem">
+			<div>
+				<tab :line-width=0 active-color='#9a7bff' v-model="index2" custom-bar-width="1.3rem">
 							<tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @click="demo2 = item" :key="index">{{item}}</tab-item>
 						</tab>
 						<div>
@@ -86,22 +53,7 @@
 								</ul>
 							</div>
 						</div>
-					</div>
-				</swiper-item>
-				<swiper-item>
-					<div class="tab-swiper">
-						<div>
-							<ul class="video">
-								<router-link tag="li" v-for="(goods,index) in goodsList" class="video_list" to="" :key="index">
-									<img :src="goods.pict_url" alt="" :onerror="defaultImg">
-									<p>视频名称视频名称视频名称视频名称视频名称</p>
-								</router-link>
-							</ul>
-						</div>
-					</div>
-				</swiper-item>
-			</swiper>
-		</div>
+			</div>
 	</div>
 </template>
 
@@ -138,25 +90,6 @@
 			}
 		},
 		methods: {
-			//      获取首页轮播图
-			getBannerList: function() {
-				this.$http({
-					method: 'POST',
-					url: '/api/index_banner'
-				}).then((res) => {
-					if(res.data.code == '200') {
-						const imgList = res.data.data.index_banner
-						const demoList = imgList.map((item, index) => ({
-							url: item.banner_url,
-							img: item.banner_image
-						}))
-						this.demoList = demoList
-						//          console.log(imgList)
-					}
-				}, (err) => {
-					console.log(err)
-				})
-			},
 			getGoodsList: function() {
 				const self = this
 				this.$http({
@@ -187,28 +120,17 @@
 
 		},
 		created: function() {
-			this.getBannerList()
 			this.getGoodsList()
 		}
 	}
 </script>
 
 <style scoped="scoped">
-	.header {
-		height: 2.18rem;
-		background-image: url(../../../static/images/store_bd.jpeg);
-		background-size: 100% 100%;
-		color: white;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-	}
-	
 	.nav-header {
 		display: flex;
 		align-items: center;
-		/*margin-top: .2rem;*/
 		height: .88rem;
+		background: #f9f9f9;
 	}
 	
 	.nav-header-right {
@@ -229,7 +151,7 @@
 		border-radius: .5rem;
 		padding: 0 .2rem;
 		box-sizing: content-box;
-		background: #F4F4F4;
+		background: #f2f2f2;
 	}
 	
 	.search_icon {
@@ -250,72 +172,24 @@
 	.share {
 		padding-right: .2rem;
 	}
+	
+	.share {}
+	
 	.classify img,
 	.share img {
 		width: .34rem;
 		height: .34rem;
-		/*padding: .2rem .22rem .2rem .44rem;*/
 	}
 	
-	.shop {
-		margin: .25rem .26rem;
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-end;
-	}
-	
-	.shop .shop-info {
-		display: flex;
-		align-items: center;
-	}
-	
-	.shop .shop-info img {
-		width: .8rem;
-		height: .8rem;
-		margin-right: .27rem;
-	}
-	
-	.shop .shop-des {
-		display: flex;
-		flex-direction: column;
-	}
-	
-	.shop .shop-des p {
-		max-width: 4rem;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;
-	}
-	
-	.shop .collect {
-		width: 1.2rem;
-		height: .5rem;
-		font-size: .24rem;
-		background: #9a7cff;
-		color: white;
-		border-radius: .06rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
 	
 	.tab-swiper {
 		font-size: 0;
 	}
 	
-	.goods,
-	.video {
+	.goods,{
 		overflow: hidden;
 	}
-	
-	.video {
-		padding: .2rem .2rem 0;
-		background: white;
-		border-top: .01rem solid #e5e5e5;
-	}
-	
-	.goods_list,
-	.video_list {
+	.goods_list{
 		font-size: 0;
 		background-color: white;
 		list-style: none;
@@ -324,26 +198,6 @@
 		box-sizing: border-box;
 		border-bottom: .1rem solid #f4f4f4;
 	}
-	
-	.video_list {
-		border-bottom: .06rem solid white;
-		height: 2.81rem;
-	}
-	
-	.video_list img {
-		width: 100%;
-		height: 1.98rem;
-	}
-	
-	.video_list p {
-		line-height: .77rem;
-		font-size: .28rem;
-		color: #333;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		overflow: hidden;
-	}
-	
 	.goods_list img {
 		width: 100%;
 		height: 3.6rem;
@@ -352,18 +206,8 @@
 	.goods_list:nth-of-type(odd) {
 		border-right: .05rem solid #f4f4f4;
 	}
-	
-	.video_list:nth-of-type(odd) {
-		border-right: .03rem solid white;
-		;
-	}
-	
 	.goods_list:nth-of-type(even) {
 		border-left: .05rem solid #f4f4f4;
-	}
-	
-	.video_list:nth-of-type(even) {
-		border-left: .03rem solid white;
 	}
 	
 	.content {
@@ -395,13 +239,5 @@
 		color: #999;
 		margin-top: .1rem;
 		margin-right: .15rem;
-	}
-	.img{
-		width: 100%;
-	}
-</style>
-<style>
-	.storeTab.vux-tab .vux-tab-item {
-		background-size: 0;
 	}
 </style>

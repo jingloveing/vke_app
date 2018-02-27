@@ -27,7 +27,7 @@
       <!--</ul>-->
     <!--</div>-->
     <div id="results" style="overflow: hidden;">
-      <tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff526d"
+      <tab :line-width=0 active-color='#9a7bff' v-model="index" custom-bar-width="1.2rem" bar-active-color="#9a7bff"
            style="border-bottom: 1px solid #e1e1e1;margin-top: 44px;">
         <tab-item class="vux-center" :selected="index === 0" v-for="(item, index) in list" @on-item-click="change(index)"
                   :key="index">{{item}}
@@ -83,7 +83,7 @@
 //        searchResults:true,
         results: [],
         keywords: '',
-        list:['综合排序','销量优先','价格优先'],
+        list:['综合','热门','新品','价格'],
         index: 0,
         getBarWidth: function (index) {
           return (index + 1) * 22 + 'px'
@@ -275,14 +275,11 @@
   }
 
   .des {
-    height: .8rem;
     font-size: .28rem;
     color: #333;
     line-height: .4rem;
-    word-wrap: break-word;
-    -webkit-line-clamp: 2;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     overflow: hidden;
   }
 
@@ -299,10 +296,21 @@
     margin-right: .15rem;
   }
   .goHome{
-    background-color: #EFEFF4;height: 44px;width: 10%;position: absolute;border-bottom: 1px solid #D7D6DC;
+    background-color: #f9f9f9;height: 44px;width: 10%;position: absolute;
     box-sizing: border-box;
   }
   .goHome>img{
     width: 22px;height: 22px;margin-top: 11px;margin-left: calc(((100% - 22px)/2) + 4px);
   }
+</style>
+<style>
+	.weui-search-bar{
+		background-color: #f9f9f9!important;
+	}
+	.weui-search-bar:before{
+		border-top: none!important;
+	}
+	.weui-search-bar:after{
+		border-bottom: none!important;
+	}
 </style>

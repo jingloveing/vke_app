@@ -110,14 +110,6 @@
 					<figcaption>购物车</figcaption>
 				</figure>
 				</router-link>
-				<figure class="list1 list2">
-					<img src="../../../static/images/personCenter/express.png" alt="" />
-					<figcaption>快递查询</figcaption>
-				</figure>
-				<figure class="list1 list2">
-					<img src="../../../static/images/personCenter/liveTV.png" alt="" />
-					<figcaption>视频直播</figcaption>
-				</figure>
 				<router-link to="/personCenter/helpCenter">
 				<figure class="list1 list2">
 					<img src="../../../static/images/personCenter/college.png" alt="" />
