@@ -16,7 +16,7 @@ import EmailList from '@/components/personCenter/emailList'
 import Setting from '@/components/personCenter/setting'
 import Accredit from '@/components/personCenter/accredit'
 import BindTel from '@/components/personCenter/bindTel'
-import Assortment from '@/components/home/assortment'
+import Taobao from '@/components/home/taobao'
 import Classify from '@/components/home/classify'
 import Search from '@/components/home/search'
 import SearchPage from '@/components/home/searchPage'
@@ -51,6 +51,12 @@ import IndexSearch from '@/components/home/indexSearch'
 import StoreIndex from '@/components/brandSite/storeIndex'
 import StoreClassify from '@/components/brandSite/storeClassify'
 import StoreGoods from '@/components/brandSite/storeGoods'
+import ToPay from '@/components/personCenter/topay'
+import Seek from '@/components/personCenter/seek'
+import GoodsDetail from '@/components/common/goodsDetail'
+import JD from '@/components/home/JD'
+import JDDetail from '@/components/home/JDDetail'
+import TBDetail from '@/components/home/TBDetail'
 Vue.use(Router)
 //Router.prototype.goBack = function() {
 //	this.isBack = true
@@ -92,8 +98,8 @@ routes: [{
 		component: IndexSearch
 	},
 	{
-		path: '/home/assortment',
-		component: Assortment
+		path: '/home/taobao',
+		component: Taobao
 	},
 	{
 		path: '/home/assortment/Classify',
@@ -252,7 +258,11 @@ routes: [{
 	{
 		path: '/personCenter/shoppingCart',
 		name: 'ShoppingCart',
-		component: ShoppingCart
+		component: ShoppingCart,
+		meta: {
+			showHeader: true,
+			title:"购物车"
+		}
 	},
 	{
 		path: '/personCenter/shoppingCart/editShoppingCart',
@@ -429,6 +439,24 @@ routes: [{
 		}
 	},
 	{
+		path: '/personCenter/myOrder/topay',
+		name: 'ToPay',
+		component: ToPay,
+		meta: {
+			showHeader: true,
+			title:"支付订单"
+		}
+	},
+	{
+		path: '/personCenter/myOrder/seek',
+		name: 'Seek',
+		component: Seek,
+		meta: {
+			showHeader: true,
+			title:"查看物流"
+		}
+	},
+	{
 		path: '/personCenter/myOrder/selectAddress',
 		name: 'SelectAddress',
 		component: SelectAddress
@@ -469,7 +497,30 @@ routes: [{
 			title:"申请退款"
 		}
 	},
-	
+	{
+		path: '/home/goodsDetail',
+		name: 'GoodsDetail',
+		component: GoodsDetail,
+//		meta: {
+//			showHeader: true,
+//			title:"商品详情页"
+//		}
+	},
+	{
+		path: '/JD',
+		name: 'JD',
+		component: JD,
+	},
+	{
+		path: '/JD/JDDetail',
+		name: 'JDDetail',
+		component: JDDetail,
+	},
+	{
+		path: '/taobao/TBDetail',
+		name: 'TBDetail',
+		component: TBDetail,
+	},
 ]
 })
 

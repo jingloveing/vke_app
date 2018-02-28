@@ -5,10 +5,10 @@
 				<!--<img src="../../../static/images/lt_white.png" alt="" />-->
 				<x-icon type="ios-arrow-left" size="30" style="fill: white;width: .91rem;" @click="goback()"></x-icon>
 				<router-link class="serach_p" to="/home/assortment/searchPage">
-				<div class="search">
-					<img src="../../../static/images/personCenter/search_img.png" alt="" class="search_icon" />
-					<span>搜索店内商品</span>
-				</div>
+					<div class="search">
+						<img src="../../../static/images/personCenter/search_img.png" alt="" class="search_icon" />
+						<span>搜索店内商品</span>
+					</div>
 				</router-link>
 				<div class="nav-header-right">
 					<router-link to="/brandSite/storeIndex/storeClassify" class="classify">
@@ -47,7 +47,7 @@
 							<source src="" type="video/ogg">
 						</video>
 						<swiper auto loop :list="demoList" style="width:100%;margin: .14rem 0;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
-						<img src="../../../static/images/store_bd.jpeg" class="img"/>
+						<img src="../../../static/images/store_bd.jpeg" class="img" />
 					</div>
 				</swiper-item>
 				<swiper-item>
@@ -62,17 +62,27 @@
 										<img :src="goods.pict_url" alt="" :onerror="defaultImg">
 										<div class="content">
 											<div class="des">{{goods.title}}</div>
-											<div style="margin: .15rem 0rem;display: flex;align-items: center;">
-												<div>
-													<span class="juan_style">
+												<div style="margin: .15rem 0;" class="flex">
+													<span class="juan_style" style="margin-right: .2rem;">
                                                     <span class="juan_style_left">券</span>
 													<span class="juan_style_right">{{goods.coupon_number}}元</span>
 													</span>
-													<span class="return_num_style" v-show="goods.fans_acer !==0">返{{goods.fans_acer}}元宝</span>
+													<div class="header_list_num jewel f22">
+														<img src="../../../static/images/personCenter/jewel.png" alt="" style="width: .22rem;height: .22rem;margin: 0 .1rem;" /> 8.86
+													</div>
+													<!--<div class="header_list_num gold">
+                	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" style="width: .22rem;height: .22rem;margin: 0 .1rem;" />
+                	       8.86
+                	     </div>
+                	     <div class="header_list_num silver">
+                	   	   <img src="../../../static/images/personCenter/silver.png" alt="" style="width: .22rem;height: .22rem;margin: 0 .1rem;" />
+                	       8.86
+                	     </div>
+                	     <div class="header_list_num coppers">
+                	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" style="width: .22rem;height: .22rem;margin: 0 .1rem;" />
+                	       8.86
+                	     </div>-->
 												</div>
-												<img src="../../../static/images/personCenter/gold_acer.png" alt="" style="width: .22rem;height: .22rem;margin: 0 .1rem;" />
-												<span style="color: #fdc71b;font-size: .22rem;">2.62</span>
-											</div>
 											<div class="des_b">
 												<div>
 													<span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span style="font-size: .20rem;" v-show="goods.zk_final_price.corner!=='00'">.{{goods.zk_final_price.corner}}</span></span>
@@ -220,15 +230,7 @@
 	}
 	
 	.search {
-		width: 4.70rem;
-		height: .64rem;
-		line-height: .64rem;
-		font-size: .28rem;
 		color: #c7c7c7;
-		text-align: left;
-		border-radius: .5rem;
-		padding: 0 .2rem;
-		box-sizing: content-box;
 		background: #F4F4F4;
 	}
 	
@@ -250,6 +252,7 @@
 	.share {
 		padding-right: .2rem;
 	}
+	
 	.classify img,
 	.share img {
 		width: .34rem;
@@ -396,7 +399,8 @@
 		margin-top: .1rem;
 		margin-right: .15rem;
 	}
-	.img{
+	
+	.img {
 		width: 100%;
 	}
 </style>

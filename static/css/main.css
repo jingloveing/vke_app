@@ -1,6 +1,9 @@
 .f20{
 	font-size: .2rem;
 }
+.f22{
+	font-size: .22rem;
+}
 .f24{
 	font-size: .24rem;
 }
@@ -195,3 +198,47 @@ input:-moz-placeholder{
   	width: 2.5rem;
   	height: 1.4rem;
   }
+  /*元宝砖石等字体颜色*/
+ 
+	.header_list_num>img {
+		width: .22rem;
+		height: .22rem;
+		margin-right: .06rem;
+	}
+	
+	.header_list_num>small {
+		font-size: .24rem;
+	}
+   .header_list_num.jewel {
+		color: #35a8ed;
+	}
+	
+	.header_list_num.gold {
+		color: #fdc71b;
+	}
+	
+	.header_list_num.silver {
+		color: #999;
+	}
+	
+	.header_list_num.coppers {
+		color: #ffb034;
+	}
+	/*弹性布局*/
+	.flex {
+		display: flex;
+		align-items: center;
+	}
+	
+
+/*搜索框*/
+	.search {
+		width: 4.70rem;
+		height: .64rem;
+		line-height: .64rem;
+		font-size: .28rem;
+		text-align: left;
+		border-radius: .5rem;
+		padding: 0 .2rem;
+		box-sizing: border-box;
+	}

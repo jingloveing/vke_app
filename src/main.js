@@ -10,6 +10,7 @@ import router from './router'
 //import BrandSite from '@/components/brandSite/brandSite'
 //import PersonCenter from '@/components/personCenter/personCenter'
 import '../static/css/main.css'
+import animate from 'animate.css'
 import { ConfirmPlugin ,AlertPlugin,ToastPlugin,AjaxPlugin ,LoadingPlugin} from 'vux'
 import VueScroller from 'vue-scroller'
 Vue.use(VueScroller)

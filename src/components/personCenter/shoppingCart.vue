@@ -1,9 +1,10 @@
 <template>
 	<div>
-		<x-header :left-options="{backText: ''}" title="购物车" style="background-color: #f9f9f9;">
+		<!--<x-header :left-options="{backText: ''}" title="购物车" style="background-color: #f9f9f9;">
 			<a slot="right" style="color: #9A7BFF;font-size: .32rem;" href="/personCenter/shoppingCart/editShoppingCart">编辑</a>
-		</x-header>
-		<div style="height: .88rem;"></div>
+		</x-header>-->
+		<span class="f32 c_f done-btn" @click="status=!status" v-text="status==true?'编辑':'完成'">编辑</span>
+		<!--<div style="height: .88rem;"></div>-->
 <!--		
 				<tr v-for="(item,index) in list">
 					<td><input type="checkbox" v-model="selectList" :id="item.id" :value="index" name="selectList"></td>
@@ -30,13 +31,18 @@
 				<div class="right">
 					<img src="../../../dist/static/images/default_img.png" alt=""  class="pic"/>
 					<div class="des">
-						<p class="name f26 c3">商品名称 名称名称商品名称 名称名称商品名称 名称名称商品名称 名称名称商品名称 名称名称</p>
-						<p class="f24 c9" style="margin-top: .1rem;">标签型号颜色等</p>
+						<p class="name f26 c3" v-show="status">商品名称 名称名称商品名称 名称名称商品名称 名称名称商品名称 名称名称商品名称 名称名称</p>
+						<p class="f24 c9" v-show="status">标签型号颜色等</p>
+						<div class="num" v-show="!status">
+							<x-number :min="0" v-model="item.count" fillable class="num f28 c3"></x-number>
+							<img src="../../../static/images/cart_del.png" alt="" class="del"/>
+						</div>
 						<div class="num">
 							<span class="f28 c_m">
 								<span class="f24">￥</span><span>88</span><span>.3</span>
+								<span class="f24 c9" style="text-decoration: line-through;">￥198</span>
 							</span>
-							<span>
+							<span v-show="status">
 								<span class="f28 c3">x1</span>
 							</span>
 						</div>
@@ -45,18 +51,22 @@
 			</div>
 			<div class="footer" v-show="list.lenght!==0">
 				<div class="f24 c3" style="display: flex;">
-					<input type="checkbox" v-on:click="swapCheck" v-model="checked">全选
+					<input type="checkbox" v-on:click="swapCheck" v-model="checked" style="margin:0 .1rem 0 .26rem;">全选
 				</div>
-				<div style="display: flex;align-items: center;">
+				<div style="display: flex;align-items: center;" v-show="status">
 					<div style="margin-right: .34rem;">
 					  <span class="f28 c3">总计：</span>
 					  <span class="f28 c_m">
 								<span class="f24">￥</span>{{ totalPrice }}</span>
 							</span>
 					</div>
-					<div class="goods-btn f32">
-						总算({{selectList.length}})
-					</div>
+					<router-link class="goods-btn f32" to="/personCenter/myOrder/pay">
+						结算({{selectList.length}})
+					</router-link>
+				</div>
+				<div style="display: flex;align-items: center;" v-show="!status">
+					<span class="f28 c9 edit-btn">收入藏宝阁</span>
+					<span class="f28 edit-btn">删除商品</span>
 				</div>
 			</div>
 			
@@ -65,11 +75,12 @@
 </template>
 
 <script>
-	import { XHeader} from 'vux'
+	import { XHeader, XNumber,} from 'vux'
 	export default {
 		name: 'Realize',
 		components: {
-			XHeader
+			XHeader,
+			 XNumber,
 		},
 		data() {
 			return {
@@ -93,7 +104,8 @@
 					}
 				],
 				selectList: [],
-				checked: false
+				checked: false,
+				status:true,
 			}
 		},
 		methods: {
@@ -136,7 +148,7 @@
 					this.checked = true;
 
 				}
-				}
+				},
 			},
 			created: function() {
 
@@ -162,6 +174,12 @@
 </script>
 
 <style scoped="scoped">
+	.done-btn{
+		position: fixed;
+		top: .2rem;
+		right: .26rem;
+		z-index: 999999;
+	}
 	.goods_list{
 		height: 2.28rem;
 		display: flex;
@@ -196,6 +214,14 @@
   	height: 1.6rem;
   	margin-right: .2rem;
   }
+  .des{
+  	line-height: .35rem;
+  	width: calc(100% - 1.86rem);
+  	height: 1.6rem;
+  	display: flex;
+  	flex-direction: column;
+  	justify-content: space-between;
+  }
   .des .num{
   	display: flex;
   	align-items: center;
@@ -227,10 +253,28 @@
   height: .36rem;   /*高度*/
   vertical-align: middle;
   width: .36rem;
-  margin:0 .1rem 0 .26rem;
 }
 input[type="checkbox"]:checked {
   background: url(../../../static/images/checked.png) no-repeat; 
    background-size: 100% 100%;
+}
+.del{
+	width: .38rem;
+	height: .34rem;
+}
+.edit-btn{
+	display: inline-block;
+	width: 2.04rem;
+	height: .7rem;
+	border: .01rem solid #e5e5e5;
+	border-radius: .06rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.edit-btn:nth-child(2){
+	margin: 0 .4rem 0 .2rem;
+	background-color: #F51D46;
+	color: white;
 }
 </style>

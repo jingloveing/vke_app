@@ -5,7 +5,7 @@
 		</group>
 		<p class="tip f24 c9">请注意昵称长度，5-24个字</p>
 		<div style="margin:0 .26rem;">
-			<x-button type="primary" action-type="button">保存</x-button>
+			<x-button type="primary" action-type="button" class='f32'>保存</x-button>
 		</div>
 	</div>
 </template>

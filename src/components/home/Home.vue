@@ -15,19 +15,20 @@
 				<span class="info_num">12</span>
 			</router-link>
 		</div>
+		<div style="height: .88rem;"></div>
 		<swiper auto :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" loop></swiper>
 		<div style=" margin-top: -.3rem;z-index: 99999;position: relative;">
 			<ul class="nav-small">
-				<router-link tag="li" to="/home/assortment">
+				<router-link tag="li" to="/home/taobao">
 					<!--<li>-->
 					<img src="static/images/taoBao.png" :onerror="defaultImg">
 					<span>淘宝</span>
 					<!--</li>-->
 				</router-link>
-				<li>
+				<router-link tag="li" to="/JD">
 					<img src="static/images/JD.png" :onerror="defaultImg">
 					<span>京东</span>
-				</li>
+				</router-link>
 				<li>
 					<img src="static/images/mogu.png" :onerror="defaultImg">
 					<span>蘑菇街</span>
@@ -47,16 +48,10 @@
 				<img src="static/images/vke_news.png" />
 			</div>
 			<div class="news_right">
-				<swiper style="width:100%;" height="55px" loop direction="vertical" :interval=2000 :show-desc-mask="false" :show-dots="false">
+				<swiper auto style="width:100%;" height="25px" loop direction="vertical" :interval=2000 :show-desc-mask="false" :show-dots="false">
 					<swiper-item class="news" v-for="i in 5" :key="i">
-						<div style="display: flex;justify-content: space-between;">
-							<div class="news_title">
-								<p>新手购买必看</p>
-								<p>这个冬天不太冷，冬装搭配</p>
-							</div>
-							<div class="news_pic">
-								<img src="static/images/mogu.png" />
-							</div>
+						<div style="margin-left: .26rem;">
+							<p style="line-height: 25px;vertical-align: middle;">1分钟前xxx完成1笔购物，获得xx财宝</p>
 						</div>
 					</swiper-item>
 				</swiper>
@@ -300,6 +295,10 @@
 	}
 	
 	.searchDiv {
+		width: 100%;
+		position: fixed;
+		top: 0;
+		z-index: 9999;
 		height: .88rem;
 		line-height: .88rem;
 		display: flex;
@@ -340,24 +339,11 @@
 	}
 	
 	.search {
-		width: 4.76rem;
-		height: .56rem;
-		line-height: .56rem;
-		font-size: .28rem;
 		color: #fff;
-		text-align: left;
-		border-radius: .5rem;
-		padding: 0 .2rem;
-		box-sizing: content-box;
-		background: -webkit-linear-gradient(left, #a547ba, #db529a);
-		/* Safari 5.1 - 6.0 */
-		background: -o-linear-gradient(left, #a547ba, #db529a);
-		/* Opera 11.1 - 12.0 */
-		background: -moz-linear-gradient(left, #a547ba, #db529a);
-		/* Firefox 3.6 - 15 */
-		background: linear-gradient(left, #a547ba, #db529a);
-		/* 标准的语法 */
+       background: rgba(255,255,255,0.2);
 	}
+	
+	
 	
 	.searchDiv .right {
 		width: .88rem;
@@ -383,36 +369,36 @@
 	
 	.news_main {
 		width: 100%;
-		height: 1.1rem;
+		height: .82rem;
 		background: white;
 		border-top: .01rem solid #e5e5e5;
 		border-bottom: .01rem solid #e5e5e5;
 		margin-bottom: .2rem;
+		display: flex;
+		align-items: center;
+		
 	}
 	
 	.news_left {
-		width: 1.3rem;
+		width: 1.1rem;
 		/*height: 100%;
   	line-height: 1.1rem;*/
-		margin: .22rem 0;
 		text-align: center;
 		box-sizing: border-box;
-		float: left;
 		border-right: .01rem solid #e5e5e5;
 	}
 	
 	.news_left>img {
-		width: .74rem;
-		height: .66rem;
+		width: .5rem;
+		height: .46rem;
 		vertical-align: middle;
 	}
 	
 	.news_right {
-		float: right;
-		width: calc(100% - 1.3rem);
-		width: -moz-calc(100% - 1.3rem);
-		width: -webkit-calc(100% - 1.3rem);
-		height: 100%;
+		width: calc(100% - 1.1rem);
+		width: -moz-calc(100% - 1.1rem);
+		width: -webkit-calc(100% - 1.1rem);
+		height: 25px;
 	}
 	
 	.news {
@@ -420,17 +406,7 @@
 		color: #666;
 	}
 	
-	.news_title {
-		padding: 0 .2rem;
-		box-sizing: border-box;
-		width: 4.4rem;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		
-	}
-	
-	.news_title>p {
+	.news>p {
 		/*height: .55rem;
   	line-height: .55rem;*/
 		word-wrap: break-word;
@@ -438,17 +414,6 @@
 		display: -webkit-box;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
-	}
-	
-	.news_pic {
-		width: 1.8rem;
-		height: 1.1rem;
-		float: right;
-	}
-	
-	.news_pic>img {
-		width: 100%;
-		height: 1.1rem;
 	}
 	
 	nav {
@@ -618,8 +583,7 @@
 		margin-left: .1rem;
 	}
 	
-	.vux-slider>.vux-indicator,
-	.vux-slider .vux-indicator-right {
+	.vux-slider>.vux-indicator,.vux-slider .vux-indicator-right {
 		bottom: .25rem!important;
 	}
 </style>

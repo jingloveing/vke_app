@@ -308,31 +308,8 @@
 		justify-content: center;
 	}
 	
-	.header_list_num>img {
-		width: .22rem;
-		height: .22rem;
-		margin-right: .06rem;
-	}
 	
-	.header_list_num>small {
-		font-size: .24rem;
-	}
 	
-	.jewel {
-		color: #35a8ed;
-	}
-	
-	.gold {
-		color: #fdc71b;
-	}
-	
-	.silver {
-		color: #999;
-	}
-	
-	.coppers {
-		color: #ffb034;
-	}
 	
 	.sort {
 		background: white;

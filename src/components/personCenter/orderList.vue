@@ -33,9 +33,12 @@
 							<p class="order_total">共1件商品(含运费￥10.00)小计：<span style="font-size: .24rem;color: #F51D46;">￥<span class="rmb">22</span><span class="corner">.90</span></span>
 							</p>
 							<div class="order_btns">
-								<span class="btn" @click="showPopupPicker=true" v-if="value.length==0">取消订单</span>
+								<router-link to="/personCenter/myOrder/seek">
+									<span class="btn">查询物流</span>
+								</router-link>
+								<!--<span class="btn" @click="showPopupPicker=true" v-if="value.length==0">取消订单</span>-->
 								<span class="btn" @click="showPopupPicker=true" v-if="value.length!==0">删除订单</span>
-								<router-link to='/personCenter/myOrder/pay'>
+								<router-link to='/personCenter/myOrder/topay'>
 									<span class="btn btn1" v-if="value.length==0">去付款</span>
 								</router-link>
 							</div>

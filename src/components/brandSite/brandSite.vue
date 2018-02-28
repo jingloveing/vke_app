@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<x-header :left-options="{showBack: false}" title="淘宝领券" class="header">
+		<x-header :left-options="{showBack: false}" title="品牌现场" class="header">
 			<a slot="right">
 				<router-link to="/personCenter/info">
 					<div class="right">
@@ -8,7 +8,6 @@
 						<span class="info_num">12</span>
 					</div>
 				</router-link>
-
 			</a>
 		</x-header>
 		<div style="height: .88rem;"></div>

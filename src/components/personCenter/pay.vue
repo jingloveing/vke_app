@@ -33,87 +33,28 @@
 		<div class="bottom">
 			<div class="f32 c3">合计：<span style="color: #F51D46;">￥<span class="rmb">22</span><span class="corner">.90</span></span>
 			</div>
-			<div class="f32 pay-btn" @click="show=!show">提交订单</div>
+			<router-link to="/personCenter/myOrder/topay" class="f32 pay-btn">
+				提交订单
+			</router-link>
 		</div>
-		<!--<x-switch :title="选择支付方式" v-model="show"></x-switch>-->
-		<actionsheet :close-on-clicking-mask="false" v-model="show" :menus="menus" show-cancel @on-click-menu="click5" :close-on-clicking-menu="false" @on-click-menu-cancel="show=!show"></actionsheet>
-	</div>
+		</div>
 </template>
 
 <script>
-	import { XNumber, XSwitch, TransferDom, Actionsheet} from 'vux'
+	import { XNumber, XSwitch} from 'vux'
 	export default {
 		components: {
 			XNumber,
-			XSwitch,
-			TransferDom,
-			Actionsheet
+			XSwitch
 		},
 		data() {
 			return {
 				num: 1,
-				show: false,
 				type:0,
-				menus: [{
-					label: '请选择支付方式',
-				}, {
-					label: '<div style="position:relative;">'+
-					'<label for="alipay" style="position:absolute;width:100%;height:46px;display:inline-block;left:0;top:-10px;"></label>'+
-					'<div style="display:flex;align-items:center;margin:0 .26rem;">'+
-					'<img src="../../../static/images/personCenter/alipay.png" alt="" style="width:.52rem;height:.52rem;margin-right:.26rem;"/>'+
-					'<div style="width: calc(100% - .82rem);display: flex;align-items: center;justify-content: space-between;">'+
-					'<span style="font-size:.28rem;color:#333;">支付宝支付</span>'+
-					'<input type="radio" name="type" value="0" id="alipay" checked="checked" v-model="type" />'+
-					'<div style="position: relative;width: .36rem;height: .36rem;border-radius: 50%;border: .01rem solid #e5e5e5;">'+
-					'<img v-show="type==0" src="../../../static/images/checked.png" style="width: .36rem;height: .36rem;position: absolute;left:0;">'+
-					'<span style="width: 100%;height: 100%;display: inline-block;position: absolute;top: 0;left: 0;"></span>'+
-					'</div></div></div></div>',
-					value:'0'
-				}, {
-					label: '<div style="position:relative;">'+
-					'<label for="weChat" style="position:absolute;width:100%;height:46px;display:inline-block;left:0;top:-10px;"></label>'+
-					'<div style="display:flex;align-items:center;margin:0 .26rem;">'+
-					'<img src="../../../static/images/personCenter/weChat.png" alt="" style="width:.52rem;height:.52rem;margin-right:.26rem;"/>'+
-					'<div style="width: calc(100% - .82rem);display: flex;align-items: center;justify-content: space-between;">'+
-					'<span style="font-size:.28rem;color:#333;">微信支付</span>'+
-					'<input type="radio" name="type" value="1" id="weChat" v-model="type" />'+
-					'<div style="position: relative;width: .36rem;height: .36rem;border-radius: 50%;border: .01rem solid #e5e5e5;">'+
-					'<img v-show="type==1" src="../../../static/images/checked.png" style="width: .36rem;height: .36rem;position: absolute;left:0;">'+
-					'<label for="weChat" style="width: 100%;height: 100%;display: inline-block;position: absolute;top: 0;left: 0;"></label>'+
-					'</div></div></div></div>',
-					value:'1'
-				}, {
-					label: '<div style="position:relative;">'+
-					'<label for="acer" style="position:absolute;width:100%;height:46px;display:inline-block;left:0;top:-10px;"></label>'+
-					'<div style="display:flex;align-items:center;margin:0 .26rem;">'+
-					'<img src="../../../static/images/personCenter/gold_acer.png" alt="" style="width:.52rem;height:.52rem;margin-right:.26rem;"/>'+
-					'<div style="width: calc(100% - .82rem);display: flex;align-items: center;justify-content: space-between;">'+
-					'<span style="font-size:.28rem;color:#333;">财宝支付</span>'+
-					'<input type="radio" name="type" value="2" id="acer" v-model="type" />'+
-					'<div style="position: relative;width: .36rem;height: .36rem;border-radius: 50%;border: .01rem solid #e5e5e5;">'+
-					'<img v-show="type==1" src="../../../static/images/checked.png" style="width: .36rem;height: .36rem;position: absolute;left:0;">'+
-					'<label for="acer" style="width: 100%;height: 100%;display: inline-block;position: absolute;top: 0;left: 0;"></label>'+
-					'</div></div></div></div>',
-					value:'2'
-				}, {
-					label: '<span style="line-height:40px;display:block;font-size:.32rem;color:white;background:#9a7bff;margin:0 .26rem;">确认支付</span>',
-				    value:'3'
-				}],
 			}
 		},
 		methods: {
-			click5(key, item) {
-				console.log(this.type)
-				if(key==3){
-					console.log('3')
-				}else if(key==0){
-					console.log('0')
-				}else if(key==1){
-					console.log('1')
-				}else{
-					console.log('2')
-				}
-			}
+			
 		}
 	}
 </script>
