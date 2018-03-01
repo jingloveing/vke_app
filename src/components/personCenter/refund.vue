@@ -191,7 +191,10 @@
 				}
 			},
 			click:function(){
-				
+				this.$router.push({
+					path: '/refundDetail'
+				})
+             
 			}
 		},
 		data() {

@@ -29,7 +29,7 @@
 					<p class="order_price">
 						<span>￥<span class="rmb">22</span><span class="corner">.90</span></span>
 					</p>
-					<router-link class="btn" style="float: right;" to="/personCenter/myOrder/refund">申请退款</router-link>
+					<router-link class="btn" style="float: right;" to="/SelectReason">申请退款</router-link>
 				</div>
 			</div>
 			<div class="list_num">

@@ -57,6 +57,11 @@ import GoodsDetail from '@/components/common/goodsDetail'
 import JD from '@/components/home/JD'
 import JDDetail from '@/components/home/JDDetail'
 import TBDetail from '@/components/home/TBDetail'
+import SelfSupport from '@/components/home/selfSupport'
+import RefundList from '@/components/personCenter/refundList'
+import RefundDetail from '@/components/personCenter/refundDetail'
+import SelectReason from '@/components/personCenter/selectReason'
+import Login from '@/components/login'
 Vue.use(Router)
 //Router.prototype.goBack = function() {
 //	this.isBack = true
@@ -315,6 +320,15 @@ routes: [{
 		}
 	},
 	{
+		path: '/personCenter/refundList',
+		name: 'RefundList',
+		component: RefundList,
+		meta: {
+			showHeader: true,
+			title:"宝物退换"
+		}
+	},
+	{
 		path: '/personCenter/myWorld/member',
 		name: 'Member',
 		component: Member
@@ -498,13 +512,19 @@ routes: [{
 		}
 	},
 	{
+		path: '/refundDetail',
+		name: 'RefundDetail',
+		component: RefundDetail,
+		meta: {
+			showHeader: true,
+			title:"退换详情"
+		}
+	},
+	{
 		path: '/home/goodsDetail',
 		name: 'GoodsDetail',
 		component: GoodsDetail,
-//		meta: {
-//			showHeader: true,
-//			title:"商品详情页"
-//		}
+
 	},
 	{
 		path: '/JD',
@@ -520,6 +540,25 @@ routes: [{
 		path: '/taobao/TBDetail',
 		name: 'TBDetail',
 		component: TBDetail,
+	},
+	{
+		path: '/selfSupport',
+		name: 'SelfSupport',
+		component: SelfSupport,
+	},
+	{
+		path: '/selectReason',
+		name: 'SelectReason',
+		component: SelectReason,
+		meta: {
+			showHeader: true,
+			title:"选择服务类型"
+		}
+	},
+	{
+		path: '/login',
+		name: 'Login',
+		component: Login,
 	},
 ]
 })

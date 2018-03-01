@@ -144,10 +144,12 @@
 				</router-link>
 			</div>
 			<div style="border-top:.01rem solid #f4f4f4;">
+				<router-link to="/personCenter/refundList">
 				<figure class="list1 list2">
 					<img src="../../../static/images/personCenter/exchange.png" alt="" />
 					<figcaption>宝物退换</figcaption>
 				</figure>
+				</router-link>
 			</div>
 		</div>
 	</div>

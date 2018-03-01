@@ -2,7 +2,7 @@
 	<div>
 		<x-header :left-options="{backText: ''}" title="商品详情">
 			<a slot="right">
-				<router-link to="/personCenter/shoppingCart">
+				<router-link to="">
 					<img src="../../../static/images/share_black_icon.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;" />
 				</router-link>
 			</a>
@@ -54,7 +54,7 @@
       is-link
       :border-intent="false"
       :arrow-direction="showDetail ? 'up' : 'down'"
-      @click.native="showDetail = !showDetail" class="pic_detail"></cell>
+      @click.native="showDetail = !showDetail" class="pic_detail f24 c3" style="height: .88rem; box-sizing: border-box;"></cell>
       <div class="slide" :class="showDetail?'animate':''" style="font-size: 0;">
       <img :src="img" alt="" v-for="img in goodsDetail.small_images" :onerror="defaultImg">
     </div>
@@ -218,7 +218,7 @@
 	
 	.prices {
 		font-size: .46rem;
-		color: #ff425f;
+		color: #f23030;
 	}
 	
 	.prices small {

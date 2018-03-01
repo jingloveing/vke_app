@@ -2,7 +2,7 @@
 	<div>
 		<x-header :left-options="{backText: ''}" title="商品详情">
 			<a slot="right">
-				<router-link to="/personCenter/shoppingCart">
+				<router-link to="">
 					<img src="../../../static/images/share_black_icon.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;" />
 				</router-link>
 			</a>
@@ -16,8 +16,7 @@
 			<div class="detail">
 				<p class="name">{{goodsDetail.title}}</p>
 				<div class="flex" style="align-items: flex-end;">
-					<span class="prices"><small>￥</small><span>{{goodsDetail.zk_final_price.rmb}}</span><small
-          v-show="goodsDetail.zk_final_price.corner!=='00'">.{{goodsDetail.zk_final_price.corner}}</small></span>
+					<span class="prices"><small>￥</small><span>{{goodsDetail.zk_final_price.rmb}}</span><small v-show="goodsDetail.zk_final_price.corner!=='00'">.{{goodsDetail.zk_final_price.corner}}</small></span>
 					<div class="f28 flex c9" style="margin:0 0 .08rem .3rem;">财宝价
 						<div class="header_list_num jewel" style="margin-left: .1rem;">
 							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
@@ -47,21 +46,20 @@
 				</div>
 			</div>
 		</div>
-		<div class="flex" style="background: white;">
-			<div class="f24 tb-quan">
-				<div>优惠券</div>
-				<div>100元</div>
+		<div class="flex" style="background: white;margin-top: .16rem;height: .88rem;padding: 0 .3rem;justify-content: space-between;">
+			<div class="flex">
+				<div class="f24 tb-quan">
+					<div>优惠券</div>
+					<div>100元</div>
+				</div>
+				<span class="f24 c9" style="margin-left: .2rem;">领取优惠券</span>
 			</div>
+			<div class="r-arrow"></div>
 		</div>
-		<cell
-      title="商品图文详情(点击查看)"
-      is-link
-      :border-intent="false"
-      :arrow-direction="showDetail ? 'up' : 'down'"
-      @click.native="showDetail = !showDetail" class="pic_detail"></cell>
-      <div class="slide" :class="showDetail?'animate':''" style="font-size: 0;">
-      <img :src="img" alt="" v-for="img in goodsDetail.small_images" :onerror="defaultImg">
-    </div>
+		<cell title="商品图文详情(点击查看)" is-link :border-intent="false" :arrow-direction="showDetail ? 'up' : 'down'" @click.native="showDetail = !showDetail" class="pic_detail f24 c3" style="height: .88rem; box-sizing: border-box;"></cell>
+		<div class="slide" :class="showDetail?'animate':''" style="font-size: 0;">
+			<img :src="img" alt="" v-for="img in goodsDetail.small_images" :onerror="defaultImg">
+		</div>
 		<div style="height: .98rem;"></div>
 		<div class="footer">
 			<div class="f_1 f1_l" @click="toHome">
@@ -73,7 +71,7 @@
 				<x-icon type="ios-heart-outline" size="22" style="padding-top:.16rem ;fill: #ff5200;" v-show="!collect"></x-icon>
 				<span v-text="collect?'已收藏':'收藏'">收藏</span>
 			</div>
-			<div class="f_2 f2_l" @click="toAdd(1)" >
+			<div class="f_2 f2_l" @click="">
 				<span>去购买</span>
 			</div>
 		</div>
@@ -81,7 +79,7 @@
 	</div>
 </template>
 <script>
-	import { XHeader, Cell, CellBox, CellFormPreview, Group, Badge, Loading, Swiper, Toast,XNumber} from 'vux'
+	import { XHeader, Cell, CellBox, CellFormPreview, Group, Badge, Loading, Swiper, Toast, XNumber } from 'vux'
 	import Clipboard from 'clipboard'
 
 	export default {
@@ -99,7 +97,7 @@
 		},
 		data() {
 			return {
-				showDetail:false,
+				showDetail: false,
 				showActionsheet: true,
 				collect: true,
 				showToast: false,
@@ -164,9 +162,9 @@
 				})
 			},
 			toHome() {
-								this.$router.push({
-									path: '/home'
-								})
+				this.$router.push({
+					path: '/home'
+				})
 			},
 			click(id) {
 				//        this.id=id
@@ -221,7 +219,7 @@
 	
 	.prices {
 		font-size: .46rem;
-		color:  #ff5200;
+		color: #ff5200;
 	}
 	
 	.prices small {
@@ -335,34 +333,44 @@
 		line-height: .98rem;
 		background: #ff5200;
 	}
+	
 	.footer>div {
 		float: left;
 	}
-	
 	/*选择商品尺码规格样式*/
-	.main{
-		width: 100%;height: 10rem;background:white;position: fixed;bottom: 0;z-index: 999999;
+	
+	.main {
+		width: 100%;
+		height: 10rem;
+		background: white;
+		position: fixed;
+		bottom: 0;
+		z-index: 999999;
 	}
-	.main-content{
+	
+	.main-content {
 		width: 100%;
 		height: 9.04rem;
 		overflow-y: scroll;
 	}
-	.main-des{
+	
+	.main-des {
 		height: 1.38rem;
-		width:80%;
+		width: 80%;
 		padding-left: 2.3rem;
 		padding-top: .2rem;
 		box-sizing: border-box;
 	}
-	.main-size{
+	
+	.main-size {
 		margin: .4rem .3rem;
-		
 	}
-	.main-size ul{
+	
+	.main-size ul {
 		flex-wrap: wrap;
 	}
-	.main-size ul li{
+	
+	.main-size ul li {
 		line-height: .5rem;
 		padding: 0 .2rem;
 		border-radius: .5rem;
@@ -372,23 +380,25 @@
 		margin-right: .2rem;
 		margin-top: .3rem;
 	}
-	.main-footer{
+	
+	.main-footer {
 		height: .96rem;
 		width: 100%;
 		position: absolute;
 		bottom: 0;
 		font-size: 0;
 	}
-	.main-footer div{
+	
+	.main-footer div {
 		width: 50%;
 		line-height: .96rem;
 		display: inline-block;
 		color: white;
 		text-align: center;
 		vertical-align: middle;
-		
 	}
-	.main-footer .sure{
+	
+	.main-footer .sure {
 		width: 100%;
 		line-height: .96rem;
 		display: inline-block;
@@ -397,16 +407,18 @@
 		vertical-align: middle;
 		background: #9A7BFF;
 	}
-	.main-footer div:nth-child(1){
+	
+	.main-footer div:nth-child(1) {
 		background: -webkit-linear-gradient(left, #b8a2fe, #9a7bff);
 		/* Safari 5.1 - 6.0 */
-		background: -o-linear-gradient(left,#b8a2fe, #9a7bff);
+		background: -o-linear-gradient(left, #b8a2fe, #9a7bff);
 		/* Opera 11.1 - 12.0 */
 		background: -moz-linear-gradient(left, #b8a2fe, #9a7bff);
 		/* Firefox 3.6 - 15 */
 		background: linear-gradient(left, #b8a2fe, #9a7bff);
 	}
-	.main-footer div:nth-child(2){
+	
+	.main-footer div:nth-child(2) {
 		background: -webkit-linear-gradient(left, #907af4, #8160ec);
 		/* Safari 5.1 - 6.0 */
 		background: -o-linear-gradient(left, #907af4, #8160ec);
@@ -415,14 +427,16 @@
 		/* Firefox 3.6 - 15 */
 		background: linear-gradient(left, #907af4, #8160ec);
 	}
-	.s-pic{
+	
+	.s-pic {
 		width: 1.78rem;
 		height: 1.78rem;
 		position: absolute;
 		top: -.4rem;
 		left: .3rem;
 	}
-	.s-cancel{
+	
+	.s-cancel {
 		width: .38rem;
 		height: .38rem;
 		right: .1rem;
@@ -430,16 +444,32 @@
 		position: absolute;
 		padding: .1rem;
 	}
-	.tb-quan{
+	
+	.tb-quan {
 		line-height: .32rem;
 		height: .32rem;
-		border:.01rem solid  #ff5200;	
+		border: .01rem solid #ff5200;
 		display: flex;
 		vertical-align: middle;
-		color:  #ff5200;
+		color: #ff5200;
 	}
-	.tb-quan div:nth-child(1){
-		border-right: .01rem dashed  #ff5200;
+	.tb-quan div{
+		padding: 0 .04rem;
+	}
+	
+	.tb-quan div:nth-child(1) {
+		border-right: .01rem dashed #ff5200;
 		box-sizing: border-box;
+	}
+	
+	.r-arrow {
+		display: inline-block;
+		height: 6px;
+		width: 6px;
+		border-width: 2px 2px 0 0;
+		border-color: #C8C8CD;
+		border-style: solid;
+		-webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+		transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
 	}
 </style>

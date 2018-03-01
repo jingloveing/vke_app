@@ -37,10 +37,10 @@
 					<img src="static/images/vip.png" :onerror="defaultImg">
 					<span>唯品会</span>
 				</li>
-				<li>
+				<router-link tag="li" to="/SelfSupport">
 					<img src="static/images/vke.png" :onerror="defaultImg">
 					<span>自营商城</span>
-				</li>
+				</router-link>
 			</ul>
 		</div>
 		<div class="news_main">
@@ -51,7 +51,7 @@
 				<swiper auto style="width:100%;" height="25px" loop direction="vertical" :interval=2000 :show-desc-mask="false" :show-dots="false">
 					<swiper-item class="news" v-for="i in 5" :key="i">
 						<div style="margin-left: .26rem;">
-							<p style="line-height: 25px;vertical-align: middle;">1分钟前xxx完成1笔购物，获得xx财宝</p>
+							<p style="line-height: 25px;vertical-align: middle;">1分钟前xxx完成1笔购物，获得xx铜板</p>
 						</div>
 					</swiper-item>
 				</swiper>
@@ -60,7 +60,7 @@
 		<div class="main">
 			<div class="main_title">
 				<img src="static/images/icon.png" alt="" />
-				<span>店铺精选</span>
+				<span>品牌精选</span>
 			</div>
 			<div>
 				<nav>

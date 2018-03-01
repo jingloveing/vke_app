@@ -56,7 +56,7 @@
       is-link
       :border-intent="false"
       :arrow-direction="showDetail ? 'up' : 'down'"
-      @click.native="showDetail = !showDetail" class="pic_detail"></cell>
+      @click.native="showDetail = !showDetail" class="pic_detail f24 c3" style="height: .88rem; box-sizing: border-box;"></cell>
       <div class="slide" :class="showDetail?'animate':''" style="font-size: 0;">
       <img :src="img" alt="" v-for="img in goodsDetail.small_images" :onerror="defaultImg">
     </div>
@@ -115,8 +115,6 @@
 </template>
 <script>
 	import { XHeader, Cell, CellBox, CellFormPreview, Group, Badge, Loading, Swiper, Toast,XNumber} from 'vux'
-	import Clipboard from 'clipboard'
-
 	export default {
 		components: {
 			Group,

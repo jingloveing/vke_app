@@ -17,7 +17,7 @@
 				</div>
 			</div>
 		</div>
-		<toast v-model="showPositionValue" type="text" :time="800" is-show-mask :text="text" :position="position"></toast>
+		<toast v-model="showPositionValue" type="text" :time="800" is-show-mask :text="text"></toast>
 	</div>
 </template>
 

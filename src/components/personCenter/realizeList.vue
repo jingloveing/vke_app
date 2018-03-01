@@ -53,13 +53,14 @@
 			</div>
 			<div>
 				<p class="f32 dateValue2" v-show="day">
-					<span class="dates">{{value1}}</span>
+					<input class="dates" v-model="value1"/>
 					<span class="c9">至</span>
-					<span class="dates">{{value2}}</span>
+					<input class="dates" v-model="value1">
 				</p>
 				<p class="f32 dateValue1" v-show="!day">{{value1}}</p>
 			</div>
 			<datetime-view :max-year="maxYear" v-model="value1" ref="datetime" :format="day?'YYYY-MM-DD':'YYYY-MM'"></datetime-view>
+			<!--<datetime-view :max-year="maxYear" v-model="value2" ref="datetime" :format="day?'YYYY-MM-DD':'YYYY-MM'"></datetime-view>-->
 		</div>
 	</div>
 </template>
@@ -252,7 +253,13 @@
 		align-items: center;
 	}
 	.dates{
+		outline:none;
+		border: none;
+		width: 2.2rem;
+		height: .6rem;
 		border-bottom: .01rem solid #e5e5e5;
 		padding: 0 .25rem;
+		font-size: .32rem;
+		text-align: center;
 	}
 </style>

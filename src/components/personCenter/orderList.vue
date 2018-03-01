@@ -36,18 +36,21 @@
 								<router-link to="/personCenter/myOrder/seek">
 									<span class="btn">查询物流</span>
 								</router-link>
-								<!--<span class="btn" @click="showPopupPicker=true" v-if="value.length==0">取消订单</span>-->
+								<span class="btn" @click="showPopupPicker=true" v-if="value.length==0">取消订单</span>
 								<span class="btn" @click="showPopupPicker=true" v-if="value.length!==0">删除订单</span>
 								<router-link to='/personCenter/myOrder/topay'>
 									<span class="btn btn1" v-if="value.length==0">去付款</span>
 								</router-link>
 							</div>
-							<popup-picker :data="reason" v-model="value" :show.sync="showPopupPicker" :show-cell="false" ></popup-picker>
+					
+					
+					
 						</div>
 					</div>
 				</swiper-item>
 			</swiper>
 		</div>
+		<popup-picker :data="reason" v-model="value" :show.sync="showPopupPicker" :show-cell="false" ></popup-picker>
 	</div>
 </template>
 
