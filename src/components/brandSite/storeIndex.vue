@@ -15,10 +15,10 @@
 						<img src="../../../static/images/classify_icon.png" alt="" />
 						<span style="font-size: .18rem;color: white;">分类</span>
 					</router-link>
-					<router-link to="" class="share">
+					<div class="share" @click="show=!show">
 						<img src="../../../static/images/share_icon.png" alt="" />
 						<span style="font-size: .18rem;color: white;">分享</span>
-					</router-link>
+					</div>
 				</div>
 			</div>
 			<div class="shop">
@@ -112,6 +112,23 @@
 				</swiper-item>
 			</swiper>
 		</div>
+		<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show">	
+		 	</div>
+		 <transition enter-active-class="fadeInUpBig" leave-active-class="fadeOutDownBig">
+              <div v-show="show" class="main">
+              	<div class="main-content">
+              		<p class="f28 c6" style="text-align: center;line-height: .94rem;height: .94rem;">———分享至———</p>
+              		<div class="share-class flex">
+              			<img src="../../../static/images/share/friendshare.png" alt="" />
+              			<img src="../../../static/images/share/QQshare.png" alt="" />
+              			<img src="../../../static/images/share/QQzoneshare.png" alt="" />
+              			<img src="../../../static/images/share/weiboshare.png" alt="" />
+              			<img src="../../../static/images/share/weixinshare.png" alt="" />
+              		</div>
+              	</div>
+              	<div class="f32 c3" style="text-align: center;line-height: .96rem;border-top: .01rem solid #e5e5e5;">取消</div>
+              </div>
+         </transition>
 	</div>
 </template>
 
@@ -144,7 +161,8 @@
 				},
 				pageIndex: 1,
 				limit: 9,
-				goodsList: []
+				goodsList: [],
+				show:false,
 			}
 		},
 		methods: {
@@ -403,9 +421,35 @@
 	.img {
 		width: 100%;
 	}
+	/*分享样式*/
+	.main{
+		width: 100%;height: 4.17rem;background:white;position: fixed;bottom: 0;z-index: 999999;
+	}
+	.main-content{
+		width: 100%;
+		height: 3.21rem;
+		overflow-y: scroll;
+	}
+	.s-cancel{
+		width: .38rem;
+		height: .38rem;
+		right: .1rem;
+		top: .1rem;
+		position: absolute;
+		padding: .1rem;
+	}
+	.share-class{
+		justify-content: space-around;
+		height: 2.27rem;
+	}
+	.share-class img{
+		width: 1rem;
+		height: 1rem;
+	}
 </style>
 <style>
 	.storeTab.vux-tab .vux-tab-item {
 		background-size: 0;
+		
 	}
 </style>

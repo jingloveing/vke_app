@@ -17,6 +17,7 @@ import Setting from '@/components/personCenter/setting'
 import Accredit from '@/components/personCenter/accredit'
 import BindTel from '@/components/personCenter/bindTel'
 import Taobao from '@/components/home/taobao'
+import Fuli from '@/components/home/fuli'
 import Classify from '@/components/home/classify'
 import Search from '@/components/home/search'
 import SearchPage from '@/components/home/searchPage'
@@ -540,6 +541,14 @@ routes: [{
 		path: '/taobao/TBDetail',
 		name: 'TBDetail',
 		component: TBDetail,
+	},
+	{
+		path: '/taobao/fuli',
+		name: 'Fuli',
+		component: Fuli,
+		meta: {
+			showHeader: true
+		}
 	},
 	{
 		path: '/selfSupport',

@@ -31,7 +31,7 @@
 			</div>
 			<div class="main">
 				<div class="nav-bigger">
-					<router-link to="">
+					<router-link to="/taobao/fuli">
 						<img class="same" src="../../../static/images/yuanbaoShop_img.png">
 					</router-link>
 					<router-link to="">

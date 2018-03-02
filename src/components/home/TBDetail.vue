@@ -17,11 +17,11 @@
 				<p class="name">{{goodsDetail.title}}</p>
 				<div class="flex" style="align-items: flex-end;">
 					<span class="prices"><small>￥</small><span>{{goodsDetail.zk_final_price.rmb}}</span><small v-show="goodsDetail.zk_final_price.corner!=='00'">.{{goodsDetail.zk_final_price.corner}}</small></span>
-					<div class="f28 flex c9" style="margin:0 0 .08rem .3rem;">财宝价
+					<!--<div class="f28 flex c9" style="margin:0 0 .08rem .3rem;">可返
 						<div class="header_list_num jewel" style="margin-left: .1rem;">
 							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
 						</div>
-						<!--<div class="header_list_num gold">
+						<div class="header_list_num gold">
                 	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
                 	       8.86
                 	     </div>
@@ -32,8 +32,8 @@
                 	     <div class="header_list_num coppers">
                 	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
                 	       8.86
-                	     </div>-->
-					</div>
+                	     </div>
+					</div>-->
 				</div>
 				<div style="margin-left: .2rem;display: inline-block;">
 
@@ -56,7 +56,7 @@
 			</div>
 			<div class="r-arrow"></div>
 		</div>
-		<cell title="商品图文详情(点击查看)" is-link :border-intent="false" :arrow-direction="showDetail ? 'up' : 'down'" @click.native="showDetail = !showDetail" class="pic_detail f24 c3" style="height: .88rem; box-sizing: border-box;"></cell>
+		<cell title="商品图文详情(点击查看)" is-link :border-intent="false" :arrow-direction="showDetail ? 'up' : 'down'" @click.native="showDetail = !showDetail" class="pic_detail f28 c3" style="height: .88rem; box-sizing: border-box;"></cell>
 		<div class="slide" :class="showDetail?'animate':''" style="font-size: 0;">
 			<img :src="img" alt="" v-for="img in goodsDetail.small_images" :onerror="defaultImg">
 		</div>

@@ -63,17 +63,17 @@
 				<span>品牌精选</span>
 			</div>
 			<div>
-				<nav>
+				<router-link class="nav" to="/brandSite/storeIndex">
 					<img src="static/images/goods.png" style="width: 100%;height: 100%;" :onerror="defaultImg">
 					<div class="nav_name">
 						<img src="static/images/mogu.png" class="nav_pic" />
 						<span class="break">店铺名称店铺名称店铺名称</span>
 					</div>
 					<div class="bd"></div>
-				</nav>
+				</router-link>
 				<scroller lock-y :scrollbar-x=false style="margin-top: .2rem;">
 					<div class="box" ref="nav1">
-						<!--<router-link :to="{name:'goodsDetail',query:{id:goods1.id}}" v-for="(goods1,index) in goods1" id="box1-item" style="width: 2.18rem;" class="box1-item" :key="index">-->
+						<router-link :to="{name:'TBDetail',query:{}}"  id="box1-item" style="width: 2.18rem;" class="box1-item">
 						<div class="box_content" v-for="i in 8" :key="i">
 							<img src="static/images/goods.png" alt="" :onerror="defaultImg">
 							<span class="dess">
@@ -84,10 +84,11 @@
 							</span>
 							<div class="ticket">券100元</div>
 						</div>
-						<div class="box_content more">
+						</router-link>
+						<router-link class="box_content more" to="/brandSite/storeIndex">
 							<span>查看全部</span>
-						</div>
-						<!--</router-link>-->
+						</router-link>
+						
 					</div>
 				</scroller>
 
@@ -416,10 +417,11 @@
 		overflow: hidden;
 	}
 	
-	nav {
+	.nav {
 		width: 100%;
 		height: 3.58rem;
 		position: relative;
+		display: inline-block;
 	}
 	
 	.nav_name {

@@ -54,7 +54,7 @@
       is-link
       :border-intent="false"
       :arrow-direction="showDetail ? 'up' : 'down'"
-      @click.native="showDetail = !showDetail" class="pic_detail f24 c3" style="height: .88rem; box-sizing: border-box;"></cell>
+      @click.native="showDetail = !showDetail" class="pic_detail f28 c3" style="height: .88rem; box-sizing: border-box;"></cell>
       <div class="slide" :class="showDetail?'animate':''" style="font-size: 0;">
       <img :src="img" alt="" v-for="img in goodsDetail.small_images" :onerror="defaultImg">
     </div>

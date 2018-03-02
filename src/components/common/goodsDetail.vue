@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<x-header :left-options="{backText: ''}" title="淘宝领券">
+		<x-header :left-options="{backText: ''}" title="商品详情">
 			<a slot="right">
 				<router-link to="/personCenter/shoppingCart">
 					<img src="../../../static/images/cart_black_icon.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;" />
@@ -18,7 +18,7 @@
 				<div class="flex">
 					<span class="prices"><small>￥</small>{{goodsDetail.zk_final_price.rmb}}<small
           v-show="goodsDetail.zk_final_price.corner!=='00'">.{{goodsDetail.zk_final_price.corner}}</small></span>
-					<div class="f28 flex" style="color: #ffb034;margin-left: .3rem;">财宝价
+					<div class="f28 flex c9" style="margin-left: .3rem;">财宝价
 						<div class="header_list_num jewel" style="margin-left: .1rem;">
 							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
 						</div>
@@ -50,13 +50,13 @@
 				</div>
 			</div>
 		</div>
-		<cell title="请选择规格数量" is-link :border-intent="false" @click.native="toAdd(0)" class="pic_detail"></cell>
+		<cell title="请选择规格数量" is-link :border-intent="false" @click.native="toAdd(0)" class="pic_detail f28 c3"></cell>
 		<cell
       title="商品图文详情(点击查看)"
       is-link
       :border-intent="false"
       :arrow-direction="showDetail ? 'up' : 'down'"
-      @click.native="showDetail = !showDetail" class="pic_detail f24 c3" style="height: .88rem; box-sizing: border-box;"></cell>
+      @click.native="showDetail = !showDetail" class="pic_detail f28 c3" style="height: .88rem; box-sizing: border-box;"></cell>
       <div class="slide" :class="showDetail?'animate':''" style="font-size: 0;">
       <img :src="img" alt="" v-for="img in goodsDetail.small_images" :onerror="defaultImg">
     </div>

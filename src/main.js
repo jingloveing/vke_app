@@ -13,6 +13,9 @@ import '../static/css/main.css'
 import animate from 'animate.css'
 import { ConfirmPlugin ,AlertPlugin,ToastPlugin,AjaxPlugin ,LoadingPlugin} from 'vux'
 import VueScroller from 'vue-scroller'
+import VueAwesomeSwiper from "vue-awesome-swiper"
+import 'swiper/dist/css/swiper.css'
+Vue.use(VueAwesomeSwiper)
 Vue.use(VueScroller)
 Vue.use(LoadingPlugin)
 Vue.use(AjaxPlugin)
