@@ -13,21 +13,23 @@
 		</div>
 		<div style="background: white;height: .88rem;line-height: .88rem;" class="f28 c3">
 			<swiper :options="swiperOptionB">
-				<swiper-slide v-for="(list,index) in list" >
-					<div @click="click(index)" class="tabs">{{list}}</div>
+				<swiper-slide v-for="(item,index) in cate" :key="index">
+					<div @click="click(index)" class="tabs" :class="indexs==index?'c_f':''">{{item.cate_name}}</div>
 				</swiper-slide>
 				
 			</swiper>
 		</div>
 		<div class="main_goods">
 					<ul class="goods">
-						<router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'GoodsDetail',query:{id:goods.id}}" :key="index">
+						<router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'GoodsDetail',query:{id:goods.id,type:5}}" :key="index">
 							<img :src="goods.pict_url" alt="" :onerror="defaultImg" class="goods-pic">
 							<div class="content">
-								<div class="des">{{goods.title}}</div>
+								<div class="des">{{goods.product_name}}</div>
 								<div class="des_b">
-									<span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span style="font-size: .20rem;" v-show="goods.zk_final_price.corner!=='00'">.{{goods.zk_final_price.corner}}</span></span>
-									<!--<del style="font-size: .20rem;color: #999;" >￥{{goods.reserve_price.rmb}}<span v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span></del>-->
+									<span class="price">
+										<span style="font-size: .2rem;">￥</span>{{goods.reserve_price.rmb}}
+										<span style="font-size: .2rem;" v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span>
+									</span>
 									<span class="num">{{goods.volume}}件已售</span>
 								</div>
 							</div>
@@ -55,11 +57,16 @@
 					slidesPerView: 5,
 					preventClicksPropagation:true,
 				},
-				list:['消耗品','日用百货','厨房用品','收纳整理','洗护清洁','化妆品'],
+				cate:[{
+					id:'',
+					cate_name:''
+				}],
+				indexs:0,
 				goodsList: [],
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
-				pageIndex: 1,
+				page: 1,
 				limit: 10,
+				cate_id:'',
 				noData: false,
 				showToast:false,
 				toast:'',
@@ -70,22 +77,37 @@
 			getGoodsList: function() {
 				const self = this
 				this.$http({
-					method: 'POST',
-					url: '/api/index_goods',
+					method: 'get',
+					url: '/api/selfProductList',
 					data: {
-						page: this.pageIndex,
-						limit: this.limit
+						page: this.page,
+						limit: this.limit,
+						cate_id:this.cate_id
 					}
 				}).then((res) => {
 					if(res.data.code == '200') {
-						if(res.data.data.goods.length == 0) {
-							this.noData = true
-							this.$refs.myscroller.finishInfinite(2);
-							//             self.noData=false;
-							//             self.$refs.myscroller.finishPullToRefresh();
-						} else {
-							this.goodsList = this.goodsList.concat(res.data.data.goods)
-						}
+//						if(res.data.data.list.length == 0) {
+//							this.noData = true
+//							this.$refs.myscroller.finishInfinite(2);
+//							//             self.noData=false;
+//							//             self.$refs.myscroller.finishPullToRefresh();
+//						} else {
+//							this.goodsList = this.goodsList.concat(res.data.data.list)
+//						}
+                           this.goodsList = res.data.data.list
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			//      获取商品分类
+			getCate: function() {
+				this.$http({
+					method: 'get',
+					url: '/api/xlkCate'
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.cate = res.data.data
 					}
 				}, (err) => {
 					console.log(err)
@@ -93,9 +115,13 @@
 			},
             click(index){
             	var tabs=document.getElementsByClassName('tabs')
+            	var self = this
             	for(var i=0;i<tabs.length;i++){
             		if(i==index){
             			tabs[i].classList.add('c_f')
+            			self.indexs=i
+            			self.cate_id=self.cate[self.indexs].id
+            			this.getGoodsList()
             		}else{
             			tabs[i].classList.remove(('c_f'))
             		}
@@ -105,10 +131,10 @@
 		},
 		created: function() {
             this.getGoodsList()
+            this.getCate()
 		},
 		mounted: function() {
-			var tabs=document.getElementsByClassName('tabs')
-			tabs[0].classList.add('c_f')
+			
 		},
 		computed: {
 

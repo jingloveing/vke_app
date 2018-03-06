@@ -4,7 +4,11 @@
 			<a slot="right" style="color: #9A7BFF;font-size: .32rem;" href="/personCenter/goldStore/realizeList">挂单记录</a>
 		</x-header>
 		<div style="height: .88rem;"></div>
-		<div class="header">
+		<div class="header" style="position: relative;">
+			<router-link to="/cashRule" class="f24 flex" style="position: absolute;right: .26rem;top: .26rem;z-index: 888;color: white;">
+				<img src="../../../static/images/rule_icon.png" alt=""  style="width: .28rem;height: .28rem;margin-right: .1rem;"/>
+				<span>挂单规则</span>
+			</router-link>
 			<p class="f24">可挂单财宝</p>
 			<p style="font-size: .52rem;display: flex;justify-content: center;align-items: center;">1.081<span style="font-size: .4rem;">钻</span></p>
 		</div>
@@ -37,7 +41,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="list">
+				<!--<div class="list">
 					<img src="../../../static/images/personCenter/wechat.png" alt="" class="icon" />
 					<div class="up_img right">
 						<div class="vue-uploader">
@@ -57,7 +61,7 @@
 						</div>
 					</div>
 
-				</div>
+				</div>-->
 				<div class="list">
 					<img src="../../../static/images/personCenter/card.png" alt="" class="icon" />
 					<div class="right">
@@ -78,7 +82,7 @@
 			</div>
 		</div>
 		<div class="des">
-			<p class="tip f30 c3">财宝(单位：铜钱)</p>
+			<p class="tip f30 c3">财宝(单位：铜币)</p>
 			<x-input placeholder="请输入挂单财宝数" novalidate :show-clear="false" style="font-size: .36rem;color:#333;"></x-input>
 		</div>
 		<div style="height: .96rem;"></div>

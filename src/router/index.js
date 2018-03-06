@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import PageAinimate from '@/components/common/pageAinimate'
 import Home from '@/components/home/Home'
-import LiveRoom from '@/components/liveRoom/liveRoom'
+import ShareRoom from '@/components/share/shareRoom'
 import BrandSite from '@/components/brandSite/brandSite'
 import PersonCenter from '@/components/personCenter/personCenter'
 import Info from '@/components/personCenter/info'
@@ -63,6 +63,12 @@ import RefundList from '@/components/personCenter/refundList'
 import RefundDetail from '@/components/personCenter/refundDetail'
 import SelectReason from '@/components/personCenter/selectReason'
 import Login from '@/components/login'
+import NewHand from '@/components/home/newHand'
+import Rule from '@/components/personCenter/rule'
+import AboutUs from '@/components/personCenter/AboutUs'
+import CashRule from '@/components/personCenter/cashRule'
+import Upgrade from '@/components/personCenter/upgrade'
+import ShareDetail from '@/components/share/shareDetail'
 Vue.use(Router)
 //Router.prototype.goBack = function() {
 //	this.isBack = true
@@ -131,11 +137,15 @@ routes: [{
 		component: SearchResult
 	},
 	{
-		path: '/liveRoom',
-		component: LiveRoom,
+		path: '/shareRoom',
+		component: ShareRoom,
 		meta: {
 			showFooter: true
 		}
+	},
+	{
+		path: '/shareRoom/shareDetail',
+		component: ShareDetail,
 	},
 	{
 		path: '/brandSite',
@@ -551,6 +561,15 @@ routes: [{
 		}
 	},
 	{
+		path: '/taobao/newHand',
+		name: 'NewHand',
+		component: NewHand,
+		meta: {
+			showHeader: true,
+			title:"新手秒懂"
+		}
+	},
+	{
 		path: '/selfSupport',
 		name: 'SelfSupport',
 		component: SelfSupport,
@@ -562,6 +581,42 @@ routes: [{
 		meta: {
 			showHeader: true,
 			title:"选择服务类型"
+		}
+	},
+	{
+		path: '/rule',
+		name: 'Rule',
+		component: Rule,
+		meta: {
+			showHeader: true,
+			title:"江湖规矩"
+		}
+	},
+	{
+		path: '/aboutUs',
+		name: 'AboutUs',
+		component: AboutUs,
+		meta: {
+			showHeader: true,
+			title:"自报家门"
+		}
+	},
+	{
+		path: '/cashRule',
+		name: 'CashRule',
+		component: CashRule,
+		meta: {
+			showHeader: true,
+			title:"挂单规则"
+		}
+	},
+	{
+		path: '/upgrade',
+		name: 'Upgrade',
+		component: Upgrade,
+		meta: {
+			showHeader: true,
+			title:"升级地位"
 		}
 	},
 	{

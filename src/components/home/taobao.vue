@@ -40,7 +40,7 @@
 					<router-link to="">
 						<img class="same" src="../../../static/images/zhinan_img.png">
 					</router-link>
-					<router-link to="">
+					<router-link to="/taobao/newHand">
 						<img class="same" src="../../../static/images/fuli_img.png">
 					</router-link>
 				</div>
@@ -168,33 +168,33 @@
 				})
 			},
 
-			infinite(done) {
-				if(this.noData) {
-					setTimeout(() => {
-						this.$refs.myscroller.finishInfinite(2);
-					})
-					return;
-				} else {
-					let self = this; //this指向问题
-					setTimeout(() => {
-						self.pageIndex += 1
-						self.getGoodsList()
-						done()
-					}, 1500)
-				}
-			},
-			refresh(done) {
-				var self = this
-				this.pageIndex = 1
-				this.goodsList = []
-				this.getBannerList()
-				this.getTypeList()
-				this.getGoodsList()
-				setTimeout(function() {
-					self.top = self.top - 10;
-					done()
-				}, 1500)
-			},
+//			infinite(done) {
+//				if(this.noData) {
+//					setTimeout(() => {
+//						this.$refs.myscroller.finishInfinite(2);
+//					})
+//					return;
+//				} else {
+//					let self = this; //this指向问题
+//					setTimeout(() => {
+//						self.pageIndex += 1
+//						self.getGoodsList()
+//						done()
+//					}, 1500)
+//				}
+//			},
+//			refresh(done) {
+//				var self = this
+//				this.pageIndex = 1
+//				this.goodsList = []
+////				this.getBannerList()
+////				this.getTypeList()
+////				this.getGoodsList()
+//				setTimeout(function() {
+//					self.top = self.top - 10;
+//					done()
+//				}, 1500)
+//			},
 			//      toTop(){
 			//        document.documentElement.scrollTop = document.body.scrollTop =0;
 			//      },
@@ -219,9 +219,9 @@
 			})
 		},
 		created: function() {
-			this.getBannerList()
-			this.getTypeList()
-			this.getGoodsList()
+//			this.getBannerList()
+//			this.getTypeList()
+//			this.getGoodsList()
 		}
 	}
 </script>

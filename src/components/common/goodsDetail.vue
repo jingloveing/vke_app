@@ -14,13 +14,13 @@
 				<!--<img :src="goodsDetail.pict_url" alt="" :onerror="defaultImg">-->
 			</div>
 			<div class="detail">
-				<p class="name">{{goodsDetail.title}}</p>
+				<p class="name">{{goodsDetail.product_name}}</p>
 				<div class="flex">
-					<span class="prices"><small>￥</small>{{goodsDetail.zk_final_price.rmb}}<small
-          v-show="goodsDetail.zk_final_price.corner!=='00'">.{{goodsDetail.zk_final_price.corner}}</small></span>
+					<span class="prices"><small>￥</small>{{goodsDetail.reserve_price.rmb}}<small
+          v-show="goodsDetail.zk_final_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</small></span>
 					<div class="f28 flex c9" style="margin-left: .3rem;">财宝价
 						<div class="header_list_num jewel" style="margin-left: .1rem;">
-							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
+							<img src="../../../static/images/personCenter/jewel.png" alt="" /> {{goodsDetail.acer}}
 						</div>
 						<!--<div class="header_list_num gold">
                 	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
@@ -42,11 +42,11 @@
 				<!--<span class="juan"><span class="juan_l">劵</span><span class="juan_r">20元</span></span>-->
 				<!--<span class="return_yuanBao">返100元宝</span>-->
 				<div class="flex" style="justify-content: space-between;">
-					<span class="old_price">价格<del>￥{{goodsDetail.reserve_price.rmb}}<span
-            v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</span></del>
+					<span class="old_price">价格<del>￥{{goodsDetail.market_price.rmb}}<span
+            v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.market_price.corner}}</span></del>
 					</span>
-					<span class="f24 c9">运费：0.00</span>
-					<span class="f24 c9">月销800件</span>
+					<span class="f24 c9">运费：{{goodsDetail.shipping_fee}}</span>
+					<span class="f24 c9">月销{{goodsDetail.volume}}件</span>
 				</div>
 			</div>
 		</div>
@@ -78,7 +78,7 @@
 				<span>立即购买</span>
 			</div>
 		</div>
-		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
+		<toast v-show="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
 		<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show">
 		 		
 		 	</div>
@@ -181,16 +181,15 @@
 				this.id = this.$route.query.id;
 				this.type = this.$route.query.type
 				this.$http({
-					method: 'POST',
-					url: '/api/goodsDetail',
-					data: {
-						goods_id: this.id,
+					method: 'get',
+					url: '/api/productInfo',
+					params: {
+						id: this.id,
 						type: this.type
 					}
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.goodsDetail = res.data.data
-						this.click_url = res.data.data.click_url
 					}
 				}, (err) => {
 					console.log(err)

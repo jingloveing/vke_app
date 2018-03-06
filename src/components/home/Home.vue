@@ -20,10 +20,8 @@
 		<div style=" margin-top: -.3rem;z-index: 99999;position: relative;">
 			<ul class="nav-small">
 				<router-link tag="li" to="/home/taobao">
-					<!--<li>-->
 					<img src="static/images/taoBao.png" :onerror="defaultImg">
 					<span>淘宝</span>
-					<!--</li>-->
 				</router-link>
 				<router-link tag="li" to="/JD">
 					<img src="static/images/JD.png" :onerror="defaultImg">
@@ -49,9 +47,9 @@
 			</div>
 			<div class="news_right">
 				<swiper auto style="width:100%;" height="25px" loop direction="vertical" :interval=2000 :show-desc-mask="false" :show-dots="false">
-					<swiper-item class="news" v-for="i in 5" :key="i">
+					<swiper-item class="news" v-for="(item,index) in news" :key="index">
 						<div style="margin-left: .26rem;">
-							<p style="line-height: 25px;vertical-align: middle;">1分钟前xxx完成1笔购物，获得xx铜板</p>
+							<p style="line-height: 25px;vertical-align: middle;">{{item.title}}</p>
 						</div>
 					</swiper-item>
 				</swiper>
@@ -62,33 +60,36 @@
 				<img src="static/images/icon.png" alt="" />
 				<span>品牌精选</span>
 			</div>
-			<div>
+			<div v-for="(item,index) in merchant" :key="index">
 				<router-link class="nav" to="/brandSite/storeIndex">
-					<img src="static/images/goods.png" style="width: 100%;height: 100%;" :onerror="defaultImg">
+					<img :src="item.image" style="width: 100%;height: 100%;" :onerror="defaultImg">
 					<div class="nav_name">
-						<img src="static/images/mogu.png" class="nav_pic" />
-						<span class="break">店铺名称店铺名称店铺名称</span>
+						<img :src="item.logo" class="nav_pic" />
+						<span class="break">{{item.name}}</span>
 					</div>
 					<div class="bd"></div>
 				</router-link>
 				<scroller lock-y :scrollbar-x=false style="margin-top: .2rem;">
 					<div class="box" ref="nav1">
-						<router-link :to="{name:'TBDetail',query:{}}"  id="box1-item" style="width: 2.18rem;" class="box1-item">
-						<div class="box_content" v-for="i in 8" :key="i">
-							<img src="static/images/goods.png" alt="" :onerror="defaultImg">
-							<span class="dess">
-            <p class="des_name break">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
-            <p class="des_price"><span class="new_price"><span class="f20">￥</span>11<span>.99</span></span>
-							<!--<span class="old_price">￥12<span>.12</span></span>-->
-							</p>
-							</span>
-							<div class="ticket">券100元</div>
-						</div>
+						<router-link :to="{name:'TBDetail',query:{}}" id="box1-item" style="width: 2.18rem;" class="box1-item" v-for="(list,index) in item.product_list" :key="index">
+							<div class="box_content">
+								<img :src="list.thumb_url" alt="" :onerror="defaultImg">
+								<span class="dess">
+                                <p class="des_name break">{{list.product_name}}</p>
+                                <p class="des_price">
+                                	<span class="new_price">
+                                		<span class="f20">￥</span>{{list.reserve_price}}
+                                	</span>
+								
+								</p>
+								</span>
+								<div class="ticket">券{{list.coupon_number}}元</div>
+							</div>
 						</router-link>
 						<router-link class="box_content more" to="/brandSite/storeIndex">
 							<span>查看全部</span>
 						</router-link>
-						
+
 					</div>
 				</scroller>
 
@@ -116,9 +117,7 @@
 		data() {
 			return {
 				demoList: [],
-				typeList: [],
-				storeTypeList: [],
-				goodsList: [],
+				merchant: [],
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 				pageIndex: 1,
 				limit: 10,
@@ -130,20 +129,21 @@
 				bottomCount: 20,
 				showLoading: false,
 				loadText: '加载中...',
+				news:[]
 			}
 		},
 		methods: {
 			//      获取首页轮播图
 			getBannerList: function() {
 				this.$http({
-					method: 'POST',
-					url: '/api/index_banner'
+					method: 'get',
+					url: '/api/indexBanner'
 				}).then((res) => {
 					if(res.data.code == '200') {
-						const imgList = res.data.data.index_banner
+						const imgList = res.data.data
 						const demoList = imgList.map((item, index) => ({
-							url: item.banner_url,
-							img: item.banner_image
+							url: item.click_url,
+							img: item.image
 						}))
 						this.demoList = demoList
 						//          console.log(imgList)
@@ -152,46 +152,32 @@
 					console.log(err)
 				})
 			},
+			//      获取享利快报
+			getNews: function() {
+				this.$http({
+					method: 'get',
+					url: '/api/indexNews'
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.news=res.data.data
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
 			//      获取商品分类
-			getTypeList: function() {
+			getMerchantList: function() {
 				this.$http({
-					method: 'POST',
-					url: '/api/index_type'
+					method: 'get',
+					url: '/api/indexMerchant'
 				}).then((res) => {
 					if(res.data.code == '200') {
-						const typeList = res.data.data.goods_type_up
-						this.typeList = typeList
+						this.merchant = res.data.data
 					}
 				}, (err) => {
 					console.log(err)
 				})
 			},
-			//      获取商品列表
-			getGoodsList: function() {
-				const self = this
-				this.$http({
-					method: 'POST',
-					url: '/api/index_goods',
-					data: {
-						page: this.pageIndex,
-						limit: this.limit
-					}
-				}).then((res) => {
-					if(res.data.code == '200') {
-						if(res.data.data.goods.length == 0) {
-							this.noData = true
-							this.$refs.myscroller.finishInfinite(2);
-							//             self.noData=false;
-							//             self.$refs.myscroller.finishPullToRefresh();
-						} else {
-							this.goodsList = this.goodsList.concat(res.data.data.goods)
-						}
-					}
-				}, (err) => {
-					console.log(err)
-				})
-			},
-
 			infinite(done) {
 				if(this.noData) {
 					setTimeout(() => {
@@ -202,7 +188,7 @@
 					let self = this; //this指向问题
 					setTimeout(() => {
 						self.pageIndex += 1
-						self.getGoodsList()
+						self.getMerchantList()
 						done()
 					}, 1500)
 				}
@@ -210,10 +196,10 @@
 			refresh(done) {
 				var self = this
 				this.pageIndex = 1
-				this.goodsList = []
+				this.merchant=[]
 				this.getBannerList()
-				this.getTypeList()
-				this.getGoodsList()
+				this.getMerchantList()
+				this.getNews()
 				setTimeout(function() {
 					self.top = self.top - 10;
 					done()
@@ -240,8 +226,8 @@
 		},
 		created: function() {
 			this.getBannerList()
-			//    this.getTypeList()
-			//    this.getGoodsList()
+			this.getNews()
+			this.getMerchantList()
 		}
 	}
 </script>
@@ -249,9 +235,11 @@
 	.nav-small {
 		overflow: hidden;
 		padding: .38rem .2rem .1rem .2rem;
-		background-color: white;
-		border-top-left-radius: 50% .30rem;
-		border-top-right-radius: 50% .30rem;
+		background: url(../../../static/images/index_bd.png);
+		background-size: 100% 100%;
+		width: 100%;
+		height: 1.94rem;
+		box-sizing: border-box;
 	}
 	
 	.nav-small li {
@@ -341,10 +329,8 @@
 	
 	.search {
 		color: #fff;
-       background: rgba(255,255,255,0.2);
+		background: rgba(255, 255, 255, 0.2);
 	}
-	
-	
 	
 	.searchDiv .right {
 		width: .88rem;
@@ -377,7 +363,6 @@
 		margin-bottom: .2rem;
 		display: flex;
 		align-items: center;
-		
 	}
 	
 	.news_left {
@@ -585,7 +570,8 @@
 		margin-left: .1rem;
 	}
 	
-	.vux-slider>.vux-indicator,.vux-slider .vux-indicator-right {
+	.vux-slider>.vux-indicator,
+	.vux-slider .vux-indicator-right {
 		bottom: .25rem!important;
 	}
 </style>

@@ -40,7 +40,7 @@
 				<tab-item class="vux-center" :selected="demo1 === item" v-for="(item, index) in list1" @click="demo1 = item" :key="index">{{item}}</tab-item>
 			</tab>
 			<swiper v-model="index1" height="1000px" :show-dots="false">
-				<swiper-item>
+				<!--<swiper-item>
 					<div class="tab-swiper">
 						<video id="myVideo" width="100%" controls style="height: 4.2rem;background: black;" poster="../../../static/images/default_img.png">
 							<source src="" type="video/mp4">
@@ -49,7 +49,7 @@
 						<swiper auto loop :list="demoList" style="width:100%;margin: .14rem 0;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
 						<img src="../../../static/images/store_bd.jpeg" class="img" />
 					</div>
-				</swiper-item>
+				</swiper-item>-->
 				<swiper-item>
 					<div class="tab-swiper">
 						<tab :line-width=0 active-color='#9a7bff' v-model="index2" custom-bar-width="1.3rem">
@@ -126,7 +126,7 @@
               			<img src="../../../static/images/share/weixinshare.png" alt="" />
               		</div>
               	</div>
-              	<div class="f32 c3" style="text-align: center;line-height: .96rem;border-top: .01rem solid #e5e5e5;">取消</div>
+              	<div @click="show=!show" class="f32 c3" style="text-align: center;line-height: .96rem;border-top: .01rem solid #e5e5e5;">取消</div>
               </div>
          </transition>
 	</div>
@@ -134,7 +134,7 @@
 
 <script>
 	import { Tab, TabItem, Swiper, SwiperItem, PopupPicker, Divider, XSwitch } from 'vux'
-	const list = () => ['首页', '全部商品', '品牌现场']
+	const list = () => ['全部商品', '品牌现场']
 	export default {
 		name: 'StoreIndex',
 		components: {

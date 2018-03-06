@@ -69,7 +69,7 @@
                  </div>
 			</div>
 		</div>
-		<div class="rule">
+		<!--<div class="rule">
 			<div class="f30 c3 title">
 				<img src="../../../static/images/personCenter/rule_icon.png" alt="" class="icon"/>财宝规则说明
 			</div>
@@ -78,7 +78,7 @@
 				<p>哈哈哈</p>
 				<p>哈哈哈</p>
 			</div>
-		</div>
+		</div>-->
 		<router-link class="enjoy" to="/personCenter/goldStore/fansOffer">
 			<span class="f30 c3"><img src="../../../static/images/personCenter/enjoy_icon.png" alt="" class="icon"/>帮众贡献</span>
 			<span class="f28 c9 right">昨日总收益3.23金 <img src="../../../static/images/gt_white.png" alt="" class="enjoy-icon"/></span>

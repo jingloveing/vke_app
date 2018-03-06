@@ -6,10 +6,10 @@
       <img slot="icon" src="../../assets/home_red.png" v-show="$route.path == '/home'">
       <span slot="label">首页</span>
     </tabbar-item>
-    <tabbar-item link="/liveRoom" :selected="$route.path == '/liveRoom'">
-      <img slot="icon" src="../../assets/search_gray.png" v-show="$route.path !== '/liveRoom'">
-      <img slot="icon" src="../../assets/search_red.png" v-show="$route.path == '/liveRoom'">
-      <span slot="label">直播间</span>
+    <tabbar-item link="/shareRoom" :selected="$route.path == '/liveRoom'">
+      <img slot="icon" src="../../assets/search_gray.png" v-show="$route.path !== '/shareRoom'">
+      <img slot="icon" src="../../assets/search_red.png" v-show="$route.path == '/shareRoom'">
+      <span slot="label">一键分享</span>
     </tabbar-item>
     <tabbar-item  link="/brandSite" :selected="$route.path == '/brandSite'">
       <img slot="icon" src="../../assets/youhui_gray.png" v-show="$route.path !== '/brandSite'">

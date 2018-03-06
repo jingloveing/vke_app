@@ -31,19 +31,19 @@
 				<div class="right">
 					<img src="../../../dist/static/images/default_img.png" alt=""  class="pic"/>
 					<div class="des">
-						<p class="name f26 c3" v-show="status">商品名称 名称名称商品名称 名称名称商品名称 名称名称商品名称 名称名称商品名称 名称名称</p>
-						<p class="f24 c9" v-show="status">标签型号颜色等</p>
+						<p class="name f26 c3" v-show="status">{{item.product_name}}</p>
+						<p class="f24 c9" v-show="status">{{item.attr}}</p>
 						<div class="num" v-show="!status">
-							<x-number :min="0" v-model="item.count" fillable class="num f28 c3"></x-number>
+							<x-number :min="0" v-model="item.number" fillable class="num f28 c3"></x-number>
 							<img src="../../../static/images/cart_del.png" alt="" class="del"/>
 						</div>
 						<div class="num">
 							<span class="f28 c_m">
-								<span class="f24">￥</span><span>88</span><span>.3</span>
-								<span class="f24 c9" style="text-decoration: line-through;">￥198</span>
+								<span class="f24">￥</span>{{item.reserve_price}}
+								<span class="f24 c9" style="text-decoration: line-through;">￥{{item.market_price}}</span>
 							</span>
 							<span v-show="status">
-								<span class="f28 c3">x1</span>
+								<span class="f28 c3">x{{item.number}}</span>
 							</span>
 						</div>
 					</div>
@@ -70,45 +70,57 @@
 				</div>
 			</div>
 			
-		</div>		
+		</div>
+		<toast v-show="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
 	</div>
 </template>
 
 <script>
-	import { XHeader, XNumber,} from 'vux'
+	import { XHeader, XNumber,Toast} from 'vux'
 	export default {
 		name: 'Realize',
 		components: {
 			XHeader,
 			 XNumber,
+			 Toast
 		},
 		data() {
 			return {
-				list: [{
-						id: 1,
-						name: 'iPhone 8',
-						price: 1.1,
-						count: 1
-					},
-					{
-						id: 2,
-						name: 'Huwei Mate10',
-						price: 2.2,
-						count: 1
-					},
-					{
-						id: 3,
-						name: 'Lenovo',
-						price: 3.3,
-						count: 1
-					}
-				],
 				selectList: [],
 				checked: false,
 				status:true,
+				list:[],
+				showToast:false,
+				toast:''
 			}
 		},
 		methods: {
+			//      获取购物车商品列表
+			getShopCar: function() {
+				this.$http({
+					method: 'get',
+					url: '/api/shopCar'
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.list=res.data.data
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			//删除购物车商品
+			remove: function() {
+				this.$http({
+					method: 'get',
+					url: '/api/delCar'
+				}).then((res) => {
+					if(res.data.code == '200') {
+						console.log(res.data)
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
 			//数量--
 			handleReduce: function(index) {
 				var item = this.list[index];
@@ -122,10 +134,7 @@
 				var item = this.list[index];
 				item.count++;
 			},
-			//删除商品
-			handleRemove: function(index) {
-				this.list.splice(index, 1);
-			},
+			
 			//全选，反选
 			swapCheck: function() {
 				var selectList = document.getElementsByName('selectList');
@@ -151,7 +160,8 @@
 				},
 			},
 			created: function() {
-
+                this.getShopCar()
+               
 			},
 			computed:{
 				//动态计算商品总价
@@ -161,14 +171,15 @@
 						var index = this.selectList[i];
 						var item = this.list[index];
 						if(item) {
-							total += item.price * item.count;
+							total += item.reserve_price * item.number;
 						} else {
 							continue;
 						}
 
 					}
 					return total.toFixed(2).replace(/\B(?=(\d{3})+$)/g, ',');
-				}
+				},
+				
 			}
 		}
 </script>

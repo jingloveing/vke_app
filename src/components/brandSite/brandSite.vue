@@ -35,7 +35,7 @@
 				<div class="list-title">
 					<div class="list-title-left">
 						<img src="../../../dist/static/images/default_img.png" alt="" class="small-icon" />
-						<span class="f28 c3">某某商家</span>
+						<span class="f28 c3" style="margin-left: .1rem;">某某商家</span>
 					</div>
 					<router-link class="f24 c3 store-btn" to="/brandSite/storeIndex">进店逛逛</router-link>
 				</div>

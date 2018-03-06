@@ -32,36 +32,49 @@
 				<span class="">帮主</span>
 			</div>
 		</div>
-	     <div class="main">
+	     <div class="main" v-show="status==1">
 	     	<div class="tip">
 	     		<span class="border"></span><p class="f30 c3">帮众特权</p>
 	     	</div>
 	     	<div class="des f26 c3">
-	     		<p>1.是的四大</p>
-	     		<p>1.是的四大</p>
-	     		<p>1.是的四大</p>
+	     		<p>1. 自用40%的利润奖励</p>
+	     		<p>2. 享受直属粉丝购物利润的20%奖励</p>
+	     		<p>3. 享受不定期平台内各项奖励或免费活动（如：0元购等“包含但不限于”）</p>
 	     	</div>
 	     </div>
-	     <div class="main">
+	     <div class="main" v-show="status==2">
 	     	<div class="tip">
 	     		<span class="border border2"></span><p class="f30 c3">帮众特权</p>
 	     	</div>
 	     	<div class="des des2 f26 c3">
-	     		<p>1.是的四大</p>
-	     		<p>1.是的四大</p>
-	     		<p>1.是的四大</p>
+	     		<p>1. 自用50%的利润奖励</p>
+	     		<p>2. 享受直属粉丝购物利润的20%奖励</p>
+	     		<p>3. 享受直属粉丝自营商城购物利润的20%分销奖励</p>
+	     		<p>4. 享受指定商品分销权限，6折进货每笔赚60元</p>
+	     		<p>5. 享受申请成立帮派权限</p>
+	     		<p>6. 享受不定期平台内各项奖励或免费活动（如：0元购等“包含但不限于”）</p>
 	     	</div>
 	     </div>
-	     <div class="main">
+	     <div class="main" v-show="status==3">
 	     	<div class="tip">
 	     		<span class="border border3"></span><p class="f30 c3">帮众特权</p>
 	     	</div>
 	     	<div class="des des3 f26 c3">
-	     		<p>1.是的四大</p>
-	     		<p>1.是的四大</p>
-	     		<p>1.是的四大</p>
+	     		<p>1. 自用90%的利润奖励</p>
+	     		<p>2. 享受旗下长老帮众等帮派好友购物利润的20%奖励</p>
+	     		<p>3. 享受2代好友购物利润20%奖励</p>
+	     		<p>4. 享受直属粉丝自营商城购物利润的30%分销奖励</p>
+	     		<p>5. 享受指定商品总代权限，成本进货直营推广赚120元/件</p>
+	     		<p>6. 享受指定商品总代权限，帮内好友分销后总代分佣赚60元/件</p>
+	     		<p>7. 享受平台营销类或市场运营类平台功能插件使用申请权</p>
+	     		<p>8. 享受平台内不定期悬赏活动（官方补贴／激励活动）权限</p>
+	     		<p>9. 享受不定期平台内各项奖励或免费活动（如；0元购等“包含但不限于”）</p>
 	     	</div>
 	     </div>
+	     <router-link to="/upgrade" class="flex f28 c3 footer">
+			<img src="../../../static/images/upgrade_icon.png" alt="" />
+			<span>升级地位,获得更多特权</span>
+		</router-link>
 	</div>
 </template>
 
@@ -71,6 +84,21 @@
 		name: 'Search',
 		components: {
 			XHeader
+		},
+		data() {
+			return {
+				status:1,
+				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
+			}
+		},
+		methods: {
+			
+		},
+		mounted: function() {
+
+		},
+		created: function() {
+			
 		}
 	}
 </script>
@@ -186,5 +214,15 @@
 	.des3{
 		border: .01rem solid #f9c404;
 	}
-	
+	.footer{
+		line-height: .78rem;
+		background: white;
+		margin-top: .3rem;
+		justify-content: center;
+	}
+	.footer img{
+		width: .32rem;
+		height: .32rem;
+		margin-right: .14rem;
+	}
 </style>

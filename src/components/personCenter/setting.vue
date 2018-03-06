@@ -9,8 +9,8 @@
 		</group>
 		<group class="myOrder" style="margin-bottom: .4rem;border-top: .01rem solid #e5e5e5;">
 			<cell title="上书弹劾" is-link link="/personCenter/setting/feedback"></cell>
-			<cell title="江湖规矩" is-link></cell>
-			<cell title="自报家门" is-link></cell>
+			<cell title="江湖规矩" is-link link="/rule"></cell>
+			<cell title="自报家门" is-link link="/aboutUs"></cell>
 		</group>
 		<div style="margin: 0 .26rem;">
 			<x-button type="default" link="" class="f32 c3">退出登录</x-button>

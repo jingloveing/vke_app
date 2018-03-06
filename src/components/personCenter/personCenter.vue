@@ -6,14 +6,18 @@
 					<img src="static/images/personCenter/setting_icon.png" class="setting" />
 				</router-link>
 				<div>
-					<router-link to="/personCenter/userInfo">
 						<div class="user_pic">
+							<router-link to="/personCenter/userInfo">
 							<img src="static/images/personCenter/pic.jpg" class="user_icon" />
 							<img src="../../../static/images/personCenter/leve1.png" alt="" class="user_order" />
+							</router-link>
+							
 						</div>
-					</router-link>
+					
 					<p class="user_name">名称</p>
-					<div class="uper_btn">升级地位</div>
+					<router-link to="/upgrade">
+						<div class="uper_btn">升级地位</div>
+					</router-link>
 				</div>
 				<router-link to="/personCenter/info">
 					<div class="right">
