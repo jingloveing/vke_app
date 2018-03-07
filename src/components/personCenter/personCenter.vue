@@ -6,15 +6,17 @@
 					<img src="static/images/personCenter/setting_icon.png" class="setting" />
 				</router-link>
 				<div>
-						<div class="user_pic">
-							<router-link to="/personCenter/userInfo">
-							<img src="static/images/personCenter/pic.jpg" class="user_icon" />
-							<img src="../../../static/images/personCenter/leve1.png" alt="" class="user_order" />
-							</router-link>
-							
-						</div>
-					
-					<p class="user_name">名称</p>
+					<div class="user_pic">
+						<router-link to="/personCenter/userInfo">
+							<img :src="userInfo.head_image" class="user_icon" />
+							<img src="../../../static/images/personCenter/leve1.png" alt="" class="user_order" v-show="userInfo.level_id==1" />
+							<img src="../../../static/images/personCenter/leve1.png" alt="" class="user_order" v-show="userInfo.level_id==2" />
+							<img src="../../../static/images/personCenter/leve1.png" alt="" class="user_order" v-show="userInfo.level_id==3" />
+						</router-link>
+
+					</div>
+
+					<p class="user_name">{{userInfo.nickname}}</p>
 					<router-link to="/upgrade">
 						<div class="uper_btn">升级地位</div>
 					</router-link>
@@ -22,12 +24,14 @@
 				<router-link to="/personCenter/info">
 					<div class="right">
 						<img src="static/images/info.png" alt="" class="info" />
-						<span class="info_num">12</span>
+						<span class="info_num" v-show="userInfo.unMessage!==0">{{userInfo.unMessage}}</span>
 					</div>
 				</router-link>
 				<router-link to="/personCenter/myPrerogative">
 					<div class="level_btn">
-						<img src="static/images/personCenter/vip0.png" alt="" class="level" />
+						<img src="static/images/personCenter/vip0.png" alt="" class="level" v-show="userInfo.level_id==1"/>
+						<img src="static/images/personCenter/vip1.png" alt="" class="level" v-show="userInfo.level_id==2"/>
+						<img src="static/images/personCenter/vip2.png" alt="" class="level" v-show="userInfo.level_id==3"/>
 						<span>享有特权</span>
 					</div>
 				</router-link>
@@ -36,130 +40,186 @@
 				<ul>
 					<router-link tag='li' to="/personCenter/bill">
 						<p class="header_list_title">消费账单</p>
-						<p class="header_list_num"><small>￥</small>688.23</p>
+						<p class="header_list_num"><small>￥</small>{{userInfo.pay_money}}</p>
 					</router-link>
 					<router-link tag="li" to="/personCenter/goldStore">
 						<p class="header_list_title">小金库</p>
-						<div class="header_list_num jewel">
-							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
+						<div>
+							<div class="header_list_num king" v-show="userInfo.chest_acer.type==5">
+								<img src="../../../static/images/personCenter/king.png" alt="" />{{userInfo.chest_acer.acer}}
+							</div>
+							<div class="header_list_num jewel" v-show="userInfo.chest_acer.type==4">
+								<img src="../../../static/images/personCenter/jewel.png" alt="" /> {{userInfo.chest_acer.acer}}
+							</div>
+							<div class="header_list_num gold" v-show="userInfo.chest_acer.type==3">
+								<img src="../../../static/images/personCenter/gold_acer.png" alt="" /> {{userInfo.chest_acer.acer}}
+							</div>
+							<div class="header_list_num silver" v-show="userInfo.chest_acer.type==2">
+								<img src="../../../static/images/personCenter/silver.png" alt="" /> {{userInfo.chest_acer.acer}}
+							</div>
+							<div class="header_list_num coppers" v-show="userInfo.chest_acer.type==1">
+								<img src="../../../static/images/personCenter/coppers.png" alt="" /> {{userInfo.chest_acer.acer}}
+							</div>
 						</div>
-						<!--<div class="header_list_num gold">
-                	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
-                	       8.86
-                	     </div>
-                	     <div class="header_list_num silver">
-                	   	   <img src="../../../static/images/personCenter/silver.png" alt="" />
-                	       8.86
-                	     </div>
-                	     <div class="header_list_num coppers">
-                	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
-                	       8.86
-                	     </div>-->
 					</router-link>
 					<router-link tag="li" to="/personCenter/underWay">
 						<p class="header_list_title">镖局押运</p>
-						<!--<div class="header_list_num jewel">
-                	   	   <img src="../../../static/images/personCenter/jewel.png" alt="" />
-                	       8.86
-                	     </div>-->
-						<div class="header_list_num gold">
-							<img src="../../../static/images/personCenter/gold_acer.png" alt="" /> 8.86
+						<div>
+							<div>
+								<div class="header_list_num king" v-show="userInfo.transport_acer.type==5">
+									<img src="../../../static/images/personCenter/king.png" alt="" /> {{userInfo.transport_acer.acer}}
+								</div>
+								<div class="header_list_num jewel" v-show="userInfo.transport_acer.type==4">
+									<img src="../../../static/images/personCenter/jewel.png" alt="" />{{userInfo.transport_acer.acer}}
+								</div>
+								<div class="header_list_num gold" v-show="userInfo.transport_acer.type==3">
+									<img src="../../../static/images/personCenter/gold_acer.png" alt="" /> {{userInfo.transport_acer.acer}}
+								</div>
+								<div class="header_list_num silver" v-show="userInfo.transport_acer.type==2">
+									<img src="../../../static/images/personCenter/silver.png" alt="" />{{userInfo.transport_acer.acer}}
+									</p>
+							    </div>
+								<div class="header_list_num coppers" v-show="userInfo.transport_acer.type==1">
+									<img src="../../../static/images/personCenter/coppers.png" alt="" />{{userInfo.transport_acer.acer}}
+								</div>
+							</div>
 						</div>
-						<!--<div class="header_list_num silver">
-                	   	   <img src="../../../static/images/personCenter/silver.png" alt="" />
-                	       8.86
-                	     </p>
-                	     <div class="header_list_num coppers">
-                	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
-                	       8.86
-                	     </div>-->
 					</router-link>
 				</ul>
-			</div>
-		</div>
-		<div class="sort">
-			<h4>我的享利</h4>
-			<div style="border-top:.01rem solid #f4f4f4;">
-				<router-link to='/personCenter/share'>
-					<figure class="list1">
-						<img src="../../../static/images/personCenter/share.png" alt="" />
-						<figcaption>分享夺宝</figcaption>
-					</figure>
-				</router-link>
+				</div>
+				</div>
+				<div class="sort">
+					<h4>我的享利</h4>
+					<div style="border-top:.01rem solid #f4f4f4;">
+						<router-link to='/personCenter/share'>
+							<figure class="list1">
+								<img src="../../../static/images/personCenter/share.png" alt="" />
+								<figcaption>分享夺宝</figcaption>
+							</figure>
+						</router-link>
 
-				<router-link to="/personCenter/myOrder">
-					<figure class="list1">
-						<img src="../../../static/images/personCenter/myOrder.png" alt="" />
-						<figcaption>我的订单</figcaption>
-					</figure>
-				</router-link>
-				<router-link to="/personCenter/myWorld">
-					<figure class="list1">
-						<img src="../../../static/images/personCenter/myWorld.png" alt="" />
-						<figcaption>我的江湖</figcaption>
-					</figure>
-				</router-link>
-				<figure class="list1">
-					<img src="../../../static/images/personCenter/server.png" alt="" />
-					<figcaption>官方小二</figcaption>
-				</figure>
+						<router-link to="/personCenter/myOrder">
+							<figure class="list1">
+								<img src="../../../static/images/personCenter/myOrder.png" alt="" />
+								<figcaption>我的订单</figcaption>
+							</figure>
+						</router-link>
+						<router-link to="/personCenter/myWorld">
+							<figure class="list1">
+								<img src="../../../static/images/personCenter/myWorld.png" alt="" />
+								<figcaption>我的江湖</figcaption>
+							</figure>
+						</router-link>
+						<figure class="list1">
+							<img src="../../../static/images/personCenter/server.png" alt="" />
+							<figcaption>官方小二</figcaption>
+						</figure>
+					</div>
+				</div>
+				<div class="sort">
+					<h4>其它工具</h4>
+					<div style="border-top:.01rem solid #f4f4f4;">
+						<router-link to="/personCenter/shoppingCart">
+							<figure class="list1 list2">
+								<img src="../../../static/images/personCenter/cart.png" alt="" />
+								<figcaption>购物车</figcaption>
+							</figure>
+						</router-link>
+						<router-link to="/personCenter/helpCenter">
+							<figure class="list1 list2">
+								<img src="../../../static/images/personCenter/college.png" alt="" />
+								<figcaption>白鹭书院</figcaption>
+							</figure>
+						</router-link>
+					</div>
+					<div style="border-top:.01rem solid #f4f4f4;">
+						<router-link to='/personCenter/code'>
+							<figure class="list1 list2">
+								<img src="../../../static/images/personCenter/code.png" alt="" />
+								<figcaption>启蒙码</figcaption>
+							</figure>
+						</router-link>
+						<router-link to="/personCenter/shareList">
+							<figure class="list1 list2">
+								<img src="../../../static/images/personCenter/listen.png" alt="" />
+								<figcaption>包打听</figcaption>
+							</figure>
+						</router-link>
+						<router-link to="/personCenter/collectList">
+							<figure class="list1 list2">
+								<img src="../../../static/images/personCenter/collect.png" alt="" />
+								<figcaption>藏宝阁</figcaption>
+							</figure>
+						</router-link>
+						<router-link to="/personCenter/myOrder/addressList">
+							<figure class="list1 list2">
+								<img src="../../../static/images/personCenter/address.png" alt="" />
+								<figcaption>总坛位置</figcaption>
+							</figure>
+						</router-link>
+					</div>
+					<div style="border-top:.01rem solid #f4f4f4;">
+						<router-link to="/personCenter/refundList">
+							<figure class="list1 list2">
+								<img src="../../../static/images/personCenter/exchange.png" alt="" />
+								<figcaption>宝物退换</figcaption>
+							</figure>
+						</router-link>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="sort">
-			<h4>其它工具</h4>
-			<div style="border-top:.01rem solid #f4f4f4;">
-				<router-link to="/personCenter/shoppingCart">
-				<figure class="list1 list2">
-					<img src="../../../static/images/personCenter/cart.png" alt="" />
-					<figcaption>购物车</figcaption>
-				</figure>
-				</router-link>
-				<router-link to="/personCenter/helpCenter">
-				<figure class="list1 list2">
-					<img src="../../../static/images/personCenter/college.png" alt="" />
-					<figcaption>白鹭书院</figcaption>
-				</figure>
-				</router-link>
-			</div>
-			<div style="border-top:.01rem solid #f4f4f4;">
-				<router-link to='/personCenter/code'>
-				<figure class="list1 list2">
-					<img src="../../../static/images/personCenter/code.png" alt="" />
-					<figcaption>启蒙码</figcaption>
-				</figure>
-				</router-link>
-				<router-link to="/personCenter/shareList">
-				<figure class="list1 list2">
-					<img src="../../../static/images/personCenter/listen.png" alt="" />
-					<figcaption>包打听</figcaption>
-				</figure>
-				</router-link>
-				<router-link to="/personCenter/collectList">
-				<figure class="list1 list2">
-					<img src="../../../static/images/personCenter/collect.png" alt="" />
-					<figcaption>藏宝阁</figcaption>
-				</figure>
-				</router-link>
-				<router-link to="/personCenter/myOrder/addressList">
-				<figure class="list1 list2">
-					<img src="../../../static/images/personCenter/address.png" alt="" />
-					<figcaption>总坛位置</figcaption>
-				</figure>
-				</router-link>
-			</div>
-			<div style="border-top:.01rem solid #f4f4f4;">
-				<router-link to="/personCenter/refundList">
-				<figure class="list1 list2">
-					<img src="../../../static/images/personCenter/exchange.png" alt="" />
-					<figcaption>宝物退换</figcaption>
-				</figure>
-				</router-link>
-			</div>
-		</div>
-	</div>
 </template>
 
 <script>
+	import { Toast } from 'vux'
+	export default {
+		name: 'personCenter',
+		components: {
+			Toast
+		},
+		data() {
+			return {
+				userInfo: {
+					nickname: '',
+					head_image: '',
+					level_id: null,
+					chest_acer: {
+						type: null,
+						acer: null,
+					},
+					transport_acer: {
+						type: null,
+						acer: null
+					},
+					pay_money: '',
+					unMessage: null
+				}
+			}
+		},
+		methods: {
+			//获取用户信息
+			getUserInfo: function() {
+				this.$http.get('/api/userInfo', {}).then((res) => {
+					if(res.data.code == '200') {
+						this.userInfo = res.data.data
+                        localStorage.setItem('userInfo',JSON.stringify(this.userInfo))
+                        
+					} else {
+
+					}
+				}, (err) => {
+					this.userInfo=JSON.parse(localStorage.getItem('userInfo'))
+				})
+			},
+		},
+		created: function() {
+			this.getUserInfo()
+
+		},
+		mounted: function() {
+            this.userInfo=JSON.parse(localStorage.getItem('userInfo'))
+		}
+	}
 </script>
 
 <style scoped="scoped">
@@ -313,9 +373,6 @@
 		align-items: center;
 		justify-content: center;
 	}
-	
-	
-	
 	
 	.sort {
 		background: white;

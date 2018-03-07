@@ -56,6 +56,9 @@ import ToPay from '@/components/personCenter/topay'
 import Seek from '@/components/personCenter/seek'
 import GoodsDetail from '@/components/common/goodsDetail'
 import JD from '@/components/home/JD'
+import NewJD from '@/components/home/new_JD'
+import NewMogu from '@/components/home/new_mogu'
+import NewVip from '@/components/home/new_vip'
 import JDDetail from '@/components/home/JDDetail'
 import TBDetail from '@/components/home/TBDetail'
 import SelfSupport from '@/components/home/selfSupport'
@@ -100,6 +103,7 @@ routes: [{
 	},
 	{
 		path: '/home',
+		name:'Home',
 		component: Home,
 		meta: {
 			showFooter: true
@@ -536,6 +540,33 @@ routes: [{
 		name: 'GoodsDetail',
 		component: GoodsDetail,
 
+	},
+	{
+		path: '/newJD',
+		name: 'NewJD',
+		component: NewJD,
+		meta: {
+			showHeader: true,
+			title:"京东"
+		}
+	},
+	{
+		path: '/newMogu',
+		name: 'NewMogu',
+		component: NewMogu,
+		meta: {
+			showHeader: true,
+			title:"蘑菇街"
+		}
+	},
+	{
+		path: '/newVip',
+		name: 'NewVip',
+		component: NewVip,
+		meta: {
+			showHeader: true,
+			title:"唯品会"
+		}
 	},
 	{
 		path: '/JD',

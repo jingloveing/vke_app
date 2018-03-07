@@ -4,14 +4,14 @@
 		<!--<div style="height: .88rem;"></div>-->
 		<div class="userInfo">
 			<p @click="changePhoto" class="cell c3">头像
-				<span><img src="///" alt="" class="photo" :onerror="defaultImg">
+				<span><img :src="userInfo.head_image" alt="" class="photo" :onerror="defaultImg">
       <img src="../../../static/images/gt_white.png" alt="" class="gt_icon"/></span>
 			</p>
 			<router-link to="/personCenter/userInfo/changeName">
-				<p class="cell c3">昵称 <span class="c9">昵称<img src="../../../static/images/gt_white.png" alt="" class="gt_icon"/></span></p>
+				<p class="cell c3">昵称 <span class="c9">{{userInfo.nickname}}<img src="../../../static/images/gt_white.png" alt="" class="gt_icon"/></span></p>
 			</router-link>
-				<p class="cell c3" @click="changeSex">性别 <span class="c9">{{sex}}<img src="../../../static/images/gt_white.png" alt="" class="gt_icon"/></span></p>
-			<p class="cell c3">等级 <span class="c9">帮众</span></p>
+				<p class="cell c3" @click="changeSex">性别 <span class="c9" v-text="userInfo.gender==1?'男':'女'"><img src="../../../static/images/gt_white.png" alt="" class="gt_icon"/></span></p>
+			<p class="cell c3">等级 <span class="c9">{{userInfo.level_title}}</span></p>
 		</div>
 		<!--<div class="btn">-->
 		<!--<x-button @click.native="userInfo()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .3rem auto;">同步微信资料</x-button>-->
@@ -19,21 +19,27 @@
 		<actionsheet v-model="show1" :menus="menus1" @on-click-menu="click1" show-cancel></actionsheet>
 		<actionsheet v-model="show2" :menus="menus2" @on-click-menu="click2" show-cancel></actionsheet>
 		<loading v-model="showLoading" :text="loadText"></loading>
-
+        <toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
 	</div>
 </template>
 <script>
-	import { XHeader, XButton, Loading, Actionsheet } from 'vux'
+	import { XHeader, XButton, Loading, Actionsheet,Toast } from 'vux'
 	export default {
 		components: {
 			XHeader,
 			XButton,
 			Loading,
-			Actionsheet
+			Actionsheet,
+			Toast
 		},
 		data() {
 			return {
-				info: {},
+				userInfo: {
+					nickname: '',
+					head_image: '',
+					gender:null,
+					level_title:''
+				},
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 				showLoading: false,
 				loadText: '加载中...',
@@ -47,28 +53,25 @@
 					menu1: '男',
 					menu2: '女'
 				},
-				sex:'女'
+				showToast:false,
+				toast:''
 			}
 		},
 		methods: {
-			//      用户信息
-			userInfo: function() {
-				this.showLoading = true
-				this.$http({
-					method: 'POST',
-					url: '/api/userinfo',
-				}).then((res) => {
+			//      修改用户信息
+			editInfo: function() {
+//				this.showLoading = true
+				this.$http.post('/api/updateInfo',{gender:this.userInfo.gender}).then((res) => {
 					if(res.data.code == '200') {
-						this.showLoading = false
-						this.info = res.data.data
-						this.$router.replace({
-							name: 'userInfo'
-						})
-					} else if(res.data.code == '400') {
-						this.showLoading = false
+						this.toast = res.data.data.message
+					    this.showToast = true
+					    localStorage.setItem('userInfo',JSON.stringify(this.userInfo))
+					} else{
+						this.toast = res.data.error
+					    this.showToast = true
 					}
 				}, (err) => {
-					console.log(err)
+					
 				})
 			},
 			console(msg) {
@@ -79,10 +82,11 @@
 			},
 			click2(key) {
 				if(key=='menu1'){
-					this.sex='男'
+					this.userInfo.gender=1
 				}else{
-					this.sex='女'
+					this.userInfo.gender=0
 				}
+				this.editInfo()
 			},
 			changePhoto:function(){
 				this.show1=true
@@ -92,11 +96,10 @@
 			}
 		},
 		mounted() {
-			//      const title = document.getElementsByClassName('vux-header-title');
-			//      title[0].style.color='#333'
+			
 		},
 		created: function() {
-			//       this.userInfo()
+			this.userInfo=JSON.parse(localStorage.getItem('userInfo'))
 		}
 	}
 </script>

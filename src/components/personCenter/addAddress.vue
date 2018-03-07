@@ -7,7 +7,7 @@
         <x-address title="所在地区" v-model="address"  :list="addressData" value-text-align="center" class="f28 c3 same"></x-address>
         <textarea name="des" placeholder="详细地址" class="des same" v-model="detail">
     </textarea>
-      <checklist :options="commonList" v-model="checkValue" @on-change="change" ref="check" v-show="is_default!==1" class="f24 c3 checkList"></checklist>
+      <checklist :options="commonList" v-model="checkValue" @on-change="change" ref="check" class="f24 c3 checkList"></checklist>
        </group>
     </div>
     <div style="height: .96rem;"></div>
@@ -48,7 +48,7 @@
         value2name:'',
         is_default:'',
         from:'',
-        pro_id:''
+        pro_id:'',
       }
     },
     methods: {
@@ -56,17 +56,13 @@
       addAddress:function(){
         this.getName(this.address)
         this.showLoading=true
-        this.$http({
-          method:'POST',
-          url:'/api/addAddress',
-          data:{
-            person_name:this.name,
+        this.$http.post('/api/updateAddress',{
+            consignee:this.name,
             telephone:this.tel,
             detail:this.detail,
             address:this.value2name,
             is_default:this.type
-          }
-        }).then((res)=>{
+         }).then((res)=>{
           if(res.data.code=='200'){
             this.showLoading=false
             this.$router.go(-1)
@@ -85,21 +81,17 @@
       update:function(){
         this.getName(this.address)
         this.showLoading=true
-        this.$http({
-          method:'POST',
-          url:'/api/updateAddress',
-          data:{
-            address_id:this.address_id,
-            person_name:this.name,
+        this.$http.post('/api/updateAddress',{
+            id:this.address_id,
+            consignee:this.name,
             telephone:this.tel,
             detail:this.detail,
             address:this.value2name,
             is_default:this.type
-          }
-        }).then((res)=>{
+         }).then((res)=>{
           if(res.data.code=='200'){
             this.showLoading=false
-            this.$router.push({path: '/personCenter/addressList',query:{id:this.pro_id,type:this.from}})
+            this.$router.push({name: 'AddressList',query:{id:this.pro_id,type:this.from}})
           }else if(res.data.code=='400'){
             this.showLoading=false
           }
@@ -113,25 +105,27 @@
         this.$http({
           method:'GET',
           url:'/api/updateAddress',
-          params:{address_id:this.address_id}
+          params:{id:this.address_id}
         }).then((res)=>{
           if(res.data.code=='200'){
             this.showLoading=false
-            this.name=res.data.data.address_info.person_name
-            this.tel=res.data.data.address_info.telephone
-            this.address=res.data.data.address_info.address_array
-            this.type = res.data.data.address_info.is_default
-            this.is_default=res.data.data.address_info.is_default
-            this.detail=res.data.data.address_info.address
-            if(res.data.data.address_info.is_default=='1'){
+            this.name=res.data.data.consignee
+            this.tel=res.data.data.telephone
+            this.address=res.data.data.address_array
+            this.type = res.data.data.is_default
+            this.is_default=res.data.data.is_default
+            this.detail=res.data.data.address
+            if(res.data.data.is_default==1){
               this.checkValue=['1']
             }else{
               this.checkValue=[]
             }
+            console.log(this.checkValue)
           }else if(res.data.code=='400'){
             this.showLoading=false
           }
         },(err)=>{
+        	this.showLoading=false
           console.log(err)
         })
       },
@@ -145,8 +139,9 @@
           if (val == '1') {
             this.type = '1'
           } else {
-            this.type = '2'
+            this.type = '0'
           }
+          console.log(this.checkValue)
       },
       getName:function(value){
         this.value2name= value2name(value, ChinaAddressV4Data)

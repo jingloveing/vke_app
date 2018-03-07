@@ -14,7 +14,7 @@
 					<td>帮众</td>
 					<td>扫码关注后下载APP微信登录即可获得</td>
 				</tr>-->
-				<tr>
+				<tr v-show="userInfo.level_id==1">
 					<td>长老</td>
 					<td style="padding:.24rem .2rem;">
 						<p>两种方法：</p>
@@ -22,7 +22,7 @@
 						<p>b.旗下团队规模拥有150位以上帮众即可免费成为代理长老(代理长老考核规则详见白鹭书院)</p>
 					</td>
 				</tr>
-				<tr>
+				<tr v-show="(userInfo.level_id==2)||(userInfo.level_id==3)">
 					<td>帮主</td>
 					<td style="padding:.24rem .2rem;">旗下拥有10位正式长老助威即可申请成立帮派升任帮主，审核通过后需要交纳680元/年的帮派维护费(及技术维护费)</td>
 				</tr>
@@ -32,10 +32,51 @@
 			<img src="../../../static/images/login/cart_s_f.png" alt="" />
 			<span>购买特供商品，升级地位</span>
 		</router-link>
+		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
 	</div>
 </template>
 
 <script>
+	import {Toast} from 'vux'
+	export default {
+		components: {
+			Toast
+		},
+		data() {
+			return {
+               userInfo:{
+               	level_id:null
+               },
+               showToast:false,
+               toast:''
+			}
+		},
+		methods: {
+            	//      修改用户信息
+			editInfo: function() {
+//				this.showLoading = true
+				this.$http.post('/api/updateInfo',{gender:this.userInfo.nickname}).then((res) => {
+					if(res.data.code == '200') {
+						this.toast = res.data.data.message
+					    this.showToast = true
+					    
+					    localStorage.setItem('userInfo',JSON.stringify(this.userInfo))
+					} else{
+						this.toast = res.data.error
+					    this.showToast = true
+					}
+				}, (err) => {
+					
+				})
+			},
+		},
+		created:function(){
+			this.userInfo=JSON.parse(localStorage.getItem('userInfo'))
+		},
+		mounted() {
+			
+		},
+	}
 </script>
 
 <style scoped="scoped">

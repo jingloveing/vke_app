@@ -23,19 +23,19 @@
 					<img src="static/images/taoBao.png" :onerror="defaultImg">
 					<span>淘宝</span>
 				</router-link>
-				<router-link tag="li" to="/JD">
+				<router-link tag="li" to="/newJD">
 					<img src="static/images/JD.png" :onerror="defaultImg">
 					<span>京东</span>
 				</router-link>
-				<li>
+				<router-link tag="li" to="/newMogu">
 					<img src="static/images/mogu.png" :onerror="defaultImg">
 					<span>蘑菇街</span>
-				</li>
-				<li>
+				</router-link>
+				<router-link tag="li" to="/newVip">
 					<img src="static/images/vip.png" :onerror="defaultImg">
 					<span>唯品会</span>
-				</li>
-				<router-link tag="li" to="/SelfSupport">
+				</router-link>
+				<router-link tag="li" to="">
 					<img src="static/images/vke.png" :onerror="defaultImg">
 					<span>自营商城</span>
 				</router-link>

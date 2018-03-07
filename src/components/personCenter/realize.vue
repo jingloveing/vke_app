@@ -62,7 +62,7 @@
 					</div>
 
 				</div>-->
-				<div class="list">
+				<!--<div class="list">
 					<img src="../../../static/images/personCenter/card.png" alt="" class="icon" />
 					<div class="right">
 						<div>
@@ -78,7 +78,7 @@
 						</div>
 					</div>
 
-				</div>
+				</div>-->
 			</div>
 		</div>
 		<div class="des">

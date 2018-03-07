@@ -4,33 +4,58 @@
 			<a slot="right" style="color: #9A7BFF;font-size: .32rem;" href="/personCenter/myOrder/addressList">管理</a>
 		</x-header>
 		<div style="height: .88rem;"></div>
-		<div>
-			<div class="list" v-for="i in 3">
-				<h5 class="f28 c3"><span class="left"><span class="default">默认</span><span>姓名</span></span><small class="f28" style="font-family: arial;">1321432453</small></h5>
-				<p class="f26 c9">您的享利客订单1224325435已发货~，请注意查收顺丰快递，单号：2425345646</p>
+		<router-link :to="{name:'Pay',query:{}}">
+			<div class="list" v-for="(item,index) in list">
+				<h5 class="f28 c3"><span class="left"><span class="default" v-show="item.is_default==1">默认</span><span>{{item.consignee}}</span></span><small class="f28" style="font-family: arial;">{{item.telephone}}</small></h5>
+				<p class="f26 c9">{{item.province}}{{item.city}}{{item.country}}{{item.address}}</p>
 			</div>
+		</router-link>
+		<div style="position:fixed;bottom: 0;width: 100%;height: .96rem;">
+			<x-button @click.native="click()" type="primary" action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32">添加新地址</x-button>
 		</div>
-		
 	</div>
 </template>
 
 <script>
-	import { XHeader} from 'vux'
+	import { XHeader,XButton} from 'vux'
 	export default {
 		name: 'Realize',
 		components: {
 			XHeader,
+			XButton
 		},
 		data() {
 			return {
-
+                page:1,
+                limit:10,
+                list:[],
 			}
 		},
 		methods: {
-            
+            //      收货地址列表
+			getAddressList: function() {
+				this.$http({
+					method: 'get',
+					url: '/api/addressList',
+					params: {
+						page: this.page,
+						limit: this.limit
+					}
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.list = res.data.data.list
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			click(){
+				this.$router.push({name:'AddAddress',query:{}})
+//          	this.$router.replace({name: ''})
+           },
 		},
 		created: function() {
-
+            this.getAddressList()
 		},
 		mounted: function() {
 

@@ -8,16 +8,16 @@
 			<div style="position: relative;">
 				<div class="pro">
 					<div>
-						<!--<img src="../../../static/images/fans/vip0_gray.png" alt="" class="icon"/>-->
-						<img src="../../../static/images/fans/vip0.png" alt="" class="icon" />
+						<img src="../../../static/images/fans/vip0_gray.png" alt="" class="icon" v-show="userInfo.level_id!==1"/>
+						<img src="../../../static/images/fans/vip0.png" alt="" class="icon" v-show="userInfo.level_id==1"/>
 					</div>
 					<div>
-						<img src="../../../static/images/fans/vip1_gray.png" alt="" class="icon" />
-						<!--<img src="../../../static/images/fans/vip1.png" alt="" class="icon"/>-->
+						<img src="../../../static/images/fans/vip1_gray.png" alt="" class="icon" v-show="userInfo.level_id!==2"/>
+						<img src="../../../static/images/fans/vip1.png" alt="" class="icon" v-show="userInfo.level_id==2"/>
 					</div>
 					<div>
-						<img src="../../../static/images/fans/vip2_gray.png" alt="" class="icon" />
-						<!--<img src="../../../static/images/fans/vip2.png" alt="" class="icon"/>-->
+						<img src="../../../static/images/fans/vip2_gray.png" alt="" class="icon" v-show="userInfo.level_id!==3"/>
+						<img src="../../../static/images/fans/vip2.png" alt="" class="icon" v-show="userInfo.level_id==3"/>
 					</div>
 
 				</div>
@@ -27,12 +27,12 @@
 				</div>
 			</div>
 			<div class="pro f24">
-				<span class="active">帮众</span>
-				<span class="">长老</span>
-				<span class="">帮主</span>
+				<span :class="userInfo.level_id==1?'active':''">帮众</span>
+				<span :class="userInfo.level_id==2?'active':''">长老</span>
+				<span :class="userInfo.level_id==3?'active':''">帮主</span>
 			</div>
 		</div>
-	     <div class="main" v-show="status==1">
+	     <div class="main" v-show="userInfo.level_id==1">
 	     	<div class="tip">
 	     		<span class="border"></span><p class="f30 c3">帮众特权</p>
 	     	</div>
@@ -42,7 +42,7 @@
 	     		<p>3. 享受不定期平台内各项奖励或免费活动（如：0元购等“包含但不限于”）</p>
 	     	</div>
 	     </div>
-	     <div class="main" v-show="status==2">
+	     <div class="main" v-show="userInfo.level_id==2">
 	     	<div class="tip">
 	     		<span class="border border2"></span><p class="f30 c3">帮众特权</p>
 	     	</div>
@@ -55,7 +55,7 @@
 	     		<p>6. 享受不定期平台内各项奖励或免费活动（如：0元购等“包含但不限于”）</p>
 	     	</div>
 	     </div>
-	     <div class="main" v-show="status==3">
+	     <div class="main" v-show="userInfo.level_id==3">
 	     	<div class="tip">
 	     		<span class="border border3"></span><p class="f30 c3">帮众特权</p>
 	     	</div>
@@ -87,7 +87,9 @@
 		},
 		data() {
 			return {
-				status:1,
+				userInfo:{
+					level_id:null,
+				},
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 			}
 		},
@@ -98,7 +100,7 @@
 
 		},
 		created: function() {
-			
+			this.userInfo=JSON.parse(localStorage.getItem('userInfo'))
 		}
 	}
 </script>

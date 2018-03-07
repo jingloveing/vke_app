@@ -224,6 +224,9 @@ input:-moz-placeholder{
 	.header_list_num.coppers {
 		color: #ffb034;
 	}
+	.header_list_num.king {
+		color: #fa1d82;
+	}
 	/*弹性布局*/
 	.flex {
 		display: flex;

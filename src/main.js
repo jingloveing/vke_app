@@ -11,7 +11,7 @@ import router from './router'
 //import PersonCenter from '@/components/personCenter/personCenter'
 import '../static/css/main.css'
 import animate from 'animate.css'
-import { ConfirmPlugin, AlertPlugin, ToastPlugin, LoadingPlugin } from 'vux'
+import {ConfirmPlugin, AlertPlugin, ToastPlugin, LoadingPlugin } from 'vux'
 import VueScroller from 'vue-scroller'
 import VueAwesomeSwiper from "vue-awesome-swiper"
 import 'swiper/dist/css/swiper.css'

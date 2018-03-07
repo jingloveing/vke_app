@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<x-header :left-options="{backText: ''}" title="享利客专区" class="header"></x-header>
+		<x-header :left-options="{backText: ''}" title="特供商品区" class="header"></x-header>
 		<div style="height: .88rem;"></div>
-		<div class="header-right">
+		<!--<div class="header-right">
 			<router-link to="/home/assortment/searchPage">
 				<img src="../../../static/images/search_icon.png" alt="" />
 			</router-link>
@@ -10,15 +10,15 @@
 			<router-link to="/personCenter/shoppingCart">
 				<img src="../../../static/images/cart_white.png" alt="" />
 			</router-link>
-		</div>
-		<div style="background: white;height: .88rem;line-height: .88rem;" class="f28 c3">
+		</div>-->
+		<!--<div style="background: white;height: .88rem;line-height: .88rem;" class="f28 c3">
 			<swiper :options="swiperOptionB">
 				<swiper-slide v-for="(item,index) in cate" :key="index">
 					<div @click="click(index)" class="tabs" :class="indexs==index?'c_f':''">{{item.cate_name}}</div>
 				</swiper-slide>
 				
 			</swiper>
-		</div>
+		</div>-->
 		<div class="main_goods">
 					<ul class="goods">
 						<router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'GoodsDetail',query:{id:goods.id,type:5}}" :key="index">
@@ -30,7 +30,7 @@
 										<span style="font-size: .2rem;">￥</span>{{goods.reserve_price.rmb}}
 										<span style="font-size: .2rem;" v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span>
 									</span>
-									<span class="num">{{goods.volume}}件已售</span>
+									<!--<span class="num">{{goods.volume}}件已售</span>-->
 								</div>
 							</div>
 						</router-link>

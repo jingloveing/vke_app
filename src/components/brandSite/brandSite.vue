@@ -83,11 +83,11 @@
 			}
 		},
 		methods: {
-			//      获取首页轮播图
+			//      获取品牌现场轮播图
 			getBannerList: function() {
 				this.$http({
-					method: 'POST',
-					url: '/api/index_banner'
+					method: 'get',
+					url: '/api/merchantBanner'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const imgList = res.data.data.index_banner

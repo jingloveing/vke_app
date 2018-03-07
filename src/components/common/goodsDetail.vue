@@ -1,28 +1,28 @@
 <template>
 	<div>
 		<x-header :left-options="{backText: ''}" title="商品详情">
-			<a slot="right">
+			<!--<a slot="right">
 				<router-link to="/personCenter/shoppingCart">
 					<img src="../../../static/images/cart_black_icon.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;" />
 				</router-link>
-			</a>
+			</a>-->
 		</x-header>
 		<div style="height: .88rem;"></div>
 		<div>
 			<div class="pic">
-				<swiper auto loop :list="list" style="width:100%;" height="7.5rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" :onerror="defaultImg"></swiper>
+				<swiper auto loop :list="goodsDetail.pict_url" style="width:100%;" height="7.5rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" :onerror="defaultImg"></swiper>
 				<!--<img :src="goodsDetail.pict_url" alt="" :onerror="defaultImg">-->
 			</div>
 			<div class="detail">
 				<p class="name">{{goodsDetail.product_name}}</p>
 				<div class="flex">
 					<span class="prices"><small>￥</small>{{goodsDetail.reserve_price.rmb}}<small
-          v-show="goodsDetail.zk_final_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</small></span>
-					<div class="f28 flex c9" style="margin-left: .3rem;">财宝价
+          v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</small></span>
+					<!--<div class="f28 flex c9" style="margin-left: .3rem;">财宝价
 						<div class="header_list_num jewel" style="margin-left: .1rem;">
 							<img src="../../../static/images/personCenter/jewel.png" alt="" /> {{goodsDetail.acer}}
 						</div>
-						<!--<div class="header_list_num gold">
+						<div class="header_list_num gold">
                 	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
                 	       8.86
                 	     </div>
@@ -33,24 +33,27 @@
                 	     <div class="header_list_num coppers">
                 	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
                 	       8.86
-                	     </div>-->
-					</div>
+                	     </div>
+					</div>-->
 				</div>
 				<div style="margin-left: .2rem;display: inline-block;">
 
 				</div>
 				<!--<span class="juan"><span class="juan_l">劵</span><span class="juan_r">20元</span></span>-->
 				<!--<span class="return_yuanBao">返100元宝</span>-->
-				<div class="flex" style="justify-content: space-between;">
+				<!--<div class="flex" style="justify-content: space-between;">
 					<span class="old_price">价格<del>￥{{goodsDetail.market_price.rmb}}<span
             v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.market_price.corner}}</span></del>
 					</span>
 					<span class="f24 c9">运费：{{goodsDetail.shipping_fee}}</span>
 					<span class="f24 c9">月销{{goodsDetail.volume}}件</span>
-				</div>
+				</div>-->
 			</div>
 		</div>
-		<cell title="请选择规格数量" is-link :border-intent="false" @click.native="toAdd(0)" class="pic_detail f28 c3"></cell>
+		<!--<cell title="请选择规格数量" is-link :border-intent="false" @click.native="toAdd(0)" class="pic_detail f28 c3"></cell>-->
+		<cell title="请选择规格数量"  :border-intent="false" @click.native="toAdd(0)" class="pic_detail f28 c3">
+			<x-number :min="0" v-model="count" fillable class="num f28 c3"></x-number>
+		</cell>
 		<cell
       title="商品图文详情(点击查看)"
       is-link
@@ -61,7 +64,10 @@
       <img :src="img" alt="" v-for="img in goodsDetail.small_images" :onerror="defaultImg">
     </div>
 		<div style="height: .98rem;"></div>
-		<div class="footer">
+		<router-link to="/personCenter/myOrder/pay" class="footer flex" style="background: #9A7BFF;color: white;justify-content: center;font-size: .32rem;">
+			立即购买
+		</router-link>
+		<!--<div class="footer">
 			<div class="f_1 f1_l" @click="toHome">
 				<img src="/static/images/xiaoer.png" alt="">
 				<span>小二</span>
@@ -77,12 +83,12 @@
 			<div class="f_2 f2_r" @click="toAdd(2)" >
 				<span>立即购买</span>
 			</div>
-		</div>
-		<toast v-show="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
-		<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show">
+		</div>-->
+		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
+		<!--<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show">
 		 		
-		 	</div>
-		 <transition enter-active-class="fadeInUpBig" leave-active-class="fadeOutDownBig">
+		 	</div>-->
+		 <!--<transition enter-active-class="fadeInUpBig" leave-active-class="fadeOutDownBig">
               <div v-show="show" class="main">
               	<div class="main-content">
               		<img src="../../../static/images/default_img.png" alt=""  class="s-pic"/>
@@ -110,7 +116,7 @@
               		<div class="f32 sure" @click="addCart()" v-show="type!==0">确定</div>
               	</div>
               </div>
-         </transition>
+         </transition>-->
 	</div>
 </template>
 <script>
@@ -132,7 +138,7 @@
 			return {
 				showDetail:false,
 				type:0,
-				count:3,
+				count:1,
 				showActionsheet: true,
 				collect: true,
 				showToast: false,
@@ -141,38 +147,25 @@
 				show: false,
 				goodsDetail: {
 					title: '',
-					pict_url: '',
+					pict_url: [],
 					small_images: [],
+//					market_price: {
+//						rmb: '',
+//						corner: ''
+//					},
+					//现价
 					reserve_price: {
 						rmb: '',
 						corner: ''
 					},
-					zk_final_price: {
-						rmb: '',
-						corner: ''
-					},
-					volume: '',
-					category: ''
-				},
+//					volume: '',
+//					category: ''
+			},
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 				command: '',
 				//        click_url:''
 				id: '',
 				type: '',
-				list: [{
-					url: 'javascript:',
-					img: 'https://static.vux.li/demo/1.jpg',
-					title: '送你一朵fua'
-				}, {
-					url: 'javascript:',
-					img: 'https://static.vux.li/demo/2.jpg',
-					title: '送你一辆车'
-				}, {
-					url: 'javascript:',
-					img: 'https://static.vux.li/demo/5.jpg',
-					title: '送你一次旅行',
-					fallbackImg: 'https://static.vux.li/demo/3.jpg'
-				}]
 			}
 		},
 		methods: {

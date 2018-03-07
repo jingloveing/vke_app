@@ -35,7 +35,10 @@
 						<p class="f24 c9" v-show="status">{{item.attr}}</p>
 						<div class="num" v-show="!status">
 							<x-number :min="0" v-model="item.number" fillable class="num f28 c3"></x-number>
-							<img src="../../../static/images/cart_del.png" alt="" class="del"/>
+							<div style="padding: .2rem;" @click="remove(item.id)">
+								<img src="../../../static/images/cart_del.png" alt="" class="del"/>
+							</div>
+							
 						</div>
 						<div class="num">
 							<span class="f28 c_m">
@@ -71,14 +74,14 @@
 			</div>
 			
 		</div>
-		<toast v-show="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
+		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
 	</div>
 </template>
 
 <script>
 	import { XHeader, XNumber,Toast} from 'vux'
 	export default {
-		name: 'Realize',
+		name: 'ShoppingCart',
 		components: {
 			XHeader,
 			 XNumber,
@@ -109,13 +112,14 @@
 				})
 			},
 			//删除购物车商品
-			remove: function() {
-				this.$http({
-					method: 'get',
-					url: '/api/delCar'
-				}).then((res) => {
+			remove: function(id) {
+				this.$http.post('/api/delCar',{id:id}).then((res) => {
 					if(res.data.code == '200') {
-						console.log(res.data)
+						this.toast = res.data.data.message
+					    this.showToast = true
+					}else{
+						this.toast = res.data.error
+					    this.showToast = true
 					}
 				}, (err) => {
 					console.log(err)
