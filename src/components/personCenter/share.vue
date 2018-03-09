@@ -1,11 +1,11 @@
 <template>
 	<div>
 		<div class="share">
-			<div style="padding-top: 1.26rem;">
-				<swiper :options="swiperOptionB">
-					<swiper-slide v-for="(list,index) in 5">
-						<div @click="click(index)" class="tabs">
-							<img src="../../../static/images/img.png" alt="" />
+			<div style="padding-top: 1.26rem;height: 7.56rem;">
+				<swiper :options="swiperOptionB" ref="mySwiper">
+					<swiper-slide v-for="(list,index) in list" :key="index">
+						<div class="tabs">
+							<img :src="list.image" alt="" />
 						</div>
 					</swiper-slide>
 
@@ -13,7 +13,7 @@
 			</div>
 			<div style="display: flex;justify-content: space-between;align-items: center;margin: .64rem .98rem 0;">
 				<x-button class="share-btn">分享</x-button>
-				<x-button class="share-btn">保存图片</x-button>
+				<x-button class="share-btn" @click.native="save()">保存图片</x-button>
 			</div>
 		</div>
 	</div>
@@ -22,6 +22,7 @@
 <script>
 	import { XButton, } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
+		var activeIndex=0
 	export default {
 		name: 'share',
 		components: {
@@ -44,22 +45,40 @@
 					},
 					on: {
 						//获取当前活slide的索引值
-						slideChange: function(){
-							console.log(this.activeIndex);
+						slideChange: function() {
+							activeIndex = this.activeIndex
 						}
 					},
 				},
+				list: [],
 			}
 		},
 		methods: {
-			click() {
-
+			//      图片列表
+			getList: function() {
+				this.$http({
+					method: 'get',
+					url: '/api/shareImage'
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.list = res.data.data.url
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			save() {
+				var img = this.list[activeIndex].image
+				console.log(img)
 			}
 		},
 		created: function() {
-
+			this.getList()
 		},
 		mounted: function() {
+
+		},
+		computed: {
 
 		}
 	}

@@ -42,8 +42,8 @@
 						<img src="../../../dist/static/images/default_img.png" alt="" :onerror="defaultImg" class="brand-pic"/>
 						<div class="brand-main">
 							<div class="brand-main-left">
-									<p class="f32 c3" style="margin-bottom: .2rem;width:5rem;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">品牌名称品牌名称品牌名称品牌名称名称品牌名称品牌名称</p>
-									<span class="type taobao">淘宝</span>
+									<p class="f32 c3" style="width:5rem;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">品牌名称品牌名称品牌名称品牌名称名称品牌名称品牌名称</p>
+									<!--<span class="type taobao">淘宝</span>-->
 									<!--<span class="type JD">京东</span>
                 <span class="type mogujie">蘑菇街</span>
                 <span class="type vipshop">唯品会</span>
@@ -100,44 +100,40 @@
 			}
 		},
 		methods: {
-			//      9.9专区商品====19.9专区商品
+			//      收藏列表
 			getGoods: function() {
 				this.$http({
-					method: 'POST',
-					url: '/api/nine',
-					data: {
-						sort: this.sort,
-						type_id: this.type_id,
-						page: this.pageIndex,
-						limit: this.limit
+					method: 'get',
+					url: '/api/collection',
+					params: {
+						type:this.index+1,
+						page:this.pageIndex,
+						limit:this.limit
 					}
 				}).then((res) => {
 					if(res.data.code == '200') {
-						if(res.data.data.nine_products.length == 0) {
+						if(res.data.data.list.length == 0) {
 							this.noData = true
 							this.$refs.myscroller.finishInfinite(2);
 						} else {
-							this.goodsList = this.goodsList.concat(res.data.data.nine_products)
+							this.goodsList = this.goodsList.concat(res.data.data.list)
 							this.$refs.myscroller.finishPullToRefresh()
 						}
-					} else if(res.data.code == '400') {
-						//            this.$vux.toast.show({
-						//              type:"cancel",
-						//              text:res.data.message
-						//            })
+					} else{
+						this.$refs.myscroller.finishInfinite();
+						this.$vux.toast.show({
+						    type:"warn",
+						    text:res.data.error
+						})
 					}
 				}, (err) => {
 					console.log(err)
 				})
 			},
-			//      toTop(){
-			//        document.documentElement.scrollTop = document.body.scrollTop =0;
-			//      },
 			infinite(done) {
-				if(this.index==0){
-					if(this.noData) {
+				if(this.noData) {
 					setTimeout(() => {
-						this.$refs.myscroller.finishInfinite(2);
+						this.$refs.myscroller.finishInfinite(1);
 					})
 					return;
 				} else {
@@ -148,10 +144,6 @@
 						done()
 					}, 1500)
 				}
-				}else{
-					this.$refs.myscroller.finishInfinite(2);
-				}
-				
 			},
 			refresh(done) {
 				var self = this
@@ -172,7 +164,6 @@
 
 		},
 		created: function() {
-			this.type_id = this.$route.query.type_id
 			this.getGoods()
 		}
 	}

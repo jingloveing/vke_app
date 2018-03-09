@@ -12,7 +12,7 @@
 				<img src="../../../static/images/gt_white.png" alt="" class="gt-icon" />
 			</div>
 		</router-link>
-		<div class="list" v-for="i in 3">
+		<div class="list">
 			<router-link class="order_des" to="">
 				<img src="../../../dist/static/images/default_img.png" alt="" class="order_pic" />
 				<div class="order_des_m">
@@ -24,8 +24,8 @@
 					</p>
 				</div>
 			</router-link>
-			<x-number :min="0" v-model="num" fillable :title="'请输入兑换数量'" class="num f28 c3"></x-number>
-			<p class="f28 c3" style="line-height: .9rem;margin: 0 .26rem;border-bottom: .01rem solid #e5e5e5;">运费：￥10.00</p>
+			<!--<x-number :min="0" v-model="num" fillable :title="'请输入兑换数量'" class="num f28 c3"></x-number>
+			<p class="f28 c3" style="line-height: .9rem;margin: 0 .26rem;border-bottom: .01rem solid #e5e5e5;">运费：￥10.00</p>-->
 			<p class="f24 c3" style="line-height: .9rem;margin: 0 .26rem;text-align: right;">共1件商品 小计：<span style="color: #F51D46;">￥<span class="rmb">22</span><span class="corner">.90</span></span>
 			</p>
 		</div>

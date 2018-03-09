@@ -3,13 +3,17 @@
 		<x-header :left-options="{backText: ''}" :title="title" style="background-color: #f9f9f9;"></x-header>
 		<div style="height: .88rem;"></div>
 		<div>
-			<div class="list" v-for="i in 5">
+			<div class="list" v-for="(item,index) in list" :key="index">
 				<div class="list_left">
-					<img src="../../../static/images/acerStore.png" alt="" />
+					<img :src="item.head_image" alt="" />
 				</div>
 				<div class="list_right">
-					<p class="title">姓名</p>
-					<p class="name">身份（帮主,长老,帮众）</p>
+					<p class="title">{{item.nickname}}</p>
+					<p class="name">
+						<span v-show="item.level_id==1">帮众</span>
+						<span v-show="item.level_id==2">长老</span>
+						<span v-show="item.level_id==3">帮主</span>
+					</p>
 				</div>
 			</div>
 		</div>
@@ -27,18 +31,35 @@
 			return {
                title:'旗下帮主',
                type:'',
+               list:[]
 			}
 		},
 		methods: {
-            
+            //获取某个等级下的粉丝数量
+			getList() {
+				this.$http({
+					methods:'get',
+					url:'/api/myInviteList',
+					params:{level:this.type}
+					}).then((res) => {
+					if(res.data.code == '200') {
+						this.list = res.data.data
+					} else {
+
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
 		},
 		created: function() {
             this.type=this.$route.query.type
+            this.getList()
 		},
 		mounted: function() {
-            if(this.type==0){
+            if(this.type==3){
             	this.title='旗下帮主'
-            }else if(this.type==1){
+            }else if(this.type==2){
             	this.title='旗下长老'
             }else{
             	this.title='旗下帮众'

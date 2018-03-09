@@ -17,51 +17,62 @@
 				<img src="../../../static/images/brandSite_icon.png" alt="" />
 				<span>入驻品牌</span>
 			</div>
-			<scroller lock-y :scrollbar-x=false style="height: 1.92rem;">
-				<div class="store" ref="nav1">
-					<div class="store_content" v-for="i in 8" :key="i">
-						<img src="../../../static/images/goods.png" alt="" :onerror="defaultImg">
-						<p class="f24 c3" style="    white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">某某商家某某商家某某商家</p>
-					</div>
-					<div class="store_content more">
+			<div style="height: 1.92rem;" class="f28 c3">
+				<swipers :options="swiperOptionA" class="store">
+					<swiper-slide class="store_content" v-for="(item,index) in merchantList" :key="index">
+						<router-link :to="{name:'StoreIndex',query:{id:item.id}}">
+							<img :src="item.logo" alt="" :onerror="defaultImg">
+							<p class="f24 c3" style="    white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">{{item.name}}</p>
+						</router-link>
+					</swiper-slide>
+					<!--<swiper-slide class="store_content more">
 						<span class="f24 c3">全部</span>
-					</div>
-					<!--</router-link>-->
-				</div>
-			</scroller>
+					</swiper-slide>-->
+				</swipers>
+			</div>
 		</div>
 		<div class="main">
-			<div class="list" v-for="i in 3">
+			<div class="list" v-for="(item,index) in merchantView" :key="index">
 				<div class="list-title">
 					<div class="list-title-left">
-						<img src="../../../dist/static/images/default_img.png" alt="" class="small-icon" />
-						<span class="f28 c3" style="margin-left: .1rem;">某某商家</span>
+						<img :src="item.logo" alt="" class="small-icon" />
+						<span class="f28 c3" style="margin-left: .1rem;">{{item.name}}</span>
 					</div>
-					<router-link class="f24 c3 store-btn" to="/brandSite/storeIndex">进店逛逛</router-link>
+					<router-link class="f24 c3 store-btn" :to="{name:'StoreIndex',query:{id:item.id}}">进店逛逛</router-link>
 				</div>
-				<video id="myVideo" width="100%" controls style="height: 4.2rem;background: black;" poster="../../../static/images/default_img.png">
-					<source src="../../../static/example.mp4" type="video/mp4">
-					<source src="/i/movie.ogg" type="video/ogg">
-				</video>
-				<scroller lock-y :scrollbar-x=false style="margin-top: .1rem;">
-					<div class="box" ref="nav1">
-						<!--<router-link :to="{name:'goodsDetail',query:{id:goods1.id}}" v-for="(goods1,index) in goods1" id="box1-item" style="width: 2.18rem;" class="box1-item" :key="index">-->
-						<div class="box_content" v-for="i in 8" :key="i">
-							<img src="static/images/goods.png" alt="" :onerror="defaultImg">
+				<div style="position: relative;" @click="play(item.id)">
+					<!--controls---video的控制条-->
+					<video controls :id="'myVideo'+item.id" width="100%" style="height: 4.2rem;background: black;">
+						<source :src="item.view" type="video/mp4">
+						<source src="/i/movie.ogg" type="video/ogg">
+					</video>
+					<div class="pause">
+						<img src="/static/images/play.png" alt=""/>
+					</div>
+				</div>
+				<swipers :options="swiperOptionB" style="margin-top: .1rem;">
+					<swiper-slide v-for="(list,index) in item.product_list" :key="index" class="box_content">
+						<router-link :to="{name:'TBDetail',query:{}}">
+							<img :src="list.thumb_url" alt="" :onerror="defaultImg">
 							<span class="dess">
-            <p class="des_name break">产品介绍产品介绍产品介绍产品介绍产品介绍产品介绍</p>
-            <p class="des_price"><span class="new_price"><span class="f20">￥</span>11<span>.99</span></span>
+                            <p class="des_name break">{{list.product_name}}</p>
+                            <p class="des_price">
+                            	<span class="new_price">
+                            		<span class="f20">￥</span>{{list.reserve_price}}
+							<!--11<span>.99</span>-->
+							</span>
 							<!--<span class="old_price">￥12<span>.12</span></span>-->
 							</p>
 							</span>
 							<div class="ticket">券100元</div>
-						</div>
-						<div class="box_content more">
+						</router-link>
+					</swiper-slide>
+					<swiper-slide>
+						<router-link class="box_content more" :to="{name:'StoreIndex',query:{id:item.id}}">
 							<span>查看全部</span>
-						</div>
-						<!--</router-link>-->
-					</div>
-				</scroller>
+						</router-link>
+					</swiper-slide>
+				</swipers>
 			</div>
 		</div>
 	</div>
@@ -69,17 +80,32 @@
 
 <script>
 	import { XHeader, Swiper, Scroller, } from 'vux'
+	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 	export default {
 		name: 'BrandSite',
 		components: {
 			XHeader,
 			Swiper,
 			Scroller,
+			swipers: swiper,
+			swiperSlide,
 		},
 		data() {
 			return {
 				demoList: [],
+				merchantList: [],
+				merchantView: [],
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
+				swiperOptionA: {
+					// 如果需要滚动条
+					slidesPerView: 5,
+					preventClicksPropagation: true,
+				},
+				swiperOptionB: {
+					// 如果需要滚动条
+					slidesPerView: 3,
+					preventClicksPropagation: true,
+				},
 			}
 		},
 		methods: {
@@ -87,13 +113,13 @@
 			getBannerList: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/merchantBanner'
+					url: '/api/merchantIndexBanner'
 				}).then((res) => {
 					if(res.data.code == '200') {
-						const imgList = res.data.data.index_banner
+						const imgList = res.data.data
 						const demoList = imgList.map((item, index) => ({
-							url: item.banner_url,
-							img: item.banner_image
+							url: item.click_url,
+							img: item.image
 						}))
 						this.demoList = demoList
 						//          console.log(imgList)
@@ -102,12 +128,50 @@
 					console.log(err)
 				})
 			},
+			//      获取入驻品牌列表
+			getMerchantList: function() {
+				this.$http({
+					method: 'get',
+					url: '/api/merchantList'
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.merchantList = res.data.data
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			//      获取入驻品牌列表---带视频
+			getMerchantView: function() {
+				this.$http({
+					method: 'get',
+					url: '/api/merchantView'
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.merchantView = res.data.data.list
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			play(e){
+				var video = document.getElementById('myVideo' + e)
+				if(video.paused) {
+					video.play()
+					video.parentNode.children[1].style.display="none"
+				} else {
+					video.pause();
+					video.parentNode.children[1].style.display="inline-block"
+				}
+			}
 		},
 		mounted: function() {
 
 		},
 		created: function() {
 			this.getBannerList()
+			this.getMerchantList()
+			this.getMerchantView()
 		}
 	}
 </script>
@@ -129,7 +193,7 @@
 		text-align: center;
 		line-height: 100%;
 		position: absolute;
-		right: 0rem;
+		right: -.2rem;
 		top: 0rem;
 	}
 	
@@ -172,7 +236,6 @@
 	
 	.box {
 		height: 2.8rem;
-		min-width: 21.3rem;
 		position: relative;
 		background-color: white;
 		padding-bottom: .34rem;
@@ -181,7 +244,6 @@
 	
 	.store {
 		height: 1.92rem;
-		min-width: 21.3rem;
 		position: relative;
 		background-color: white;
 		display: flex;
@@ -193,9 +255,8 @@
 		width: 1.64rem;
 		padding: 0 .1rem;
 		box-sizing: border-box;
-		float: left;
-		position: relative;
 		text-align: center;
+		margin-top: .2rem;
 	}
 	
 	.store_content img {
@@ -220,15 +281,14 @@
 	}
 	
 	.box_content {
-		margin: 0 0 0 .18rem;
-		width: 2.18rem;
+		margin: 0 0 0 .2rem;
+		width: 2rem!important;
 		box-sizing: border-box;
-		float: left;
 		position: relative;
 	}
 	
 	.box_content img {
-		width: 100%;
+		width: 2rem;
 		height: 2rem;
 		border-radius: .08rem;
 	}
@@ -301,9 +361,7 @@
 		justify-content: center;
 	}
 	
-	.main {
-		
-	}
+	.main {}
 	
 	.list {
 		margin-top: .2rem;

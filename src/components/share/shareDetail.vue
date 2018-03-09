@@ -30,10 +30,6 @@
 		},
 		data() {
 			return {
-				tipFixed1: false,
-				tipFixed2: false,
-				offsetTop1:'',
-				offsetTop2:'',
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 			}
 		},

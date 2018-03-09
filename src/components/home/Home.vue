@@ -61,7 +61,7 @@
 				<span>品牌精选</span>
 			</div>
 			<div v-for="(item,index) in merchant" :key="index">
-				<router-link class="nav" to="/brandSite/storeIndex">
+				<router-link class="nav" :to="{name:'StoreIndex',query:{id:item.id}}">
 					<img :src="item.image" style="width: 100%;height: 100%;" :onerror="defaultImg">
 					<div class="nav_name">
 						<img :src="item.logo" class="nav_pic" />
@@ -69,11 +69,10 @@
 					</div>
 					<div class="bd"></div>
 				</router-link>
-				<scroller lock-y :scrollbar-x=false style="margin-top: .2rem;">
-					<div class="box" ref="nav1">
-						<router-link :to="{name:'TBDetail',query:{}}" id="box1-item" style="width: 2.18rem;" class="box1-item" v-for="(list,index) in item.product_list" :key="index">
-							<div class="box_content">
-								<img :src="list.thumb_url" alt="" :onerror="defaultImg">
+				<swipers :options="swiperOptionB" style="margin-top: .2rem;">
+					<swiper-slide v-for="(list,index) in item.product_list" :key="index"  class="box_content">
+						<router-link :to="{name:'TBDetail',query:{}}">
+							<img :src="list.thumb_url" alt="" :onerror="defaultImg">
 								<span class="dess">
                                 <p class="des_name break">{{list.product_name}}</p>
                                 <p class="des_price">
@@ -84,15 +83,14 @@
 								</p>
 								</span>
 								<div class="ticket">券{{list.coupon_number}}元</div>
-							</div>
 						</router-link>
-						<router-link class="box_content more" to="/brandSite/storeIndex">
+					</swiper-slide>
+					<swiper-slide>
+						<router-link class="box_content more" :to="{name:'StoreIndex',query:{id:item.id}}">
 							<span>查看全部</span>
 						</router-link>
-
-					</div>
-				</scroller>
-
+					</swiper-slide>
+				</swipers>
 				<!--<div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>-->
 			</div>
 		</div>
@@ -106,13 +104,16 @@
 </template>
 <script>
 	import { Swiper, SwiperItem, Scroller, Loading } from 'vux'
+	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 	export default {
 		name: 'Home',
 		components: {
 			Swiper,
 			SwiperItem,
 			Scroller,
-			Loading
+			Loading,
+			swipers: swiper,
+			swiperSlide,
 		},
 		data() {
 			return {
@@ -129,7 +130,12 @@
 				bottomCount: 20,
 				showLoading: false,
 				loadText: '加载中...',
-				news:[]
+				news:[],
+				swiperOptionB: {
+					// 如果需要滚动条
+					slidesPerView: 3,
+					preventClicksPropagation: true,
+				},
 			}
 		},
 		methods: {
@@ -205,6 +211,7 @@
 					done()
 				}, 1500)
 			},
+			
 			//      toTop(){
 			//        document.documentElement.scrollTop = document.body.scrollTop =0;
 			//      },
@@ -287,7 +294,7 @@
 		width: 100%;
 		position: fixed;
 		top: 0;
-		z-index: 9999;
+		z-index: 9999999;
 		height: .88rem;
 		line-height: .88rem;
 		display: flex;
@@ -448,25 +455,23 @@
 		left: 0;
 	}
 	
-	.box {
+	/*.box {
 		height: 2.8rem;
-		min-width: 21.3rem;
 		position: relative;
 		background-color: white;
 		padding-bottom: .34rem;
 		margin-bottom: .16rem;
-	}
+	}*/
 	
 	.box_content {
 		margin: 0 0 0 .18rem;
-		width: 2.18rem;
+		width: 2rem!important;
 		box-sizing: border-box;
-		float: left;
 		position: relative;
 	}
 	
 	.box_content img {
-		width: 100%;
+		width: 2rem;
 		height: 2rem;
 		border-radius: .08rem;
 	}
@@ -506,7 +511,7 @@
 		border-radius: .08rem;
 	}
 	
-	.more>span {
+	.more span {
 		display: table-cell;
 		text-align: center;
 		vertical-align: middle;

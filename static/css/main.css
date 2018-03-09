@@ -185,8 +185,15 @@ input::-webkit-input-placeholder{
 input:-moz-placeholder{
 		color: #C7C7C7;
 	}
-
-
+textarea::-webkit-input-placeholder{
+		color: #C7C7C7;
+	}
+textarea:-moz-placeholder{
+		color: #C7C7C7;
+	}
+	.weui-textarea{
+		color: #333;
+	}
 
 /*列表为空的样式*/
 .empty{
@@ -244,4 +251,13 @@ input:-moz-placeholder{
 		border-radius: .5rem;
 		padding: 0 .2rem;
 		box-sizing: border-box;
+	}
+	/*开始停止样式*/
+	.pause{
+		position: absolute;z-index: 99;top: 0;width: 100%;height: 100%;
+		text-align: center;
+	}
+	.pause img{
+		width: 1.14rem;height: 1.14rem;border-radius: 50%;border: .01rem solid white;
+		margin-top:1rem;
 	}

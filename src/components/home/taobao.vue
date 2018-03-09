@@ -54,22 +54,7 @@
 									<span class="juan_style" style="margin-right: .2rem;">
                       <span class="juan_style_left">券</span>
 									<span class="juan_style_right">{{goods.coupon_number}}元</span>
-									</span>
-									<div class="header_list_num jewel f22">
-										<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
-									</div>
-									<!--<div class="header_list_num gold">
-                	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
-                	       8.86
-                	     </div>
-                	     <div class="header_list_num silver">
-                	   	   <img src="../../../static/images/personCenter/silver.png" alt="" />
-                	       8.86
-                	     </div>
-                	     <div class="header_list_num coppers">
-                	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
-                	       8.86
-                	     </div>-->
+									</span>					
 								</div>
 								<div class="des_b">
 									<span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span style="font-size: .20rem;" v-show="goods.zk_final_price.corner!=='00'">.{{goods.zk_final_price.corner}}</span></span>
@@ -112,17 +97,16 @@
 			//      获取首页轮播图
 			getBannerList: function() {
 				this.$http({
-					method: 'POST',
-					url: '/api/index_banner'
+					method: 'get',
+					url: '/api/tbBanner'
 				}).then((res) => {
 					if(res.data.code == '200') {
-						const imgList = res.data.data.index_banner
+						const imgList = res.data.data
 						const demoList = imgList.map((item, index) => ({
-							url: item.banner_url,
-							img: item.banner_image
+							url: item.click_url,
+							img: item.image
 						}))
 						this.demoList = demoList
-						console.log(imgList)
 					}
 				}, (err) => {
 					console.log(err)
@@ -131,11 +115,11 @@
 			//      获取商品分类
 			getTypeList: function() {
 				this.$http({
-					method: 'POST',
-					url: '/api/index_type'
+					method: 'get',
+					url: '/api/tbCate'
 				}).then((res) => {
 					if(res.data.code == '200') {
-						const typeList = res.data.data.goods_type_up
+						const typeList = res.data.data
 						this.typeList = typeList
 					}
 				}, (err) => {
@@ -146,21 +130,19 @@
 			getGoodsList: function() {
 				const self = this
 				this.$http({
-					method: 'POST',
-					url: '/api/index_goods',
-					data: {
+					method: 'get',
+					url: '/api/tbList',
+					params: {
 						page: this.pageIndex,
-						limit: this.limit
+						limit: this.limit,
 					}
 				}).then((res) => {
 					if(res.data.code == '200') {
-						if(res.data.data.goods.length == 0) {
+						if(res.data.data.list.length == 0) {
 							this.noData = true
 							this.$refs.myscroller.finishInfinite(2);
-							//             self.noData=false;
-							//             self.$refs.myscroller.finishPullToRefresh();
 						} else {
-							this.goodsList = this.goodsList.concat(res.data.data.goods)
+							this.goodsList = this.goodsList.concat(res.data.data.list)
 						}
 					}
 				}, (err) => {
@@ -168,36 +150,33 @@
 				})
 			},
 
-//			infinite(done) {
-//				if(this.noData) {
-//					setTimeout(() => {
-//						this.$refs.myscroller.finishInfinite(2);
-//					})
-//					return;
-//				} else {
-//					let self = this; //this指向问题
-//					setTimeout(() => {
-//						self.pageIndex += 1
-//						self.getGoodsList()
-//						done()
-//					}, 1500)
-//				}
-//			},
-//			refresh(done) {
-//				var self = this
-//				this.pageIndex = 1
-//				this.goodsList = []
-////				this.getBannerList()
-////				this.getTypeList()
-////				this.getGoodsList()
-//				setTimeout(function() {
-//					self.top = self.top - 10;
-//					done()
-//				}, 1500)
-//			},
-			//      toTop(){
-			//        document.documentElement.scrollTop = document.body.scrollTop =0;
-			//      },
+			infinite(done) {
+				if(this.noData) {
+					setTimeout(() => {
+						this.$refs.myscroller.finishInfinite(2);
+					})
+					return;
+				} else {
+					let self = this; //this指向问题
+					setTimeout(() => {
+						self.pageIndex += 1
+						self.getGoodsList()
+						done()
+					}, 1500)
+				}
+			},
+			refresh(done) {
+				var self = this
+				this.pageIndex = 1
+				this.goodsList = []
+				this.getBannerList()
+				this.getTypeList()
+				this.getGoodsList()
+				setTimeout(function() {
+					self.top = self.top - 10;
+					done()
+				}, 1500)
+			},
 			goback() {
 				history.back(-1);
 			}
@@ -205,23 +184,12 @@
 		},
 		mounted: function() {
 			this.$nextTick(function() {
-				//        // 返回顶部
-				//        let back_btn = document.getElementsByClassName('toTop')[0];
-				//        window.onscroll=function () {
-				//          let top = document.documentElement.scrollTop || document.body.scrollTop;
-				////          console.log(top)
-				//          if (top > 800) {
-				//            back_btn.style.display = 'block';
-				//          } else {
-				//            back_btn.style.display = 'none';
-				//          }
-				//        }
 			})
 		},
 		created: function() {
-//			this.getBannerList()
-//			this.getTypeList()
-//			this.getGoodsList()
+			this.getBannerList()
+			this.getTypeList()
+			this.getGoodsList()
 		}
 	}
 </script>

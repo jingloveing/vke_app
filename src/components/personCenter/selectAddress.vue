@@ -4,12 +4,12 @@
 			<a slot="right" style="color: #9A7BFF;font-size: .32rem;" href="/personCenter/myOrder/addressList">管理</a>
 		</x-header>
 		<div style="height: .88rem;"></div>
-		<router-link :to="{name:'Pay',query:{}}">
-			<div class="list" v-for="(item,index) in list">
+		<div>
+			<div class="list" v-for="(item,index) in list" @click="">
 				<h5 class="f28 c3"><span class="left"><span class="default" v-show="item.is_default==1">默认</span><span>{{item.consignee}}</span></span><small class="f28" style="font-family: arial;">{{item.telephone}}</small></h5>
 				<p class="f26 c9">{{item.province}}{{item.city}}{{item.country}}{{item.address}}</p>
 			</div>
-		</router-link>
+		</div>
 		<div style="position:fixed;bottom: 0;width: 100%;height: .96rem;">
 			<x-button @click.native="click()" type="primary" action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32">添加新地址</x-button>
 		</div>

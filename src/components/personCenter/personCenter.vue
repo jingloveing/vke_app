@@ -118,33 +118,33 @@
 				</div>
 				<div class="sort">
 					<h4>其它工具</h4>
-					<div style="border-top:.01rem solid #f4f4f4;">
-						<router-link to="/personCenter/shoppingCart">
+					<div style="border-top:.01rem solid #f4f4f4;overflow: hidden;">
+						<!--<router-link to="/personCenter/shoppingCart">-->
 							<figure class="list1 list2">
 								<img src="../../../static/images/personCenter/cart.png" alt="" />
 								<figcaption>购物车</figcaption>
 							</figure>
-						</router-link>
+						<!--</router-link>-->
 						<router-link to="/personCenter/helpCenter">
 							<figure class="list1 list2">
 								<img src="../../../static/images/personCenter/college.png" alt="" />
 								<figcaption>白鹭书院</figcaption>
 							</figure>
 						</router-link>
-					</div>
-					<div style="border-top:.01rem solid #f4f4f4;">
 						<router-link to='/personCenter/code'>
 							<figure class="list1 list2">
 								<img src="../../../static/images/personCenter/code.png" alt="" />
 								<figcaption>启蒙码</figcaption>
 							</figure>
 						</router-link>
-						<router-link to="/personCenter/shareList">
+						<!--<router-link to="/personCenter/shareList">-->
 							<figure class="list1 list2">
 								<img src="../../../static/images/personCenter/listen.png" alt="" />
 								<figcaption>包打听</figcaption>
 							</figure>
-						</router-link>
+						<!--</router-link>-->
+					</div>
+					<div style="border-top:.01rem solid #f4f4f4;overflow: hidden;">
 						<router-link to="/personCenter/collectList">
 							<figure class="list1 list2">
 								<img src="../../../static/images/personCenter/collect.png" alt="" />
@@ -157,14 +157,12 @@
 								<figcaption>总坛位置</figcaption>
 							</figure>
 						</router-link>
-					</div>
-					<div style="border-top:.01rem solid #f4f4f4;">
-						<router-link to="/personCenter/refundList">
+						<!--<router-link to="/personCenter/refundList">-->
 							<figure class="list1 list2">
 								<img src="../../../static/images/personCenter/exchange.png" alt="" />
 								<figcaption>宝物退换</figcaption>
 							</figure>
-						</router-link>
+						<!--</router-link>-->
 					</div>
 				</div>
 			</div>

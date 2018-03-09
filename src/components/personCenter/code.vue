@@ -3,9 +3,9 @@
 		<div class="header">
 			<div style="overflow: hidden;">
 				<group class="weui-cells_form">
-					<x-input class="weui-vcode code" placeholder="请输入启蒙码" novalidate :show-clear="false">
-						<x-button slot="right" type="primary" mini class="f28" style="width: 1.2rem;padding: 0 0;" v-show="show" @click.native="show=!show">确定</x-button>
-						<x-button slot="right" mini class="f28" disabled style="margin-top:0;background-color: #999;color: white;width: 1.2rem;padding: 0 0;" v-show="!show">已开启</x-button>
+					<x-input class="weui-vcode code" placeholder="请输入启蒙码" novalidate :show-clear="false" v-model="invite_code">
+						<x-button slot="right" type="primary" mini class="f28" style="width: 1.2rem;padding: 0 0;" @click.native="invite()" v-show="is_fans==0">确定</x-button>
+						<x-button slot="right" mini class="f28" disabled style="margin-top:0;background-color: #999;color: white;width: 1.2rem;padding: 0 0;" v-show="is_fans==1">已开启</x-button>
 					</x-input>
 				</group>
 			</div>
@@ -17,12 +17,13 @@
 				</div>
 			</div>
 		</div>
-		<toast v-model="showPositionValue" type="text" :time="800" is-show-mask :text="text"></toast>
+		<toast v-model="showToast" type="text" :time="800" is-show-mask :text="text"></toast>
+		<loading v-model="showLoading" :text="loadText"></loading>
 	</div>
 </template>
 
 <script>
-	import { Group, XButton, XInput ,Toast} from 'vux'
+	import { Group, XButton, XInput ,Toast,Loading} from 'vux'
 	import Clipboard from 'clipboard'
 	export default {
 		name: 'Code',
@@ -30,16 +31,53 @@
 			Group,
 			XButton,
 			XInput,
-			Toast
+			Toast,
+			Loading
 		},
 		data() {
 			return {
-				show: true,
-				code:'12234',
-				position: 'middle',
-                showPositionValue: false,
-                text:''
+				is_fans: true,
+				code:'',
+                showToast: false,
+                text:'',
+                invite_code:'',
+                showLoading:false,
+                loadText:''
 			}
+		},
+		methods:{
+			//获取个人推荐码
+			getCode(){
+				this.$http.get('/api/myCode',{}).then((res) => {
+					if(res.data.code == '200') {
+						this.code=res.data.data.code
+						this.is_fans=res.data.data.is_fans
+					}else{
+						
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			//提交推荐人推荐码
+			invite(){
+				this.$http.post('/api/invite',{invite_code:this.invite_code}).then((res) => {
+					if(res.data.code == '200') {
+						this.$vux.toast.show({
+                             text: res.data.data.message,
+                             type:'success',
+                        })
+						this.getCode()
+					}else{
+						this.$vux.toast.show({
+                             text: res.data.error,
+                             type:'warn',
+                       })
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
 		},
 		mounted: function() {
 				this.$nextTick(function() {
@@ -47,15 +85,18 @@
 						const clipboard = new Clipboard('.m_btn')
 						clipboard.on('success', function(e) {
                              self.text="复制成功"
-                             self.showPositionValue = true
+                             self.showToast = true
 							e.clearSelection();
 						});
 						clipboard.on('error', function(e) {
                              self.text="请重新复制"
-                             self.showPositionValue = true
+                             self.showToast = true
 						});
 				})
-			}
+		},
+		created:function(){
+			this.getCode()
+		}
 	}
 </script>
 <style scoped="scoped">

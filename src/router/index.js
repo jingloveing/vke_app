@@ -11,8 +11,6 @@ import OrderList from '@/components/personCenter/orderList'
 import OrderDeatail from '@/components/personCenter/orderDeatail'
 import Refund from '@/components/personCenter/refund'
 import InfoList from '@/components/personCenter/infoList'
-import AcerStorage from '@/components/personCenter/acerStorage'
-import EmailList from '@/components/personCenter/emailList'
 import Setting from '@/components/personCenter/setting'
 import Accredit from '@/components/personCenter/accredit'
 import BindTel from '@/components/personCenter/bindTel'
@@ -59,8 +57,9 @@ import JD from '@/components/home/JD'
 import NewJD from '@/components/home/new_JD'
 import NewMogu from '@/components/home/new_mogu'
 import NewVip from '@/components/home/new_vip'
-import JDDetail from '@/components/home/JDDetail'
+//import JDDetail from '@/components/home/JDDetail'
 import TBDetail from '@/components/home/TBDetail'
+import BrandDetail from '@/components/brandSite/brandDetail'
 import SelfSupport from '@/components/home/selfSupport'
 import RefundList from '@/components/personCenter/refundList'
 import RefundDetail from '@/components/personCenter/refundDetail'
@@ -72,6 +71,7 @@ import AboutUs from '@/components/personCenter/AboutUs'
 import CashRule from '@/components/personCenter/cashRule'
 import Upgrade from '@/components/personCenter/upgrade'
 import ShareDetail from '@/components/share/shareDetail'
+import Vedio from '@/components/brandSite/vedio'
 Vue.use(Router)
 //Router.prototype.goBack = function() {
 //	this.isBack = true
@@ -411,33 +411,18 @@ routes: [{
 	{
 		path: '/personCenter/setting/feedback',
 		name: 'Feedback',
-		component: Feedback
+		component: Feedback,
+		meta: {
+			showHeader: true,
+			title:"意见反馈"
+		}
 	},
 	{
 		path: '/personCenter/info/infoList',
 		name: 'InfoList',
 		component: InfoList,
 		meta: {
-			showHeader: true,
-			title:"商品发货"
-		}
-	},
-	{
-		path: '/personCenter/info/acerStorage',
-		name: 'AcerStorage',
-		component: AcerStorage,
-		meta: {
-			showHeader: true,
-			title:"财宝入库"
-		}
-	},
-	{
-		path: '/personCenter/info/emailList',
-		name: 'EmailList',
-		component: EmailList,
-		meta: {
-			showHeader: true,
-			title:"官方信件"
+			showHeader: true
 		}
 	},
 	{
@@ -568,15 +553,15 @@ routes: [{
 			title:"唯品会"
 		}
 	},
+//	{
+//		path: '/JD',
+//		name: 'JD',
+//		component: JD,
+//	},
 	{
-		path: '/JD',
-		name: 'JD',
-		component: JD,
-	},
-	{
-		path: '/JD/JDDetail',
-		name: 'JDDetail',
-		component: JDDetail,
+		path: '/brandDetail',
+		name: 'BrandDetail',
+		component: BrandDetail,
 	},
 	{
 		path: '/taobao/TBDetail',
@@ -654,6 +639,15 @@ routes: [{
 		path: '/login',
 		name: 'Login',
 		component: Login,
+	},
+	{
+		path: '/vedio',
+		name: 'Vedio',
+		component: Vedio,
+		meta: {
+			showHeader: true,
+			title:"视频"
+		}
 	},
 ]
 })

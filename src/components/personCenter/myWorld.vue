@@ -2,21 +2,21 @@
 	<div>
 		<div style="position: relative;margin-bottom: 1.5rem;">
 			<div class="header">
-				<p class="f30">帮众总人数</p>
+				<p class="f30">帮众总数:{{data.total}}人</p>
 			</div>
 			<div class="header_main">
 				<ul class="header_list c3">
-					<router-link :to="{name:'Member',query:{type:0}}" tag="li">
+					<router-link :to="{name:'Member',query:{type:3}}" tag="li">
 						<p class="header_list_title">帮主</p>
-						<p style="font-size: .36rem;">100<small class="f2 c6">人</small></p>
-					</router-link>
-					<router-link :to="{name:'Member',query:{type:1}}" tag="li">
-						<p class="header_list_title">长老</p>
-						<p style="font-size: .36rem;">100<small class="f2 c6">人</small></p>
+						<p style="font-size: .36rem;">{{data.level3}}<small class="f2 c6">人</small></p>
 					</router-link>
 					<router-link :to="{name:'Member',query:{type:2}}" tag="li">
+						<p class="header_list_title">长老</p>
+						<p style="font-size: .36rem;">{{data.level2}}<small class="f2 c6">人</small></p>
+					</router-link>
+					<router-link :to="{name:'Member',query:{type:1}}" tag="li">
 						<p class="header_list_title">帮众</p>
-						<p style="font-size: .36rem;">100<small class="f2 c6">人</small></p>
+						<p style="font-size: .36rem;">{{data.level1}}<small class="f2 c6">人</small></p>
 					</router-link>
 				</ul>
 			</div>
@@ -24,39 +24,99 @@
 		<div class="main">
 			<div class="list">
 				<div class="list_left">
-					<img src="../../../static/images/personCenter/pic.jpg" alt="" />
+					<img :src="data.nickname.head_image" alt="" />
 				</div>
 				<div class="list_right">
-					<p class="title">姓名<span class="leve">推荐人</span></p>
-					<p class="name">身份（帮主,长老,帮众）</p>
+					<p class="title">{{data.nickname.nickname}}<span class="leve">推荐人</span></p>
+					<p class="name">
+						<span v-show="data.nickname.level_id==1">帮众</span>
+						<span v-show="data.nickname.level_id==2">长老</span>
+						<span v-show="data.nickname.level_id==3">帮主</span>
+					</p>
 				</div>
 			</div>
 			<p class="f24 c9 tip">最新帮众</p>
 			<div>
-				<div class="list">
-				<div class="list_left">
-					<img src="../../../static/images/acerStore.png" alt="" />
+				<div class="list" v-for="(item,index) in newInvite" :key="index">
+					<div class="list_left">
+						<img :src="item.head_image" alt="" />
+					</div>
+					<div class="list_right">
+						<p class="title">{{item.nickname}}</p>
+						<p class="name">
+							<span v-show="item.level_id==1">帮众</span>
+						<span v-show="item.level_id==2">长老</span>
+						<span v-show="item.level_id==3">帮主</span>
+						</p>
+					</div>
 				</div>
-				<div class="list_right">
-					<p class="title">姓名</p>
-					<p class="name">身份（帮主,长老,帮众）</p>
-				</div>
-			</div>
-			<div class="list">
-				<div class="list_left">
-					<img src="../../../static/images/acerStore.png" alt="" />
-				</div>
-				<div class="list_right">
-					<p class="title">姓名</p>
-					<p class="name">身份（帮主,长老,帮众）</p>
-				</div>
-			</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+	import { Toast, Loading } from 'vux'
+	export default {
+		name: 'Code',
+		components: {
+			Toast,
+			Loading
+		},
+		data() {
+			return {
+				data: {
+					total: null,
+					level1: null,
+					level2: null,
+					level3: null,
+					nickname: {
+						nickname: null,
+						level_id: null
+					}
+				},
+				newInvite: [],
+				showToast: false,
+				text: '',
+				showLoading: false,
+				loadText: ''
+			}
+		},
+		methods: {
+			//获取个人推荐人数及信息
+			getCount() {
+				this.$http.get('/api/inviteCount', {}).then((res) => {
+					if(res.data.code == '200') {
+						this.data = res.data.data
+					} else {
+
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			//获取最新邀请粉丝信息
+			getInviteNew() {
+				this.$http.get('/api/inviteNew', {}).then((res) => {
+					if(res.data.code == '200') {
+						this.newInvite = res.data.data
+					} else {
+
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+
+		},
+		mounted: function() {
+
+		},
+		created: function() {
+			this.getCount()
+			this.getInviteNew()
+		}
+	}
 </script>
 
 <style scoped="scoped">
@@ -150,14 +210,17 @@
 		display: inline-block;
 		margin-left: .16rem;
 	}
-	.tip{
+	
+	.tip {
 		line-height: .58rem;
 		padding: 0 .26rem;
 	}
-	.list{
+	
+	.list {
 		border-top: .01rem solid #e5e5e5;
 	}
-	.list:nth-child(1){
-		border-top:none;
+	
+	.list:nth-child(1) {
+		border-top: none;
 	}
 </style>
