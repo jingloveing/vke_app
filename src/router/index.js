@@ -72,6 +72,7 @@ import CashRule from '@/components/personCenter/cashRule'
 import Upgrade from '@/components/personCenter/upgrade'
 import ShareDetail from '@/components/share/shareDetail'
 import Vedio from '@/components/brandSite/vedio'
+import PaySuccess from '@/components/personCenter/paySuccess'
 Vue.use(Router)
 //Router.prototype.goBack = function() {
 //	this.isBack = true
@@ -121,10 +122,6 @@ routes: [{
 		path: '/home/assortment/Classify',
 		name:'Classify',
 		component: Classify,
-		meta: {
-			showHeader: true,
-			title:"淘宝领券"
-		}
 	},
 	{
 		path: '/home/assortment/search',
@@ -571,10 +568,7 @@ routes: [{
 	{
 		path: '/taobao/fuli',
 		name: 'Fuli',
-		component: Fuli,
-		meta: {
-			showHeader: true
-		}
+		component: Fuli
 	},
 	{
 		path: '/taobao/newHand',
@@ -647,6 +641,15 @@ routes: [{
 		meta: {
 			showHeader: true,
 			title:"视频"
+		}
+	},
+	{
+		path: '/paySuccess',
+		name: 'PaySuccess',
+		component: PaySuccess,
+		meta: {
+			showHeader: true,
+			title:"支付成功"
 		}
 	},
 ]

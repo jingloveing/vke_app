@@ -21,10 +21,13 @@
         <!--</div>-->
       <!--</div>-->
     <!--</div>-->
+    <x-header :left-options="{backText: ''}" :title="title" style="background-color: #f9f9f9;">
+		</x-header>
+		<div style="height: .88rem;"></div>
     <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
       <div class="main_goods">
         <ul class="goods">
-          <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :to="{name:'goodsDetail',query:{id:goods.id}}" :key="index">
+          <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :to="{name:'TBDetail',query:{id:goods.id}}" :key="index">
             <img :src="goods.pict_url" alt="" :onerror="defaultImg">
             <div class="content">
               <div class="des" v-text="goods.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
@@ -33,7 +36,7 @@
                       <span class="juan_style_left">券</span>
                       <span class="juan_style_right">{{goods.coupon_number}}元</span>
                     </span>
-                <span class="return_num_style"  v-show="goods.fans_acer !==0">返{{goods.fans_acer}}元宝</span>
+               <!-- <span class="return_num_style"  v-show="goods.fans_acer !==0">返{{goods.fans_acer}}元宝</span>-->
               </div>
               <div class="des_b">
                 <!--<p>                <del style="font-size: .20rem;color: #999;" >￥{{goods.reserve_price.rmb}}<span v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span></del>-->
@@ -51,7 +54,7 @@
   </div>
 </template>
 <script>
-//  import {XHeader} from 'vux'
+    import {XHeader} from 'vux'
 //  import Vue from 'vue'
 //  import VueScroller from 'vue-scroller'
 //  Vue.use(VueScroller)
@@ -59,7 +62,7 @@
     name: 'jiFen',
     components: {
 //      Vue,
-//      XHeader,
+        XHeader,
 //      VueScroller
     },
     data() {
@@ -73,6 +76,7 @@
         limit:10,
         noData: false,
         defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
+        title:'',
       }
     },
     methods: {
@@ -83,22 +87,19 @@
       },
       //      获取商品列表
       getGoodsList:function(){
-        const routerQuery = this.$route.query.id;
-        this.cate_id = routerQuery;
-//        console.log(this.cate_id);
         this.$http({
-          method:'POST',
-          url:'/api/goodslist',
-          data:{
-            cate_id:this.cate_id,page:this.pageIndex,limit:this.limit
+          method:'get',
+          url:'/api/tbList',
+          params:{
+            type:this.$route.query.id,page:this.pageIndex,limit:this.limit
           }
         }).then((res)=>{
           if(res.data.code == '200'){
-            if(res.data.data.goodsList.length==0){
+            if(res.data.data.list.length==0){
               this.noData=true
               this.$refs.myscroller.finishInfinite(2);
             }else{
-              this.goodsList=this.goodsList.concat(res.data.data.goodsList)
+              this.goodsList=this.goodsList.concat(res.data.data.list)
               this.$refs.myscroller.finishPullToRefresh()
             }
           }
@@ -158,6 +159,7 @@
 
     },
     created:function(){
+    	this.title=this.$route.query.title
       this.getGoodsList();
       this.getTypeList();
     }

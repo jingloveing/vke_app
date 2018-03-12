@@ -2,7 +2,7 @@
 	<div>
 		<x-header :left-options="{backText: ''}" title="特供商品区" class="header"></x-header>
 		<div style="height: .88rem;"></div>
-		<!--<div class="header-right">
+			<!--<div class="header-right">
 			<router-link to="/home/assortment/searchPage">
 				<img src="../../../static/images/search_icon.png" alt="" />
 			</router-link>
@@ -11,7 +11,7 @@
 				<img src="../../../static/images/cart_white.png" alt="" />
 			</router-link>
 		</div>-->
-		<!--<div style="background: white;height: .88rem;line-height: .88rem;" class="f28 c3">
+			<!--<div style="background: white;height: .88rem;line-height: .88rem;" class="f28 c3">
 			<swiper :options="swiperOptionB">
 				<swiper-slide v-for="(item,index) in cate" :key="index">
 					<div @click="click(index)" class="tabs" :class="indexs==index?'c_f':''">{{item.cate_name}}</div>
@@ -19,29 +19,29 @@
 				
 			</swiper>
 		</div>-->
-		<div class="main_goods">
-					<ul class="goods">
-						<router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'GoodsDetail',query:{id:goods.id,type:5}}" :key="index">
-							<img :src="goods.pict_url" alt="" :onerror="defaultImg" class="goods-pic">
-							<div class="content">
-								<div class="des">{{goods.product_name}}</div>
-								<div class="des_b">
-									<span class="price">
+			<div class="main_goods">
+				<ul class="goods">
+					<router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'GoodsDetail',query:{id:goods.id,type:5}}" :key="index">
+						<img :src="goods.thumb_url" alt="" :onerror="defaultImg" class="goods-pic">
+						<div class="content">
+							<div class="des">{{goods.product_name}}</div>
+							<div class="des_b">
+								<span class="price">
 										<span style="font-size: .2rem;">￥</span>{{goods.reserve_price.rmb}}
-										<span style="font-size: .2rem;" v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span>
-									</span>
-									<!--<span class="num">{{goods.volume}}件已售</span>-->
-								</div>
+								<span style="font-size: .2rem;" v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span>
+								</span>
+								<!--<span class="num">{{goods.volume}}件已售</span>-->
 							</div>
-						</router-link>
-					</ul>
-				</div>
-				<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
+						</div>
+					</router-link>
+				</ul>
+			</div>
+		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
 	</div>
 </template>
 
 <script>
-	import { XHeader ,Toast,} from 'vux'
+	import { XHeader, Toast, } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 	export default {
 		components: {
@@ -52,24 +52,23 @@
 		},
 		data() {
 			return {
-				swiperOptionB: {
-					// 如果需要滚动条
-					slidesPerView: 5,
-					preventClicksPropagation:true,
-				},
-				cate:[{
-					id:'',
-					cate_name:''
-				}],
-				indexs:0,
+				//				swiperOptionB: {
+				//					// 如果需要滚动条
+				//					slidesPerView: 5,
+				//					preventClicksPropagation:true,
+				//				},
+				//				cate:[{
+				//					id:'',
+				//					cate_name:''
+				//				}],
+				//				indexs:0,
 				goodsList: [],
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 				page: 1,
-				limit: 10,
-				cate_id:'',
+				limit: 20,
 				noData: false,
-				showToast:false,
-				toast:'',
+				showToast: false,
+				toast: '',
 			}
 		},
 		methods: {
@@ -78,63 +77,50 @@
 				const self = this
 				this.$http({
 					method: 'get',
-					url: '/api/selfProductList',
-					data: {
-						page: this.page,
-						limit: this.limit,
-						cate_id:this.cate_id
-					}
+					url: '/api/teList',
 				}).then((res) => {
 					if(res.data.code == '200') {
-//						if(res.data.data.list.length == 0) {
-//							this.noData = true
-//							this.$refs.myscroller.finishInfinite(2);
-//							//             self.noData=false;
-//							//             self.$refs.myscroller.finishPullToRefresh();
-//						} else {
-//							this.goodsList = this.goodsList.concat(res.data.data.list)
-//						}
-                           this.goodsList = res.data.data.list
+						this.goodsList = res.data.data
 					}
 				}, (err) => {
 					console.log(err)
 				})
 			},
-			//      获取商品分类
-			getCate: function() {
-				this.$http({
-					method: 'get',
-					url: '/api/xlkCate'
-				}).then((res) => {
-					if(res.data.code == '200') {
-						this.cate = res.data.data
-					}
-				}, (err) => {
-					console.log(err)
-				})
-			},
-            click(index){
-            	var tabs=document.getElementsByClassName('tabs')
-            	var self = this
-            	for(var i=0;i<tabs.length;i++){
-            		if(i==index){
-            			tabs[i].classList.add('c_f')
-            			self.indexs=i
-            			self.cate_id=self.cate[self.indexs].id
-            			this.getGoodsList()
-            		}else{
-            			tabs[i].classList.remove(('c_f'))
-            		}
-            	}
-            	
-            },
+			//			//      获取商品分类
+			//			getCate: function() {
+			//				this.$http({
+			//					method: 'get',
+			//					url: '/api/xlkCate'
+			//				}).then((res) => {
+			//					if(res.data.code == '200') {
+			//						this.cate = res.data.data
+			//					}
+			//				}, (err) => {
+			//					console.log(err)
+			//				})
+			//			},
+			//          click(index){
+			//          	var tabs=document.getElementsByClassName('tabs')
+			//          	var self = this
+			//          	for(var i=0;i<tabs.length;i++){
+			//          		if(i==index){
+			//          			tabs[i].classList.add('c_f')
+			//          			self.indexs=i
+			//          			self.cate_id=self.cate[self.indexs].id
+			//          			this.getGoodsList()
+			//          		}else{
+			//          			tabs[i].classList.remove(('c_f'))
+			//          		}
+			//          	}
+			//          	
+			//          },
 		},
 		created: function() {
-            this.getGoodsList()
-            this.getCate()
+			this.getGoodsList()
+			//          this.getCate()
 		},
 		mounted: function() {
-			
+
 		},
 		computed: {
 
@@ -160,16 +146,17 @@
 		height: .4rem;
 		padding: .2rem .1rem;
 	}
-	.swiper-slide{
+	
+	.swiper-slide {
 		text-align: center;
-		
 	}
-	.tabs.c_f{
+	
+	.tabs.c_f {
 		height: .88rem;
 		border-bottom: .05rem solid #9A7BFF;
 		box-sizing: border-box;
-		
 	}
+	
 	.goods {
 		overflow: hidden;
 	}

@@ -5,7 +5,7 @@
 		</x-header>
 		<div style="height: .88rem;"></div>
 		<div>
-			<div class="list" v-for="(item,index) in list" @click="">
+			<div class="list" v-for="(item,index) in list" @click="goPay(item)">
 				<h5 class="f28 c3"><span class="left"><span class="default" v-show="item.is_default==1">默认</span><span>{{item.consignee}}</span></span><small class="f28" style="font-family: arial;">{{item.telephone}}</small></h5>
 				<p class="f26 c9">{{item.province}}{{item.city}}{{item.country}}{{item.address}}</p>
 			</div>
@@ -53,6 +53,10 @@
 				this.$router.push({name:'AddAddress',query:{}})
 //          	this.$router.replace({name: ''})
            },
+           goPay(ev){
+           	    localStorage.setItem('address',JSON.stringify(ev))
+           	    this.$router.go(-1)
+           }
 		},
 		created: function() {
             this.getAddressList()

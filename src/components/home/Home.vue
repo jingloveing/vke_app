@@ -15,7 +15,7 @@
 				<span class="info_num">12</span>
 			</router-link>
 		</div>
-		<div style="height: .88rem;"></div>
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
 		<swiper auto :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" loop></swiper>
 		<div style=" margin-top: -.3rem;z-index: 99999;position: relative;">
 			<ul class="nav-small">
@@ -91,26 +91,20 @@
 						</router-link>
 					</swiper-slide>
 				</swipers>
-				<!--<div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>-->
 			</div>
 		</div>
+		</scroller>
 		<loading v-model="showLoading" :text="loadText"></loading>
-
-		<!--<div class="toTop" @click="toTop()">-->
-		<!--<img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;">-->
-		<!--<span>顶部</span>-->
-		<!--</div>-->
 	</div>
 </template>
 <script>
-	import { Swiper, SwiperItem, Scroller, Loading } from 'vux'
+	import { Swiper, SwiperItem, Loading } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 	export default {
 		name: 'Home',
 		components: {
 			Swiper,
 			SwiperItem,
-			Scroller,
 			Loading,
 			swipers: swiper,
 			swiperSlide,
@@ -123,7 +117,6 @@
 				pageIndex: 1,
 				limit: 10,
 				noData: false,
-
 				showList1: true,
 				scrollTop: 0,
 				onFetching: false,
@@ -175,10 +168,17 @@
 			getMerchantList: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/indexMerchant'
+					url: '/api/indexMerchant',
+					params:{page:this.pageIndex,limit:this.limit}
 				}).then((res) => {
 					if(res.data.code == '200') {
-						this.merchant = res.data.data
+						if(res.data.data.list.length == 0) {
+							this.noData = true
+							this.$refs.myscroller.finishInfinite(2);
+						} else {
+							this.merchant = this.merchant.concat(res.data.data.list)
+							this.$refs.myscroller.finishPullToRefresh()
+						}
 					}
 				}, (err) => {
 					console.log(err)
@@ -212,24 +212,9 @@
 				}, 1500)
 			},
 			
-			//      toTop(){
-			//        document.documentElement.scrollTop = document.body.scrollTop =0;
-			//      },
 		},
 		mounted: function() {
-			this.$nextTick(function() {
-				//        // 返回顶部
-				//        let back_btn = document.getElementsByClassName('toTop')[0];
-				//        window.onscroll=function () {
-				//          let top = document.documentElement.scrollTop || document.body.scrollTop;
-				////          console.log(top)
-				//          if (top > 800) {
-				//            back_btn.style.display = 'block';
-				//          } else {
-				//            back_btn.style.display = 'none';
-				//          }
-				//        }
-			})
+			
 		},
 		created: function() {
 			this.getBannerList()

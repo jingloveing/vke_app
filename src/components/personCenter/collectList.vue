@@ -8,12 +8,12 @@
 		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 88px;">
 			<div class="goods_list" v-show="index==0">
 				<ul class="goods">
-					<li v-for="list in goodsList">
+					<li v-for="(list,index) in goodsList" :key="index">
 						<router-link to="">
-							<img :src="list.pict_url" alt="" class="pic" :onerror="defaultImg">
+							<img :src="list.image" alt="" class="pic" :onerror="defaultImg">
 						</router-link>
 						<div class="content">
-							<p class="title" v-text="list.title">产品标题产品标题</p>
+							<p class="title" v-text="list.collect_name">产品标题产品标题</p>
 							<div>
 								<div style="margin-bottom: .1rem;">
 									<span class="type taobao">淘宝</span>
@@ -24,8 +24,8 @@
 								</div>
 								<div style="display: flex;justify-content: space-between;align-items: center;">
 									<div>
-										<span class="new_num f28"><span class="f24">￥</span>{{list.zk_final_price.rmb}}<span v-show="list.zk_final_price.corner!=='00'" class="f24">.{{list.zk_final_price.corner}}</span></span>
-										<del class="old_num f24">￥{{list.reserve_price.rmb}}<span v-show="list.reserve_price.corner!=='00'">.{{list.reserve_price.corner}}</span></del>
+										<span class="new_num f28"><span class="f24">￥</span>{{list.product_price}}<span v-show="list.product_price!=='00'" class="f24">.{{list.product_price}}</span></span>
+										<del class="old_num f24">￥{{list.market_price}}<span v-show="list.market_price!=='00'">.{{list.market_price}}</span></del>
 									</div>
 									<div @click="del">
 										<img src="../../../static/images/collect_del.png" alt="" style="width: .32rem;height: .32rem;" />

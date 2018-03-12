@@ -51,7 +51,7 @@
 			</div>
 		</div>
 		<!--<cell title="请选择规格数量" is-link :border-intent="false" @click.native="toAdd(0)" class="pic_detail f28 c3"></cell>-->
-		<cell title="请选择规格数量"  :border-intent="false" @click.native="toAdd(0)" class="pic_detail f28 c3">
+		<cell title="请选择规格数量"  :border-intent="false" class="pic_detail f28 c3">
 			<x-number :min="0" v-model="count" fillable class="num f28 c3"></x-number>
 		</cell>
 		<cell
@@ -64,9 +64,9 @@
       <img :src="img" alt="" v-for="img in goodsDetail.small_images" :onerror="defaultImg">
     </div>
 		<div style="height: .98rem;"></div>
-		<router-link to="/personCenter/myOrder/pay" class="footer flex" style="background: #9A7BFF;color: white;justify-content: center;font-size: .32rem;">
+		<div class="footer flex" style="background: #9A7BFF;color: white;justify-content: center;font-size: .32rem;" @click="topay()">
 			立即购买
-		</router-link>
+		</div>
 		<!--<div class="footer">
 			<div class="f_1 f1_l" @click="toHome">
 				<img src="/static/images/xiaoer.png" alt="">
@@ -188,47 +188,50 @@
 					console.log(err)
 				})
 			},
-			toHome() {
-				//				this.$router.push({
-				//					path: '/home'
-				//				})
-			},
-			click(id) {
-				//        this.id=id
-				//        this.$router.push({name:'goodsDetail',query:{id:id}})
-				location.href = 'http://www.dxvke.com/goodsDetail/?id=' + id
-				//        this.toTop()
-				//        this.getGoodsDetail()
-			},
-			toCollect() {
-				this.collect = !this.collect
-				if(this.collect == false) {
-					this.toast = "取消收藏成功"
-					this.showToast = true
-				} else {
-					this.showToast = false
-				}
-			},
-			addCart(){
-				this.show=!this.show
-				if(this.type==1){
-					this.toast = "加入成功"
-				    this.showToast = true
-				}else{
-					this.$router.push({name:'Pay',query:{}})
-				}
-					
-			},
-	        toAdd(type){
-	        	this.show=!this.show
-	        	this.type =type
-	        }
+//			toHome() {
+//				//				this.$router.push({
+//				//					path: '/home'
+//				//				})
+//			},
+//			click(id) {
+//				//        this.id=id
+//				//        this.$router.push({name:'goodsDetail',query:{id:id}})
+//				location.href = 'http://www.dxvke.com/goodsDetail/?id=' + id
+//				//        this.toTop()
+//				//        this.getGoodsDetail()
+//			},
+//			toCollect() {
+//				this.collect = !this.collect
+//				if(this.collect == false) {
+//					this.toast = "取消收藏成功"
+//					this.showToast = true
+//				} else {
+//					this.showToast = false
+//				}
+//			},
+//			addCart(){
+//				this.show=!this.show
+//				if(this.type==1){
+//					this.toast = "加入成功"
+//				    this.showToast = true
+//				}else{
+//					this.$router.push({name:'Pay',query:{}})
+//				}
+//					
+//			},
+//	        toAdd(type){
+//	        	this.show=!this.show
+//	        	this.type =type
+//	        },
+            topay(){
+            	this.$router.push({name:'Pay',query:{data:JSON.stringify(this.goodsDetail),count:this.count,id:this.id}})
+            }
 		},
 		created: function() {
 			this.id = this.$route.query.id
 			this.type = this.$route.query.type
 			this.getGoodsDetail()
-
+  
 		},
 		mounted: function() {
 

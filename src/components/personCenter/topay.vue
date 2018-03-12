@@ -1,14 +1,14 @@
 <template>
 	<div>
 		<div class="top">
-			<div class="f24 c3 time flex">支付剩余时间 <span style="margin-left: .2rem;">20</span>分钟 <span>20</span>秒</div>
+			<!--<div class="f24 c3 time flex">支付剩余时间 <span style="margin-left: .2rem;">20</span>分钟 <span>20</span>秒</div>-->
 			<div class="price flex">
-				<span class="f32 c3">订单总金额</span><span class="f28 c_m" style="margin: 0 .1rem;">￥33.3</span>
-				<span class="f28 c9" style="display: flex;">（财宝价
+				<span class="f32 c3">订单总金额</span><span class="f28 c_m" style="margin: 0 .1rem;">￥{{order.pay_money}}</span>
+				<!--<span class="f28 c9" style="display: flex;">（财宝价
 				<div class="header_list_num jewel">
 							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
 						</div>
-						<!--<div class="header_list_num gold">
+						<div class="header_list_num gold">
                 	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
                 	       8.86
                 	     </div>
@@ -19,8 +19,8 @@
                 	     <div class="header_list_num coppers">
                 	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
                 	       8.86
-                	     </div>-->）
-			</span>
+                	     </div>）
+			</span>-->
 			</div>
 		</div>
 		<div class="main">
@@ -30,9 +30,9 @@
 					<p class="f28 c3">支付宝支付</p>
 				</div>
 				<div class="right">
-					<input type="radio" name="type" value="0" id="alipay" class="typeList" checked="checked" v-model="type" />
+					<input type="radio" name="type" value="1" id="alipay" class="typeList" checked="checked" v-model="type" />
 					<div class="all">
-						<img class="success" v-show="type==0" src="../../../static/images/checked.png">
+						<img class="success" v-show="type==1" src="../../../static/images/checked.png">
 						<label for="alipay" class="radio"></label>
 					</div>
 				</div>
@@ -44,15 +44,15 @@
 
 				</div>
 				<div class="up_img right">
-					<input type="radio" name="type" value="1" id="weChat" v-model="type" />
+					<input type="radio" name="type" value="2" id="weChat" v-model="type" />
 					<div class="all">
-						<img class="success" v-show="type==1" src="../../../static/images/checked.png">
+						<img class="success" v-show="type==2" src="../../../static/images/checked.png">
 						<label for="weChat" class="radio"></label>
 					</div>
 				</div>
 
 			</div>
-			<div class="list">
+			<!--<div class="list">
 				<div class="flex">
 					<img src="../../../static/images/personCenter/share.png" alt="" class="icon" />
 					<p class="f28 c3 flex">财宝支付
@@ -60,7 +60,7 @@
 				<div class="header_list_num jewel">
 							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
 						</div>
-						<!--<div class="header_list_num gold">
+						<div class="header_list_num gold">
                 	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
                 	       8.86
                 	     </div>
@@ -71,7 +71,7 @@
                 	     <div class="header_list_num coppers">
                 	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
                 	       8.86
-                	     </div>-->）
+                	     </div>）
 			</span>
 					</p>
 				</div>
@@ -84,37 +84,61 @@
 					</div>
 				</div>
 
-			</div>
+			</div>-->
 		</div>
 		<div style="margin:.4rem .26rem 0;">
 			<x-button type="primary" action-type="button" class='f32' @click.native="pay()">确认支付</x-button>
 		</div>
+		<loading v-model="showLoading" :text="loadText"></loading>
 	</div>
 </template>
 
 <script>
-	import { XHeader, XInput, XButton, Group } from 'vux'
+	import { XHeader, XInput, XButton, Group ,Loading} from 'vux'
 	export default {
 		name: 'Realize',
 		components: {
 			XHeader,
 			XInput,
 			XButton,
-			Group
+			Group,
+			Loading
 		},
 		data() {
 			return {
 				alipay: '',
-				type: 0,
+				type: 1,
+				order:{},
+				showLoading:false,
 			}
 		},
 		methods: {
-            pay(){
-            	this.$router.push({path: '/personCenter/myOrder/orderDeatail',query:{}})
-            }
+			//      支付订单
+			pay() {
+				this.$router.push({name:'PaySuccess',query:{}})
+//				this.showLoading = true
+//				this.$http.post('/api/pay',{order_id:this.order.order_id,pay_type:this.type}
+//				).then((res) => {
+//					if(res.data.code == '200') {
+//						this.showLoading = false
+//						this.$router.push({name:'PaySuccess',query:{}})
+//					}else{
+//						this.$vux.toast.show({
+//							text: res.data.error,
+//							type: 'cancel'
+//						})
+//						this.showLoading = false
+//					}
+//				}, (err) => {
+//					this.showLoading = false
+//					console.log(err)
+//				})
+			},
+            
 		},
 		created: function() {
-
+            this.order=JSON.parse(this.$route.query.order)
+            console.log(this.order)
 		},
 		mounted: function() {
 

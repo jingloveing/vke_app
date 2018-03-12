@@ -23,7 +23,7 @@
 			<swiper auto loop :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
 			<div>
 				<ul class="nav-small">
-					<router-link tag="li" v-for="(type,index) in typeList" :to="{name:'Classify',query:{id:type.id}}" :key="index">
+					<router-link tag="li" v-for="(type,index) in typeList" :to="{name:'Classify',query:{id:type.id,title:type.cate_name}}" :key="index">
 						<img :src="type.image_url" :onerror="defaultImg">
 						<span>{{type.cate_name}}</span>
 					</router-link>
@@ -31,13 +31,13 @@
 			</div>
 			<div class="main">
 				<div class="nav-bigger">
-					<router-link to="/taobao/fuli">
+					<router-link :to="{path:'/taobao/fuli',query:{type:1}}">
 						<img class="same" src="../../../static/images/yuanbaoShop_img.png">
 					</router-link>
-					<router-link to="">
+					<router-link :to="{path:'/taobao/fuli',query:{type:2}}">
 						<img class="same" src="../../../static/images/xianbao_img.png">
 					</router-link>
-					<router-link to="">
+					<router-link :to="{path:'/taobao/fuli',query:{type:3}}">
 						<img class="same" src="../../../static/images/zhinan_img.png">
 					</router-link>
 					<router-link to="/taobao/newHand">

@@ -10,13 +10,12 @@
 		<div style="height: .88rem;"></div>
 		<div>
 			<div class="pic">
-				<swiper auto loop :list="list" style="width:100%;" height="7.5rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" :onerror="defaultImg"></swiper>
-				<!--<img :src="goodsDetail.pict_url" alt="" :onerror="defaultImg">-->
+				<swiper auto loop :list="goodsDetail.pict_url" style="width:100%;" height="7.5rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" :onerror="defaultImg"></swiper>
 			</div>
 			<div class="detail">
 				<p class="name">{{goodsDetail.title}}</p>
 				<div class="flex" style="align-items: flex-end;">
-					<span class="prices"><small>￥</small><span>{{goodsDetail.zk_final_price.rmb}}</span><small v-show="goodsDetail.zk_final_price.corner!=='00'">.{{goodsDetail.zk_final_price.corner}}</small></span>
+					<span class="prices"><small>￥</small><span>{{goodsDetail.reserve_price.rmb}}</span><small v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</small></span>
 					<!--<div class="f28 flex c9" style="margin:0 0 .08rem .3rem;">可返
 						<div class="header_list_num jewel" style="margin-left: .1rem;">
 							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
@@ -39,10 +38,10 @@
 
 				</div>
 				<div class="flex">
-					<span class="old_price">价格<del>￥{{goodsDetail.reserve_price.rmb}}<span
-            v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</span></del>
+					<span class="old_price">价格<del>￥{{goodsDetail.market_price.rmb}}<span
+            v-show="goodsDetail.market_price.corner!=='00'">.{{goodsDetail.market_price.corner}}</span></del>
 					</span>
-					<span class="f24 c9">销量800件</span>
+					<span class="f24 c9">销量{{goodsDetail.volume}}件</span>
 				</div>
 			</div>
 		</div>
@@ -50,7 +49,7 @@
 			<div class="flex">
 				<div class="f24 tb-quan">
 					<div>优惠券</div>
-					<div>100元</div>
+					<div>{{goodsDetail.volume}}元</div>
 				</div>
 				<span class="f24 c9" style="margin-left: .2rem;">领取优惠券</span>
 			</div>
@@ -106,56 +105,38 @@
 				show: false,
 				goodsDetail: {
 					title: '',
-					pict_url: '',
+					pict_url: [],
 					small_images: [],
 					reserve_price: {
 						rmb: '',
 						corner: ''
 					},
-					zk_final_price: {
+					market_price: {
 						rmb: '',
 						corner: ''
 					},
 					volume: '',
-					category: ''
 				},
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 				command: '',
 				//        click_url:''
-				id: '',
-				type: '',
-				list: [{
-					url: 'javascript:',
-					img: 'https://static.vux.li/demo/1.jpg',
-					title: '送你一朵fua'
-				}, {
-					url: 'javascript:',
-					img: 'https://static.vux.li/demo/2.jpg',
-					title: '送你一辆车'
-				}, {
-					url: 'javascript:',
-					img: 'https://static.vux.li/demo/5.jpg',
-					title: '送你一次旅行',
-					fallbackImg: 'https://static.vux.li/demo/3.jpg'
-				}]
 			}
 		},
 		methods: {
 			//      商品详情
-			getGoodsDetail: function() {
+			getDetail: function() {
 				this.id = this.$route.query.id;
 				this.type = this.$route.query.type
 				this.$http({
-					method: 'POST',
-					url: '/api/goodsDetail',
-					data: {
-						goods_id: this.id,
-						type: this.type
+					method: 'get',
+					url: '/api/productInfo',
+					params: {
+						id: this.$route.query.id,
+						type: 1
 					}
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.goodsDetail = res.data.data
-						this.click_url = res.data.data.click_url
 					}
 				}, (err) => {
 					console.log(err)
@@ -184,9 +165,7 @@
 			},
 		},
 		created: function() {
-			this.id = this.$route.query.id
-			this.type = this.$route.query.type
-			this.getGoodsDetail()
+			this.getDetail()
 
 		},
 		mounted: function() {
