@@ -18,6 +18,7 @@
 
 <script>
 	import { XHeader,XButton} from 'vux'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Realize',
 		components: {
@@ -36,7 +37,7 @@
 			getAddressList: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/addressList',
+					url: url+'/api/addressList',
 					params: {
 						page: this.page,
 						limit: this.limit

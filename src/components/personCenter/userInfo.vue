@@ -24,6 +24,7 @@
 </template>
 <script>
 	import { XHeader, XButton, Loading, Actionsheet,Toast } from 'vux'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		components: {
 			XHeader,
@@ -61,7 +62,7 @@
 			//      修改用户信息
 			editInfo: function() {
 //				this.showLoading = true
-				this.$http.post('/api/updateInfo',{gender:this.userInfo.gender}).then((res) => {
+				this.$http.post(url+'/api/updateInfo',{gender:this.userInfo.gender}).then((res) => {
 					if(res.data.code == '200') {
 						this.toast = res.data.data.message
 					    this.showToast = true

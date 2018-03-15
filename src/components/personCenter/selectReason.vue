@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="order_des">
-				<img src="../../../dist/static/images/default_img.png" alt="" class="order_pic" />
+				<img src="../../../static/images/default_img.png" alt="" class="order_pic" />
 				<div class="order_des_m">
 					<p class="break break_two order_name">商品名称商品名称商品名称商品名称商品是的法商品名称商品名称商品名称商品名称商品是的法商品名称商品名称商品名称商品名称商品是的法律上都没佛打扫地方撒是地方撒地方撒</p>
 					<p class="order_des_num">规格：24包 </p>

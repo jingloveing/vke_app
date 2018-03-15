@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="goods flex">
-			<img src="../../../dist/static/images/default_img.png" alt="" class="pic"/>
+			<img src="../../../static/images/default_img.png" alt="" class="pic"/>
 			<div>
 				<p class="f32 c_f">
 				   <span>已发货</span>

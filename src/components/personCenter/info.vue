@@ -32,7 +32,7 @@
 </template>
 
 <script>
-	
+	const url='http://xlk.dxvke.com/'
 	export default {
   
   components: {
@@ -59,7 +59,7 @@
   methods:{
   	//获取消息已读或未读
 			getMessage() {
-				this.$http.get('/api/messageCate', {}).then((res) => {
+				this.$http.get(url+'/api/messageCate', {}).then((res) => {
 					if(res.data.code == '200') {
 						this.message = res.data.data
 					} else {

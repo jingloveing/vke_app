@@ -18,6 +18,7 @@
 
 <script>
 	import { XHeader, XInput, XButton, DatetimeView, } from 'vux'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Realize',
 		components: {

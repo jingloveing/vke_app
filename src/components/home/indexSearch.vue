@@ -1,127 +1,279 @@
 <template>
 	<div class="indexSearch">
-		<x-header :left-options="{backText: ''}" style="background: -webkit-linear-gradient(left, #8721b5, #db3283);"></x-header>
+		<x-header :left-options="{backText: ''}"></x-header>
+		<button-tab v-model="type" class="nav">
+			<button-tab-item @on-item-click="consoleIndex()">淘宝商品</button-tab-item>
+			<button-tab-item @on-item-click="consoleIndex()">品牌商品</button-tab-item>
+		</button-tab>
 		<div style="height: .88rem;"></div>
-		<div class="header f36">
-			智搜一下，享全站优惠
+		<div class="searchDiv">
+			<img src="../../../static/images/personCenter/search_img.png" alt="">
+			<form action="">
+				<input v-model="key" type="text">
+			</form>
+			<!--<span @click="onCancel()" class="cancel_btn">取消</span>-->
 		</div>
-		<div class="main">
-			<router-link class="serach_p" to="/home/assortment/searchPage">
-				<img src="../../../static/images/vke.png" alt="" class="pic" />
-				<input type="text" name="" id="" value="" class="input" disabled="disabled" placeholder="享利客店内搜索" />
-				<img src="../../../static/images/search_black.png" class="icon" />
-			</router-link>
-			<router-link class="serach_p" to="/home/assortment/searchPage">
-				<img src="../../../static/images/taoBao.png" alt="" class="pic" />
-				<input type="text" name="" id="" value="" class="input" disabled="disabled" placeholder="淘宝智搜入口" />
-				<img src="../../../static/images/search_black.png" class="icon" />
-			</router-link>
-           <router-link class="serach_p" to="/home/assortment/searchPage">
-				<img src="../../../static/images/JD.png" alt="" class="pic" />
-				<input type="text" name="" id="" value="" class="input" disabled="disabled" placeholder="京东智搜入口" />
-				<img src="../../../static/images/search_black.png" class="icon" />
-			</router-link>
-			<router-link class="serach_p" to="/home/assortment/searchPage">
-				<img src="../../../static/images/mogu.png" alt="" class="pic" />
-				<input type="text" name="" id="" value="" class="input" disabled="disabled" placeholder="蘑菇街智搜入口" />
-				<img src="../../../static/images/search_black.png" class="icon" />
-			</router-link>
-			<router-link class="serach_p" to="/home/assortment/searchPage">
-				<img src="../../../static/images/vip.png" alt="" class="pic" />
-				<input type="text" name="" id="" value="" class="input" disabled="disabled" placeholder="唯品会智搜入口" />
-				<img src="../../../static/images/search_black.png" class="icon" />
-			</router-link>
+		<div id="hot">
+			<p style="font-size: .28rem;color: #666;padding: .2rem .3rem">热门搜索</p>
+			<ul class="hot_list">
+				<li v-for="hotList in hotList" v-text="hotList.keywords" @click="onSubmit(hotList.keywords)">冬装</li>
+			</ul>
+			<p style="font-size: .28rem;color: #666;padding:0 .3rem .2rem ;">历史搜索 <img src="../../../static/images/trash.png" alt="" style="margin-top:.05rem;width: .28rem;height: .28rem;float: right;" @click="del"></p>
+			<ul class="hot_list">
+				<li v-for="historyList in historyList" v-text="historyList.keywords" @click="onSubmit(historyList.keywords)">冬装</li>
+			</ul>
 		</div>
+		<loading v-model="showLoading" :text="loadText"></loading>
+		<!--<div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>-->
 	</div>
 </template>
 
 <script>
-	import { XHeader } from 'vux'
+	import { XHeader, ButtonTab, ButtonTabItem, Loading } from 'vux'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Realize',
 		components: {
 			XHeader,
+			ButtonTab,
+			ButtonTabItem,
+			Loading
 		},
 		data() {
 			return {
-
+				type: 0,
+				sort_id: '',
+				goodsList: [],
+				showLoading: false,
+				loadText: '加载中...',
+				hotList: [],
+				historyList: [],
+				results: [],
+				list: [],
+				index: 0,
+				getBarWidth: function(index) {
+					return(index + 1) * 22 + 'px'
+				},
+				key: ''
 			}
 		},
 		methods: {
+			//      热门推荐列表
+			getHotList: function() {
+				this.$http({
+					method: 'get',
+					url: url+'/api/hotKeywords'
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.hotList = res.data.data
+					} else {
 
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			//      搜索历史列表
+			getHistoryList: function() {
+				this.$http({
+					method: 'get',
+					url: url+'/api/searchHistory',
+					params: {
+						type: 3
+					}
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.historyList = res.data.data
+					} else {
+
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			//      清除历史列表
+			del: function() {
+				this.$http.post(url+'/api/delSearchHistory', {
+					type: 3
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.$vux.toast.show({
+							text: res.data.data.message
+						})
+						this.historyList = []
+					} else {
+
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			change(e) {
+				this.sort_id = e
+				this.goodsList = ''
+				this.doSearch()
+
+			},
+			onSubmit(e) {
+				//        this.showLoading=true
+				if(this.type==0){
+					this.$router.push({
+					name: 'searchResult',
+					query: {
+						keyword: e,
+						type: 3
+					}
+				})
+				}else{
+					this.$router.push({
+					name: 'searchResult',
+					query: {
+						keyword: e,
+						type: 2
+					}
+				})
+				}
+				
+
+			},
+			//点击头部事件
+			consoleIndex() {
+				this.key=''
+			}
 		},
 		created: function() {
-
+			this.getHotList()
+			this.getHistoryList()
 		},
 		mounted: function() {
-
+			this.$nextTick(function() {
+				var oForm = document.getElementsByTagName("form")[0];
+				var self = this
+				oForm.onsubmit = function(e) {
+					e.preventDefault();
+					if(self.type==0){
+						self.$router.push({
+						name: 'searchResult',
+						query: {
+							keyword: self.key,
+							type: 3
+						}
+					})
+					}else{
+						self.$router.push({
+						name: 'searchResult',
+						query: {
+							keyword: self.key,
+							type: 2
+						}
+					})
+					}
+				};
+			})
 		}
 	}
 </script>
 
 <style scoped="scoped">
-	.indexSearch{
-		position: relative;
-	}
-	.header {
-		color: white;
-		height: 1.68rem;
-		text-align: center;
-		background: -webkit-linear-gradient(left, #8721b5, #db3283);
-		border-bottom-left-radius: 50% .30rem;
-		border-bottom-right-radius: 50% .30rem;
-	}
-	.main{
-		width: 100%;
-		position: absolute;
-		text-align: center;
-		top: 2.08rem;
-	}
-	.serach_p {
-		width: 6.62rem;
-		margin: 0 auto .6rem;
-		height: .88rem;
-		display: flex;
-		align-items: center;
-		background: white;
-		border-radius: .06rem;
-		box-shadow: 0rem 0.06rem 0.32rem 0 #e0dfdb;
+	.hot_list {
+		margin: 0 .3rem;
 	}
 	
-	.input {
-		background: #F4F4F4;
-		outline: none;
-		border: none;
-		-webkit-appearance: none;
-		line-height: .56rem;
-		width: 4.48rem;
-		border-radius: .06rem;
+	ul li {
+		list-style: none;
+	}
+	
+	.hot_list li {
+		display: inline-block;
+		border: .01rem solid #999;
+		border-radius: .5rem;
+		line-height: .6rem;
+		padding: 0rem .3rem;
 		font-size: .28rem;
 		color: #333;
-		padding: 0 .2rem;
-		box-sizing: border-box;
+		margin: 0 .2rem .2rem 0;
 	}
 	
-	.pic {
-		width: .48rem;
-		height: .48rem;
-		border-radius: 50%;
-		margin: 0 .28rem;
+	.searchDiv {
+		background-color: #f4f4f4;
+		padding: .28rem .26rem;
+		font-size: 0;
+		position: relative;
 	}
 	
-	.icon {
-		width: .36rem;
-		height: .36rem;
-		margin: 0 .37rem;
+	.searchDiv>img {
+		width: .4rem;
+		height: .4rem;
+		vertical-align: middle;
+		position: absolute;
+		top: .4rem;
+		left: .46rem;
 	}
+	
+	.searchDiv>form {
+		display: inline-block;
+		width: 88.5%;
+	}
+	
+	.searchDiv>form>input {
+		width: 100%;
+		outline: none;
+		padding: .1rem .1rem .1rem .7rem;
+		border: none;
+		line-height: .44rem;
+		font-size: .28rem;
+		border-radius: .5rem;
+	}
+	
+	.searchDiv>.cancel_btn {
+		display: inline-block;
+		text-align: center;
+		font-size: .28rem;
+		color: #333;
+		margin-left: .2rem;
+	}
+	.nav {
+		width: 3.34rem;
+		position: fixed;
+		top: 0;
+		z-index: 99999;
+		left: calc((100% - 3.34rem)/2);
+		top: calc((.88rem - .6rem)/2);
+	}
+	
 </style>
 <style>
-	.indexSearch .vux-header .vux-header-left .left-arrow:before {
-		border: 1px solid white;
-		border-width: 1px 0 0 1px;
+	.nav.vux-button-group>a.vux-button-group-current {
+		color: #FFF;
+		background: #9a7bff;
 	}
 	
-	.indexSearch .vux-header {
-		border: none;
+	.nav.vux-button-group>a.vux-button-tab-item-last:after {
+		border: .01rem solid #9a7bff;
+		border-top-right-radius: .1rem;
+		border-bottom-right-radius: .1rem;
+	}
+	
+	.nav.vux-button-group>a.vux-button-tab-item-first:after {
+		border: .01rem solid #9a7bff;
+		border-top-left-radius: .1rem;
+		border-bottom-left-radius: .1rem;
+	}
+	
+	.nav.vux-button-group>a {
+		height: .6rem;
+		line-height: .6rem;
+		color: #9A7BFF;
+		font-size: .26rem;
+	}
+	
+	.nav.vux-button-group>a.vux-button-tab-item-last {
+		border-top-right-radius: .1rem;
+		border-bottom-right-radius: .1rem;
+	}
+	
+	.nav.vux-button-group>a.vux-button-tab-item-first {
+		border-top-left-radius: .1rem;
+		border-bottom-left-radius: .1rem;
 	}
 </style>

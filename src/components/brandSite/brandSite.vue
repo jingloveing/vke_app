@@ -10,7 +10,7 @@
 				</router-link>
 			</a>
 		</x-header>
-		<div style="height: .88rem;"></div>
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
 		<swiper auto loop :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
 		<div style="background: white;">
 			<div class="main_title">
@@ -52,7 +52,7 @@
 				</div>
 				<swipers :options="swiperOptionB" style="margin-top: .1rem;">
 					<swiper-slide v-for="(list,index) in item.product_list" :key="index" class="box_content">
-						<router-link :to="{name:'TBDetail',query:{}}">
+						<router-link :to="{name:'BrandDetail',query:{}}">
 							<img :src="list.thumb_url" alt="" :onerror="defaultImg">
 							<span class="dess">
                             <p class="des_name break">{{list.product_name}}</p>
@@ -75,18 +75,19 @@
 				</swipers>
 			</div>
 		</div>
+		</scroller>
 	</div>
 </template>
 
 <script>
-	import { XHeader, Swiper, Scroller, } from 'vux'
+	import { XHeader, Swiper } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'BrandSite',
 		components: {
 			XHeader,
 			Swiper,
-			Scroller,
 			swipers: swiper,
 			swiperSlide,
 		},
@@ -106,6 +107,9 @@
 					slidesPerView: 3,
 					preventClicksPropagation: true,
 				},
+				noData: false,
+				page:1,
+				limit:20,
 			}
 		},
 		methods: {
@@ -113,7 +117,7 @@
 			getBannerList: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/merchantIndexBanner'
+					url: url+'/api/merchantIndexBanner'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const imgList = res.data.data
@@ -132,7 +136,7 @@
 			getMerchantList: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/merchantList'
+					url: url+'/api/merchantList'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.merchantList = res.data.data
@@ -145,10 +149,23 @@
 			getMerchantView: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/merchantView'
+					url: url+'/api/merchantView',
+					params:{
+						page:this.page,
+						limit:this.limit
+					}
 				}).then((res) => {
 					if(res.data.code == '200') {
-						this.merchantView = res.data.data.list
+						if(res.data.data.list.length == 0) {
+							this.noData = true
+							this.$refs.myscroller.finishInfinite(2);
+						} else {
+							this.merchantView = this.merchantView.concat(res.data.data.list)
+							this.$refs.myscroller.finishPullToRefresh()
+						}
+					}else{
+						this.noData = true
+							this.$refs.myscroller.finishInfinite(2);
 					}
 				}, (err) => {
 					console.log(err)
@@ -163,7 +180,35 @@
 					video.pause();
 					video.parentNode.children[1].style.display="inline-block"
 				}
-			}
+			},
+			infinite(done) {
+				if(this.noData) {
+					setTimeout(() => {
+						this.$refs.myscroller.finishInfinite(2);
+					})
+					return;
+				} else {
+					let self = this; //this指向问题
+					setTimeout(() => {
+						self.page += 1
+						self.getMerchantView()
+						done()
+					}, 1500)
+				}
+			},
+			refresh(done) {
+				var self = this
+				this.page = 1
+				this.merchantView=[]
+				this.getBannerList()
+			this.getMerchantList()
+			this.getMerchantView()
+				setTimeout(function() {
+					self.top = self.top - 10;
+					done()
+				}, 1500)
+			},
+			
 		},
 		mounted: function() {
 
@@ -194,7 +239,7 @@
 		line-height: 100%;
 		position: absolute;
 		right: -.2rem;
-		top: 0rem;
+		top: .4rem;
 	}
 	
 	.info {

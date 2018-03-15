@@ -43,6 +43,7 @@
 <script>
 	import { XHeader, Toast, } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		components: {
 			XHeader,
@@ -77,7 +78,7 @@
 				const self = this
 				this.$http({
 					method: 'get',
-					url: '/api/teList',
+					url: url+'/api/teList',
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.goodsList = res.data.data

@@ -68,6 +68,7 @@
 <script>
 	var list = ["全部", "支付宝", "微信", "银行卡"]
 	import { DatetimeView, } from 'vux'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Realize',
 		components: {

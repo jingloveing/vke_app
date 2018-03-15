@@ -42,6 +42,7 @@
 <script>
   import {XButton, XInput, Loading,Group} from 'vux'
   import {ImageResizer,dataURLtoBlob} from '@/util/util.js'
+  const url='http://xlk.dxvke.com/'
   export default {
     name: 'toShowList',
     components: {
@@ -70,7 +71,7 @@
         this.showLoading = true
         this.$http({
           method: 'POST',
-          url: '/api/shareBrief'
+          url: url+'/api/shareBrief'
         }).then((res) => {
           this.showLoading = false
           if (res.data.code == '200') {
@@ -112,7 +113,7 @@
         this.showLoading = true
         this.$http({
           method: 'POST',
-          url: '/api/shareOrder_front',
+          url: url+'/api/shareOrder_front',
           data: {evaluate: this.evaluate, order_num: this.order_num, evaluate_url: JSON.stringify(this.imgList)}
         }).then((res) => {
           this.showLoading = false
@@ -140,7 +141,7 @@
       uploadPic(formData){
                     this.$http({
               method: 'POST',
-              url: '/api/upload',
+              url: url+'/api/upload',
               dataType: 'formData',
               data: formData
             }).then((res) => {

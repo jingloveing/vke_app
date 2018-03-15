@@ -1,88 +1,89 @@
 <template>
 	<div>
 		<x-header :left-options="{showBack: false}" title="一键分享" class="header"></x-header>
-		<div style="height: .88rem;"></div>
-		<div class="tip tip1" id="tip1" :class="tipFixed1 == true ? 'isFixed' :''">今/日/更/新</div>
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
+		<div class="tip tip1" id="tip1">今/日/更/新</div>
 		<div class="main">
-			<div class="list" v-for="i in 5">
+			<div class="list" v-for="(item,index) in today" :key="index">
 				<div class="left">
-					<img src="../../../dist/static/images/vke.png" alt="" class="icon" />
+					<img src="../../../static/images/vke.png" alt="" class="icon" />
 				</div>
 				<div class="right">
 					<div class="right-title flex">
 						<div>
 							<p class="f28 c3">每日优选</p>
-							<p class="f20" style="color: #d1d1d1;">10-28 13:00</p>
+							<p class="f20" style="color: #d1d1d1;">{{item.create_time}}</p>
 						</div>
-						<router-link class="flex" to="/shareRoom/shareDetail">
+						<router-link class="flex" :to="{name:'ShareDetail',query:{id:item.id}}">
 							<img src="../../../static/images/shareRoom/share.png" alt="" style="width: .28rem;height: .28rem;" />
 							<span class="f24 c_f" style="margin-left: .08rem;">分享</span>
 						</router-link>
 					</div>
 					<div>
-						<p class="f28 c3" style="line-height: .32rem;margin-top: .1rem;">文案文案文案文案文案啊文案文案文案文案文案文案文案文案文案</p>
+						<p class="f28 c3" style="line-height: .32rem;margin-top: .1rem;">{{item.msg}}</p>
 						<div class="pic">
-							<router-link to="/home/goodsDetail">
-								<img src="../../../static/images/default_img.png" alt="" />
+							<router-link :to="{name:'ShareDetail',query:{id:item.id}}">
+								<img :src="item.image_url" alt="" />
 							</router-link>
 							<div class="quan flex">
 								<img src="../../../static/images/shareRoom/quan_r.png" alt="" />
 								<div class="quan-right">
-									<span class="f20">￥</span><span class="f28">100.8</span>
+									<span class="f20">￥</span><span class="f28">{{item.reserve_price}}</span>
 								</div>
 							</div>
 						</div>
-						<div class="f20 c6 detail-btn">查看详情</div>
+						<router-link class="f20 c6 detail-btn" :to="{name:'ShareDetail',query:{id:item.id}}">查看详情</router-link>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="tip tip2" id="tip2" :class="tipFixed2 == true ? 'isFixed' :''">往/日/更/新</div>
+		<div class="tip tip2" id="tip2" v-show="before.length!==0">往/日/更/新</div>
 		<div class="main">
-			<div class="list" v-for="i in 5">
+			<div class="list" v-for="(item,index) in before">
 				<div class="left">
-					<img src="../../../dist/static/images/vke.png" alt="" class="icon" />
+					<img src="../../../static/images/vke.png" alt="" class="icon" />
 				</div>
 				<div class="right">
 					<div class="right-title flex">
 						<div>
 							<p class="f28 c3">每日优选</p>
-							<p class="f20" style="color: #d1d1d1;">10-28 13:00</p>
+							<p class="f20" style="color: #d1d1d1;">{{item.create_time}}</p>
 						</div>
-						<div class="flex">
+						<router-link :to="{name:'ShareDetail',query:{id:item.id}}" class="flex">
 							<img src="../../../static/images/shareRoom/share.png" alt="" style="width: .28rem;height: .28rem;" />
 							<span class="f24 c_f" style="margin-left: .08rem;">分享</span>
-						</div>
+						</router-link>
 					</div>
 					<div>
-						<p class="f28 c3" style="line-height: .32rem;margin-top: .1rem;">文案文案文案文案文案啊文案文案文案文案文案文案文案文案文案</p>
+						<p class="f28 c3" style="line-height: .32rem;margin-top: .1rem;">{{item.msg}}</p>
 						<div class="pic">
-							<router-link to="/home/goodsDetail">
-								<img src="../../../static/images/default_img.png" alt="" />
+							<router-link :to="{name:'ShareDetail',query:{id:item.id}}">
+								<img :src="item.image_url" alt="" />
 							</router-link>
 							<div class="quan flex">
 								<img src="../../../static/images/shareRoom/quan_r.png" alt="" />
 								<div class="quan-right">
-									<span class="f20">￥</span><span class="f28">100.8</span>
+									<span class="f20">￥</span><span class="f28">{{item.reserve_price}}</span>
 								</div>
 							</div>
 						</div>
-						<div class="f20 c6 detail-btn">查看详情</div>
+						<router-link class="f20 c6 detail-btn" :to="{name:'ShareDetail',query:{id:item.id}}">查看详情</router-link>
 					</div>
 				</div>
 			</div>
 		</div>
+		</scroller>
 	</div>
 </template>
 
 <script>
-	import { XHeader, Swiper, Scroller, } from 'vux'
+	import { XHeader, Swiper, } from 'vux'
+	const url='http://xlk.dxvke.com'
 	export default {
 		name: 'shareRoom',
 		components: {
 			XHeader,
 			Swiper,
-			Scroller,
 		},
 		data() {
 			return {
@@ -91,57 +92,97 @@
 				offsetTop1:'',
 				offsetTop2:'',
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
+				page:1,
+				limit:20,
+				noData: false,
+				today:[],
+				before:[]
 			}
 		},
 		methods: {
-			//      获取首页轮播图
-			getBannerList: function() {
+			//      商品列表
+			getList: function() {
 				this.$http({
-					method: 'POST',
-					url: '/api/index_banner'
+					method: 'get',
+					url: url+'/api/shareList',
+					params:{
+						page:this.page,
+						limit:this.limit
+					}
 				}).then((res) => {
 					if(res.data.code == '200') {
-						const imgList = res.data.data.index_banner
-						const demoList = imgList.map((item, index) => ({
-							url: item.banner_url,
-							img: item.banner_image
-						}))
-						this.demoList = demoList
-						//          console.log(imgList)
+						if(res.data.data.today== 0 && res.data.data.before==0) {
+							this.noData = true
+							this.$refs.myscroller.finishInfinite(2);
+						} else {
+							this.today = this.today.concat(res.data.data.today)
+							this.before = this.before.concat(res.data.data.today)
+							this.$refs.myscroller.finishPullToRefresh()
+						}
+					}else{
+						this.noData = true
+							this.$refs.myscroller.finishInfinite(2);
 					}
 				}, (err) => {
 					console.log(err)
 				})
 			},
-			handleScroll() {
-				var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-				
-				if(scrollTop >this.offsetTop1) {
-					this.tipFixed1 = true
+//			handleScroll() {
+//				var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+//				
+//				if(scrollTop >this.offsetTop1) {
+//					this.tipFixed1 = true
+//				} else {
+//					this.tipFixed1 = false
+//				}
+//				
+//				if(scrollTop >this.offsetTop2) {
+//					this.tipFixed2 = true
+//				} else {
+//					this.tipFixed2 = false
+//				}
+//				
+//				
+//			},
+			infinite(done) {
+				if(this.noData) {
+					setTimeout(() => {
+						this.$refs.myscroller.finishInfinite(2);
+					})
+					return;
 				} else {
-					this.tipFixed1 = false
+					let self = this; //this指向问题
+					setTimeout(() => {
+						self.page += 1
+						self.getList()
+						done()
+					}, 1500)
 				}
-				
-				if(scrollTop >this.offsetTop2) {
-					this.tipFixed2 = true
-				} else {
-					this.tipFixed2 = false
-				}
-				
-				
 			},
+			refresh(done) {
+				var self = this
+				this.page = 1
+				this.today=[]
+				this.before=[]
+				this.getList()
+				setTimeout(function() {
+					self.top = self.top - 10;
+					done()
+				}, 1500)
+			},
+			
 		},
 		mounted: function() {
-			this.offsetTop1 = document.getElementById('tip1').offsetTop
-			this.offsetTop2 = document.getElementById('tip2').offsetTop
-			window.addEventListener('scroll', this.handleScroll)
+//			this.offsetTop1 = document.getElementById('tip1').offsetTop
+//			this.offsetTop2 = document.getElementById('tip2').offsetTop
+//			window.addEventListener('scroll', this.handleScroll)
 
 		},
 		created: function() {
-
+           this.getList()
 		},
 		destroyed() {
-			window.removeEventListener('scroll', this.handleScroll)
+//			window.removeEventListener('scroll', this.handleScroll)
 		},
 	}
 </script>

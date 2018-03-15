@@ -25,6 +25,7 @@
 <script>
 	import { Group, XButton, XInput ,Toast,Loading} from 'vux'
 	import Clipboard from 'clipboard'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Code',
 		components: {
@@ -48,7 +49,7 @@
 		methods:{
 			//获取个人推荐码
 			getCode(){
-				this.$http.get('/api/myCode',{}).then((res) => {
+				this.$http.get(url+'/api/myCode',{}).then((res) => {
 					if(res.data.code == '200') {
 						this.code=res.data.data.code
 						this.is_fans=res.data.data.is_fans
@@ -61,7 +62,7 @@
 			},
 			//提交推荐人推荐码
 			invite(){
-				this.$http.post('/api/invite',{invite_code:this.invite_code}).then((res) => {
+				this.$http.post(url+'/api/invite',{invite_code:this.invite_code}).then((res) => {
 					if(res.data.code == '200') {
 						this.$vux.toast.show({
                              text: res.data.data.message,

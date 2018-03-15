@@ -19,7 +19,7 @@
 				<div v-for="(item,index) in list" :key="index">
 				<swipers :options="swiperOptionB">
 					<swiper-slide v-for="(list,index) in list" :key="index"  class="box_content">
-						<router-link :to="{name:'BrandDetail',query:{}}">
+						<router-link :to="{name:'BrandDetail',query:{id:list.id,store_id:store_id}}">
 							<img :src="list.thumb_url" alt="" :onerror="defaultImg">
 								<span class="dess">
                                 <p class="des_name break">{{list.product_name}}</p>
@@ -48,6 +48,7 @@
 <script>
 	import {} from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'shareRoom',
 		components: {
@@ -56,6 +57,7 @@
 		},
 		data() {
 			return {
+				store_id:'',
 				viewDes: {
 					view: null,
 					view_name: null,
@@ -83,7 +85,7 @@
 			getViewDes: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/merViewUrl',
+					url: url+'/api/merViewUrl',
 					params:{id:this.$route.query.id}
 				}).then((res) => {
 					if(res.data.code == '200') {
@@ -97,7 +99,7 @@
 			getMerViewPro: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/merViewPro',
+					url: url+'/api/merViewPro',
 					params:{id:this.$route.query.id}
 				}).then((res) => {
 					if(res.data.code == '200') {
@@ -125,6 +127,7 @@
 
 		},
 		created: function() {
+			this.store_id=this.$route.query.store_id
 			this.getViewDes()
 			this.getMerViewPro()
 		},

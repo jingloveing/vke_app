@@ -41,6 +41,7 @@
 <script>
 	import { Tab, TabItem, Swiper, SwiperItem} from 'vux'
 	const list = () => ['累计消费', '累计节省']
+	const url='http://xlk.dxvke.com/'
 	export default {
 		components: {
 			Tab,

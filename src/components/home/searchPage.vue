@@ -23,6 +23,7 @@
 </template>
 <script>
   import {Loading} from 'vux'
+  const url='http://xlk.dxvke.com/'
   export default {
     name: 'searchPage',
     components: {
@@ -42,7 +43,8 @@
         getBarWidth: function (index) {
           return (index + 1) * 22 + 'px'
         },
-        key:''
+        key:'',
+        type:'',
       }
     },
     mounted() {
@@ -67,53 +69,55 @@
     },
     methods: {
       //      热门推荐列表
-      getHotList:function(){
-        this.$http({
-          method:'POST',
-          url:'/api/searchHot'
-        }).then((res)=>{
-          if(res.data.code=='200'){
-            this.hotList = res.data.data.hot
-          }else{
+			getHotList: function() {
+				this.$http({
+					method: 'get',
+					url: url+'/api/hotKeywords'
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.hotList = res.data.data
+					} else {
 
-          }
-        },(err)=>{
-          console.log(err)
-        })
-      },
-      //      搜索历史列表
-      getHistoryList:function(){
-        this.$http({
-          method:'POST',
-          url:'/api/searchPage'
-        }).then((res)=>{
-          if(res.data.code=='200'){
-            this.historyList = res.data.data.history
-          }else{
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			//      搜索历史列表
+			getHistoryList: function() {
+				this.$http({
+					method: 'get',
+					url: url+'/api/searchHistory',
+					params: {
+						type: this.$route.query.type
+					}
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.historyList = res.data.data
+					} else {
 
-          }
-        },(err)=>{
-          console.log(err)
-        })
-      },
-      //      清除历史列表
-      del:function(){
-        this.$http({
-          method:'POST',
-          url:'/api/delSearch'
-        }).then((res)=>{
-          if(res.data.code=='200'){
-            this.$vux.toast.show({
-              text:res.data.data.message
-            })
-            this.historyList=[]
-          }else{
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			//      清除历史列表
+			del: function() {
+				this.$http.post(url+'/api/delSearchHistory', {
+					type: this.$route.query.type
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.$vux.toast.show({
+							text: res.data.data.message
+						})
+						this.historyList = []
+					} else {
 
-          }
-        },(err)=>{
-          console.log(err)
-        })
-      },
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
       onCancel() {
 //  应该返回到智搜首页
 //      this.$router.push({path:'/home/assortment/Search'})
@@ -124,18 +128,19 @@
         this.sort_id = e
         this.goodsList=''
         this.doSearch()
-
+ 
       },
 //      toTop(){
 //        document.documentElement.scrollTop = document.body.scrollTop =0;
 //      },
       onSubmit(e) {
 //        this.showLoading=true
-        this.$router.push({name:'searchResult',query:{keyword:e}})
+        this.$router.push({name:'searchResult',query:{keyword:e,type:this.type}})
 
       },
     },
     created:function(){
+    	this.type=this.$route.query.type
       this.getHotList()
       this.getHistoryList()
     },
@@ -163,13 +168,13 @@ ul li{
     background-color: #f4f4f4;padding: .1rem;font-size: 0;
   }
   .searchDiv>img{
-    width: .4rem;height: .4rem;vertical-align: middle;position: absolute;top: .25rem;left: .2rem;
+    width: .4rem;height: .4rem;vertical-align: middle;position: absolute;top: .22rem;left: .2rem;
   }
   .searchDiv>form{
     width: 80%;display: inline-block;margin-right: .6rem;
   }
   .searchDiv>form>input{
-    width: 100%;outline: none;padding:.1rem .1rem .1rem .6rem;border:none;line-height: .5rem;font-size: .28rem;border-radius: .1rem;
+    width: 100%;outline: none;padding:.1rem .1rem .1rem .6rem;border:none;line-height: .44rem;font-size: .28rem;border-radius: .5rem;
   }
   .searchDiv>.cancel_btn{
     display: inline-block;text-align: center;font-size: .28rem;color: #333;margin-left: .2rem;

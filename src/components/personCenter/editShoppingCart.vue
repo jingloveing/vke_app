@@ -11,7 +11,7 @@
 				<input type="checkbox" v-model="selectList" :id="item.id" :value="index" name="selectList">
 				</div>
 				<div class="right">
-					<img src="../../../dist/static/images/default_img.png" alt=""  class="pic"/>
+					<img src="../../../static/images/default_img.png" alt=""  class="pic"/>
 					<div class="des">
 						<!--<p class="name f26 c3">商品名称 名称名称商品名称 名称名称商品名称 名称名称商品名称 名称名称商品名称 名称名称</p>
 						<p class="f24 c9" style="margin-top: .1rem;">标签型号颜色等</p>-->
@@ -45,6 +45,7 @@
 
 <script>
 	import { XNumber, XSwitch, TransferDom, Actionsheet} from 'vux'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Realize',
 		components: {

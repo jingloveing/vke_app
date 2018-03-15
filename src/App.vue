@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<x-header :left-options="{backText: ''}" :title="$route.meta.title" v-show="$route.meta.showHeader"></x-header>
-		<div style="height: .88rem;" v-show="$route.meta.showHeader"></div>
+		<div style="height: 1.28rem;" v-show="$route.meta.showHeader"></div>
 		<router-view></router-view>
 		<app-footer v-show="$route.meta.showFooter"></app-footer>
 		<div class="toTop" @click="toTop()">

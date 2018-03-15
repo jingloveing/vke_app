@@ -2,10 +2,10 @@
 	<div>
 		<!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;border-bottom: 1px solid #e1e1e1;position: fixed;z-index: 10;width: 100%;top: 0;">9.9专区</x-header>-->
 		<!--<div style="height: .88rem;"></div>-->
-		<tab :line-width=2 active-color='#9a7bff' v-model="index" custom-bar-width=".8rem">
+		<tab :line-width=2 active-color='#9a7bff' v-model="index" custom-bar-width=".8rem" style="height: .88rem;line-height: .88rem;">
 			<tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list" @click="demo2 = item" :key="index">{{item}}</tab-item>
 		</tab>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 88px;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 2.16rem;">
 			<div class="goods_list" v-show="index==0">
 				<ul class="goods">
 					<li v-for="(list,index) in goodsList" :key="index">
@@ -39,7 +39,7 @@
 			<div v-show="index==1" style="background: white;">
 				<ul class="brand">
 					<li v-for="i in 4">
-						<img src="../../../dist/static/images/default_img.png" alt="" :onerror="defaultImg" class="brand-pic"/>
+						<img src="../../../static/images/default_img.png" alt="" :onerror="defaultImg" class="brand-pic"/>
 						<div class="brand-main">
 							<div class="brand-main-left">
 									<p class="f32 c3" style="width:5rem;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">品牌名称品牌名称品牌名称品牌名称名称品牌名称品牌名称</p>
@@ -66,7 +66,7 @@
 <script>
 	import { Tab, TabItem, Loading, Toast } from 'vux'
 	const list = () => ['宝贝', '品牌']
-
+    const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'subject',
 		components: {
@@ -104,7 +104,7 @@
 			getGoods: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/collection',
+					url: url+'/api/collection',
 					params: {
 						type:this.index+1,
 						page:this.pageIndex,

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<iframe src="https://m.jd.com/?cu=true&utm_source=kong&utm_medium=tuiguang&utm_campaign=t_1000379762_&utm_term=45f85816b65547398811990ab1ca39bc&abt=3" id="Iframe" frameborder="0" scrolling="" style="border:0px;height: 12.46rem;" width="100%" height=""></iframe>
+		<iframe src="https://m.jd.com/?cu=true&utm_source=kong&utm_medium=tuiguang&utm_campaign=t_1000379762_&utm_term=468675df4caf465cb68615dccbc66065&abt=3" id="Iframe" frameborder="0" scrolling="" style="border:0px;height: 12.46rem;" width="100%" height=""></iframe>
 		<div class="return flex" @click="goHome()">
 			<img src="../../../static/images/return_icon.png" alt="" />
 			<span class="f28">返回</span>

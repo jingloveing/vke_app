@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<x-header :left-options="{backText: ''}" title="库存挂单" style="background-color: #f9f9f9;">
-			<a slot="right" style="color: #9A7BFF;font-size: .32rem;" href="/personCenter/goldStore/realizeList">挂单记录</a>
+			<a slot="right" style="color: #9A7BFF;font-size: .32rem;padding-top: .4rem;" href="/personCenter/goldStore/realizeList">挂单记录</a>
 		</x-header>
-		<div style="height: .88rem;"></div>
+		<div style="height: 1.28rem;"></div>
 		<div class="header" style="position: relative;">
 			<router-link to="/cashRule" class="f24 flex" style="position: absolute;right: .26rem;top: .26rem;z-index: 888;color: white;">
 				<img src="../../../static/images/rule_icon.png" alt=""  style="width: .28rem;height: .28rem;margin-right: .1rem;"/>
@@ -94,6 +94,7 @@
 
 <script>
 	import { XHeader, XInput, XButton, Group} from 'vux'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Realize',
 		components: {
@@ -116,7 +117,7 @@
 			uploadPic(formData) {
 				this.$http({
 					method: 'POST',
-					url: '/api/upload',
+					url: url+'/api/upload',
 					dataType: 'formData',
 					data: formData
 				}).then((res) => {

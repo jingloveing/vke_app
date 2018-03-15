@@ -46,7 +46,7 @@
 				</div>
 				<div class="main_goods">
 					<ul class="goods">
-						<router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'TBDetail',query:{id:goods.id}}" :key="index">
+						<router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'TBDetail',query:{id:goods.id,type:1}}" :key="index">
 							<img :src="goods.pict_url" alt="" :onerror="defaultImg" class="goods-pic">
 							<div class="content">
 								<div class="des">{{goods.title}}</div>
@@ -75,6 +75,7 @@
 </template>
 <script>
 	import { XHeader, Swiper } from 'vux'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Home',
 		components: {
@@ -98,7 +99,7 @@
 			getBannerList: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/tbBanner'
+					url: url+'/api/tbBanner'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const imgList = res.data.data
@@ -116,7 +117,7 @@
 			getTypeList: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/tbCate'
+					url: url+'/api/tbCate'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const typeList = res.data.data
@@ -131,7 +132,7 @@
 				const self = this
 				this.$http({
 					method: 'get',
-					url: '/api/tbList',
+					url: url+'/api/tbList',
 					params: {
 						page: this.pageIndex,
 						limit: this.limit,
@@ -199,6 +200,7 @@
 		
 	}
 	.nav-header {
+		padding-top: .4rem;
 		width: 100%;
 		position: fixed;
 		top: 0;

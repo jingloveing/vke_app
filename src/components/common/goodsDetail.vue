@@ -121,6 +121,7 @@
 </template>
 <script>
 	import { XHeader, Cell, CellBox, CellFormPreview, Group, Badge, Loading, Swiper, Toast,XNumber} from 'vux'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		components: {
 			Group,
@@ -175,7 +176,7 @@
 				this.type = this.$route.query.type
 				this.$http({
 					method: 'get',
-					url: '/api/productInfo',
+					url: url+'/api/productInfo',
 					params: {
 						id: this.id,
 						type: this.type

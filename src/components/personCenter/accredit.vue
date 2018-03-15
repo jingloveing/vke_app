@@ -21,6 +21,7 @@
 
 <script>
 	import { Group, Cell, XButton, XSwitch } from 'vux'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		components: {
 			Group,
@@ -42,7 +43,7 @@
 			getStart: function(type) {
 				this.$http({
 					method: 'get',
-					url: '/api/accreditInfo',
+					url: url+'/api/accreditInfo',
 					//					params:{type:type}
 				}).then((res) => {
 					if(res.data.code == '200') {
@@ -61,7 +62,7 @@
 					if(this.tb_auth == 0) {
 						this.$http({
 							method: 'get',
-							url: '/api/doAccredit',
+							url: url+'/api/doAccredit',
 							params: {
 								type: type
 							}
@@ -78,7 +79,7 @@
 					} else {
 						this.$http({
 							method: 'get',
-							url: '/api/exitAccredit',
+							url: url+'/api/exitAccredit',
 							params: {
 								type: type
 							}
@@ -97,7 +98,7 @@
 					if(this.jd_auth == 0) {
 						this.$http({
 							method: 'get',
-							url: '/api/doAccredit',
+							url: url+'/api/doAccredit',
 							params: {
 								type: type
 							}
@@ -114,7 +115,7 @@
 					} else {
 						this.$http({
 							method: 'get',
-							url: '/api/exitAccredit',
+							url: url+'/api/exitAccredit',
 							params: {
 								type: type
 							}

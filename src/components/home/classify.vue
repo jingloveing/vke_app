@@ -23,11 +23,10 @@
     <!--</div>-->
     <x-header :left-options="{backText: ''}" :title="title" style="background-color: #f9f9f9;">
 		</x-header>
-		<div style="height: .88rem;"></div>
-    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
+    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
       <div class="main_goods">
         <ul class="goods">
-          <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :to="{name:'TBDetail',query:{id:goods.id}}" :key="index">
+          <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :to="{name:'TBDetail',query:{id:goods.id,type:1}}" :key="index">
             <img :src="goods.pict_url" alt="" :onerror="defaultImg">
             <div class="content">
               <div class="des" v-text="goods.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
@@ -58,6 +57,7 @@
 //  import Vue from 'vue'
 //  import VueScroller from 'vue-scroller'
 //  Vue.use(VueScroller)
+const url='http://xlk.dxvke.com/'
   export default {
     name: 'jiFen',
     components: {
@@ -82,14 +82,14 @@
     methods: {
       toExchange() {
         this.$router.push({
-          path: '/home/Exchange'
+          path:'/home/Exchange'
         })
       },
       //      获取商品列表
       getGoodsList:function(){
         this.$http({
           method:'get',
-          url:'/api/tbList',
+          url:url+'/api/tbList',
           params:{
             type:this.$route.query.id,page:this.pageIndex,limit:this.limit
           }
@@ -111,7 +111,7 @@
         this.cate_id = routerQuery;
         this.$http({
           method:'POST',
-          url:'/api/goodslist_type',
+          url:url+'/api/goodslist_type',
           data:{
             cate_id:this.cate_id
           }

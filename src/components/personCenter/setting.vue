@@ -15,7 +15,7 @@
 			<cell title="自报家门" is-link link="/aboutUs"></cell>
 		</group>
 		<div style="margin: 0 .26rem;">
-			<x-button type="default" link="" class="f32 c3">退出登录</x-button>
+			<x-button type="default" class="f32 c3" @click.native="dropout()">退出登录</x-button>
 		</div>
 	</div>
 </template>
@@ -36,7 +36,11 @@
 		},
 		methods:{
 			clear(){
+				localStorage.removeItem('userInfo')
+			},
+			dropout(){
 				localStorage.clear()
+				this.$router.go(-1)
 			}
 		},
 		created:function(){

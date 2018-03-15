@@ -73,6 +73,7 @@ import Upgrade from '@/components/personCenter/upgrade'
 import ShareDetail from '@/components/share/shareDetail'
 import Vedio from '@/components/brandSite/vedio'
 import PaySuccess from '@/components/personCenter/paySuccess'
+import guide from '@/components/guide'
 Vue.use(Router)
 //Router.prototype.goBack = function() {
 //	this.isBack = true
@@ -93,8 +94,16 @@ Vue.use(Router)
 //component: PageAinimate, // 引入页面切换组件
 
 const router = new Router({
-mode: 'history',
+//mode: 'history',
 routes: [{
+//		path: '',
+//		redirect: '/guide',
+//		component: guide,
+//	},{
+//		path: '/guide',
+//		name:'guide',
+//		component: guide,
+//	},
 		path: '',
 		redirect: '/home',
 		component: Home,
@@ -146,6 +155,7 @@ routes: [{
 	},
 	{
 		path: '/shareRoom/shareDetail',
+		name:'ShareDetail',
 		component: ShareDetail,
 	},
 	{
@@ -559,11 +569,19 @@ routes: [{
 		path: '/brandDetail',
 		name: 'BrandDetail',
 		component: BrandDetail,
+		meta: {
+			showHeader: true,
+			title:"商品详情"
+		}
 	},
 	{
 		path: '/taobao/TBDetail',
 		name: 'TBDetail',
 		component: TBDetail,
+		meta: {
+			showHeader: true,
+			title:"商品详情"
+		}
 	},
 	{
 		path: '/taobao/fuli',
@@ -633,6 +651,10 @@ routes: [{
 		path: '/login',
 		name: 'Login',
 		component: Login,
+		meta: {
+			showHeader: true,
+			title:"登录"
+		}
 	},
 	{
 		path: '/vedio',

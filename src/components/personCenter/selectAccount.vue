@@ -60,6 +60,7 @@
 
 <script>
 	import { Group, XInput, XButton, Icon } from 'vux'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'selectAccount',
 		components: {
@@ -81,7 +82,7 @@
 			uploadPic(formData) {
 				this.$http({
 					method: 'POST',
-					url: '/api/upload',
+					url: url+'/api/upload',
 					dataType: 'formData',
 					data: formData
 				}).then((res) => {

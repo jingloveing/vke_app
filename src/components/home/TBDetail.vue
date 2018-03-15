@@ -1,13 +1,8 @@
 <template>
 	<div>
-		<x-header :left-options="{backText: ''}" title="商品详情">
-			<a slot="right">
-				<router-link to="">
-					<img src="../../../static/images/share_black_icon.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;" />
-				</router-link>
-			</a>
-		</x-header>
-		<div style="height: .88rem;"></div>
+		<div style="position: fixed;z-index: 99999;right: 0;top: .4rem;height: .88rem;line-height: .88rem;" @click="show=!show">
+			<img src="../../../static/images/share_black_icon.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;padding: .1rem .26rem;" />
+		</div>
 		<div>
 			<div class="pic">
 				<swiper auto loop :list="goodsDetail.pict_url" style="width:100%;" height="7.5rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" :onerror="defaultImg"></swiper>
@@ -49,7 +44,7 @@
 			<div class="flex">
 				<div class="f24 tb-quan">
 					<div>优惠券</div>
-					<div>{{goodsDetail.volume}}元</div>
+					<div>{{goodsDetail.coupon_number}}元</div>
 				</div>
 				<span class="f24 c9" style="margin-left: .2rem;">领取优惠券</span>
 			</div>
@@ -66,21 +61,38 @@
 				<span>首页</span>
 			</div>
 			<div class="f_1 " @click="toCollect()">
-				<x-icon type="ios-heart" size="22" style="padding-top:.16rem ;fill: #ff5200;" v-show="collect"></x-icon>
-				<x-icon type="ios-heart-outline" size="22" style="padding-top:.16rem ;fill: #ff5200;" v-show="!collect"></x-icon>
-				<span v-text="collect?'已收藏':'收藏'">收藏</span>
+				<x-icon type="ios-heart" size="22" style="padding-top:.16rem ;fill: #ff5200;" v-show="goodsDetail.is_collect==1"></x-icon>
+				<x-icon type="ios-heart-outline" size="22" style="padding-top:.16rem ;fill: #ff5200;" v-show="goodsDetail.is_collect==0||!goodsDetail.is_collect"></x-icon>
+				<span v-text="goodsDetail.is_collect==1?'已收藏':'收藏'">收藏</span>
 			</div>
 			<div class="f_2 f2_l" @click="">
 				<span>去购买</span>
 			</div>
 		</div>
 		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
+		<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show">
+		</div>
+		<transition enter-active-class="fadeInUpBig" leave-active-class="fadeOutDownBig">
+			<div v-show="show" class="share-main">
+				<div class="share-main-content">
+					<p class="f28 c6" style="text-align: center;line-height: .94rem;height: .94rem;">———分享至———</p>
+					<div class="share-class flex">
+						<img src="../../../static/images/share/friendshare.png" alt="" />
+						<img src="../../../static/images/share/QQshare.png" alt="" />
+						<img src="../../../static/images/share/QQzoneshare.png" alt="" />
+						<img src="../../../static/images/share/weiboshare.png" alt="" />
+						<img src="../../../static/images/share/weixinshare.png" alt="" />
+					</div>
+				</div>
+				<div @click="show=!show" class="f32 c3" style="text-align: center;line-height: .96rem;border-top: .01rem solid #e5e5e5;">取消</div>
+			</div>
+		</transition>
 	</div>
 </template>
 <script>
 	import { XHeader, Cell, CellBox, CellFormPreview, Group, Badge, Loading, Swiper, Toast, XNumber } from 'vux'
 	import Clipboard from 'clipboard'
-
+const url='http://xlk.dxvke.com/'
 	export default {
 		components: {
 			Group,
@@ -104,7 +116,7 @@
 				showLoading: false,
 				show: false,
 				goodsDetail: {
-					title: '',
+					product_name: '',
 					pict_url: [],
 					small_images: [],
 					reserve_price: {
@@ -126,17 +138,35 @@
 			//      商品详情
 			getDetail: function() {
 				this.id = this.$route.query.id;
-				this.type = this.$route.query.type
 				this.$http({
 					method: 'get',
-					url: '/api/productInfo',
+					url: url+'/api/productInfo',
 					params: {
 						id: this.$route.query.id,
-						type: 1
+						type: this.$route.query.type
 					}
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.goodsDetail = res.data.data
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			//      收藏----取消收藏
+			toCollect: function() {
+				this.id = this.$route.query.id;
+				this.$http.post(url+'/api/doCollect', {
+						id: this.$route.query.id,
+						type: 4
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.toast=res.data.data.message
+						this.showToast=true
+						this.goodsDetail.is_collect=res.data.data.is_collect
+					}else{
+						this.toast=res.data.error
+						this.showToast=true
 					}
 				}, (err) => {
 					console.log(err)
@@ -153,15 +183,6 @@
 				location.href = 'http://www.dxvke.com/goodsDetail/?id=' + id
 				//        this.toTop()
 				//        this.getGoodsDetail()
-			},
-			toCollect() {
-				this.collect = !this.collect
-				if(this.collect == false) {
-					this.toast = "取消收藏成功"
-					this.showToast = true
-				} else {
-					this.showToast = false
-				}
 			},
 		},
 		created: function() {

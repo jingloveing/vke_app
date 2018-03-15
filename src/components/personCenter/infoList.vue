@@ -12,6 +12,7 @@
 
 <script>
 	import { XHeader} from 'vux'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Member',
 		components: {
@@ -29,7 +30,7 @@
 			getList() {
 				this.$http({
 					methods:'get',
-					url:'/api/messageList',
+					url:url+'/api/messageList',
 					params:{
 						cate:this.type
 					}

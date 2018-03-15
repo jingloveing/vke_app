@@ -29,7 +29,7 @@
 				<input type="checkbox" v-model="selectList" :id="item.id" :value="index" name="selectList">
 				</div>
 				<div class="right">
-					<img src="../../../dist/static/images/default_img.png" alt=""  class="pic"/>
+					<img src="../../../static/images/default_img.png" alt=""  class="pic"/>
 					<div class="des">
 						<p class="name f26 c3" v-show="status">{{item.product_name}}</p>
 						<p class="f24 c9" v-show="status">{{item.attr}}</p>
@@ -80,6 +80,7 @@
 
 <script>
 	import { XHeader, XNumber,Toast} from 'vux'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'ShoppingCart',
 		components: {
@@ -102,7 +103,7 @@
 			getShopCar: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/shopCar'
+					url: url+'/api/shopCar'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.list=res.data.data

@@ -8,7 +8,7 @@
 				<div>
 					<div class="user_pic">
 						<router-link to="/personCenter/userInfo">
-							<img :src="userInfo.head_image" class="user_icon" />
+							<img :src="userInfo.head_image" class="user_icon" :onerror="defaultImg"/>
 							<img src="../../../static/images/personCenter/leve1.png" alt="" class="user_order" v-show="userInfo.level_id==1" />
 							<img src="../../../static/images/personCenter/leve1.png" alt="" class="user_order" v-show="userInfo.level_id==2" />
 							<img src="../../../static/images/personCenter/leve1.png" alt="" class="user_order" v-show="userInfo.level_id==3" />
@@ -17,9 +17,10 @@
 					</div>
 
 					<p class="user_name">{{userInfo.nickname}}</p>
-					<router-link to="/upgrade">
+					<router-link to="/upgrade" v-show='token'>
 						<div class="uper_btn">升级地位</div>
 					</router-link>
+					<router-link class="user_name" style="padding: 0 .2rem;"   to="/login">登录</router-link>
 				</div>
 				<router-link to="/personCenter/info">
 					<div class="right">
@@ -27,7 +28,7 @@
 						<span class="info_num" v-show="userInfo.unMessage!==0">{{userInfo.unMessage}}</span>
 					</div>
 				</router-link>
-				<router-link to="/personCenter/myPrerogative">
+				<router-link to="/personCenter/myPrerogative" v-show="token">
 					<div class="level_btn">
 						<img src="static/images/personCenter/vip0.png" alt="" class="level" v-show="userInfo.level_id==1"/>
 						<img src="static/images/personCenter/vip1.png" alt="" class="level" v-show="userInfo.level_id==2"/>
@@ -60,6 +61,9 @@
 							<div class="header_list_num coppers" v-show="userInfo.chest_acer.type==1">
 								<img src="../../../static/images/personCenter/coppers.png" alt="" /> {{userInfo.chest_acer.acer}}
 							</div>
+							<div class="header_list_num" v-show="userInfo.chest_acer.type==0">
+									0
+								</div>
 						</div>
 					</router-link>
 					<router-link tag="li" to="/personCenter/underWay">
@@ -81,6 +85,9 @@
 							    </div>
 								<div class="header_list_num coppers" v-show="userInfo.transport_acer.type==1">
 									<img src="../../../static/images/personCenter/coppers.png" alt="" />{{userInfo.transport_acer.acer}}
+								</div>
+								<div class="header_list_num" v-show="userInfo.transport_acer.type==0">
+									0
 								</div>
 							</div>
 						</div>
@@ -170,6 +177,7 @@
 
 <script>
 	import { Toast } from 'vux'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'personCenter',
 		components: {
@@ -182,22 +190,24 @@
 					head_image: '',
 					level_id: null,
 					chest_acer: {
-						type: null,
-						acer: null,
+						type: 0,
+						acer: 0,
 					},
 					transport_acer: {
-						type: null,
-						acer: null
+						type: 0,
+						acer: 0
 					},
-					pay_money: '',
-					unMessage: null
-				}
+					pay_money: 0,
+					unMessage: 0
+				},
+				token:'',
+				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 			}
 		},
 		methods: {
 			//获取用户信息
 			getUserInfo: function() {
-				this.$http.get('/api/userInfo', {}).then((res) => {
+				this.$http.get(url+'/api/userInfo', {}).then((res) => {
 					if(res.data.code == '200') {
 						this.userInfo = res.data.data
                         localStorage.setItem('userInfo',JSON.stringify(this.userInfo))
@@ -211,7 +221,8 @@
 			},
 		},
 		created: function() {
-			this.getUserInfo()
+			this.token=localStorage.getItem('token')
+//			this.getUserInfo()
 
 		},
 		mounted: function() {
@@ -232,7 +243,7 @@
 		/* Firefox 3.6 - 15 */
 		background: linear-gradient(left, #8721b5, #db3283);
 		/* 标准的语法 */
-		padding: .24rem;
+		padding: .64rem .24rem .24rem;
 		box-sizing: border-box;
 		text-align: center;
 		position: relative;
@@ -250,7 +261,7 @@
 		width: .4rem;
 		height: .4rem;
 		vertical-align: middle;
-		padding: .24rem;
+		padding: .64rem .24rem .24rem;
 	}
 	
 	.info_num {
@@ -273,7 +284,7 @@
 		height: .4rem;
 		position: absolute;
 		left: .24rem;
-		top: .24rem;
+		top: .64rem;
 	}
 	
 	.user_icon {

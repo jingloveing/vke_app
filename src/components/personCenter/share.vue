@@ -23,6 +23,7 @@
 	import { XButton, } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 		var activeIndex=0
+		const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'share',
 		components: {
@@ -58,7 +59,7 @@
 			getList: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/shareImage'
+					url: url+'/api/shareImage'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.list = res.data.data.url

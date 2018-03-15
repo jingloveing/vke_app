@@ -1,22 +1,17 @@
 <template>
 	<div>
-		<x-header :left-options="{backText: ''}" title="商品详情">
-			<a slot="right">
-				<router-link to="">
-					<img src="../../../static/images/share_black_icon.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;" />
-				</router-link>
-			</a>
-		</x-header>
-		<div style="height: .88rem;"></div>
+		<div style="position: fixed;z-index: 99999;right: 0;top: .4rem;height: .88rem;line-height: .88rem;" @click="show=!show">
+			<img src="../../../static/images/share_black_icon.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;padding: .1rem .26rem;" />
+		</div>
 		<div>
 			<div class="pic">
-				<swiper auto loop :list="list" style="width:100%;" height="7.5rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" :onerror="defaultImg"></swiper>
+				<swiper auto loop :list="goodsDetail.pict_url" style="width:100%;" height="7.5rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" :onerror="defaultImg"></swiper>
 				<!--<img :src="goodsDetail.pict_url" alt="" :onerror="defaultImg">-->
 			</div>
 			<div class="detail">
-				<p class="name">{{goodsDetail.title}}</p>
+				<p class="name">{{goodsDetail.product_name}}</p>
 				<div class="flex" style="align-items: flex-end;">
-					<span class="prices"><small>￥</small><span>{{goodsDetail.zk_final_price.rmb}}</span><small v-show="goodsDetail.zk_final_price.corner!=='00'">.{{goodsDetail.zk_final_price.corner}}</small></span>
+					<span class="prices"><small>￥</small><span>{{goodsDetail.reserve_price.rmb}}</span><small v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</small></span>
 					<!--<div class="f28 flex c9" style="margin:0 0 .08rem .3rem;">可返
 						<div class="header_list_num jewel" style="margin-left: .1rem;">
 							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
@@ -39,10 +34,10 @@
 
 				</div>
 				<div class="flex">
-					<span class="old_price">价格<del>￥{{goodsDetail.reserve_price.rmb}}<span
-            v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</span></del>
+					<span class="old_price">价格<del>￥{{goodsDetail.market_price.rmb}}<span
+            v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.market_price.corner}}</span></del>
 					</span>
-					<span class="f24 c9">销量800件</span>
+					<span class="f24 c9">销量{{goodsDetail.volume}}件</span>
 				</div>
 			</div>
 		</div>
@@ -50,7 +45,7 @@
 			<div class="flex">
 				<div class="f24 tb-quan">
 					<div>优惠券</div>
-					<div>100元</div>
+					<div>{{goodsDetail.coupon_number}}元</div>
 				</div>
 				<span class="f24 c9" style="margin-left: .2rem;">领取优惠券</span>
 			</div>
@@ -63,25 +58,42 @@
 		<div style="height: .98rem;"></div>
 		<div class="footer">
 			<div class="f_1 f1_l" @click="toHome">
-				<img src="../../../static/images/home.png" alt="">
-				<span>首页</span>
+				<img src="../../../static/images/store_icon.png" alt="">
+				<span>店铺</span>
 			</div>
 			<div class="f_1 " @click="toCollect()">
-				<x-icon type="ios-heart" size="22" style="padding-top:.16rem ;fill: #ff5200;" v-show="collect"></x-icon>
-				<x-icon type="ios-heart-outline" size="22" style="padding-top:.16rem ;fill: #ff5200;" v-show="!collect"></x-icon>
-				<span v-text="collect?'已收藏':'收藏'">收藏</span>
+				<x-icon type="ios-heart" size="22" style="padding-top:.16rem ;fill: #ff5200;" v-show="goodsDetail.is_collect==1"></x-icon>
+				<x-icon type="ios-heart-outline" size="22" style="padding-top:.16rem ;fill: #ff5200;" v-show="goodsDetail.is_collect==0||!goodsDetail.is_collect"></x-icon>
+				<span v-text="goodsDetail.is_collect==1?'已收藏':'收藏'">收藏</span>
 			</div>
 			<div class="f_2 f2_l" @click="">
 				<span>去购买</span>
 			</div>
 		</div>
 		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
+		<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show">
+		</div>
+		<transition enter-active-class="fadeInUpBig" leave-active-class="fadeOutDownBig">
+			<div v-show="show" class="share-main">
+				<div class="share-main-content">
+					<p class="f28 c6" style="text-align: center;line-height: .94rem;height: .94rem;">———分享至———</p>
+					<div class="share-class flex">
+						<img src="../../../static/images/share/friendshare.png" alt="" />
+						<img src="../../../static/images/share/QQshare.png" alt="" />
+						<img src="../../../static/images/share/QQzoneshare.png" alt="" />
+						<img src="../../../static/images/share/weiboshare.png" alt="" />
+						<img src="../../../static/images/share/weixinshare.png" alt="" />
+					</div>
+				</div>
+				<div @click="show=!show" class="f32 c3" style="text-align: center;line-height: .96rem;border-top: .01rem solid #e5e5e5;">取消</div>
+			</div>
+		</transition>
 	</div>
 </template>
 <script>
-	import { XHeader, Cell, CellBox, CellFormPreview, Group, Badge, Loading, Swiper, Toast, XNumber } from 'vux'
+	import {Cell, CellBox, CellFormPreview, Group, Badge, Loading, Swiper, Toast, XNumber } from 'vux'
 	import Clipboard from 'clipboard'
-
+    const url='http://xlk.dxvke.com/'
 	export default {
 		components: {
 			Group,
@@ -90,7 +102,6 @@
 			CellBox,
 			Badge,
 			Loading,
-			XHeader,
 			Swiper,
 			Toast,
 			XNumber
@@ -105,57 +116,37 @@
 				showLoading: false,
 				show: false,
 				goodsDetail: {
-					title: '',
-					pict_url: '',
+					product_name: '',
+					pict_url: [],
 					small_images: [],
 					reserve_price: {
 						rmb: '',
 						corner: ''
 					},
-					zk_final_price: {
+					market_price: {
 						rmb: '',
 						corner: ''
 					},
 					volume: '',
-					category: ''
 				},
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 				command: '',
-				//        click_url:''
-				id: '',
-				type: '',
-				list: [{
-					url: 'javascript:',
-					img: 'https://static.vux.li/demo/1.jpg',
-					title: '送你一朵fua'
-				}, {
-					url: 'javascript:',
-					img: 'https://static.vux.li/demo/2.jpg',
-					title: '送你一辆车'
-				}, {
-					url: 'javascript:',
-					img: 'https://static.vux.li/demo/5.jpg',
-					title: '送你一次旅行',
-					fallbackImg: 'https://static.vux.li/demo/3.jpg'
-				}]
+				
 			}
 		},
 		methods: {
 			//      商品详情
 			getGoodsDetail: function() {
-				this.id = this.$route.query.id;
-				this.type = this.$route.query.type
 				this.$http({
-					method: 'POST',
-					url: '/api/goodsDetail',
-					data: {
-						goods_id: this.id,
-						type: this.type
+					method: 'get',
+					url: url+'/api/productInfo',
+					params: {
+						id: this.$route.query.id,
+						type: 6
 					}
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.goodsDetail = res.data.data
-						this.click_url = res.data.data.click_url
 					}
 				}, (err) => {
 					console.log(err)
@@ -163,7 +154,10 @@
 			},
 			toHome() {
 				this.$router.push({
-					path: '/home'
+					name: 'StoreIndex',
+					query:{
+						id:this.$route.query.store_id
+					}
 				})
 			},
 			click(id) {
@@ -174,18 +168,24 @@
 				//        this.getGoodsDetail()
 			},
 			toCollect() {
-				this.collect = !this.collect
-				if(this.collect == false) {
-					this.toast = "取消收藏成功"
-					this.showToast = true
-				} else {
-					this.showToast = false
-				}
+				this.$http.post(url+'/api/doCollect', {
+						id: this.$route.query.id,
+						type: 3
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.toast=res.data.data.message
+						this.showToast=true
+						this.goodsDetail.is_collect=res.data.data.is_collect
+					}else{
+						this.toast=res.data.error
+						this.showToast=true
+					}
+				}, (err) => {
+					console.log(err)
+				})
 			},
 		},
 		created: function() {
-			this.id = this.$route.query.id
-			this.type = this.$route.query.type
 			this.getGoodsDetail()
 
 		},

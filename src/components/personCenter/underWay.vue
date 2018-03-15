@@ -82,6 +82,7 @@
 <script>
 	import { Tab, TabItem, Swiper, SwiperItem } from 'vux'
 	const list = () => ['帮众', '淘宝', '京东', '蘑菇街', '唯品会']
+	const url='http://xlk.dxvke.com/'
 	export default {
 		components: {
 			Tab,

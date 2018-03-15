@@ -15,7 +15,7 @@
 				<span class="info_num">12</span>
 			</router-link>
 		</div>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
 		<swiper auto :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" loop></swiper>
 		<div style=" margin-top: -.3rem;z-index: 99999;position: relative;">
 			<ul class="nav-small">
@@ -71,7 +71,7 @@
 				</router-link>
 				<swipers :options="swiperOptionB" style="margin-top: .2rem;">
 					<swiper-slide v-for="(list,index) in item.product_list" :key="index"  class="box_content">
-						<router-link :to="{name:'TBDetail',query:{}}">
+						<router-link :to="{name:'BrandDetail',query:{id:list.id,store_id:item.id}}">
 							<img :src="list.thumb_url" alt="" :onerror="defaultImg">
 								<span class="dess">
                                 <p class="des_name break">{{list.product_name}}</p>
@@ -100,6 +100,7 @@
 <script>
 	import { Swiper, SwiperItem, Loading } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Home',
 		components: {
@@ -136,7 +137,7 @@
 			getBannerList: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/indexBanner'
+					url: url+'/api/indexBanner'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const imgList = res.data.data
@@ -155,7 +156,7 @@
 			getNews: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/indexNews'
+					url: url+'/api/indexNews'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.news=res.data.data
@@ -168,7 +169,7 @@
 			getMerchantList: function() {
 				this.$http({
 					method: 'get',
-					url: '/api/indexMerchant',
+					url: url+'/api/indexMerchant',
 					params:{page:this.pageIndex,limit:this.limit}
 				}).then((res) => {
 					if(res.data.code == '200') {
@@ -179,6 +180,9 @@
 							this.merchant = this.merchant.concat(res.data.data.list)
 							this.$refs.myscroller.finishPullToRefresh()
 						}
+					}else{
+						this.noData = true
+							this.$refs.myscroller.finishInfinite(2);
 					}
 				}, (err) => {
 					console.log(err)
@@ -225,9 +229,9 @@
 </script>
 <style scoped>
 	.nav-small {
+		background-image: url("../../assets/index_bd.png");
 		overflow: hidden;
 		padding: .38rem .2rem .1rem .2rem;
-		background: url(../../../static/images/index_bd.png);
 		background-size: 100% 100%;
 		width: 100%;
 		height: 1.94rem;
@@ -293,6 +297,7 @@
 		/* Firefox 3.6 - 15 */
 		background: linear-gradient(left, #8721b5, #db3283);
 		/* 标准的语法 */
+		padding-top: .4rem;
 	}
 	
 	.searchDiv .left {

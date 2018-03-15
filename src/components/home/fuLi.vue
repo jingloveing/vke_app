@@ -2,17 +2,18 @@
 	<div>
 		<x-header :left-options="{backText: ''}" :title="title" style="background-color: #f9f9f9;">
 		</x-header>
-		<div style="font-size: 0;position: fixed;z-index: 9999;top:.88rem;width: 100%;">
+		<div style="font-size: 0;position: fixed;z-index: 9999;top:1.28rem;width: 100%;">
 			<tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff526d">
 				<tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @on-item-click="change(list2,index)" :key="index">{{item}}
 				</tab-item>
 			</tab>
 		</div>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.76rem;">
+		
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 2.16rem;">
 			<div class="main_goods">
 				<div>
 					<ul class="goods">
-						<router-link class="goods_list" v-for="(goodList1,index) in goodList1" :to="{name:'TBDetail',query:{id:goodList1.id}}" :key="index">
+						<router-link class="goods_list" v-for="(goodList1,index) in goodList1" :to="{name:'TBDetail',query:{id:goodList1.id,type:1}}" :key="index">
 							<img :src="goodList1.pict_url" alt="" :onerror="defaultImg">
 							<div class="content">
 								<div class="des" v-text="goodList1.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
@@ -35,60 +36,6 @@
 						</router-link>
 					</ul>
 				</div>
-				<!--<div v-show="index==1">-->
-				<!--<ul class="goods" v-for="goodList2 in goodList2">-->
-				<!--<li class="goods_list">-->
-				<!--<img :src="goodList2.small_images" alt="" :onerror="defaultImg">-->
-				<!--<div class="content">-->
-				<!--<div class="des" v-text="goodList2.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>-->
-				<!--<p style="position: relative;margin-top: .2rem;"><span class="left">送{{goodList2.volume}}元宝</span>-->
-				<!--&lt;!&ndash;<span class="right">剩余<span&ndash;&gt;-->
-				<!--&lt;!&ndash;style="color: #ffb205;">{{goodList2.volume}}</span>件</span>&ndash;&gt;-->
-				<!--</p>-->
-				<!--<p class="des_b" style="position: relative;margin-top: .1rem;">-->
-				<!--<span class="price"><span style="font-size: .2rem;">￥</span>{{goodList2.zk_final_price.rmb}}<span v-show="goodList2.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{goodList2.zk_final_price.corner}}</span></span>-->
-				<!--<span class="num">{{goodList2.volume}}件已售</span>-->
-				<!--</p>-->
-				<!--</div>-->
-				<!--</li>-->
-				<!--</ul>-->
-				<!--</div>-->
-				<!--<div v-show="index==2">-->
-				<!--<ul class="goods" v-for="goodList3 in goodList3">-->
-				<!--<li class="goods_list">-->
-				<!--<img :src="goodList3.small_images" alt="" :onerror="defaultImg">-->
-				<!--<div class="content">-->
-				<!--<div class="des" v-text="goodList3.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>-->
-				<!--<p style="position: relative;margin-top: .2rem;"><span class="left">送{{goodList3.volume}}元宝</span>-->
-				<!--&lt;!&ndash;<span class="right">剩余<span&ndash;&gt;-->
-				<!--&lt;!&ndash;style="color: #ffb205;">{{goodList3.volume}}</span>件</span>&ndash;&gt;-->
-				<!--</p>-->
-				<!--<p class="des_b" style="position: relative;margin-top: .1rem;">-->
-				<!--<span class="price"><span style="font-size: .2rem;">￥</span>{{goodList3.zk_final_price.rmb}}<span v-show="goodList3.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{goodList3.zk_final_price.corner}}</span></span>-->
-				<!--<span class="num">{{goodList3.volume}}件已售</span>-->
-				<!--</p>-->
-				<!--</div>-->
-				<!--</li>-->
-				<!--</ul>-->
-				<!--</div>-->
-				<!--<div v-show="index==3">-->
-				<!--<ul class="goods" v-for="goodList4 in goodList4">-->
-				<!--<li class="goods_list">-->
-				<!--<img :src="goodList4.small_images" alt="" :onerror="defaultImg">-->
-				<!--<div class="content">-->
-				<!--<div class="des" v-text="goodList4.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>-->
-				<!--<p style="position: relative;margin-top: .2rem;"><span class="left">送{{goodList4.volume}}元宝</span>-->
-				<!--&lt;!&ndash;<span class="right">剩余<span&ndash;&gt;-->
-				<!--&lt;!&ndash;style="color: #ffb205;">{{goodList4.volume}}</span>件</span>&ndash;&gt;-->
-				<!--</p>-->
-				<!--<p class="des_b" style="position: relative;margin-top: .1rem;">-->
-				<!--<span class="price"><span style="font-size: .2rem;">￥</span>{{goodList4.zk_final_price.rmb}}<span v-show="goodList4.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{goodList4.zk_final_price.corner}}</span></span>-->
-				<!--<span class="num">{{goodList4.volume}}件已售</span>-->
-				<!--</p>-->
-				<!--</div>-->
-				<!--</li>-->
-				<!--</ul>-->
-				<!--</div>-->
 			</div>
 		</scroller>
 
@@ -98,7 +45,7 @@
 </template>
 <script>
 	import { Tab, TabItem, Swiper, SwiperItem, XHeader, Loading } from 'vux'
-
+const url='http://xlk.dxvke.com/'
 	const list = () => ['价格优先', '销量优先', '券额优先', '最新商品']
 	export default {
 		name: 'Exchange',
@@ -136,14 +83,14 @@
 		},
 		methods: {
 			//      获取粉丝福利商品列表====价格
-			getList1: function(e) {
+			getList1: function() {
 //				this.showLoading = true
 				this.$http({
 					method: 'get',
-					url: '/api/tbStoreList',
+					url: url+'/api/tbStoreList',
 					params: {
 						type: this.$route.query.type,
-						order: e,
+						order: this.order,
 						page: this.page,
 						limit: this.limit
 					}
@@ -239,7 +186,6 @@
 				var self = this
 				this.page = 1
 				this.goodList1 = []
-				this.getList1(1)
 				setTimeout(function() {
 					self.top = self.top - 10;
 					done()
@@ -249,15 +195,8 @@
 				this.showLoading = true
 				this.goodList1 = []
 				this.page=1
-				if(index == 0) {
-					this.getList1(1)
-				} else if(index == 1) {
-					this.getList1(2)
-				} else if(index == 2) {
-					this.getList1(3)
-				} else if(index == 3) {
-					this.getList1(4)
-				}
+				this.order=index+1
+				this.getList1()
 			},
 
 		},

@@ -67,6 +67,7 @@
 <script>
 	var list = ["今日", "昨日", "本月", "全部"]
 	import { DatetimeView, } from 'vux'
+	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Realize',
 		components: {
