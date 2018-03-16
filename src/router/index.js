@@ -74,6 +74,10 @@ import ShareDetail from '@/components/share/shareDetail'
 import Vedio from '@/components/brandSite/vedio'
 import PaySuccess from '@/components/personCenter/paySuccess'
 import guide from '@/components/guide'
+import OrderTaobao from '@/components/personCenter/order_taobao'
+import OrderVip from '@/components/personCenter/order_vip'
+import OrderMogu from '@/components/personCenter/order_mogu'
+import OrderJD from '@/components/personCenter/order_JD'
 Vue.use(Router)
 //Router.prototype.goBack = function() {
 //	this.isBack = true
@@ -672,6 +676,42 @@ routes: [{
 		meta: {
 			showHeader: true,
 			title:"支付成功"
+		}
+	},
+	{
+		path: '/orderTaobao',
+		name: 'OrderTaobao',
+		component: OrderTaobao,
+		meta: {
+			showHeader: true,
+			title:"我的淘宝订单"
+		}
+	},
+	{
+		path: '/orderVip',
+		name: 'OrderVip',
+		component: OrderVip,
+		meta: {
+			showHeader: true,
+			title:"我的唯品会订单"
+		}
+	},
+	{
+		path: '/orderMogu',
+		name: 'OrderMogu',
+		component: OrderMogu,
+		meta: {
+			showHeader: true,
+			title:"我的蘑菇街订单"
+		}
+	},
+	{
+		path: '/orderJD',
+		name: 'OrderJD',
+		component: OrderJD,
+		meta: {
+			showHeader: true,
+			title:"我的京东订单"
 		}
 	},
 ]

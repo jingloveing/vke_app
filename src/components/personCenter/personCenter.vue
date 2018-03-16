@@ -187,7 +187,7 @@
 			return {
 				userInfo: {
 					nickname: '',
-					head_image: '',
+					head_image: "",
 					level_id: null,
 					chest_acer: {
 						type: 0,
@@ -226,7 +226,26 @@
 
 		},
 		mounted: function() {
-            this.userInfo=JSON.parse(localStorage.getItem('userInfo'))
+            var userInfo=JSON.parse(localStorage.getItem('userInfo'))
+            if(userInfo){
+                 this.userInfo=userInfo            	
+            }else{
+            	this.userInfo={
+					nickname: '',
+					head_image: "",
+					level_id: null,
+					chest_acer: {
+						type: 0,
+						acer: 0,
+					},
+					transport_acer: {
+						type: 0,
+						acer: 0
+					},
+					pay_money: 0,
+					unMessage: 0
+				}
+            }
 		}
 	}
 </script>

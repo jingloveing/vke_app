@@ -110,7 +110,7 @@
 		position: relative;
 		width: 100%;
 		height: 4.16rem;
-		background-image: url(../../../static/images/personCenter/code_bd.png);
+		background-image: url(../../../static/images/personCenter/code_bd.jpg);
 		background-size: 100% 100%;
 		background-repeat: no-repeat;
 	}

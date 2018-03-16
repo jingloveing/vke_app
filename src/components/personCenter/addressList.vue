@@ -30,7 +30,8 @@
 
 <script>
 	import { XHeader, XInput, XButton, Group,Toast,Loading} from 'vux'
-	const url='http://xlk.dxvke.com/'
+//	const url='http://xlk.dxvke.com/'
+    const url=''
 	export default {
 		name: 'Realize',
 		components: {
@@ -44,8 +45,6 @@
 		data() {
 			return {
 				type:0,
-				page:1,
-				limit:10,
 				list:[],
 				showToast:false,
 				toast:'',
@@ -59,10 +58,6 @@
 				this.$http({
 					method: 'get',
 					url: url+'/api/addressList',
-					params: {
-						page: this.page,
-						limit: this.limit
-					}
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.list = res.data.data.list

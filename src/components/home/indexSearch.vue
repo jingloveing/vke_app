@@ -5,7 +5,7 @@
 			<button-tab-item @on-item-click="consoleIndex()">淘宝商品</button-tab-item>
 			<button-tab-item @on-item-click="consoleIndex()">品牌商品</button-tab-item>
 		</button-tab>
-		<div style="height: .88rem;"></div>
+		<div style="height: 1.28rem;"></div>
 		<div class="searchDiv">
 			<img src="../../../static/images/personCenter/search_img.png" alt="">
 			<form action="">
@@ -238,7 +238,7 @@
 		top: 0;
 		z-index: 99999;
 		left: calc((100% - 3.34rem)/2);
-		top: calc((.88rem - .6rem)/2);
+		top: calc((.88rem - .6rem)/2 + .4rem);
 	}
 	
 </style>
@@ -250,14 +250,14 @@
 	
 	.nav.vux-button-group>a.vux-button-tab-item-last:after {
 		border: .01rem solid #9a7bff;
-		border-top-right-radius: .1rem;
-		border-bottom-right-radius: .1rem;
+		border-top-right-radius: .06rem;
+		border-bottom-right-radius: .06rem;
 	}
 	
 	.nav.vux-button-group>a.vux-button-tab-item-first:after {
 		border: .01rem solid #9a7bff;
-		border-top-left-radius: .1rem;
-		border-bottom-left-radius: .1rem;
+		border-top-left-radius: .06rem;
+		border-bottom-left-radius: .06rem;
 	}
 	
 	.nav.vux-button-group>a {
@@ -268,12 +268,12 @@
 	}
 	
 	.nav.vux-button-group>a.vux-button-tab-item-last {
-		border-top-right-radius: .1rem;
-		border-bottom-right-radius: .1rem;
+		border-top-right-radius: .06rem;
+		border-bottom-right-radius: .06rem;
 	}
 	
 	.nav.vux-button-group>a.vux-button-tab-item-first {
-		border-top-left-radius: .1rem;
-		border-bottom-left-radius: .1rem;
+		border-top-left-radius: .06rem;
+		border-bottom-left-radius: .06rem;
 	}
 </style>

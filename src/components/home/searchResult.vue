@@ -1,6 +1,6 @@
 <template>
   <div style="background-color: white;">
-   <div style="position: fixed;z-index: 999999;width: 100%;">
+   <div style="position: fixed;z-index: 999999;width: 100%;background:#f9f9f9;padding-top: .4rem;height: .88rem;">
      <div class="goHome" @click="goHome()">
        <x-icon type="ios-arrow-left" size="30" style="fill: #333;width: .86rem;margin-top: 6px;" @click="goback()"></x-icon>
      </div>
@@ -24,7 +24,7 @@
     <!--</div>-->
     <div id="results" style="overflow: hidden;">
       <tab :line-width=0 active-color='#9a7bff' v-model="index" custom-bar-width="1.2rem" bar-active-color="#9a7bff"
-           style="margin-top: 44px;">
+           style="margin-top: 1.28rem;">
         <tab-item class="vux-center" v-for="(item, index) in list" @on-item-click="change(index)" :key="index">{{item}}
         </tab-item>
         <tab-item class="vux-center" @on-item-click="change(3)">价格 <div style="display: inline-block;">
@@ -34,7 +34,7 @@
 			</div>
 							</tab-item>
       </tab>
-      <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 89px;">
+      <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 2.16rem;">
       <div class="main_goods">
         <ul class="goods">
           <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :key="index" :to="{name:'TBDetail',query:{id:goods.id,type:7}}">

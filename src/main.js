@@ -43,7 +43,7 @@ Vue.http.interceptors.push((request, next) => {
 		let token= 'aaa'
 	if(token) {
 		//如果请求时TOKEN存在,就为每次请求的headers中设置好TOKEN,后台根据headers中的TOKEN判断是否放行      
-		request.headers.set('Authorization', 'Bearer '+token);
+		request.headers.set('token', 'Bearer '+token);
 	}
 	next((response) => {
 			if(response.status === 400 || response.status === 401) {

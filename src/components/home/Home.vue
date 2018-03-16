@@ -229,7 +229,7 @@
 </script>
 <style scoped>
 	.nav-small {
-		background-image: url("../../assets/index_bd.png");
+		background-image: url("../../../static/images/index_bd.png");
 		overflow: hidden;
 		padding: .38rem .2rem .1rem .2rem;
 		background-size: 100% 100%;

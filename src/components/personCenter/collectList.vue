@@ -1,9 +1,7 @@
 <template>
 	<div>
-		<!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;border-bottom: 1px solid #e1e1e1;position: fixed;z-index: 10;width: 100%;top: 0;">9.9专区</x-header>-->
-		<!--<div style="height: .88rem;"></div>-->
 		<tab :line-width=2 active-color='#9a7bff' v-model="index" custom-bar-width=".8rem" style="height: .88rem;line-height: .88rem;">
-			<tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list" @click="demo2 = item" :key="index">{{item}}</tab-item>
+			<tab-item class="vux-center" v-for="(item, index) in list" :key="index" @on-item-click="change(item,index)">{{item}}</tab-item>
 		</tab>
 		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 2.16rem;">
 			<div class="goods_list" v-show="index==0">
@@ -24,10 +22,10 @@
 								</div>
 								<div style="display: flex;justify-content: space-between;align-items: center;">
 									<div>
-										<span class="new_num f28"><span class="f24">￥</span>{{list.product_price}}<span v-show="list.product_price!=='00'" class="f24">.{{list.product_price}}</span></span>
-										<del class="old_num f24">￥{{list.market_price}}<span v-show="list.market_price!=='00'">.{{list.market_price}}</span></del>
+										<span class="new_num f28"><span class="f24">￥</span>{{list.product_price.rmb}}<span v-show="list.product_price.corner!=='00'" class="f24">.{{list.product_price}}</span></span>
+										<del class="old_num f24">￥{{list.market_price.rmb}}<span v-show="list.market_price!=='00'">.{{list.market_price.corner}}</span></del>
 									</div>
-									<div @click="del">
+									<div @click="del(list.type,list.collect_id)">
 										<img src="../../../static/images/collect_del.png" alt="" style="width: .32rem;height: .32rem;" />
 									</div>
 								</div>
@@ -38,18 +36,18 @@
 			</div>
 			<div v-show="index==1" style="background: white;">
 				<ul class="brand">
-					<li v-for="i in 4">
-						<img src="../../../static/images/default_img.png" alt="" :onerror="defaultImg" class="brand-pic"/>
+					<li v-for="(list,index) in goodsList" :key="index">
+						<img :src="list.image" alt="" alt="" :onerror="defaultImg" class="brand-pic"/>
 						<div class="brand-main">
 							<div class="brand-main-left">
-									<p class="f32 c3" style="width:5rem;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">品牌名称品牌名称品牌名称品牌名称名称品牌名称品牌名称</p>
+									<p class="f32 c3" style="width:5rem;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" v-text="list.collect_name"></p>
 									<!--<span class="type taobao">淘宝</span>-->
 									<!--<span class="type JD">京东</span>
                 <span class="type mogujie">蘑菇街</span>
                 <span class="type vipshop">唯品会</span>
                 <span class="type self">自营</span>-->
 							</div>
-							<div style="line-height: 1rem;padding:0 .26rem;" @click="del">
+							<div style="line-height: 1rem;padding:0 .26rem;" @click="del(list.type,list.collect_id)">
 								<img src="../../../static/images/collect_del.png" alt="" style="width: .32rem;height: .32rem;vertical-align: middle;" />
 							</div>
 						</div>
@@ -58,7 +56,7 @@
 			</div>
 		</scroller>
 		<loading v-model="showLoading" :text="loadText"></loading>
-		<toast v-model="showPositionValue" type="text" :time="800" is-show-mask :text="text" :position="position"></toast>
+		<toast v-model="showToast" type="text" :time="800" is-show-mask :text="toast" ></toast>
 		<!--<div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>-->
 
 	</div>
@@ -66,7 +64,8 @@
 <script>
 	import { Tab, TabItem, Loading, Toast } from 'vux'
 	const list = () => ['宝贝', '品牌']
-    const url='http://xlk.dxvke.com/'
+    const url='http://xlk.dxvke.com'
+//  const url=""
 	export default {
 		name: 'subject',
 		components: {
@@ -78,7 +77,6 @@
 		data() {
 			return {
 				list: list(),
-				demo2: '宝贝',
 				sortsType: [],
 				goodsList: [],
 				type_id: '',
@@ -89,13 +87,12 @@
 				getBarWidth: function(index) {
 					return(index + 1) * 22 + 'px'
 				},
-				pageIndex: 1,
+				page: 1,
 				limit: 10,
 				noData: false,
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
-				position: 'middle',
-				showPositionValue: false,
-				text: ''
+				showToast: false,
+				toast: ''
 
 			}
 		},
@@ -107,10 +104,11 @@
 					url: url+'/api/collection',
 					params: {
 						type:this.index+1,
-						page:this.pageIndex,
+						page:this.page,
 						limit:this.limit
 					}
 				}).then((res) => {
+					this.showLoading = false
 					if(res.data.code == '200') {
 						if(res.data.data.list.length == 0) {
 							this.noData = true
@@ -127,6 +125,8 @@
 						})
 					}
 				}, (err) => {
+					this.showLoading = false
+					this.$refs.myscroller.finishInfinite();
 					console.log(err)
 				})
 			},
@@ -139,7 +139,7 @@
 				} else {
 					let self = this; //this指向问题
 					setTimeout(() => {
-						self.pageIndex += 1
+						self.page += 1
 						self.getGoods()
 						done()
 					}, 1500)
@@ -147,7 +147,7 @@
 			},
 			refresh(done) {
 				var self = this
-				this.pageIndex = 1
+				this.page = 1
 				this.goodsList = []
 				this.getGoods()
 				setTimeout(function() {
@@ -155,10 +155,31 @@
 					done()
 				}, 1500)
 			},
-			del() {
-				this.text = "取消收藏成功"
-				this.showPositionValue = true
-			}
+			//      收藏----取消收藏
+			del(type,id) {
+				this.$http.post(url+'/api/doCollect', {
+						id: id,
+						type: type,
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.toast=res.data.data.message
+						this.showToast=true
+						this.page=1
+						this.getGoods()
+					}else{
+						this.toast=res.data.error
+						this.showToast=true
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+			change(item, index) {
+				this.page=1
+				this.showLoading = true
+				this.goodsList =[]
+				this.getGoods()
+			},
 		},
 		mounted() {
 
@@ -284,7 +305,7 @@
 		width: calc(100% - 1rem - .22rem);
     padding-left: .22rem;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
 	}
 </style>

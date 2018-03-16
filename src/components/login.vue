@@ -10,66 +10,20 @@
 </template>
 
 <script>
-//	export default {
-//		components: {
-//
-//		},
-//		data() {
-//			return {
-//				auths: null,
-//			}
-//		},
-//		methods: {
-//			// 登录操作
-//			authLogin() {
-//				console.log(this.auths)
-//				var s = this.auths[0];
-//				console.log(s)
-//				if(!s.authResult) {
-//					s.login(function(e) {
-//						alert("登录认证成功！");
-//					}, function(e) {
-//						alert("登录认证失败！");
-//					});
-//				} else {
-//					alert("已经登录认证！");
-//				}
-//			}
-//		},
-//		mounted: function() {
-//          // 监听plusready事件  
-//			document.addEventListener("plusready", function() {
-//				console.log('aaaa')
-//				// 扩展API加载完毕，现在可以正常调用扩展API
-//				plus.oauth.getServices(function(services) {
-//					this.auths = services;
-//				}, function(e) {
-//					alert("获取分享服务列表失败：" + e.message + " - " + e.code);
-//				});
-//			}, false);
-//		},
-//		created: function() {
-//			
-//		},
-//		destroyed() {
-//
-//		},
-//	}
-       var oauth=null
-	 // 监听plusready事件  
-			document.addEventListener("plusready", function() {
-				console.log('aaaa')
-				// 扩展API加载完毕，现在可以正常调用扩展API
-				plus.oauth.getServices(function(services) {
-					auths = services;
-				}, function(e) {
-					alert("获取分享服务列表失败：" + e.message + " - " + e.code);
-				});
-			}, false);
+	export default {
+		components: {
+
+		},
+		data() {
+			return {
+				auths: null,
+			}
+		},
+		methods: {
 			// 登录操作
-			function authLogin() {
-				console.log(auths)
-				var s = auths[0];
+			authLogin() {
+				console.log(this.auths)
+				var s = this.auths[0];
 				console.log(s)
 				if(!s.authResult) {
 					s.login(function(e) {
@@ -80,7 +34,27 @@
 				} else {
 					alert("已经登录认证！");
 				}
-			}
+		},
+		mounted: function() {
+           // 监听plusready事件  
+			document.addEventListener("plusready", function() {
+				console.log(plus)
+				// 扩展API加载完毕，现在可以正常调用扩展API
+				plus.oauth.getServices(function(services) {
+					this.auths = services;
+				}, function(e) {
+					alert("获取分享服务列表失败：" + e.message + " - " + e.code);
+				});
+			}, false);
+		},
+		created: function() {
+			
+		},
+		destroyed() {
+
+		},
+	}
+}
 </script>
 
 <style scoped="scoped">
