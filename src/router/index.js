@@ -78,6 +78,7 @@ import OrderTaobao from '@/components/personCenter/order_taobao'
 import OrderVip from '@/components/personCenter/order_vip'
 import OrderMogu from '@/components/personCenter/order_mogu'
 import OrderJD from '@/components/personCenter/order_JD'
+import DoAccredit from '@/components/personCenter/doAccredit'
 Vue.use(Router)
 //Router.prototype.goBack = function() {
 //	this.isBack = true
@@ -110,7 +111,6 @@ routes: [{
 //	},
 		path: '',
 		redirect: '/home',
-		component: Home,
 		meta: {
 			showFooter: true
 		}
@@ -372,7 +372,10 @@ routes: [{
 		path: '/personCenter/goldStore/realize',
 		name: 'Realize',
 		component: Realize,
-		
+//		meta: {
+//			showHeader: true,
+//			title:"库存挂单"
+//		}
 	},
 	{
 		path: '/personCenter/goldStore/introduce',
@@ -416,7 +419,7 @@ routes: [{
 		component: BindTel,
 		meta: {
 			showHeader: true,
-			title:"手机绑定"
+			title:"手机绑定/解绑"
 		}
 	},
 	{
@@ -712,6 +715,15 @@ routes: [{
 		meta: {
 			showHeader: true,
 			title:"我的京东订单"
+		}
+	},
+	{
+		path: '/doAccredit',
+		name: 'DoAccredit',
+		component: DoAccredit,
+		meta: {
+			showHeader: true,
+			title:"授权/取消授权"
 		}
 	},
 ]

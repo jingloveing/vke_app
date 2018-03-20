@@ -12,7 +12,7 @@
 			</router-link>
 			<router-link class="right" to="/personCenter/info">
 				<img src="static/images/info.png" alt="" class="info" />
-				<span class="info_num">12</span>
+				<span class="info_num" v-show="unMessage && unMessage !=='0'">{{unMessage}}</span>
 			</router-link>
 		</div>
 		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
@@ -100,7 +100,7 @@
 <script>
 	import { Swiper, SwiperItem, Loading } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
-	const url='http://xlk.dxvke.com/'
+	const url='http://xlk.dxvke.com'
 	export default {
 		name: 'Home',
 		components: {
@@ -130,6 +130,7 @@
 					slidesPerView: 3,
 					preventClicksPropagation: true,
 				},
+				unMessage:null,
 			}
 		},
 		methods: {
@@ -185,6 +186,8 @@
 							this.$refs.myscroller.finishInfinite(2);
 					}
 				}, (err) => {
+					this.noData = true
+					this.$refs.myscroller.finishInfinite(2);
 					console.log(err)
 				})
 			},
@@ -224,6 +227,7 @@
 			this.getBannerList()
 			this.getNews()
 			this.getMerchantList()
+			this.unMessage = plus.storage.getItem("unMessage")
 		}
 	}
 </script>

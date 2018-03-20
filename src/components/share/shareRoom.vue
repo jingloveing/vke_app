@@ -2,7 +2,7 @@
 	<div>
 		<x-header :left-options="{showBack: false}" title="一键分享" class="header"></x-header>
 		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
-		<div class="tip tip1" id="tip1">今/日/更/新</div>
+		<div class="tip tip1" id="tip1" v-show="today.length!==0">今/日/更/新</div>
 		<div class="main">
 			<div class="list" v-for="(item,index) in today" :key="index">
 				<div class="left">
@@ -78,7 +78,8 @@
 
 <script>
 	import { XHeader, Swiper, } from 'vux'
-	const url='http://xlk.dxvke.com'
+//	const url='http://xlk.dxvke.com'
+    const url=''
 	export default {
 		name: 'shareRoom',
 		components: {
@@ -116,7 +117,7 @@
 							this.$refs.myscroller.finishInfinite(2);
 						} else {
 							this.today = this.today.concat(res.data.data.today)
-							this.before = this.before.concat(res.data.data.today)
+							this.before = this.before.concat(res.data.data.before)
 							this.$refs.myscroller.finishPullToRefresh()
 						}
 					}else{
@@ -124,6 +125,8 @@
 							this.$refs.myscroller.finishInfinite(2);
 					}
 				}, (err) => {
+					this.noData = true
+					this.$refs.myscroller.finishInfinite(2);
 					console.log(err)
 				})
 			},

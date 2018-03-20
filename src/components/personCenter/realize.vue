@@ -1,7 +1,11 @@
 <template>
 	<div>
 		<x-header :left-options="{backText: ''}" title="库存挂单" style="background-color: #f9f9f9;">
-			<a slot="right" style="color: #9A7BFF;font-size: .32rem;padding-top: .4rem;" href="/personCenter/goldStore/realizeList">挂单记录</a>
+			<a slot="right">
+				<router-link to="/personCenter/goldStore/realizeList" style="color: #9A7BFF;font-size: .32rem;padding-top: .4rem;">
+					挂单记录
+				</router-link>	
+			</a>
 		</x-header>
 		<div style="height: 1.28rem;"></div>
 		<div class="header" style="position: relative;">
@@ -10,7 +14,13 @@
 				<span>挂单规则</span>
 			</router-link>
 			<p class="f24">可挂单财宝</p>
-			<p style="font-size: .52rem;display: flex;justify-content: center;align-items: center;">1.081<span style="font-size: .4rem;">钻</span></p>
+			<p style="font-size: .52rem;display: flex;justify-content: center;align-items: center;">{{this.$route.query.acer}}<span style="font-size: .4rem;">
+				<span v-show="this.$route.query.type==1">铜币</span>
+					<span v-show="this.$route.query.type==2">银</span>
+					<span v-show="this.$route.query.type==3">金</span>
+					<span v-show="this.$route.query.type==4">钻石</span>
+					<span v-show="this.$route.query.type==5">皇冠</span>
+			</span></p>
 		</div>
 		<div class="account">
 			<p class="tip f30 c3">挂单账户选择</p>
@@ -31,14 +41,19 @@
 						<div>
 							<group class="input">
 								<x-input title="" v-model="alipay" class="same f30 c3" placeholder="请输入正确的支付宝账号" style="margin-bottom: .2rem;"></x-input>
-								<x-input title="" v-model="alipay" class="same f30 c3" placeholder="请输入对账手机号"></x-input>
+								<x-input title="" v-model="alipay" class="same f30 c3" placeholder="请输入对账手机号" style="margin-bottom: .2rem;"></x-input>
+								<x-input title="" v-model="alipay" class="same f30 c3" placeholder="请输入真实姓名" style="margin-bottom: .2rem;"></x-input>
+								<div class="flex">
+									<x-input title="" v-model="alipay" class="same f30 c3" placeholder="请输入验证码" style="width: 3rem;"></x-input>
+									<span class="f26" style="display: inline-block;width: 2rem;text-align: center;background: #9A7BFF;color: white;height: .68rem;line-height: .68rem;">获取验证码</span>
+								</div>
 							</group>
 						</div>
-						<input type="radio" name="type" value="0" id="alipay" class="typeList" checked="checked" v-model="type"/>
+						<!--<input type="radio" name="type" value="0" id="alipay" class="typeList" checked="checked" v-model="type"/>
 						<div class="all">
 							<img class="success" v-show="type==0" src="../../../static/images/checked.png">
 							<label for="alipay" class="radio"></label>
-						</div>
+						</div>-->
 					</div>
 				</div>
 				<!--<div class="list">
@@ -83,7 +98,7 @@
 		</div>
 		<div class="des">
 			<p class="tip f30 c3">财宝(单位：铜币)</p>
-			<x-input placeholder="请输入挂单财宝数" novalidate :show-clear="false" style="font-size: .36rem;color:#333;"></x-input>
+			<x-input placeholder="请输入挂单财宝数" novalidate :show-clear="false"></x-input>
 		</div>
 		<div style="height: .96rem;"></div>
 		<div style="position:fixed;bottom: 0;width: 100%;height: .96rem;">
@@ -111,66 +126,83 @@
 			}
 		},
 		methods: {
-			add() {
-				this.$refs.file.click()
-			},
-			uploadPic(formData) {
-				this.$http({
-					method: 'POST',
-					url: url+'/api/upload',
-					dataType: 'formData',
-					data: formData
+//			add() {
+//				this.$refs.file.click()
+//			},
+//			uploadPic(formData) {
+//				this.$http({
+//					method: 'POST',
+//					url: url+'/api/upload',
+//					dataType: 'formData',
+//					data: formData
+//				}).then((res) => {
+//					if(res.data.code == '200') {
+//						this.img = res.data.data.image_url[0].image_url
+//						this.files = []
+//					}
+//				}, (err) => {})
+//			},
+//
+//			fileChanged(e) {
+//				var file = e.target.files[0]
+//				var self = this
+//				var imgSize = file.size
+//				const formData = new FormData();
+//				if(imgSize < 256 * 1024) {
+//					formData.append('images[]', file);
+//					self.uploadPic(formData);
+//				} else { // 图片压缩处理
+//					var reader = new FileReader(),
+//						maxWidth = 400,
+//						maxHeight = 400,
+//						suffix = file.name.substring(file.name.lastIndexOf('.') + 1);
+//
+//					if(imgSize > 2 * 1024 * 1024) {
+//						maxWidth = 800;
+//						maxHeight = 800;
+//					}
+//
+//					reader.onload = function(e) {
+//						var base64Img = e.target.result;
+//						//--执行resize。
+//						var _ir = ImageResizer({
+//							resizeMode: "auto",
+//							dataSource: base64Img,
+//							dataSourceType: "base64",
+//							maxWidth: maxWidth, //允许的最大宽度
+//							maxHeight: maxHeight, //允许的最大高度。
+//							onTmpImgGenerate: function(img) {},
+//							success: function(resizeImgBase64, canvas) {
+//								var blob = dataURLtoBlob(resizeImgBase64);
+//								console.log(blob)
+//								formData.append('images[]', blob);
+//								self.uploadPic(formData);
+//							}
+//						});
+//					};
+//					reader.readAsDataURL(file);
+//				}
+//			},
+             //执行挂单
+			doWithdraw() {
+				this.$http.post(url+'/api/doWithdraw', {
+					type:this.type,
+					acer:this.acer,
+					account:this.account,
+					telephone:this.telephone
 				}).then((res) => {
 					if(res.data.code == '200') {
-						this.img = res.data.data.image_url[0].image_url
-						this.files = []
+						
+					} else {
+
 					}
-				}, (err) => {})
-			},
-
-			fileChanged(e) {
-				var file = e.target.files[0]
-				var self = this
-				var imgSize = file.size
-				const formData = new FormData();
-				if(imgSize < 256 * 1024) {
-					formData.append('images[]', file);
-					self.uploadPic(formData);
-				} else { // 图片压缩处理
-					var reader = new FileReader(),
-						maxWidth = 400,
-						maxHeight = 400,
-						suffix = file.name.substring(file.name.lastIndexOf('.') + 1);
-
-					if(imgSize > 2 * 1024 * 1024) {
-						maxWidth = 800;
-						maxHeight = 800;
-					}
-
-					reader.onload = function(e) {
-						var base64Img = e.target.result;
-						//--执行resize。
-						var _ir = ImageResizer({
-							resizeMode: "auto",
-							dataSource: base64Img,
-							dataSourceType: "base64",
-							maxWidth: maxWidth, //允许的最大宽度
-							maxHeight: maxHeight, //允许的最大高度。
-							onTmpImgGenerate: function(img) {},
-							success: function(resizeImgBase64, canvas) {
-								var blob = dataURLtoBlob(resizeImgBase64);
-								console.log(blob)
-								formData.append('images[]', blob);
-								self.uploadPic(formData);
-							}
-						});
-					};
-					reader.readAsDataURL(file);
-				}
+				}, (err) => {
+					console.log(err)
+				})
 			},
 		},
 		created: function() {
-
+           
 		},
 		mounted: function() {
 			
@@ -270,7 +302,8 @@
 	
 	.list {
 		margin: 0 .26rem;
-		height: 2.16rem;
+		/*height: 2.16rem;*/
+		height: 3.9rem;
 		display: flex;
 		align-items: center;
 		border-top: .01rem solid #e5e5e5;
@@ -295,7 +328,7 @@
 		height: 1.28rem;
 		background-image: url("/static/images/upload.png");
 		background-size: 100% 100%;
-		border: 1px dashed #ececec;
+		border: .01rem dashed #ececec;
 		position: relative;
 	}
 	
@@ -367,5 +400,18 @@
 	
 	.input .weui-cells:after {
 		border: none;
+	}
+	.des .weui-cell:after {
+		left: 0!important;
+		bottom: -.04rem!important;
+	}
+	.des .weui-input{
+		font-size: .36rem;
+		color: #333;
+		
+	}
+	.des .weui-cell{
+		margin: .1rem .26rem;
+		padding: 0;
 	}
 </style>

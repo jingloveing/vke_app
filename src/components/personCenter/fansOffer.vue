@@ -1,49 +1,58 @@
 <template>
 	<div>
-		<div class="header">
-			<p class="f24">帮众贡献财宝总值</p>
-			<p style="font-size: .52rem;display: flex;justify-content: center;align-items: center;">1.081<span style="font-size: .4rem;">钻</span></p>
-		    <p class="f20" style="color: #fdfbe9;">帮众：100人</p>
-		</div>
-		<div style="position: relative;">
-			<div class="select">
-				<div style="display: flex;align-items: center;" v-on:click="showMenu=!showMenu">
-					<span class="f32 c3">{{type}}</span><img src="../../../static/images/down.png" alt="" class="down_icon" />
-				</div>
-				<div @click="selectDate()" style="line-height: .92rem;width: .5rem;padding-right: .26rem;text-align: right;vertical-align: middle;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
+			<div class="header">
+				<p class="f24">帮众贡献财宝总值</p>
+				<p style="font-size: .52rem;display: flex;justify-content: center;align-items: center;">{{totalAcer.acer}}<span style="font-size: .4rem;">
+					<span v-show="totalAcer.type==1">铜币</span>
+					<span v-show="totalAcer.type==2">银</span>
+					<span v-show="totalAcer.type==3">金</span>
+					<span v-show="totalAcer.type==4">钻石</span>
+					<span v-show="totalAcer.type==5">皇冠</span>
+				</span></p>
+				<p class="f20" style="color: #fdfbe9;">帮众：{{fansCount}}人</p>
+			</div>
+			<div style="position: relative;">
+				<div class="select">
+					<div style="display: flex;align-items: center;" v-on:click="showMenu=!showMenu">
+						<span class="f32 c3">{{date}}</span><img src="../../../static/images/down.png" alt="" class="down_icon" />
+					</div>
+					<!--<div @click="selectDate()" style="line-height: .92rem;width: .5rem;padding-right: .26rem;text-align: right;vertical-align: middle;">
 					<img src="../../../static/images/personCenter/date_icon.png" alt="" class="date" />
+				</div>-->
+				</div>
+				<div class="down-menu" v-show="showMenu">
+					<ul>
+						<li v-for="(item,index) in list" @click="select(item,index)" :key="index">{{item}}</li>
+					</ul>
 				</div>
 			</div>
-			<div class="down-menu" v-show="showMenu">
-				<ul>
-					<li v-for="item in list" @click="select(item)">{{item}}</li>
-				</ul>
-			</div>
-		</div>
-		<div class="list" v-for="i in 5">
-			<div>
-				<span>01-08 14:00</span>
-			</div>
-			<div class="f28 c9">
-				<span style="font-family: arial;">帮众贡献押运完成，财宝已入小金库</span>
-				<div class="header_list_num jewel">
-					<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
+
+			<div class="list" v-for="(item,index) in dataList" :key="index">
+				<div>
+					<span>{{item.update_time}}</span>
 				</div>
-				<!--<div class="header_list_num gold">
-                	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
-                	       8.86
-                	     </div>
-                	     <div class="header_list_num silver">
-                	   	   <img src="../../../static/images/personCenter/silver.png" alt="" />
-                	       8.86
-                	     </div>
-                	     <div class="header_list_num coppers">
-                	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
-                	       8.86
-                	     </div>-->
+				<div class="f28 c9">
+					<span style="font-family: arial;">帮众贡献押运完成，财宝已入小金库</span>
+					<div class="header_list_num king" v-show="item.transport_acer.type==5">
+						<img src="../../../static/images/personCenter/king.png" alt="" /> {{item.transport_acer.acer}}
+					</div>
+					<div class="header_list_num jewel" v-show="item.transport_acer.type==4">
+						<img src="../../../static/images/personCenter/jewel.png" alt="" /> {{item.transport_acer.acer}}
+					</div>
+					<div class="header_list_num gold" v-show="item.transport_acer.type==3">
+						<img src="../../../static/images/personCenter/gold_acer.png" alt="" /> {{item.transport_acer.acer}}
+					</div>
+					<div class="header_list_num silver" v-show="item.transport_acer.type==2">
+						<img src="../../../static/images/personCenter/silver.png" alt="" /> {{item.transport_acer.acer}}
+					</div>
+					<div class="header_list_num coppers" v-show="item.transport_acer.type==1">
+						<img src="../../../static/images/personCenter/coppers.png" alt="" /> {{item.transport_acer.acer}}
+					</div>
+				</div>
 			</div>
-		</div>
-		<div style="background: white;" class="bottom" v-if="show">
+		</scroller>
+		<!--<div style="background: white;" class="bottom" v-if="show">
 			<p class="f32 title"><span @click="cancel()">取消</span><span style="color: #333;" class="f32">选择时间</span><span @click="done()">完成</span></p>
 			<div style="text-align: center;">
 				<div class="botton" @click="day=!day">
@@ -60,14 +69,15 @@
 				<p class="f32 dateValue1" v-show="!day">{{value1}}</p>
 			</div>
 			<datetime-view :max-year="maxYear" v-model="value1" ref="datetime" :format="day?'YYYY-MM-DD':'YYYY-MM'"></datetime-view>
-		</div>
+		</div>-->
 	</div>
 </template>
 
 <script>
 	var list = ["今日", "昨日", "本月", "全部"]
 	import { DatetimeView, } from 'vux'
-	const url='http://xlk.dxvke.com/'
+		const url='http://xlk.dxvke.com'
+//	const url = ""
 	export default {
 		name: 'Realize',
 		components: {
@@ -76,46 +86,122 @@
 		data() {
 			return {
 				list: list,
-				type: list[0],
+				type: 1,
+				date:list[0],
 				showMenu: false,
 				value: '',
-				show:false,
-				day:false,
-				maxYear:'',
-				maxMonth:'',
-				value1:'',
-				value2:''
+				show: false,
+				day: false,
+				//				maxYear:'',
+				//				maxMonth:'',
+				//				value1:'',
+				//				value2:'',
+				page: 1,
+				limit: 10,
+				noData: false,
+				dataList: [],
+				fansCount:0,
+				totalAcer:{
+					type:0,
+					acer:0
+				}
 			}
 		},
 		methods: {
-			select(item) {
-				this.type = item
+			//获取帮众贡献列表
+			getList() {
+				this.$http({
+					mothed: 'get',
+					url: url + '/api/getFansAcerList',
+					params: {
+						type: this.type,
+						page:this.page,
+						limit:this.limit
+					}
+				}).then((res) => {
+					if(res.data.code == '200') {
+						if(res.data.data.list.length == 0) {
+							this.noData = true
+							this.$refs.myscroller.finishInfinite(2);
+						} else {
+							this.dataList = this.dataList.concat(res.data.data.list)
+							this.fansCount=res.data.data.fansCount
+							this.totalAcer=res.data.data.totalAcer
+							this.$refs.myscroller.finishPullToRefresh()
+						}
+					} else {
+						this.noData = true
+						this.$refs.myscroller.finishInfinite(2);
+					}
+				}, (err) => {
+					this.noData = true
+					this.$refs.myscroller.finishInfinite(2);
+					console.log(err)
+				})
+			},
+			select(item,index) {
+				this.date=item
+				this.type = index+1
 				this.showMenu = !this.showMenu
+				this.dataList=[]
+				this.page=1
+				this.getList()
 			},
-			setToday(value) {
-				let now = new Date()
-				let cmonth = now.getMonth() + 1
-				let day = now.getDate()
-				if(cmonth < 10) cmonth = '0' + cmonth
-				if(day < 10) day = '0' + day
-				this.value = now.getFullYear() + '-' + cmonth
-				this.maxYear = now.getFullYear()
+			//			setToday(value) {
+			//				let now = new Date()
+			//				let cmonth = now.getMonth() + 1
+			//				let day = now.getDate()
+			//				if(cmonth < 10) cmonth = '0' + cmonth
+			//				if(day < 10) day = '0' + day
+			//				this.value = now.getFullYear() + '-' + cmonth
+			//				this.maxYear = now.getFullYear()
+			//			},
+			selectDate() {
+				this.show = true
 			},
-			selectDate(){
-				this.show=true
+			cancel() {
+				this.show = false
 			},
-			cancel(){
-				this.show=false
+			done() {
+				this.show = false
 			},
-			done(){
-				this.show=false
+			change() {
+
 			},
-			change(){
-				
-			}
+			infinite(done) {
+				if(this.noData) {
+					setTimeout(() => {
+						this.$refs.myscroller.finishInfinite(2);
+					})
+					return;
+				} else {
+					let self = this; //this指向问题
+					setTimeout(() => {
+						self.page += 1
+						self.getList()
+						done()
+					}, 1500)
+				}
+			},
+			refresh(done) {
+				var self = this
+				this.page = 1
+				this.dataList = []
+				this.fansCount=0,
+				this.totalAcer={
+					type:0,
+					acer:0
+				}
+				this.getList()
+				setTimeout(function() {
+					self.top = self.top - 10;
+					done()
+				}, 1500)
+			},
 		},
 		created: function() {
-			this.setToday()
+			//			this.setToday()
+			this.getList()
 		},
 		mounted: function() {
 
@@ -135,6 +221,7 @@
 		padding-top: .7rem;
 		box-sizing: border-box;
 	}
+	
 	.down-menu {
 		font-size: .28rem;
 		width: 1.64rem;
@@ -146,6 +233,7 @@
 		border-radius: .06rem;
 		top: .8rem;
 		left: .12rem;
+		z-index: 999999;
 	}
 	
 	.select {
@@ -234,7 +322,8 @@
 		height: .22rem;
 		margin-left: .1rem;
 	}
-	.title{
+	
+	.title {
 		line-height: .88rem;
 		color: #9a7bff;
 		display: flex;
@@ -242,28 +331,32 @@
 		justify-content: space-between;
 		padding: 0 .26rem;
 	}
-	.bottom{
+	
+	.bottom {
 		height: 13.4rem;
 		width: 100%;
 		position: absolute;
 		bottom: 0;
 		z-index: 9999999;
 	}
-	.dateValue1{
-		line-height: .6rem; 
-		margin:.26rem; 
+	
+	.dateValue1 {
+		line-height: .6rem;
+		margin: .26rem;
 		text-align: center;
 		color: #927bff;
 		border-bottom: .01rem solid #927bff;
 	}
-	.dateValue2{
-		line-height: .6rem; 
-		margin:.26rem; 
+	
+	.dateValue2 {
+		line-height: .6rem;
+		margin: .26rem;
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
 	}
-	.dates{
+	
+	.dates {
 		border-bottom: .01rem solid #e5e5e5;
 		padding: 0 .25rem;
 	}

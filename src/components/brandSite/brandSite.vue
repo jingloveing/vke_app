@@ -5,7 +5,7 @@
 				<router-link to="/personCenter/info">
 					<div class="right">
 						<img src="static/images/info.png" alt="" class="info" />
-						<span class="info_num">12</span>
+						<span class="info_num" v-show="unMessage && unMessage !=='0'">{{unMessage}}</span>
 					</div>
 				</router-link>
 			</a>
@@ -110,6 +110,7 @@
 				noData: false,
 				page:1,
 				limit:20,
+				unMessage:null
 			}
 		},
 		methods: {
@@ -214,6 +215,7 @@
 
 		},
 		created: function() {
+			this.unMessage = plus.storage.getItem("unMessage")
 			this.getBannerList()
 			this.getMerchantList()
 			this.getMerchantView()

@@ -24,6 +24,7 @@
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 		var activeIndex=0
 		const url='http://xlk.dxvke.com/'
+//		const url = ''
 	export default {
 		name: 'share',
 		components: {

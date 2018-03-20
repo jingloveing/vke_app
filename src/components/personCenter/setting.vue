@@ -15,39 +15,66 @@
 			<cell title="自报家门" is-link link="/aboutUs"></cell>
 		</group>
 		<div style="margin: 0 .26rem;">
-			<x-button type="default" class="f32 c3" @click.native="dropout()">退出登录</x-button>
+			<x-button type="default" class="f32 c3" @click.native="authLogout()">退出登录</x-button>
 		</div>
+		<loading v-model="showLoading" :text="loadText"></loading>
 	</div>
 </template>
 
 <script>
-	import { Group, Cell, XButton, XSwitch } from 'vux'
+	import { Group, Cell, XButton, XSwitch,Loading} from 'vux'
 	export default {
 		components: {
 			Group,
 			Cell,
 			XButton,
-			XSwitch
+			XSwitch,
+			Loading
 		},
 		data() {
 			return {
-               value:'',
+				value: '',
+				showLoading: false,
+				loadText: ''
 			}
 		},
-		methods:{
-			clear(){
-				localStorage.removeItem('userInfo')
+		methods: {
+			clear() {
+//				localStorage.removeItem('userInfo')
 			},
-			dropout(){
-				localStorage.clear()
-				this.$router.go(-1)
+			// 注销所有登录授权认证服务
+			authLogout() {
+					var s = window.auths[0];
+					var slef = this
+					if(s.authResult) {
+						s.logout(function(e) {
+							alert('开始退出')
+							alert(plus.storage.getLength())
+							slef.$router.go(-1)
+							plus.storage.removeItem('token')
+							plus.storage.removeItem('userInfo')						
+						}, function(e) {
+							slef.$vux.toast.show({
+										text: "退出失败",
+										type: 'warn',
+									})
+						});
+						
+						
+					}else{
+						
+						slef.$router.go(-1)
+						plus.storage.removeItem('token')
+						plus.storage.removeItem('userInfo')	
+					}
+					
 			}
 		},
-		created:function(){
-			
+		created: function() {
+
 		},
-		mounted:function(){
-			
+		mounted: function() {
+
 		}
 	}
 </script>

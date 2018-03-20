@@ -33,22 +33,33 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
 	router,
-	render: h => h(App)
+	render: h => h(App),
+//	created(){
+//  document.addEventListener( "plusready", function(){
+//    // 扩展API加载完毕，现在可以正常调用扩展API
+//    plus.oauth.getServices( function(services){
+//      window.auths = services;
+//    }, function(e){
+//      alert( "获取分享服务列表失败："+e.message+" - "+e.code );
+//    } );
+//  }, false );
+//}
 }).$mount('#app-box')
 
 /******************拦截器设置请参考这部分(开始)******************/
 Vue.http.interceptors.push((request, next) => {
 	//登录成功后将后台返回的TOKEN在本地存下来,每次请求从sessionStorage中拿到存储的TOKEN值  
 //		let token = localStorage.getItem('token');
-		let token= 'aaa'
+//		let token=  plus.storage.getItem("token")
+         let token='aaa'
 	if(token) {
 		//如果请求时TOKEN存在,就为每次请求的headers中设置好TOKEN,后台根据headers中的TOKEN判断是否放行      
-		request.headers.set('token', 'Bearer '+token);
+		request.headers.set("token",token);
 	}
 	next((response) => {
 			if(response.status === 400 || response.status === 401) {
 				// 当 Token 已经失效时，清空所有保存在 localStorage 的数据
-				localStorage.clear();
+				plus.storage.removeItem("token");
 			}
 			return response;
 	});

@@ -6,55 +6,110 @@
 				<img src="../../static/images/login/icon.png" alt="" class="icon" />微信登录
 			</div>
 		</div>
+		<loading v-model="showLoading" :text="loadText"></loading>
 	</div>
 </template>
 
 <script>
+	import { Loading } from 'vux'
+	const url = 'http://xlk.dxvke.com/'
 	export default {
 		components: {
-
+			Loading
 		},
 		data() {
 			return {
-				auths: null,
+				showLoading: false,
+				loadText: ''
 			}
 		},
 		methods: {
-			// 登录操作
 			authLogin() {
-				console.log(this.auths)
-				var s = this.auths[0];
-				console.log(s)
+				var self = this
+				var s = window.auths[0]
+				console.log(JSON.stringify(s));
 				if(!s.authResult) {
 					s.login(function(e) {
-						alert("登录认证成功！");
+						s.getUserInfo(function(e) {
+							//后端保存用户信息
+							self.$http.post(url + '/api/login', {
+								type: "1",
+								userInfo: JSON.stringify(s.userInfo)
+							}).then((res) => {
+								if(res.data.code == '200') {
+									self.$vux.toast.show({
+										text: res.data.data.message,
+										type: 'success',
+									})
+									alert(JSON.stringify(res.data.data))
+									plus.storage.setItem("token", res.data.data.token);
+									plus.storage.setItem("unMessage", res.data.data.unMessage);
+									alert(plus.storage.getItem('token'))
+									self.$router.push({
+										name: 'PersonCenter'
+									})
+								} else {
+									alert(JSON.stringify(res.data))
+									self.$vux.toast.show({
+										text: res.data.error,
+										type: 'warn',
+									})
+								}
+							}, (err) => {
+								console.log(err)
+							})
+						}, function(e) {
+							self.$vux.toast.show({
+								text: "获取用户信息失败！" + e.message + " - " + e.code,
+								type: 'warn',
+							})
+						});
 					}, function(e) {
-						alert("登录认证失败！");
+						self.$vux.toast.show({
+							text: "获取用户信息失败！",
+							type: 'warn',
+						})
 					});
 				} else {
-					alert("已经登录认证！");
+					//后端保存用户信息
+					self.$http.post(url + '/api/login', {
+						type: "1",
+						userInfo: JSON.stringify(s.userInfo)
+					}).then((res) => {
+						if(res.data.code == '200') {
+							self.$vux.toast.show({
+								text: res.data.data.message,
+								type: 'success',
+							})
+							alert(JSON.stringify(res.data.data))
+							plus.storage.setItem("token", res.data.data.token);
+							plus.storage.setItem("unMessage", res.data.data.unMessage);
+							self.$router.push({
+								name: 'PersonCenter'
+							})
+						} else {
+							alert(JSON.stringify(res.data))
+							self.$vux.toast.show({
+								text: res.data.error,
+								type: 'warn',
+							})
+						}
+					}, (err) => {
+						console.log(err)
+					})
 				}
+			},
 		},
 		mounted: function() {
-           // 监听plusready事件  
-			document.addEventListener("plusready", function() {
-				console.log(plus)
-				// 扩展API加载完毕，现在可以正常调用扩展API
-				plus.oauth.getServices(function(services) {
-					this.auths = services;
-				}, function(e) {
-					alert("获取分享服务列表失败：" + e.message + " - " + e.code);
-				});
-			}, false);
+
 		},
 		created: function() {
-			
+
 		},
 		destroyed() {
 
 		},
 	}
-}
 </script>
 
 <style scoped="scoped">

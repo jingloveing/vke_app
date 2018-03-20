@@ -9,7 +9,7 @@
 			<x-input name="mobile" placeholder="请填写您的手机号" keyboard="number" is-type="china-mobile" style="font-size: .28rem;color: #333;" v-model="telephone"></x-input>
 		</group>
 		<div style="position:fixed;bottom: 0;width: 100%;height: .96rem;">
-			<x-button @click.native="feedback()" type="primary" action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32">提交</x-button>
+			<x-button @click.native="feedback()" type="default" action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32">提交</x-button>
 		</div>
 		<loading v-model="showLoading" :text="loadText"></loading>
 	</div>
@@ -36,7 +36,7 @@
 			}
 		},
 		methods: {
-             //获取消息列表
+             //提交意见反馈
 			feedback(){
 				this.$http.post(url+'/api/feedback', {
 					msg: this.msg,

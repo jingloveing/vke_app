@@ -17,10 +17,10 @@
 					</div>
 
 					<p class="user_name">{{userInfo.nickname}}</p>
-					<router-link to="/upgrade" v-show='token'>
+					<router-link to="/upgrade" v-show='userInfo.level_id'>
 						<div class="uper_btn">升级地位</div>
 					</router-link>
-					<router-link class="user_name" style="padding: 0 .2rem;"   to="/login">登录</router-link>
+					<router-link class="user_name" style="padding: 0 .2rem;"   to="/login" v-show='!userInfo'>登录</router-link>
 				</div>
 				<router-link to="/personCenter/info">
 					<div class="right">
@@ -28,7 +28,7 @@
 						<span class="info_num" v-show="userInfo.unMessage!==0">{{userInfo.unMessage}}</span>
 					</div>
 				</router-link>
-				<router-link to="/personCenter/myPrerogative" v-show="token">
+				<router-link to="/personCenter/myPrerogative" v-show='userInfo.level_id'>
 					<div class="level_btn">
 						<img src="static/images/personCenter/vip0.png" alt="" class="level" v-show="userInfo.level_id==1"/>
 						<img src="static/images/personCenter/vip1.png" alt="" class="level" v-show="userInfo.level_id==2"/>
@@ -186,21 +186,22 @@
 		data() {
 			return {
 				userInfo: {
-					nickname: '',
-					head_image: "",
-					level_id: null,
-					chest_acer: {
-						type: 0,
-						acer: 0,
+					nickname:null,
+					head_image:"",
+					gender:null,
+					level_id:null,
+					level_title:null,
+					chest_acer:{
+						type:0,
+						acer:0
 					},
-					transport_acer: {
-						type: 0,
-						acer: 0
+					transport_acer:{
+						type:0,
+						acer:0
 					},
-					pay_money: 0,
-					unMessage: 0
+					pay_money:0,
+					unMessage:0
 				},
-				token:'',
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 			}
 		},
@@ -210,42 +211,23 @@
 				this.$http.get(url+'/api/userInfo', {}).then((res) => {
 					if(res.data.code == '200') {
 						this.userInfo = res.data.data
-                        localStorage.setItem('userInfo',JSON.stringify(this.userInfo))
-                        
+                        plus.storage.setItem('userInfo',JSON.stringify(this.userInfo))
 					} else {
-
+                        
 					}
 				}, (err) => {
-					this.userInfo=JSON.parse(localStorage.getItem('userInfo'))
+					this.userInfo=JSON.parse(plus.storage.getItem('userInfo'))
 				})
 			},
 		},
 		created: function() {
-			this.token=localStorage.getItem('token')
-//			this.getUserInfo()
-
+			this.getUserInfo()
+			
+            
+            
 		},
 		mounted: function() {
-            var userInfo=JSON.parse(localStorage.getItem('userInfo'))
-            if(userInfo){
-                 this.userInfo=userInfo            	
-            }else{
-            	this.userInfo={
-					nickname: '',
-					head_image: "",
-					level_id: null,
-					chest_acer: {
-						type: 0,
-						acer: 0,
-					},
-					transport_acer: {
-						type: 0,
-						acer: 0
-					},
-					pay_money: 0,
-					unMessage: 0
-				}
-            }
+
 		}
 	}
 </script>

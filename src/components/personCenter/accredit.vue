@@ -14,14 +14,15 @@
 			</p>
 		</div>
 		<group class="myOrder" style="margin-bottom: .2rem;">
-			<cell link="/personCenter/setting/bindTel" title="手机绑定" :value="tel" style="border-top: .01rem solid #e5e5e5;" is-link></cell>
+			<cell :link="{path:'/personCenter/setting/bindTel',query:{type:type}}" title="手机绑定" :value="telephone" style="border-top: .01rem solid #e5e5e5;" is-link></cell>
 		</group>
 	</div>
 </template>
 
 <script>
 	import { Group, Cell, XButton, XSwitch } from 'vux'
-	const url='http://xlk.dxvke.com/'
+//	const url='http://xlk.dxvke.com/'
+    const url=''
 	export default {
 		components: {
 			Group,
@@ -32,10 +33,10 @@
 		data() {
 			return {
 				value: '',
-				tel: '1243254435',
-				type: '1',
+				type: null,
 				jd_auth: 0,
 				tb_auth: 0,
+				telephone:null,
 			}
 		},
 		methods: {
@@ -47,8 +48,14 @@
 					//					params:{type:type}
 				}).then((res) => {
 					if(res.data.code == '200') {
-						this.jd_auth = res.data.data.data.jd_auth
-						this.tb_auth = res.data.data.data.tb_auth
+						this.jd_auth = res.data.data.jd_auth
+						this.tb_auth = res.data.data.tb_auth
+						this.telephone=res.data.data.telephone
+						if(this.telephone==''){
+							this.type=3
+						}else{
+							this.type=4
+						}
 					} else {
 
 					}
@@ -56,83 +63,9 @@
 					console.log(err)
 				})
 			},
-			//      获取淘宝、京东授权
-			getAccredit: function(type) {
-				if(type == 1) {
-					if(this.tb_auth == 0) {
-						this.$http({
-							method: 'get',
-							url: url+'/api/doAccredit',
-							params: {
-								type: type
-							}
-						}).then((res) => {
-							if(res.data.code == '200') {
-								this.url = res.data.data.data.url
-								window.location.href = this.url
-							} else {
-
-							}
-						}, (err) => {
-							console.log(err)
-						})
-					} else {
-						this.$http({
-							method: 'get',
-							url: url+'/api/exitAccredit',
-							params: {
-								type: type
-							}
-						}).then((res) => {
-							if(res.data.code == '200') {
-								this.url = res.data.data.data.url
-								window.location.href = this.url
-							} else {
-
-							}
-						}, (err) => {
-							console.log(err)
-						})
-					}
-				} else {
-					if(this.jd_auth == 0) {
-						this.$http({
-							method: 'get',
-							url: url+'/api/doAccredit',
-							params: {
-								type: type
-							}
-						}).then((res) => {
-							if(res.data.code == '200') {
-								this.url = res.data.data.data.url
-								window.location.href = this.url
-							} else {
-
-							}
-						}, (err) => {
-							console.log(err)
-						})
-					} else {
-						this.$http({
-							method: 'get',
-							url: url+'/api/exitAccredit',
-							params: {
-								type: type
-							}
-						}).then((res) => {
-							if(res.data.code == '200') {
-								this.url = res.data.data.data.url
-								window.location.href = this.url
-							} else {
-
-							}
-						}, (err) => {
-							console.log(err)
-						})
-					}
-				}
-
-			},
+			getAccredit(type){
+				this.$router.push({name:'DoAccredit',query:{type:type}})
+			}
 		},
 		created: function() {
 			this.getStart()

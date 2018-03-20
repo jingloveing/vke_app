@@ -3,67 +3,91 @@
 		<div style="position: relative;margin-bottom: 1.5rem;">
 			<div class="header">
 				<p class="f24">财宝总值</p>
-				<p style="font-size: .52rem;display: flex;justify-content: center;align-items: center;">1.081<span style="font-size: .4rem;">钻</span></p>
+				<p style="font-size: .52rem;display: flex;justify-content: center;align-items: center;">{{total.acer}}<span style="font-size: .4rem;">
+					<span v-show="total.type==1">铜币</span>
+					<span v-show="total.type==2">银</span>
+					<span v-show="total.type==3">金</span>
+					<span v-show="total.type==4">钻石</span>
+					<span v-show="total.type==5">皇冠</span>
+				</span></p>
 			</div>
 			<div class="header_main">
-				<router-link to="/personCenter/goldStore/realize">
+				<router-link :to="{name:'Realize',query:{acer:chest_acer.acer,type:chest_acer.type}}">
                  <div style="overflow: hidden;"><span class="botton">挂单</span></div>
                  </router-link>
                  <div class="header_list">
                  	<ul>
 					<li>
 						<p class="header_list_title">挂单中</p>
-						<div class="header_list_num jewel">
-							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
+						<div class="header_list_num king" v-show="withdraw_acer.type==5">
+							<img src="../../../static/images/personCenter/king.png" alt="" /> {{withdraw_acer.acer}}
 						</div>
-						<!--<div class="header_list_num gold">
+						<div class="header_list_num jewel" v-show="withdraw_acer.type==4">
+							<img src="../../../static/images/personCenter/jewel.png" alt="" /> {{withdraw_acer.acer}}
+						</div>
+						<div class="header_list_num gold" v-show="withdraw_acer.type==3">
                 	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
-                	       8.86
+                	      {{withdraw_acer.acer}}
                 	     </div>
-                	     <div class="header_list_num silver">
+                	     <div class="header_list_num silver" v-show="withdraw_acer.type==2">
                 	   	   <img src="../../../static/images/personCenter/silver.png" alt="" />
-                	       8.86
+                	       {{withdraw_acer.acer}}
                 	     </div>
-                	     <div class="header_list_num coppers">
+                	     <div class="header_list_num coppers" v-show="withdraw_acer.type==1">
                 	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
-                	       8.86
-                	     </div>-->
+                	      {{withdraw_acer.acer}}
+                	     </div>
+                	     <div class="header_list_num coppers" v-show="withdraw_acer.type==0">
+                	      0
+                	     </div>
 					</li>
 					<li>
 						<p class="header_list_title">已成交</p>
-						<div class="header_list_num jewel">
-							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
+						<div class="header_list_num king" v-show="withdraw_over.type==5">
+							<img src="../../../static/images/personCenter/king.png" alt="" /> {{withdraw_over.acer}}
 						</div>
-						<!--<div class="header_list_num gold">
+						<div class="header_list_num jewel" v-show="withdraw_over.type==4">
+							<img src="../../../static/images/personCenter/jewel.png" alt="" /> {{withdraw_over.acer}}
+						</div>
+						<div class="header_list_num gold" v-show="withdraw_over.type==3">
                 	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
-                	       8.86
+                	      {{withdraw_over.acer}}
                 	     </div>
-                	     <div class="header_list_num silver">
+                	     <div class="header_list_num silver" v-show="withdraw_over.type==2">
                 	   	   <img src="../../../static/images/personCenter/silver.png" alt="" />
-                	       8.86
+                	       {{withdraw_over.acer}}
                 	     </div>
-                	     <div class="header_list_num coppers">
+                	     <div class="header_list_num coppers" v-show="withdraw_over.type==1">
                 	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
-                	       8.86
-                	     </div>-->
+                	      {{withdraw_over.acer}}
+                	     </div>
+                	     <div class="header_list_num coppers" v-show="withdraw_over.type==0">
+                	      0
+                	     </div>
 					</li>
 					<li>
 						<p class="header_list_title">库存</p>
-						<!--<div class="header_list_num jewel">
-                	   	   <img src="../../../static/images/personCenter/jewel.png" alt="" />
-                	       8.86
-                	     </div>-->
-						<div class="header_list_num gold">
-							<img src="../../../static/images/personCenter/gold_acer.png" alt="" /> 8.86
+						<div class="header_list_num king" v-show="chest_acer.type==5">
+							<img src="../../../static/images/personCenter/king.png" alt="" /> {{chest_acer.acer}}
 						</div>
-						<!--<div class="header_list_num silver">
+						<div class="header_list_num jewel" v-show="chest_acer.type==4">
+							<img src="../../../static/images/personCenter/jewel.png" alt="" /> {{chest_acer.acer}}
+						</div>
+						<div class="header_list_num gold" v-show="chest_acer.type==3">
+                	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
+                	      {{chest_acer.acer}}
+                	     </div>
+                	     <div class="header_list_num silver" v-show="chest_acer.type==2">
                 	   	   <img src="../../../static/images/personCenter/silver.png" alt="" />
-                	       8.86
-                	     </p>
-                	     <div class="header_list_num coppers">
+                	       {{chest_acer.acer}}
+                	     </div>
+                	     <div class="header_list_num coppers" v-show="chest_acer.type==1">
                 	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
-                	       8.86
-                	     </div>-->
+                	      {{chest_acer.acer}}
+                	     </div>
+                	     <div class="header_list_num coppers" v-show="chest_acer.type==0">
+                	      0
+                	     </div>
 					</li>
 				</ul>
                  </div>
@@ -81,7 +105,18 @@
 		</div>-->
 		<router-link class="enjoy" to="/personCenter/goldStore/fansOffer">
 			<span class="f30 c3"><img src="../../../static/images/personCenter/enjoy_icon.png" alt="" class="icon"/>帮众贡献</span>
-			<span class="f28 c9 right">昨日总收益3.23金 <img src="../../../static/images/gt_white.png" alt="" class="enjoy-icon"/></span>
+			<span class="f28 c9 right">昨日总收益
+				{{yesterday.acer}}
+				<div>
+					<span v-show="yesterday.type==1">铜币</span>
+					<span v-show="yesterday.type==2">银</span>
+					<span v-show="yesterday.type==3">金</span>
+					<span v-show="yesterday.type==4">钻石</span>
+					<span v-show="yesterday.type==5">皇冠</span>
+				</div>
+				
+				
+				<img src="../../../static/images/gt_white.png" alt="" class="enjoy-icon"/></span>
 		</router-link>
 		<div class="list">
 			<div class="f30 c3 title">
@@ -89,76 +124,52 @@
 			</div>
 			<ul>
 				<li>
-						<div class="header_list_num jewel">
-							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
+						<div class="header_list_num king" v-show="jd.type==5">
+							<img src="../../../static/images/personCenter/king.png" alt="" /> {{jd.acer}}
 						</div>
-						<!--<div class="header_list_num gold">
-                	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
-                	       8.86
-                	     </div>
-                	     <div class="header_list_num silver">
-                	   	   <img src="../../../static/images/personCenter/silver.png" alt="" />
-                	       8.86
-                	     </div>
-                	     <div class="header_list_num coppers">
-                	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
-                	       8.86
-                	     </div>-->
-                	     <p class="header_list_title">淘宝财宝收入</p>
-				</li>
-				<li>
-						<div class="header_list_num jewel">
-							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
+						<div class="header_list_num jewel" v-show="jd.type==4">
+							<img src="../../../static/images/personCenter/jewel.png" alt="" /> {{jd.acer}}
 						</div>
-						<!--<div class="header_list_num gold">
+						<div class="header_list_num gold" v-show="jd.type==3">
                 	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
-                	       8.86
+                	      {{jd.acer}}
                 	     </div>
-                	     <div class="header_list_num silver">
+                	     <div class="header_list_num silver" v-show="jd.type==2">
                 	   	   <img src="../../../static/images/personCenter/silver.png" alt="" />
-                	       8.86
+                	       {{jd.acer}}
                 	     </div>
-                	     <div class="header_list_num coppers">
+                	     <div class="header_list_num coppers" v-show="jd.type==1">
                 	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
-                	       8.86
-                	     </div>-->
+                	      {{jd.acer}}
+                	     </div>
+                	     <div class="header_list_num coppers" v-show="jd.type==0">
+                	      0
+                	     </div>
                 	     <p class="header_list_title">京东财宝收入</p>
 				</li>
 				<li>
-						<div class="header_list_num jewel">
-							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
+						<div class="header_list_num king" v-show="mgj.type==5">
+							<img src="../../../static/images/personCenter/king.png" alt="" /> {{mgj.acer}}
 						</div>
-						<!--<div class="header_list_num gold">
+						<div class="header_list_num jewel" v-show="mgj.type==4">
+							<img src="../../../static/images/personCenter/jewel.png" alt="" /> {{mgj.acer}}
+						</div>
+						<div class="header_list_num gold" v-show="mgj.type==3">
                 	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
-                	       8.86
+                	      {{mgj.acer}}
                 	     </div>
-                	     <div class="header_list_num silver">
+                	     <div class="header_list_num silver" v-show="mgj.type==2">
                 	   	   <img src="../../../static/images/personCenter/silver.png" alt="" />
-                	       8.86
+                	       {{mgj.acer}}
                 	     </div>
-                	     <div class="header_list_num coppers">
+                	     <div class="header_list_num coppers" v-show="mgj.type==1">
                 	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
-                	       8.86
-                	     </div>-->
+                	      {{mgj.acer}}
+                	     </div>
+                	     <div class="header_list_num coppers" v-show="mgj.type==0">
+                	      0
+                	     </div>
                 	     <p class="header_list_title">蘑菇街财宝收入</p>
-				</li>
-				<li>
-						<div class="header_list_num jewel">
-							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
-						</div>
-						<!--<div class="header_list_num gold">
-                	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
-                	       8.86
-                	     </div>
-                	     <div class="header_list_num silver">
-                	   	   <img src="../../../static/images/personCenter/silver.png" alt="" />
-                	       8.86
-                	     </div>
-                	     <div class="header_list_num coppers">
-                	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
-                	       8.86
-                	     </div>-->
-                	     <p class="header_list_title">唯品会财宝收入</p>
 				</li>
 			</ul>
 		</div>
@@ -166,6 +177,79 @@
 </template>
 
 <script>
+	import { Toast, Loading } from 'vux'
+//	const url='http://xlk.dxvke.com/'
+    const url=''
+	export default {
+		components: {
+			Toast,
+			Loading
+		},
+		data() {
+			return {
+				chest_acer:{
+					type:0,
+					acer:0
+				},
+				withdraw_acer:{
+					type:0,
+					acer:0
+				},
+				withdraw_over:{
+					type:0,
+					acer:0
+				},
+				total:{
+					type:0,
+					acer:0
+				},
+				yesterday:{
+					type:0,
+					acer:0
+				},
+				jd:{
+					type:0,
+					acer:0,
+				},
+				mgj:{
+					type:0,
+					acer:0
+				},
+				showToast: false,
+				text: '',
+				showLoading: false,
+				loadText: ''
+			}
+		},
+		methods: {
+			//获取用户财宝信息
+			getCount() {
+				this.$http.get(url+'/api/withdrawAcer', {}).then((res) => {
+					if(res.data.code == '200') {
+						this.chest_acer=res.data.data.chest_acer
+						this.withdraw_acer=res.data.data.withdraw_acer
+						this.withdraw_over=res.data.data.withdraw_over
+						this.total = res.data.data.total,
+						this.yesterday=res.data.data.yesterday,
+						this.jd=res.data.data.jd,
+						this.mgj=res.data.data.mgj
+					} else {
+
+					}
+				}, (err) => {
+					console.log(err)
+				})
+			},
+		},
+		mounted: function() {
+
+		},
+		created: function() {
+			this.getCount()
+		}
+	}
+	
+	
 </script>
 
 <style scoped="scoped">

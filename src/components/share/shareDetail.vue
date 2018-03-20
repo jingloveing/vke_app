@@ -1,13 +1,13 @@
 <template>
 	<div>
 		<x-header :left-options="{backText: ''}" title="分享商品" class="header"></x-header>
-		<div style="position: fixed;z-index: 99999;right: 0;top: 0;height: .88rem;line-height: .88rem;" @click="show=!show">
+		<div style="position: fixed;z-index: 99999;right: 0;top: .4rem;height: .88rem;line-height: .88rem;" @click="show=!show">
 			<img src="../../../static/images/share_icon.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;padding: .1rem .26rem;" />
 		</div>
-		<div style="height: .88rem;"></div>
+		<div style="height: 1.28rem;"></div>
 		<div class="tip f24 c9">商品图片已为朋友圈特别优化，建议将图片分享到<span>微信朋友圈</span></div>
 		<div class="f28 c3" style="background: white;padding: .26rem .26rem .34rem;">
-			<p>文案长按图片文案文案文案文案啊文案文案文案文案文案文案文案文案文案</p>
+			<p>{{msg}}</p>
 			<p>长按图片识别或扫描二维码，即可复制淘口令打开手机淘宝，领取优惠券购买</p>
 		</div>
 		<div class="main">
@@ -35,7 +35,8 @@
 
 <script>
 	import { XHeader } from 'vux'
-	const url='http://xlk.dxvke.com/'
+	const url='http://xlk.dxvke.com'
+//  const url =''
 	export default {
 		name: 'shareRoom',
 		components: {
@@ -43,6 +44,7 @@
 		},
 		data() {
 			return {
+				msg:'',
 				show:false,
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 			}
@@ -54,7 +56,7 @@
 					share_id:this.$route.query.id
 				}).then((res) => {
 					if(res.data.code == '200') {
-						this.detail=res.data.data
+						this.msg=res.data.data.msg
 					}
 				}, (err) => {
 					console.log(err)
