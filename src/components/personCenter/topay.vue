@@ -37,7 +37,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="list">
+			<!--<div class="list">
 				<div class="flex">
 					<img src="../../../static/images/personCenter/wechat.png" alt="" class="icon" />
 					<p class="f28 c3">微信支付</p>
@@ -51,7 +51,7 @@
 					</div>
 				</div>
 
-			</div>
+			</div>-->
 			<!--<div class="list">
 				<div class="flex">
 					<img src="../../../static/images/personCenter/share.png" alt="" class="icon" />

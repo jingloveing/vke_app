@@ -32,16 +32,16 @@
 			<div class="main">
 				<div class="nav-bigger">
 					<router-link :to="{path:'/taobao/fuli',query:{type:1}}">
-						<img class="same" src="../../../static/images/yuanbaoShop_img.png">
+						<img class="same" src="../../../static/images/yuanbaoShop_img.png" :onerror="defaultImg">
 					</router-link>
 					<router-link :to="{path:'/taobao/fuli',query:{type:2}}">
-						<img class="same" src="../../../static/images/xianbao_img.png">
+						<img class="same" src="../../../static/images/xianbao_img.png" :onerror="defaultImg">
 					</router-link>
 					<router-link :to="{path:'/taobao/fuli',query:{type:3}}">
-						<img class="same" src="../../../static/images/zhinan_img.png">
+						<img class="same" src="../../../static/images/zhinan_img.png" :onerror="defaultImg">
 					</router-link>
 					<router-link to="/taobao/newHand">
-						<img class="same" src="../../../static/images/fuli_img.png">
+						<img class="same" src="../../../static/images/fuli_img.png" :onerror="defaultImg">
 					</router-link>
 				</div>
 				<div class="main_goods">
@@ -76,6 +76,7 @@
 <script>
 	import { XHeader, Swiper } from 'vux'
 	const url='http://xlk.dxvke.com/'
+//  const url=''
 	export default {
 		name: 'Home',
 		components: {
@@ -145,8 +146,13 @@
 						} else {
 							this.goodsList = this.goodsList.concat(res.data.data.list)
 						}
+					}else{
+						this.noData = true
+					    this.$refs.myscroller.finishInfinite(2);
 					}
 				}, (err) => {
+					this.noData = true
+					this.$refs.myscroller.finishInfinite(2);
 					console.log(err)
 				})
 			},

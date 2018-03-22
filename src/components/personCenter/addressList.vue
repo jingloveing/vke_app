@@ -21,7 +21,7 @@
 		</div>
 		<div style="height: .96rem;"></div>
 		<div style="position:fixed;bottom: 0;width: 100%;height: .96rem;">
-			<x-button @click.native="click()" type="primary" action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32">添加新地址</x-button>
+			<x-button @click.native="click()" action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32">添加新地址</x-button>
 		</div>
 		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
 		<loading v-model="showLoading" :text="loadText"></loading>

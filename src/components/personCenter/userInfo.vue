@@ -10,7 +10,7 @@
 			<router-link to="/personCenter/userInfo/changeName">
 				<p class="cell c3">昵称 <span class="c9">{{userInfo.nickname}}<img src="../../../static/images/gt_white.png" alt="" class="gt_icon"/></span></p>
 			</router-link>
-				<p class="cell c3" @click="changeSex">性别 <span class="c9" v-text="userInfo.gender==1?'男':'女'"><img src="../../../static/images/gt_white.png" alt="" class="gt_icon"/></span></p>
+			<p class="cell c3" @click="changeSex">性别 <span class="c9" v-text="userInfo.gender==1?'男':'女'"><img src="../../../static/images/gt_white.png" alt="" class="gt_icon"/></span></p>
 			<p class="cell c3">等级 <span class="c9">{{userInfo.level_title}}</span></p>
 		</div>
 		<!--<div class="btn">-->
@@ -19,12 +19,12 @@
 		<actionsheet v-model="show1" :menus="menus1" @on-click-menu="click1" show-cancel></actionsheet>
 		<actionsheet v-model="show2" :menus="menus2" @on-click-menu="click2" show-cancel></actionsheet>
 		<loading v-model="showLoading" :text="loadText"></loading>
-        <toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
+		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
 	</div>
 </template>
 <script>
-	import { XHeader, XButton, Loading, Actionsheet,Toast } from 'vux'
-	const url='http://xlk.dxvke.com/'
+	import { XHeader, XButton, Loading, Actionsheet, Toast } from 'vux'
+	const url = 'http://xlk.dxvke.com/'
 	export default {
 		components: {
 			XHeader,
@@ -38,8 +38,8 @@
 				userInfo: {
 					nickname: '',
 					head_image: '',
-					gender:null,
-					level_title:''
+					gender: null,
+					level_title: ''
 				},
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 				showLoading: false,
@@ -54,53 +54,104 @@
 					menu1: '男',
 					menu2: '女'
 				},
-				showToast:false,
-				toast:''
+				showToast: false,
+				toast: '',
+				data: {
+
+				}
 			}
 		},
 		methods: {
 			//      修改用户信息
 			editInfo: function() {
-//				this.showLoading = true
-				this.$http.post(url+'/api/updateInfo',{gender:this.userInfo.gender}).then((res) => {
+				//				this.showLoading = true
+				this.$http.post(url + '/api/updateInfo', this.data).then((res) => {
 					if(res.data.code == '200') {
 						this.toast = res.data.data.message
-					    this.showToast = true
-					    localStorage.setItem('userInfo',JSON.stringify(this.userInfo))
-					} else{
+						this.showToast = true
+						plus.storage.setItem('userInfo', JSON.stringify(this.userInfo))
+					} else {
 						this.toast = res.data.error
-					    this.showToast = true
+						this.showToast = true
 					}
 				}, (err) => {
-					
+
 				})
 			},
-			console(msg) {
-				console.log(msg)
+			// 5+调用手机摄像头
+			captureImage() {
+				var cmr = plus.camera.getCamera();
+				var res = cmr.supportedImageResolutions[0];
+				var fmt = cmr.supportedImageFormats[0];
+				var self = this
+				cmr.captureImage(function(path) {
+					plus.io.resolveLocalFileSystemURL(path, function(entry) {
+						self.userInfo.head_image = entry.toLocalURL()
+						self.data = {
+							head_image: entry.toLocalURL()
+						}
+						self.editInfo()
+					}, function(e) {});
+						
+					},
+					function(error) {
+						alert("Capture image failed: " + error.message);
+					}, {
+						resolution: res,
+						format: fmt,
+						index:1,
+						filename:"_doc/camera/"
+					}
+				);
 			},
+			// 5+从相册中选择图片 
+			galleryImg() {
+				// 从相册中选择图片
+				var self = this
+				plus.gallery.pick(function(path) {
+					self.userInfo.head_image = path
+					self.data = {
+						head_image: path
+					}
+					self.editInfo()
+				}, function(e) {
+
+				}, {
+					filter: "image"
+				});
+			},
+			//设置头像
 			click1(key) {
-				console.log(key)
+				if(key == 'menu1') {
+					this.captureImage()
+				} else {
+					this.galleryImg()
+				}
 			},
+			//设置性别
 			click2(key) {
-				if(key=='menu1'){
-					this.userInfo.gender=1
-				}else{
-					this.userInfo.gender=0
+				if(key == 'menu1') {
+					this.userInfo.gender = 1
+				} else {
+					this.userInfo.gender = 0
+				}
+				this.data = {
+					gender: this.userInfo.gender
 				}
 				this.editInfo()
 			},
-			changePhoto:function(){
-				this.show1=true
+			changePhoto: function() {
+				this.show1 = true
 			},
-			changeSex:function(){
-				this.show2=true
+			changeSex: function() {
+				this.show2 = true
 			}
 		},
 		mounted() {
-			
+
 		},
 		created: function() {
-			this.userInfo=JSON.parse(localStorage.getItem('userInfo'))
+			this.userInfo = JSON.parse(plus.storage.getItem('userInfo'))
 		}
 	}
 </script>

@@ -41,11 +41,11 @@
 						<div>
 							<group class="input">
 								<x-input title="" v-model="alipay" class="same f30 c3" placeholder="请输入正确的支付宝账号" style="margin-bottom: .2rem;"></x-input>
-								<x-input title="" v-model="alipay" class="same f30 c3" placeholder="请输入对账手机号" style="margin-bottom: .2rem;"></x-input>
-								<x-input title="" v-model="alipay" class="same f30 c3" placeholder="请输入真实姓名" style="margin-bottom: .2rem;"></x-input>
+								<x-input title="" v-model="tel" class="same f30 c3" placeholder="请输入对账手机号" style="margin-bottom: .2rem;"></x-input>
+								<x-input title="" v-model="name" class="same f30 c3" placeholder="请输入真实姓名" style="margin-bottom: .2rem;"></x-input>
 								<div class="flex">
-									<x-input title="" v-model="alipay" class="same f30 c3" placeholder="请输入验证码" style="width: 3rem;"></x-input>
-									<span class="f26" style="display: inline-block;width: 2rem;text-align: center;background: #9A7BFF;color: white;height: .68rem;line-height: .68rem;">获取验证码</span>
+									<x-input title="" v-model="code" class="same f30 c3" placeholder="请输入验证码" style="width: 3rem;"></x-input>
+									<button class="f26"id="get-code" @click="getCode()">{{texts}}</button>
 								</div>
 							</group>
 						</div>
@@ -98,31 +98,42 @@
 		</div>
 		<div class="des">
 			<p class="tip f30 c3">财宝(单位：铜币)</p>
-			<x-input placeholder="请输入挂单财宝数" novalidate :show-clear="false"></x-input>
+			<x-input placeholder="请输入挂单财宝数" novalidate :show-clear="false" v-model="acer"></x-input>
 		</div>
 		<div style="height: .96rem;"></div>
 		<div style="position:fixed;bottom: 0;width: 100%;height: .96rem;">
-			<x-button type="primary" action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32">确认挂单</x-button>
+			<x-button type="primary" action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32" @click.native="doWithdraw()">确认挂单</x-button>
 		</div>
+		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
 	</div>
 </template>
 
 <script>
-	import { XHeader, XInput, XButton, Group} from 'vux'
+	import { XHeader, XInput, XButton, Group,Toast} from 'vux'
 	const url='http://xlk.dxvke.com/'
+//  const url =''
 	export default {
 		name: 'Realize',
 		components: {
 			XHeader,
 			XInput,
 			XButton,
-			Group
+			Group,
+			Toast
 		},
 		data() {
 			return {
 				alipay: '',
+				name:'',
+				tel:'',
+				code:'',
 				img: '',
-				type:0,
+				type:1,
+				acer:'',
+				texts:'获取验证码',
+				showToast: false,
+				toast: '',
+				countdown:60,
 			}
 		},
 		methods: {
@@ -188,18 +199,67 @@
 				this.$http.post(url+'/api/doWithdraw', {
 					type:this.type,
 					acer:this.acer,
-					account:this.account,
-					telephone:this.telephone
+					account:this.alipay,
+					telephone:this.tel,
+					code:this.code,
+					real_name:this.name
 				}).then((res) => {
 					if(res.data.code == '200') {
+						this.toast=res.data.data.message
+						this.showToast=true
+						this.acer='',
+						this.alipay='',
+						this.tel='',
+						this.code='',
+						this.name=''
 						
 					} else {
-
+                        this.toast=res.data.error
+						this.showToast=true
 					}
 				}, (err) => {
 					console.log(err)
+					this.toast=err.statusText
+					this.showToast=true
 				})
 			},
+			getCode() {
+				this.$http.post(url + '/api/sendCode', {
+					telephone: this.tel,
+					type: 2
+				}).then((res) => {
+					if(res.data.code == '200') {
+                         this.invokeSettime()
+					} else {
+                        this.toast=res.data.error
+						this.showToast=true
+					}
+				}, (err) => {
+					this.toast=err.statusText
+					this.showToast=true
+				})
+			},
+				 //定时器
+        invokeSettime(){
+            this.settime()
+            
+           },
+         settime(){
+         	var self =this
+            	if (this.countdown == 0) {
+                    document.getElementById('get-code').disabled=false
+                    this.texts="获取验证码";
+                    this.countdown = 60;
+                    return
+                } else {
+                    document.getElementById('get-code').disabled=true
+                    this.texts= "重新发送"+"(" + this.countdown + ")";
+                    this.countdown--;
+                } 
+                setTimeout(function() {
+                   self.settime()
+                },1000)
+            } 
 		},
 		created: function() {
            
@@ -391,6 +451,9 @@
 		width: .36rem;
 		height: .36rem;
 		position: absolute;
+	}
+	#get-code{
+		display: inline-block;width: 2rem;text-align: center;background: #9A7BFF;color: white;height: .68rem;line-height: .68rem;border: none;outline: none;
 	}
 </style>
 <style>

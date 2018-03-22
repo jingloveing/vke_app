@@ -101,6 +101,7 @@
 	import { Swiper, SwiperItem, Loading } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 	const url='http://xlk.dxvke.com'
+//  const url=''
 	export default {
 		name: 'Home',
 		components: {
@@ -183,7 +184,7 @@
 						}
 					}else{
 						this.noData = true
-							this.$refs.myscroller.finishInfinite(2);
+						this.$refs.myscroller.finishInfinite(2);
 					}
 				}, (err) => {
 					this.noData = true

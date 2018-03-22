@@ -4,7 +4,7 @@
 			<div style="overflow: hidden;">
 				<group class="weui-cells_form">
 					<x-input class="weui-vcode code" placeholder="请输入启蒙码" novalidate :show-clear="false" v-model="invite_code">
-						<x-button slot="right" type="primary" mini class="f28" style="width: 1.2rem;padding: 0 0;" @click.native="invite()" v-show="is_fans==0">确定</x-button>
+						<x-button slot="right" mini class="f28" style="width: 1.2rem;padding: 0 0;" @click.native="invite()" v-show="is_fans==1">确定</x-button>
 						<x-button slot="right" mini class="f28" disabled style="margin-top:0;background-color: #999;color: white;width: 1.2rem;padding: 0 0;" v-show="is_fans==1">已开启</x-button>
 					</x-input>
 				</group>
@@ -13,7 +13,7 @@
 				<div style="text-align: center;">
 					<p class="c3" style="font-size: .4rem;text-align: center;">您的启蒙码</p>
 					<input class="f36" id="kouling" :value="code">
-					<x-button slot="right" type="primary" mini class="f36 m_btn" data-clipboard-target="#kouling">一键复制</x-button>
+					<x-button slot="right" mini class="f36 m_btn" data-clipboard-target="#kouling">一键复制</x-button>
 				</div>
 			</div>
 		</div>

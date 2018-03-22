@@ -10,9 +10,35 @@
 			<p>{{msg}}</p>
 			<p>长按图片识别或扫描二维码，即可复制淘口令打开手机淘宝，领取优惠券购买</p>
 		</div>
-		<div class="main">
-			<img src="../../../static/images/default_img.png" alt="" />
-		</div>
+		<img :src="image_url" style="margin: .2rem .35rem .58rem;width: 6.8rem;height: 9.73rem;"/>
+		<!--<div class="main" id="main">
+			<div class="flex">
+				<div class="main-top-left flex">
+					<p class="f28 c3 break_two break" style="height: .84rem;width: 100%;">{{title}}</p>
+					<div class="flex" style="justify-content: space-between;width: 100%;align-items: flex-end;">
+						<div class="share-quan f28">
+							<div style="padding: 0 .2rem;">
+								<span>￥{{coupon_number}}</span>
+								<span>券</span>
+							</div>
+							<img src="../../../static/images/shareRoom/round.png" alt="" class="left" />
+							<img src="../../../static/images/shareRoom/round.png" alt="" class="right" />
+						</div>
+						<div>
+							<div class="f24 c9">价格<span style="text-decoration: line-through;">￥{{reserve_price}}</span></div>
+							<div class="f36 c_m" style="text-align: right;"><span class="f24">￥</span>{{zk_final_price}}</div>
+						</div>
+					</div>
+				</div>
+				<div class="main-top-right">
+					<img :src="ewm" alt="" :onerror="defaultImg" />
+				</div>
+			</div>
+			<div class="main-bottom">
+				<img :src="image_url" alt="" :onerror="defaultImg" />
+				<p class="f20 c9" style="text-align: right;">更多优惠，下载享利客APP</p>
+			</div>
+		</div>-->
 		<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show">
 		</div>
 		<transition enter-active-class="fadeInUpBig" leave-active-class="fadeOutDownBig">
@@ -20,11 +46,19 @@
 				<div class="share-main-content">
 					<p class="f28 c6" style="text-align: center;line-height: .94rem;height: .94rem;">———分享至———</p>
 					<div class="share-class flex">
-						<img src="../../../static/images/share/friendshare.png" alt="" />
-						<img src="../../../static/images/share/QQshare.png" alt="" />
-						<img src="../../../static/images/share/QQzoneshare.png" alt="" />
-						<img src="../../../static/images/share/weiboshare.png" alt="" />
-						<img src="../../../static/images/share/weixinshare.png" alt="" />
+						<div @click="shareAction('weixin','WXSceneTimeline')">
+							<img src="../../../static/images/share/friendshare.png" alt="" />
+						</div>
+						<div @click="shareAction('qq','')">
+							<img src="../../../static/images/share/QQshare.png" alt="" />
+						</div>
+						<div @click="shareAction('sinaweibo','')">
+							<img src="../../../static/images/share/weiboshare.png" alt="" />
+						</div>
+						<div @click="shareAction('weixin','WXSceneSession')">
+							<img src="../../../static/images/share/weixinshare.png" alt="" />
+						</div>
+
 					</div>
 				</div>
 				<div @click="show=!show" class="f32 c3" style="text-align: center;line-height: .96rem;border-top: .01rem solid #e5e5e5;">取消</div>
@@ -34,9 +68,10 @@
 </template>
 
 <script>
+	import html2canvas from 'html2canvas'
 	import { XHeader } from 'vux'
-	const url='http://xlk.dxvke.com'
-//  const url =''
+	const url = 'http://xlk.dxvke.com'
+//		const url = ''
 	export default {
 		name: 'shareRoom',
 		components: {
@@ -44,34 +79,91 @@
 		},
 		data() {
 			return {
-				msg:'',
-				show:false,
+				msg: '',
+				image_url: '',
+				click_url:'',
+//				reserve_price:'',
+//				zk_final_price:'',
+//				coupon_number:'',
+//				title:'',
+//				ewm:'',
+				show: false,
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
+//				dataURL:'',
+				
 			}
 		},
 		methods: {
 			//      获取商品详情
 			getDetail: function() {
-				this.$http.post(url+'/api/shareProductInfo',{
-					share_id:this.$route.query.id
+				this.$http.post(url + '/api/shareProductInfo', {
+					share_id: this.$route.query.id
 				}).then((res) => {
 					if(res.data.code == '200') {
-						this.msg=res.data.data.msg
+						this.msg = res.data.data.msg
+						this.image_url = res.data.data.image_url
+						this.click_url=res.data.data.click_url
+//						this.reserve_price=res.data.data.reserve_price
+//						this.zk_final_price=res.data.data.zk_final_price
+//						this.coupon_number=res.data.data.coupon_number
+//						this.title=res.data.data.title
+//						this.ewm=res.data.data.ewm
 					}
 				}, (err) => {
 					console.log(err)
 				})
 			},
+			//分享操作
+			shareAction(id,ex) {
+				console.log(id,ex)
+				var self = this
+//				html2canvas(document.getElementById('main'), ).then(function(canvas) {
+//					self.dataURL = canvas.toDataURL("image/png");
+//                  console.log(self.dataURL)
+//				});
+				var s = window.shares[id]
+				if(!id || !s) {
+					alert('无效的分享服务！')
+					return;
+				}
+				if(s.authenticated) {
+					self.shareMessage(s,ex);
+				} else {
+					s.authorize(self.shareMessage(s,ex), function(e) {
+						alert("未进行认证");
+					});
+				}
+			},
+			//发送分享消息
+			shareMessage(s,ex) {
+				var self=this
+				var pictures=[]
+				pictures.push(self.image_url)
+				console.log(JSON.stringify(self.image_url))
+				s.send({
+					title:'享利客',
+					content: self.msg + '长按图片识别或扫描二维码，即可复制淘口令打开手机淘宝，领取优惠券购买',
+					pictures: pictures,
+					href:self.click_url,
+					extra:{
+						scene:ex
+					}
+				}, function() {
+					alert("分享成功！");
+				}, function(e) {
+					console.log(JSON.stringify(e))
+					alert("分享失败：" + e.message);
+				});
+			}
 		},
 		mounted: function() {
-			
 
 		},
 		created: function() {
-            this.getDetail()
+			this.getDetail()
 		},
 		destroyed() {
-			
+
 		},
 	}
 </script>
@@ -88,20 +180,65 @@
 		background: linear-gradient(left, #8721b5, #db3283);
 		/* 标准的语法 */
 	}
-	.tip{
+	
+	.tip {
 		line-height: .78rem;
 		height: .78rem;
 		padding: 0 .26rem;
 	}
-	.tip>span{
+	
+	.tip>span {
 		color: #d13089;
 	}
-	.main{
+	
+	/*.main {
 		background: white;
 		margin: .2rem .35rem 0;
 		font-size: 0;
+		padding: .34rem .3rem;
 	}
-	.main img{
+	
+	.main-top-left {
+		width: calc(100% - 2.3rem);
+		height: 2rem;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: flex-start;
+	}
+	
+	.main-top-right img {
+		width: 2rem;
+		height: 2rem;
+		margin-left: .3rem;
+	}
+	
+	.share-quan {
+		background: #F51D46;
+		position: relative;
+		color: white;
+		height: .5rem;
+		line-height: .5rem;
+	}
+	
+	.share-quan .left,
+	.share-quan .right {
+		position: absolute;
+		top: .18rem;
+		width: .14rem;
+		height: .14rem;
+	}
+	
+	.share-quan .left {
+		left: -.07rem;
+	}
+	
+	.share-quan .right {
+		right: -.07rem;
+	}
+	
+	.main-bottom img {
 		width: 100%;
-	}
+		height: 5.7rem;
+		margin: .24rem 0;
+	}*/
 </style>

@@ -48,8 +48,6 @@
 					var slef = this
 					if(s.authResult) {
 						s.logout(function(e) {
-							alert('开始退出')
-							alert(plus.storage.getLength())
 							slef.$router.go(-1)
 							plus.storage.removeItem('token')
 							plus.storage.removeItem('userInfo')						

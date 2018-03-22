@@ -41,15 +41,12 @@
 										text: res.data.data.message,
 										type: 'success',
 									})
-									alert(JSON.stringify(res.data.data))
 									plus.storage.setItem("token", res.data.data.token);
 									plus.storage.setItem("unMessage", res.data.data.unMessage);
-									alert(plus.storage.getItem('token'))
 									self.$router.push({
 										name: 'PersonCenter'
 									})
 								} else {
-									alert(JSON.stringify(res.data))
 									self.$vux.toast.show({
 										text: res.data.error,
 										type: 'warn',
@@ -81,14 +78,12 @@
 								text: res.data.data.message,
 								type: 'success',
 							})
-							alert(JSON.stringify(res.data.data))
 							plus.storage.setItem("token", res.data.data.token);
 							plus.storage.setItem("unMessage", res.data.data.unMessage);
 							self.$router.push({
 								name: 'PersonCenter'
 							})
 						} else {
-							alert(JSON.stringify(res.data))
 							self.$vux.toast.show({
 								text: res.data.error,
 								type: 'warn',

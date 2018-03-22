@@ -8,7 +8,9 @@
 				<div>
 					<div class="user_pic">
 						<router-link to="/personCenter/userInfo">
-							<img :src="userInfo.head_image" class="user_icon" :onerror="defaultImg"/>
+							<div class="user_icon">
+								<img :src="userInfo.head_image" :onerror="defaultImg"/>
+							</div>
 							<img src="../../../static/images/personCenter/leve1.png" alt="" class="user_order" v-show="userInfo.level_id==1" />
 							<img src="../../../static/images/personCenter/leve1.png" alt="" class="user_order" v-show="userInfo.level_id==2" />
 							<img src="../../../static/images/personCenter/leve1.png" alt="" class="user_order" v-show="userInfo.level_id==3" />
@@ -17,10 +19,10 @@
 					</div>
 
 					<p class="user_name">{{userInfo.nickname}}</p>
-					<router-link to="/upgrade" v-show='userInfo.level_id'>
+					<router-link to="/upgrade" v-show='token'>
 						<div class="uper_btn">升级地位</div>
 					</router-link>
-					<router-link class="user_name" style="padding: 0 .2rem;"   to="/login" v-show='!userInfo'>登录</router-link>
+					<router-link class="user_name" style="padding: 0rem .2rem;display: inline-block;margin-top: .2rem;"   to="/login" v-show='!token'>登录</router-link>
 				</div>
 				<router-link to="/personCenter/info">
 					<div class="right">
@@ -28,7 +30,7 @@
 						<span class="info_num" v-show="userInfo.unMessage!==0">{{userInfo.unMessage}}</span>
 					</div>
 				</router-link>
-				<router-link to="/personCenter/myPrerogative" v-show='userInfo.level_id'>
+				<router-link to="/personCenter/myPrerogative" v-show='token'>
 					<div class="level_btn">
 						<img src="static/images/personCenter/vip0.png" alt="" class="level" v-show="userInfo.level_id==1"/>
 						<img src="static/images/personCenter/vip1.png" alt="" class="level" v-show="userInfo.level_id==2"/>
@@ -202,7 +204,8 @@
 					pay_money:0,
 					unMessage:0
 				},
-				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
+				token:'',
+				defaultImg: 'this.src="' + require('../../../static/images/personCenter/photo.png') + '"',
 			}
 		},
 		methods: {
@@ -222,9 +225,7 @@
 		},
 		created: function() {
 			this.getUserInfo()
-			
-            
-            
+			this.token=plus.storage.getItem('token')         
 		},
 		mounted: function() {
 
@@ -289,10 +290,14 @@
 	}
 	
 	.user_icon {
+		font-size: 0;
+	}
+	.user_icon>img{
 		width: 1.48rem;
 		height: 1.48rem;
 		border-radius: 50%;
-		border: .01rem solid white;
+		border: .02rem solid white;
+		box-sizing: border-box;
 	}
 	
 	.user_pic {

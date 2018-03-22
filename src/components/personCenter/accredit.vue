@@ -14,15 +14,15 @@
 			</p>
 		</div>
 		<group class="myOrder" style="margin-bottom: .2rem;">
-			<cell :link="{path:'/personCenter/setting/bindTel',query:{type:type}}" title="手机绑定" :value="telephone" style="border-top: .01rem solid #e5e5e5;" is-link></cell>
+			<cell :link="{path:'/personCenter/setting/bindTel',query:{type:type}}" title="手机绑定" :value="type=='3'?'':telephone" style="border-top: .01rem solid #e5e5e5;" is-link></cell>
 		</group>
 	</div>
 </template>
 
 <script>
 	import { Group, Cell, XButton, XSwitch } from 'vux'
-//	const url='http://xlk.dxvke.com/'
-    const url=''
+	const url='http://xlk.dxvke.com/'
+//  const url=''
 	export default {
 		components: {
 			Group,
@@ -37,6 +37,7 @@
 				jd_auth: 0,
 				tb_auth: 0,
 				telephone:null,
+				telephone_status:''
 			}
 		},
 		methods: {
@@ -51,7 +52,8 @@
 						this.jd_auth = res.data.data.jd_auth
 						this.tb_auth = res.data.data.tb_auth
 						this.telephone=res.data.data.telephone
-						if(this.telephone==''){
+						this.telephone_status=res.data.data.telephone_status
+						if(this.telephone_status=='1'){
 							this.type=3
 						}else{
 							this.type=4

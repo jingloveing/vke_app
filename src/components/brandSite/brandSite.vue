@@ -83,6 +83,7 @@
 	import { XHeader, Swiper } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 	const url='http://xlk.dxvke.com/'
+//  const url=''
 	export default {
 		name: 'BrandSite',
 		components: {
@@ -215,10 +216,10 @@
 
 		},
 		created: function() {
-			this.unMessage = plus.storage.getItem("unMessage")
 			this.getBannerList()
 			this.getMerchantList()
 			this.getMerchantView()
+			this.unMessage = plus.storage.getItem("unMessage")
 		}
 	}
 </script>

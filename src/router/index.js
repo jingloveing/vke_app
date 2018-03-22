@@ -79,6 +79,7 @@ import OrderVip from '@/components/personCenter/order_vip'
 import OrderMogu from '@/components/personCenter/order_mogu'
 import OrderJD from '@/components/personCenter/order_JD'
 import DoAccredit from '@/components/personCenter/doAccredit'
+import TBQuan from '@/components/home/tb_quan'
 Vue.use(Router)
 //Router.prototype.goBack = function() {
 //	this.isBack = true
@@ -724,6 +725,15 @@ routes: [{
 		meta: {
 			showHeader: true,
 			title:"授权/取消授权"
+		}
+	},
+	{
+		path: '/tb_quan',
+		name: 'TBQuan',
+		component: TBQuan,
+		meta: {
+			showHeader: true,
+			title:"淘宝领券"
 		}
 	},
 ]

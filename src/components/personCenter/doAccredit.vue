@@ -1,16 +1,16 @@
 <template>
     <div>
     	<iframe :src="url" scrolling="" style="border:0px;height: 12.46rem;" width="100%"></iframe>
-		<div class="return flex" @click="goHome()">
+		<!--<div class="return flex" @click="goHome()">
 			<img src="../../../static/images/return_icon.png" alt="" />
 			<span class="f28">返回</span>
-		</div>
+		</div>-->
     </div>
 </template>
 
 <script>
-//	const url='http://xlk.dxvke.com/'
-    const url=''
+	const url='http://xlk.dxvke.com/'
+//  const url=''
 	export default {
 		components: {
 			
@@ -97,9 +97,9 @@
 				}
 
 			},
-			goHome(){
-				this.$router.push({name:'Home',query:{}})
-			}
+//			goHome(){
+//				router.go(-1);
+//			}
 		},
 		created: function() {
 			this.getAccredit()
@@ -108,7 +108,7 @@
 </script>
 
 <style scoped="scoped">
-	.return{
+	/*.return{
     	width: 1.34rem;
     	line-height: .56rem;
     	height: .56rem;
@@ -125,5 +125,5 @@
     	width: .28rem;
     	height: .28rem;
     	margin:0 .05rem 0 .1rem;
-    }
+    }*/
 </style>

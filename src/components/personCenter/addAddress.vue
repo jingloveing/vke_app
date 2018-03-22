@@ -12,7 +12,7 @@
     </div>
     <div style="height: .96rem;"></div>
 		<div style="position:fixed;bottom: 0;width: 100%;height: .96rem;">
-			<x-button @click.native="click()" type="primary" action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32">保存</x-button>
+			<x-button @click.native="click()" action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32">保存</x-button>
 		</div>
     <loading v-model="showLoading" :text="loadText"></loading>
   </div>

@@ -40,7 +40,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="flex" style="background: white;margin-top: .16rem;height: .88rem;padding: 0 .3rem;justify-content: space-between;">
+		<div class="flex" style="background: white;margin-top: .16rem;height: .88rem;padding: 0 .3rem;justify-content: space-between;" @click="toquan()">
 			<div class="flex">
 				<div class="f24 tb-quan">
 					<div>优惠券</div>
@@ -65,7 +65,7 @@
 				<x-icon type="ios-heart-outline" size="22" style="padding-top:.16rem ;fill: #ff5200;" v-show="goodsDetail.is_collect==0||!goodsDetail.is_collect"></x-icon>
 				<span v-text="goodsDetail.is_collect==1?'已收藏':'收藏'">收藏</span>
 			</div>
-			<div class="f_2 f2_l" @click="">
+			<div class="f_2 f2_l" @click="tobuy()">
 				<span>去购买</span>
 			</div>
 		</div>
@@ -79,7 +79,7 @@
 					<div class="share-class flex">
 						<img src="../../../static/images/share/friendshare.png" alt="" />
 						<img src="../../../static/images/share/QQshare.png" alt="" />
-						<img src="../../../static/images/share/QQzoneshare.png" alt="" />
+						<!--<img src="../../../static/images/share/QQzoneshare.png" alt="" />-->
 						<img src="../../../static/images/share/weiboshare.png" alt="" />
 						<img src="../../../static/images/share/weixinshare.png" alt="" />
 					</div>
@@ -184,6 +184,12 @@ const url='http://xlk.dxvke.com/'
 				//        this.toTop()
 				//        this.getGoodsDetail()
 			},
+			tobuy(){
+				this.$router.push({name:'TBQuan',query:{url:this.goodsDetail.click_url}})
+			},
+			toquan(){
+				this.$router.push({name:'TBQuan',query:{url:this.goodsDetail.coupon_url}})
+			}
 		},
 		created: function() {
 			this.getDetail()

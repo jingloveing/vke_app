@@ -78,8 +78,8 @@
 
 <script>
 	import { XHeader, Swiper, } from 'vux'
-//	const url='http://xlk.dxvke.com'
-    const url=''
+	const url='http://xlk.dxvke.com'
+//  const url=''
 	export default {
 		name: 'shareRoom',
 		components: {

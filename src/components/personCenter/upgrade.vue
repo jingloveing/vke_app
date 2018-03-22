@@ -61,7 +61,7 @@
 						this.toast = res.data.data.message
 					    this.showToast = true
 					    
-					    localStorage.setItem('userInfo',JSON.stringify(this.userInfo))
+					    plus.storage.setItem('userInfo',JSON.stringify(this.userInfo))
 					} else{
 						this.toast = res.data.error
 					    this.showToast = true
@@ -72,7 +72,7 @@
 			},
 		},
 		created:function(){
-			this.userInfo=JSON.parse(localStorage.getItem('userInfo'))
+			this.userInfo=JSON.parse(plus.storage.getItem('userInfo'))
 		},
 		mounted() {
 			

@@ -5,7 +5,7 @@
 		</group>
 		<p class="tip f24 c9">请注意昵称长度，5-24个字</p>
 		<div style="margin:0 .26rem;">
-			<x-button type="primary" action-type="button" class='f32' @click.native="editInfo()">保存</x-button>
+			<x-button action-type="button" class='f32' @click.native="editInfo()">保存</x-button>
 		</div>
 		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
 	</div>
@@ -39,7 +39,7 @@
 						this.toast = res.data.data.message
 					    this.showToast = true
 					    
-					    localStorage.setItem('userInfo',JSON.stringify(this.userInfo))
+					    plus.storage.setItem('userInfo',JSON.stringify(this.userInfo))
 					} else{
 						this.toast = res.data.error
 					    this.showToast = true
@@ -50,7 +50,7 @@
 			},
 		},
 		created:function(){
-			this.userInfo=JSON.parse(localStorage.getItem('userInfo'))
+			this.userInfo=JSON.parse(plus.storage.getItem('userInfo'))
 		},
 		mounted() {
 			

@@ -44,7 +44,7 @@
 	     </div>
 	     <div class="main" v-show="userInfo.level_id==2">
 	     	<div class="tip">
-	     		<span class="border border2"></span><p class="f30 c3">帮众特权</p>
+	     		<span class="border border2"></span><p class="f30 c3">长老特权</p>
 	     	</div>
 	     	<div class="des des2 f26 c3">
 	     		<p>1. 自用50%的利润奖励</p>
@@ -57,7 +57,7 @@
 	     </div>
 	     <div class="main" v-show="userInfo.level_id==3">
 	     	<div class="tip">
-	     		<span class="border border3"></span><p class="f30 c3">帮众特权</p>
+	     		<span class="border border3"></span><p class="f30 c3">帮主特权</p>
 	     	</div>
 	     	<div class="des des3 f26 c3">
 	     		<p>1. 自用90%的利润奖励</p>
@@ -100,7 +100,7 @@
 
 		},
 		created: function() {
-			this.userInfo=JSON.parse(localStorage.getItem('userInfo'))
+			this.userInfo=JSON.parse(plus.storage.getItem('userInfo'))
 		}
 	}
 </script>
@@ -120,7 +120,7 @@
 	
 	.header-main {
 		height: 2.84rem;
-		margin-top: .88rem;
+		margin-top: 1.28rem;
 		text-align: center;
 		background: -webkit-linear-gradient(left, #8721b5, #db3283);
 		/* Safari 5.1 - 6.0 */

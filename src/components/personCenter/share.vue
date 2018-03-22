@@ -16,11 +16,12 @@
 				<x-button class="share-btn" @click.native="save()">保存图片</x-button>
 			</div>
 		</div>
+		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
 	</div>
 </template>
 
 <script>
-	import { XButton, } from 'vux'
+	import { XButton,  Toast,} from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 		var activeIndex=0
 		const url='http://xlk.dxvke.com/'
@@ -30,7 +31,8 @@
 		components: {
 			XButton,
 			swiper,
-			swiperSlide
+			swiperSlide,
+			 Toast,
 		},
 		data() {
 			return {
@@ -53,6 +55,8 @@
 					},
 				},
 				list: [],
+				showToast: false,
+				toast: '',
 			}
 		},
 		methods: {
@@ -71,7 +75,13 @@
 			},
 			save() {
 				var img = this.list[activeIndex].image
-				console.log(img)
+				plus.gallery.save(img,function(){
+					this.toast="保存成功"
+					this.showToast=true
+				},function(){
+					this.toast="保存失败"
+					this.showToast=true
+				})
 			}
 		},
 		created: function() {
