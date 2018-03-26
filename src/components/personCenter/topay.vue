@@ -1,6 +1,7 @@
 <template>
 	<div>
-		<div class="top">
+		<div class="pay" v-show="!showSuccess">
+			<div class="top">
 			<!--<div class="f24 c3 time flex">支付剩余时间 <span style="margin-left: .2rem;">20</span>分钟 <span>20</span>秒</div>-->
 			<div class="price flex">
 				<span class="f32 c3">订单总金额</span><span class="f28 c_m" style="margin: 0 .1rem;">￥{{order.pay_money}}</span>
@@ -87,14 +88,37 @@
 			</div>-->
 		</div>
 		<div style="margin:.4rem .26rem 0;">
-			<x-button type="primary" action-type="button" class='f32' @click.native="pay()">确认支付</x-button>
+			<x-button action-type="button" class='f32' @click.native="pay()">确认支付</x-button>
+		</div>
 		</div>
 		<loading v-model="showLoading" :text="loadText"></loading>
+		
+		
+		
+		<div class="pay-success" v-show="showSuccess">
+		<div class="header">
+			<p class="f28 c3">支付成功</p>
+			<h1 class="c_f">{{msg}}</h1>
+			<div class="btn f28" @click="gohome()">回到首页</div>
+		</div>
+		<img src="../../../static/images/pay_success_bg.png" alt="" />
+		<div class="main">
+			<p class="f28 c3">已通知商家发货，货物状态可在消息中心查看</p>
+			<div style="line-height: .5rem;margin-top: .4rem;">
+				<p class="f24 c9">商品名称：{{product_name}}</p>
+				<p class="f24 c9">商品价格：￥{{product_price}}</p>
+				<p class="f24 c9">收货地址：{{address}}</p>
+				<p class="f24 c9">成交时间：<span style="font-family: arial;">{{complete_time}}</span></p>
+				<p class="f24 c9">订单编号：<span style="font-family: arial;">{{order_sn}}</span></p>
+			</div>
+		</div>
+	</div>
 	</div>
 </template>
 
 <script>
-	import { XHeader, XInput, XButton, Group ,Loading} from 'vux'
+	import { XHeader, XInput, XButton, Group, Loading } from 'vux'
+	const url = 'http://xlk.dxvke.com/'
 	export default {
 		name: 'Realize',
 		components: {
@@ -108,37 +132,73 @@
 			return {
 				alipay: '',
 				type: 1,
-				order:{},
-				showLoading:false,
+				order: {},
+				showLoading: false,
+				showSuccess:false,
+				msg:null,
+				product_name:null,
+				product_price:null,
+				address:null,
+				complete_time:null,
+				order_sn:null
 			}
 		},
 		methods: {
-			//      支付订单
+			//支付   
 			pay() {
-				this.$router.push({name:'PaySuccess',query:{}})
-//				this.showLoading = true
-//				this.$http.post('/api/pay',{order_id:this.order.order_id,pay_type:this.type}
-//				).then((res) => {
-//					if(res.data.code == '200') {
-//						this.showLoading = false
-//						this.$router.push({name:'PaySuccess',query:{}})
-//					}else{
-//						this.$vux.toast.show({
-//							text: res.data.error,
-//							type: 'cancel'
-//						})
-//						this.showLoading = false
-//					}
-//				}, (err) => {
-//					this.showLoading = false
-//					console.log(err)
-//				})
+				plus.nativeUI.showWaiting();
+				var self = this
+				var alipay = window.alipay
+				this.$http({
+					method: 'get',
+					url: url + 'api/pay',
+					params: {order:this.order.order_id,type:1}
+				}).then((res) => {
+					plus.nativeUI.closeWaiting();
+					if(res.data.code == 200) {
+						plus.payment.request(alipay, res.data.data.order, function(result) {
+							plus.nativeUI.toast("付费成功");
+							self.showSuccess=true
+							self.paySuccess()							
+						}, function(e) {
+							plus.nativeUI.toast("付费失败");
+						});
+					} else {
+						plus.nativeUI.toast("支付失败");
+					}
+				}, (err) => {
+					plus.nativeUI.closeWaiting();
+					plus.nativeUI.toast("支付失败");
+				})
 			},
-            
+			//支付成功之后获取订单信息
+			paySuccess(){
+				this.$http({
+					method: 'get',
+					url: url + 'api/paySuccess',
+					params: {order:this.order.order_id}
+				}).then((res) => {
+					plus.nativeUI.closeWaiting();
+					if(res.data.code == 200) {
+						this.msg=res.data.data.msg
+						this.product_name=res.data.data.product_name
+						this.product_price=res.data.data.product_price
+						this.address=res.data.data.address
+						this.complete_time=res.data.data.complete_time
+						this.order_sn=res.data.data.order_sn
+					} else {
+						plus.nativeUI.toast("获取订单信息失败");
+					}
+				}, (err) => {
+					plus.nativeUI.toast("获取订单信息失败");
+				})
+			},
+			gohome(){
+            	this.$router.push({name:'Home',query:{}})
+            }
 		},
 		created: function() {
-            this.order=JSON.parse(this.$route.query.order)
-            console.log(this.order)
+			this.order = JSON.parse(this.$route.query.order)
 		},
 		mounted: function() {
 
@@ -147,43 +207,43 @@
 </script>
 
 <style scoped="scoped">
-	.top {
+	.pay .top {
 		background: white;
 		margin-bottom: .2rem;
 	}
 	
-	.time,
-	.price {
+	.pay .time,
+	.pay .price {
 		border-bottom: .01rem solid #e5e5e5;
 		justify-content: center;
 	}
 	
-	.time {
+	.pay .time {
 		margin: 0 .26rem;
 		height: 1.06rem;
 	}
 	
-	.price {
+	.pay .price {
 		height: 1.82rem;
 		line-height: 1.82rem;
 	}
 	
-	.header_list_num {
+	.pay .header_list_num {
 		margin: 0 .1rem;
 	}
 	
-	.main {
+	.pay .main {
 		background: white;
 		border-bottom: .01rem solid #e5e5e5;
 	}
 	
-	.icon {
+	.pay .icon {
 		width: .52rem;
 		height: .52rem;
 		margin-right: .3rem;
 	}
 	
-	.list {
+	.pay .list {
 		padding: 0 .4rem;
 		height: 1rem;
 		display: flex;
@@ -192,7 +252,7 @@
 		justify-content: space-between;
 	}
 	
-	.same {
+	.pay .same {
 		background: #f9f9f9;
 		border: none;
 		height: .68rem;
@@ -200,12 +260,12 @@
 		width: 5rem;
 	}
 	
-	.pic {
+	.pay .pic {
 		width: 100%;
 		height: 100%;
 	}
 	
-	.add {
+	.pay .add {
 		width: 1.28rem;
 		height: 1.28rem;
 		background-image: url("/static/images/upload.png");
@@ -214,7 +274,7 @@
 		position: relative;
 	}
 	
-	.add label {
+	.pay .add label {
 		display: inline-block;
 		width: 100%;
 		height: 100%;
@@ -223,20 +283,20 @@
 		top: 0;
 	}
 	
-	.vue-uploader {
+	.pay .vue-uploader {
 		display: flex;
 		align-items: flex-end;
 	}
 	
-	.vue-uploader>input[type="file"] {
+	.pay .vue-uploader>input[type="file"] {
 		display: none;
 	}
 	
-	input[type="radio"] {
+	.pay input[type="radio"] {
 		display: none;
 	}
 	
-	.all {
+	.pay .all {
 		position: relative;
 		width: .36rem;
 		height: .36rem;
@@ -244,7 +304,7 @@
 		border: .01rem solid #e5e5e5;
 	}
 	
-	.radio {
+	.pay .radio {
 		width: 100%;
 		height: 100%;
 		display: inline-block;
@@ -253,15 +313,50 @@
 		left: 0;
 	}
 	
-	.right {
+	.pay .right {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 	}
 	
-	.success {
+	.pay .success {
 		width: .36rem;
 		height: .36rem;
 		position: absolute;
+	}
+	
+	
+	/*支付成功*/
+	.pay-success {
+		margin: .2rem .35rem 0;
+		background: white;
+	}
+	
+	.pay-success .header {
+		padding-top: .6rem;
+		text-align: center;
+	}
+	
+	.header h1 {
+		font-size: .48rem;
+		padding: .34rem 0 .56rem;
+	}
+	
+	.pay-success .header .btn {
+		height: .72rem;
+		line-height: .72rem;
+		color: white;
+		background: #9A7BFF;
+		width: 2.78rem;
+		border-radius: .06rem;
+		margin-bottom: .46rem;
+	}
+	
+	.pay-success img {
+		width: 100%;
+	}
+	
+	.pay-success .main {
+		padding: .5rem .3rem .8rem;
 	}
 </style>

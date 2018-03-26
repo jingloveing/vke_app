@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div>
-			<div class="list" v-for="item in list" @click="newC()">
+			<div class="list" v-for="item in list">
 				<div>
 					<h5 class="f28 c3">{{item.consignee}}<span style="font-family: arial;">{{item.telephone}}</span></h5>
 				    <p class="f26 c9">{{item.province}}{{item.city}}{{item.country}}{{item.address}}</p>
@@ -30,8 +30,8 @@
 
 <script>
 	import { XHeader, XInput, XButton, Group,Toast,Loading} from 'vux'
-//	const url='http://xlk.dxvke.com/'
-    const url=''
+	const url='http://xlk.dxvke.com/'
+//  const url=''
 	export default {
 		name: 'Realize',
 		components: {
@@ -60,7 +60,7 @@
 					url: url+'/api/addressList',
 				}).then((res) => {
 					if(res.data.code == '200') {
-						this.list = res.data.data.list
+						this.list = res.data.data
 					}
 				}, (err) => {
 					console.log(err)
@@ -91,10 +91,7 @@
 			click(){
 				this.$router.push({name:'AddAddress',query:{}})
 //          	this.$router.replace({name: ''})
-           },
-           newC(){
-           	console.log('aaaa')
-           }
+          },
 			
 		},
 		created: function() {

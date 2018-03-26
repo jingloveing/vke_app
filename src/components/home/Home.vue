@@ -16,83 +16,83 @@
 			</router-link>
 		</div>
 		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
-		<swiper auto :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" loop></swiper>
-		<div style=" margin-top: -.3rem;z-index: 99999;position: relative;">
-			<ul class="nav-small">
-				<router-link tag="li" to="/home/taobao">
-					<img src="static/images/taoBao.png" :onerror="defaultImg">
-					<span>淘宝</span>
-				</router-link>
-				<router-link tag="li" to="/newJD">
-					<img src="static/images/JD.png" :onerror="defaultImg">
-					<span>京东</span>
-				</router-link>
-				<router-link tag="li" to="/newMogu">
-					<img src="static/images/mogu.png" :onerror="defaultImg">
-					<span>蘑菇街</span>
-				</router-link>
-				<router-link tag="li" to="/newVip">
-					<img src="static/images/vip.png" :onerror="defaultImg">
-					<span>唯品会</span>
-				</router-link>
-				<router-link tag="li" to="">
-					<img src="static/images/vke.png" :onerror="defaultImg">
-					<span>自营商城</span>
-				</router-link>
-			</ul>
-		</div>
-		<div class="news_main">
-			<div class="news_left">
-				<img src="static/images/vke_news.png" />
+			<swiper auto :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" loop></swiper>
+			<div style=" margin-top: -.3rem;z-index: 99999;position: relative;">
+				<ul class="nav-small">
+					<router-link tag="li" to="/home/taobao">
+						<img src="static/images/taoBao.png" :onerror="defaultImg">
+						<span>淘宝</span>
+					</router-link>
+					<router-link tag="li" to="/newJD">
+						<img src="static/images/JD.png" :onerror="defaultImg">
+						<span>京东</span>
+					</router-link>
+					<router-link tag="li" to="/newMogu">
+						<img src="static/images/mogu.png" :onerror="defaultImg">
+						<span>蘑菇街</span>
+					</router-link>
+					<router-link tag="li" to="/newVip">
+						<img src="static/images/vip.png" :onerror="defaultImg">
+						<span>唯品会</span>
+					</router-link>
+					<router-link tag="li" to="">
+						<img src="static/images/vke.png" :onerror="defaultImg">
+						<span>自营商城</span>
+					</router-link>
+				</ul>
 			</div>
-			<div class="news_right">
-				<swiper auto style="width:100%;" height="25px" loop direction="vertical" :interval=2000 :show-desc-mask="false" :show-dots="false">
-					<swiper-item class="news" v-for="(item,index) in news" :key="index">
-						<div style="margin-left: .26rem;">
-							<p style="line-height: 25px;vertical-align: middle;">{{item.title}}</p>
+			<div class="news_main">
+				<div class="news_left">
+					<img src="static/images/vke_news.png" />
+				</div>
+				<div class="news_right">
+					<swiper auto style="width:100%;" height="25px" loop direction="vertical" :interval=2000 :show-desc-mask="false" :show-dots="false">
+						<swiper-item class="news" v-for="(item,index) in news" :key="index">
+							<div style="margin-left: .26rem;">
+								<p style="line-height: 25px;vertical-align: middle;">{{item.title}}</p>
+							</div>
+						</swiper-item>
+					</swiper>
+				</div>
+			</div>
+			<div class="main">
+				<div class="main_title">
+					<img src="static/images/icon.png" alt="" />
+					<span>品牌精选</span>
+				</div>
+				<div v-for="(item,index) in merchant" :key="index">
+					<router-link class="nav" :to="{name:'StoreIndex',query:{id:item.id}}">
+						<img :src="item.image" style="width: 100%;height: 100%;" :onerror="defaultImg">
+						<div class="nav_name">
+							<img :src="item.logo" class="nav_pic" />
+							<span class="break">{{item.name}}</span>
 						</div>
-					</swiper-item>
-				</swiper>
-			</div>
-		</div>
-		<div class="main">
-			<div class="main_title">
-				<img src="static/images/icon.png" alt="" />
-				<span>品牌精选</span>
-			</div>
-			<div v-for="(item,index) in merchant" :key="index">
-				<router-link class="nav" :to="{name:'StoreIndex',query:{id:item.id}}">
-					<img :src="item.image" style="width: 100%;height: 100%;" :onerror="defaultImg">
-					<div class="nav_name">
-						<img :src="item.logo" class="nav_pic" />
-						<span class="break">{{item.name}}</span>
-					</div>
-					<div class="bd"></div>
-				</router-link>
-				<swipers :options="swiperOptionB" style="margin-top: .2rem;">
-					<swiper-slide v-for="(list,index) in item.product_list" :key="index"  class="box_content">
-						<router-link :to="{name:'BrandDetail',query:{id:list.id,store_id:item.id}}">
-							<img :src="list.thumb_url" alt="" :onerror="defaultImg">
+						<div class="bd"></div>
+					</router-link>
+					<swipers :options="swiperOptionB" style="margin-top: .2rem;">
+						<swiper-slide v-for="(list,index) in item.product_list" :key="index" class="box_content">
+							<router-link :to="{name:'BrandDetail',query:{id:list.id,store_id:item.id}}">
+								<img :src="list.thumb_url" alt="" :onerror="defaultImg">
 								<span class="dess">
                                 <p class="des_name break">{{list.product_name}}</p>
                                 <p class="des_price">
                                 	<span class="new_price">
                                 		<span class="f20">￥</span>{{list.reserve_price}}
-                                	</span>
-								
+								</span>
+
 								</p>
 								</span>
 								<div class="ticket">券{{list.coupon_number}}元</div>
-						</router-link>
-					</swiper-slide>
-					<swiper-slide>
-						<router-link class="box_content more" :to="{name:'StoreIndex',query:{id:item.id}}">
-							<span>查看全部</span>
-						</router-link>
-					</swiper-slide>
-				</swipers>
+							</router-link>
+						</swiper-slide>
+						<swiper-slide>
+							<router-link class="box_content more" :to="{name:'StoreIndex',query:{id:item.id}}">
+								<span>查看全部</span>
+							</router-link>
+						</swiper-slide>
+					</swipers>
+				</div>
 			</div>
-		</div>
 		</scroller>
 		<loading v-model="showLoading" :text="loadText"></loading>
 	</div>
@@ -100,8 +100,8 @@
 <script>
 	import { Swiper, SwiperItem, Loading } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
-	const url='http://xlk.dxvke.com'
-//  const url=''
+	const url = 'http://xlk.dxvke.com'
+	//	const url = ''
 	export default {
 		name: 'Home',
 		components: {
@@ -125,13 +125,13 @@
 				bottomCount: 20,
 				showLoading: false,
 				loadText: '加载中...',
-				news:[],
+				news: [],
 				swiperOptionB: {
 					// 如果需要滚动条
 					slidesPerView: 3,
 					preventClicksPropagation: true,
 				},
-				unMessage:null,
+				unMessage: null,
 			}
 		},
 		methods: {
@@ -139,7 +139,7 @@
 			getBannerList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/indexBanner'
+					url: url + '/api/indexBanner'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const imgList = res.data.data
@@ -158,10 +158,10 @@
 			getNews: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/indexNews'
+					url: url + '/api/indexNews'
 				}).then((res) => {
 					if(res.data.code == '200') {
-						this.news=res.data.data
+						this.news = res.data.data
 					}
 				}, (err) => {
 					console.log(err)
@@ -171,8 +171,11 @@
 			getMerchantList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/indexMerchant',
-					params:{page:this.pageIndex,limit:this.limit}
+					url: url + '/api/indexMerchant',
+					params: {
+						page: this.pageIndex,
+						limit: this.limit
+					}
 				}).then((res) => {
 					if(res.data.code == '200') {
 						if(res.data.data.list.length == 0) {
@@ -182,7 +185,7 @@
 							this.merchant = this.merchant.concat(res.data.data.list)
 							this.$refs.myscroller.finishPullToRefresh()
 						}
-					}else{
+					} else {
 						this.noData = true
 						this.$refs.myscroller.finishInfinite(2);
 					}
@@ -210,7 +213,7 @@
 			refresh(done) {
 				var self = this
 				this.pageIndex = 1
-				this.merchant=[]
+				this.merchant = []
 				this.getBannerList()
 				this.getMerchantList()
 				this.getNews()
@@ -222,7 +225,7 @@
 			
 		},
 		mounted: function() {
-			
+
 		},
 		created: function() {
 			this.getBannerList()
@@ -449,7 +452,6 @@
 		top: 0;
 		left: 0;
 	}
-	
 	/*.box {
 		height: 2.8rem;
 		position: relative;

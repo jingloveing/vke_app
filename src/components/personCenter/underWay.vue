@@ -227,6 +227,8 @@
 						this.$refs.myscroller.finishInfinite(2);
 					}
 				}, (err) => {
+					this.noData = true
+					this.$refs.myscroller.finishInfinite(2);
 					console.log(err)
 				})
 			},

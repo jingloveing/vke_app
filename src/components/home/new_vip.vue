@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<iframe src="https://m.vip.com/index.html?f=CPS#!hash" id="Iframe" frameborder="0" scrolling="" style="border:0px;height: 12.46rem;" width="100%" height=""></iframe>
+		<iframe src="https://m.vip.com/index.html?f=CPS#!hash" id="Iframe" frameborder="0" scrolling="" style="border:0px;" width="100%" height=""></iframe>
 		<div class="return flex" @click="goHome()">
 			<img src="../../../static/images/return_icon.png" alt="" />
 			<span class="f28">返回</span>
@@ -19,36 +19,46 @@
 			}
 		},
 		methods: {
-			goHome(){
-				this.$router.push({name:'Home',query:{}})
-			}
+			goHome() {
+				this.$router.push({
+					name: 'Home',
+					query: {}
+				})
+			},
+			
 		},
 		created: function() {
-            
+			
 		},
-		mounted() {
-
+		mounted:function(){
+			var Iframe = document.getElementById("Iframe")
+			Iframe.height = document.documentElement.clientHeight - 64;
+			Iframe.onload=function(event){
+				console.log(document.getElementById('directorderBtm'))
+				console.log('onloadsss',event)
+			}
 		},
 	}
 </script>
 
 <style scoped="scoped">
-.return{
-    	width: 1.34rem;
-    	line-height: .56rem;
-    	height: .56rem;
-    	border-top-right-radius: .28rem;
-    	border-bottom-right-radius: .28rem;
-    	color: white;
-    	background: rgba(154,123,255,.8);
-    	position: fixed;
-    	left: 0;
-    	bottom: 3.28rem;
-    	z-index: 99999;
-    }
-    .return img{
-    	width: .28rem;
-    	height: .28rem;
-    	margin:0 .05rem 0 .1rem;
-    }
+	.return {
+		width: 1.34rem;
+		line-height: .56rem;
+		height: .56rem;
+		border-top-right-radius: .28rem;
+		border-bottom-right-radius: .28rem;
+		color: white;
+		background: rgba(154, 123, 255, .8);
+		position: fixed;
+		left: 0;
+		bottom: 3.28rem;
+		z-index: 99999;
+	}
+	
+	.return img {
+		width: .28rem;
+		height: .28rem;
+		margin: 0 .05rem 0 .1rem;
+	}
 </style>

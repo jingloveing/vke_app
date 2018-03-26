@@ -90,8 +90,7 @@
 					type: 1,
 					address_id: this.address.id,
 					product_list:[{product_id:this.$route.query.id,number:this.data.number}]
-				}).then((res) => {
-					
+				}).then((res) => {					
 					if(res.data.code == '200') {
 						this.showLoading = false
 						this.$router.push({
@@ -109,20 +108,19 @@
 					}
 				}, (err) => {
 					this.showLoading = false
-					console.log(err)
+					console.log(JSON.stringify(err))
 				})
 			},
 		},
 		created: function() {
-			console.log(this.$route.query.id)
 			this.data = JSON.parse(this.$route.query.data)
 			this.data.number = this.$route.query.count
 			var price = this.data.reserve_price.rmb + '.' + this.data.reserve_price.corner
 			var total = price * this.data.number;
 			this.total.rmb = Math.floor(total)
 			this.total.corner = total.toFixed(2).split('.')[1]
-			if(localStorage.getItem('address')) {
-				this.address = JSON.parse(localStorage.getItem('address'))
+			if(plus.storage.getItem('address')) {
+				this.address = JSON.parse(plus.storage.getItem('address'))
 			} else {
 				this.getAddress()
 			}
@@ -131,7 +129,7 @@
 
 		},
 		destroyed: function() {
-			localStorage.removeItem('address')
+			plus.storage.removeItem('address')
 		}
 	}
 </script>

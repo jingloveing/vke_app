@@ -12,7 +12,7 @@
     </div>
     <div style="height: .96rem;"></div>
 		<div style="position:fixed;bottom: 0;width: 100%;height: .96rem;">
-			<x-button @click.native="click()" action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32">保存</x-button>
+			<x-button @click.native="save()" action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32">保存</x-button>
 		</div>
     <loading v-model="showLoading" :text="loadText"></loading>
   </div>
@@ -20,6 +20,7 @@
 <script>
   import {Cell,ChinaAddressV4Data,Group,XAddress,XInput,Checklist,XButton,Loading,Value2nameFilter as value2name } from 'vux'
 const url='http://xlk.dxvke.com/'
+//const url=''
   export default {
     name: 'addAddress',
     components: {
@@ -91,7 +92,8 @@ const url='http://xlk.dxvke.com/'
          }).then((res)=>{
           if(res.data.code=='200'){
             this.showLoading=false
-            this.$router.push({name: 'AddressList',query:{id:this.pro_id,type:this.from}})
+//          this.$router.push({name: 'AddressList',query:{id:this.pro_id,type:this.from}})
+            this.$router.go(-1)
           }else if(res.data.code=='400'){
             this.showLoading=false
           }
@@ -146,7 +148,7 @@ const url='http://xlk.dxvke.com/'
       getName:function(value){
         this.value2name= value2name(value, ChinaAddressV4Data)
       },
-      click(){
+      save(){
         if(this.address_id){
            this.update()
         }else{

@@ -42,7 +42,7 @@
 				</div>
 				<div style="position: relative;" @click="play(item.id)">
 					<!--controls---video的控制条-->
-					<video controls :id="'myVideo'+item.id" width="100%" style="height: 4.2rem;background: black;">
+					<video controls :id="'myVideo'+item.id" width="100%" style="height: 4.2rem;background: black;" :poster="item.poster">
 						<source :src="item.view" type="video/mp4">
 						<source src="/i/movie.ogg" type="video/ogg">
 					</video>
@@ -111,7 +111,8 @@
 				noData: false,
 				page:1,
 				limit:20,
-				unMessage:null
+				unMessage:null,
+				poster:[]
 			}
 		},
 		methods: {
@@ -210,16 +211,30 @@
 					done()
 				}, 1500)
 			},
-			
+			//获取视频第一帧为封面
+			captureImage(){
+				var video = document.getElementsByTagName('video')
+				var canvas = document.createElement("canvas");
+				 console.log(this.merchantView)
+				for(var i = 0;i<video.length; i++){
+					canvas.width = video[i].videoWidth * scale;
+                    canvas.height = video[i].videoHeight * scale;
+                    canvas.getContext('2d').drawImage(video[i], 0, 0, canvas.width, canvas.height);
+                    this.merchantView[i].poster=canvas.toDataURL("image/png");
+				}
+			    console.log(this.merchantView)
+				
+			}
 		},
 		mounted: function() {
-
+            this.captureImage()
 		},
 		created: function() {
 			this.getBannerList()
 			this.getMerchantList()
 			this.getMerchantView()
 			this.unMessage = plus.storage.getItem("unMessage")
+			
 		}
 	}
 </script>

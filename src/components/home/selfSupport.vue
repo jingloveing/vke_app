@@ -27,8 +27,7 @@
 							<div class="des">{{goods.product_name}}</div>
 							<div class="des_b">
 								<span class="price">
-										<span style="font-size: .2rem;">￥</span>{{goods.reserve_price.rmb}}
-								<span style="font-size: .2rem;" v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span>
+										<span style="font-size: .2rem;">￥</span>{{goods.reserve_price.rmb}}<span style="font-size: .2rem;" v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span>
 								</span>
 								<!--<span class="num">{{goods.volume}}件已售</span>-->
 							</div>

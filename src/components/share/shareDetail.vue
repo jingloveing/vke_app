@@ -10,11 +10,11 @@
 			<p>{{msg}}</p>
 			<p>长按图片识别或扫描二维码，即可复制淘口令打开手机淘宝，领取优惠券购买</p>
 		</div>
-		<img :src="image_url" style="margin: .2rem .35rem .58rem;width: 6.8rem;height: 9.73rem;"/>
-		<!--<div class="main" id="main">
+		<!--<img :src="image_url" style="margin: .2rem .35rem .58rem;width: 6.8rem;height: 9.73rem;"/>-->
+		<div class="main" id="main">
 			<div class="flex">
 				<div class="main-top-left flex">
-					<p class="f28 c3 break_two break" style="height: .84rem;width: 100%;">{{title}}</p>
+					<div class="f28 c3 break_two break" style="height: .84rem;width: 100%;">{{title}}</div>
 					<div class="flex" style="justify-content: space-between;width: 100%;align-items: flex-end;">
 						<div class="share-quan f28">
 							<div style="padding: 0 .2rem;">
@@ -31,15 +31,15 @@
 					</div>
 				</div>
 				<div class="main-top-right">
-					<img :src="ewm" alt="" :onerror="defaultImg" />
+					<img :src="ewm" alt="" :onerror="defaultImg" crossOrigin = '*'/>
 				</div>
 			</div>
 			<div class="main-bottom">
-				<img :src="image_url" alt="" :onerror="defaultImg" />
+				<img :src="image_url" alt="" :onerror="defaultImg" crossOrigin = '*'/>
 				<p class="f20 c9" style="text-align: right;">更多优惠，下载享利客APP</p>
 			</div>
-		</div>-->
-		<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show">
+		</div>
+		<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show" @click="show=!show">
 		</div>
 		<transition enter-active-class="fadeInUpBig" leave-active-class="fadeOutDownBig">
 			<div v-show="show" class="share-main">
@@ -71,7 +71,7 @@
 	import html2canvas from 'html2canvas'
 	import { XHeader } from 'vux'
 	const url = 'http://xlk.dxvke.com'
-//		const url = ''
+	//		const url = ''
 	export default {
 		name: 'shareRoom',
 		components: {
@@ -81,16 +81,15 @@
 			return {
 				msg: '',
 				image_url: '',
-				click_url:'',
-//				reserve_price:'',
-//				zk_final_price:'',
-//				coupon_number:'',
-//				title:'',
-//				ewm:'',
+				click_url: '',
+				reserve_price: '',
+				zk_final_price: '',
+				coupon_number: '',
+				title: '',
+				ewm: '',
 				show: false,
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
-//				dataURL:'',
-				
+
 			}
 		},
 		methods: {
@@ -102,51 +101,67 @@
 					if(res.data.code == '200') {
 						this.msg = res.data.data.msg
 						this.image_url = res.data.data.image_url
-						this.click_url=res.data.data.click_url
-//						this.reserve_price=res.data.data.reserve_price
-//						this.zk_final_price=res.data.data.zk_final_price
-//						this.coupon_number=res.data.data.coupon_number
-//						this.title=res.data.data.title
-//						this.ewm=res.data.data.ewm
+						this.click_url = res.data.data.click_url
+						this.reserve_price = res.data.data.reserve_price
+						this.zk_final_price = res.data.data.zk_final_price
+						this.coupon_number = res.data.data.coupon_number
+						this.title = res.data.data.title
+						this.ewm = res.data.data.ewm
 					}
 				}, (err) => {
 					console.log(err)
 				})
 			},
 			//分享操作
-			shareAction(id,ex) {
-				console.log(id,ex)
+			shareAction(id, ex) {
+				console.log(id, ex)
 				var self = this
-//				html2canvas(document.getElementById('main'), ).then(function(canvas) {
-//					self.dataURL = canvas.toDataURL("image/png");
-//                  console.log(self.dataURL)
-//				});
+				html2canvas(document.getElementById('main'), {useCORS:true}).then(function(canvas) {
+					var dataUrl = canvas.toDataURL("image/png")
+					var b = new plus.nativeObj.Bitmap();
+					b.loadBase64Data(dataUrl, function() {
+						console.log("创建成功");
+					}, function() {
+						console.log("创建失败");
+					});
+					b.save('_www/img1.png', {
+						overwrite: true
+					}, function() {
+						console.log("保存成功");
+					}, function() {
+						console.log("保存失败");
+					});
+
+					plus.gallery.save('_www/img1.png', function() {
+						console.log("保存图片到相册成功");
+					}, function() {
+						console.log("保存图片到相册失败");
+
+					});
+				})
 				var s = window.shares[id]
 				if(!id || !s) {
 					alert('无效的分享服务！')
 					return;
 				}
 				if(s.authenticated) {
-					self.shareMessage(s,ex);
+					self.shareMessage(s, ex);
 				} else {
-					s.authorize(self.shareMessage(s,ex), function(e) {
+					s.authorize(self.shareMessage(s, ex), function(e) {
 						alert("未进行认证");
 					});
 				}
 			},
 			//发送分享消息
-			shareMessage(s,ex) {
-				var self=this
-				var pictures=[]
-				pictures.push(self.image_url)
-				console.log(JSON.stringify(self.image_url))
+			shareMessage(s, ex) {
+				var self = this
 				s.send({
-					title:'享利客',
+					//					title: '享利客',
 					content: self.msg + '长按图片识别或扫描二维码，即可复制淘口令打开手机淘宝，领取优惠券购买',
-					pictures: pictures,
-					href:self.click_url,
-					extra:{
-						scene:ex
+					pictures: ["_www/img1.png"],
+					//					href: self.click_url,
+					extra: {
+						scene: ex
 					}
 				}, function() {
 					alert("分享成功！");
@@ -191,7 +206,7 @@
 		color: #d13089;
 	}
 	
-	/*.main {
+	.main {
 		background: white;
 		margin: .2rem .35rem 0;
 		font-size: 0;
@@ -240,5 +255,5 @@
 		width: 100%;
 		height: 5.7rem;
 		margin: .24rem 0;
-	}*/
+	}
 </style>

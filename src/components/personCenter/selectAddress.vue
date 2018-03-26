@@ -1,10 +1,14 @@
 <template>
 	<div>
 		<x-header :left-options="{backText: ''}" title="选择收货地址" style="background-color: #f9f9f9;">
-			<a slot="right" style="color: #9A7BFF;font-size: .32rem;" href="/personCenter/myOrder/addressList">管理</a>
+			<a slot="right" style="color: #9A7BFF;font-size: .32rem;margin-top: .4rem;">
+				<router-link to="/personCenter/myOrder/addressList">
+					管理
+				</router-link>
+			</a>
 		</x-header>
-		<div style="height: .88rem;"></div>
-		<div>
+		<div style="height: 1.28rem;"></div>
+		<div style="margin-bottom: .96rem;">
 			<div class="list" v-for="(item,index) in list" @click="goPay(item)">
 				<h5 class="f28 c3"><span class="left"><span class="default" v-show="item.is_default==1">默认</span><span>{{item.consignee}}</span></span><small class="f28" style="font-family: arial;">{{item.telephone}}</small></h5>
 				<p class="f26 c9">{{item.province}}{{item.city}}{{item.country}}{{item.address}}</p>
@@ -27,8 +31,6 @@
 		},
 		data() {
 			return {
-                page:1,
-                limit:10,
                 list:[],
 			}
 		},
@@ -37,14 +39,10 @@
 			getAddressList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/addressList',
-					params: {
-						page: this.page,
-						limit: this.limit
-					}
+					url: url+'/api/addressList'
 				}).then((res) => {
 					if(res.data.code == '200') {
-						this.list = res.data.data.list
+						this.list = res.data.data
 					}
 				}, (err) => {
 					console.log(err)
@@ -55,7 +53,7 @@
 //          	this.$router.replace({name: ''})
            },
            goPay(ev){
-           	    localStorage.setItem('address',JSON.stringify(ev))
+           	    plus.storage.setItem('address',JSON.stringify(ev))
            	    this.$router.go(-1)
            }
 		},
