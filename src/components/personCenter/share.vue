@@ -12,27 +12,52 @@
 				</swiper>
 			</div>
 			<div style="display: flex;justify-content: space-between;align-items: center;margin: .64rem .98rem 0;">
-				<x-button class="share-btn">分享</x-button>
+				<x-button class="share-btn" @click.native="show=!show">分享</x-button>
 				<x-button class="share-btn" @click.native="save()">保存图片</x-button>
 			</div>
 		</div>
+		<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show" @click="show=!show">
+		</div>
+		<transition enter-active-class="fadeInUpBig" leave-active-class="fadeOutDownBig">
+			<div v-show="show" class="share-main">
+				<div class="share-main-content">
+					<p class="f28 c6" style="text-align: center;line-height: .94rem;height: .94rem;">———分享至———</p>
+					<div class="share-class flex">
+						<div @click="shareAction('weixin','WXSceneTimeline')">
+							<img src="../../../static/images/share/friendshare.png" alt="" />
+						</div>
+						<div @click="shareAction('qq','')">
+							<img src="../../../static/images/share/QQshare.png" alt="" />
+						</div>
+						<div @click="shareAction('sinaweibo','')">
+							<img src="../../../static/images/share/weiboshare.png" alt="" />
+						</div>
+						<div @click="shareAction('weixin','WXSceneSession')">
+							<img src="../../../static/images/share/weixinshare.png" alt="" />
+						</div>
+
+					</div>
+				</div>
+				<div @click="show=!show" class="f32 c3" style="text-align: center;line-height: .96rem;border-top: .01rem solid #e5e5e5;">取消</div>
+			</div>
+		</transition>
 		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
 	</div>
 </template>
 
 <script>
-	import { XButton,  Toast,} from 'vux'
+	import { XButton, Toast, } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
-		var activeIndex=0
-		const url='http://xlk.dxvke.com/'
-//		const url = ''
+	var activeIndex = 0
+	const url = 'http://xlk.dxvke.com/'
+	//		const url = ''
 	export default {
 		name: 'share',
 		components: {
 			XButton,
 			swiper,
 			swiperSlide,
-			 Toast,
+			Toast,
 		},
 		data() {
 			return {
@@ -57,6 +82,7 @@
 				list: [],
 				showToast: false,
 				toast: '',
+				show: false,
 			}
 		},
 		methods: {
@@ -64,7 +90,7 @@
 			getList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/shareImage'
+					url: url + '/api/shareImage'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.list = res.data.data.url
@@ -75,13 +101,60 @@
 			},
 			save() {
 				var img = this.list[activeIndex].image
-				plus.gallery.save(img,function(){
-					this.toast="保存成功"
-					this.showToast=true
-				},function(){
-					this.toast="保存失败"
-					this.showToast=true
+				plus.gallery.save(img, function() {
+					this.toast = "保存成功"
+					this.showToast = true
+				}, function() {
+					this.toast = "保存失败"
+					this.showToast = true
 				})
+			},
+			//分享操作
+			shareAction(id, ex) {
+				plus.nativeUI.showWaiting();
+				var self = this
+				var picUrl = this.list[activeIndex].image
+				var dtask = plus.downloader.createDownload(picUrl, {}, function(d, status) {
+					// 下载完成
+					if(status == 200) {
+						var s = window.shares[id]
+							if(!id || !s) {
+								plus.nativeUI.closeWaiting();
+								plus.nativeUI.toast("分享失败");
+								return;
+							}
+							if(s.authenticated) {
+								plus.nativeUI.closeWaiting();
+								self.shareMessage(s,ex,d.filename);
+							} else {
+								plus.nativeUI.closeWaiting();
+								s.authorize(self.shareMessage(s, ex,d.filename), function(e) {
+
+								});
+							}
+					} else {
+						plus.nativeUI.closeWaiting();
+						plus.nativeUI.toast("分享失败");
+					}
+				});
+				dtask.start();
+			},
+			//发送分享消息
+			shareMessage(s,ex,d) {
+				console.log(JSON.stringify(d))
+				var self = this
+				s.send({
+					content: "精打细算不如能省会赚，享利客APP一款能赚钱的购物APP",
+					pictures: [d],
+					extra: {
+						scene: ex
+					}
+				}, function() {
+					plus.nativeUI.toast("分享成功！");
+				}, function(e) {
+					console.log(JSON.stringify(e))
+					plus.nativeUI.toast("取消分享");
+				});
 			}
 		},
 		created: function() {

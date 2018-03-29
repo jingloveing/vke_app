@@ -22,7 +22,7 @@
 </template>
 
 <script>
-	import { Group, Cell, XButton, XSwitch,Loading} from 'vux'
+	import { Group, Cell, XButton, XSwitch, Loading } from 'vux'
 	export default {
 		components: {
 			Group,
@@ -40,32 +40,33 @@
 		},
 		methods: {
 			clear() {
-//				localStorage.removeItem('userInfo')
+				plus.cache.clear(function() {
+					plus.nativeUI.toast("缓存清理成功");
+				});
 			},
 			// 注销所有登录授权认证服务
 			authLogout() {
-					var s = window.auths[0];
-					var slef = this
-					if(s.authResult) {
-						s.logout(function(e) {
-							slef.$router.go(-1)
-							plus.storage.removeItem('token')
-							plus.storage.removeItem('userInfo')						
-						}, function(e) {
-							slef.$vux.toast.show({
-										text: "退出失败",
-										type: 'warn',
-									})
-						});
-						
-						
-					}else{
-						
+				var s = window.auths[0];
+				var slef = this
+				if(s.authResult) {
+					s.logout(function(e) {
 						slef.$router.go(-1)
 						plus.storage.removeItem('token')
-						plus.storage.removeItem('userInfo')	
-					}
-					
+						plus.storage.removeItem('userInfo')
+					}, function(e) {
+						slef.$vux.toast.show({
+							text: "退出失败",
+							type: 'warn',
+						})
+					});
+
+				} else {
+
+					slef.$router.go(-1)
+					plus.storage.removeItem('token')
+					plus.storage.removeItem('userInfo')
+				}
+
 			}
 		},
 		created: function() {

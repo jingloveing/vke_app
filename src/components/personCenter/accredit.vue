@@ -14,7 +14,7 @@
 			</p>
 		</div>
 		<group class="myOrder" style="margin-bottom: .2rem;">
-			<cell :link="{path:'/personCenter/setting/bindTel',query:{type:type}}" title="手机绑定" :value="type=='3'?'':telephone" style="border-top: .01rem solid #e5e5e5;" is-link></cell>
+			<cell :link="{path:'/personCenter/setting/bindTel',query:{type:type,tel:telephone}}" title="手机绑定" :value="type=='3'?'':telephone" style="border-top: .01rem solid #e5e5e5;" is-link></cell>
 		</group>
 	</div>
 </template>
@@ -54,15 +54,17 @@
 						this.telephone=res.data.data.telephone
 						this.telephone_status=res.data.data.telephone_status
 						if(this.telephone_status=='1'){
+							this.type=4
+						}else if(this.telephone_status=='2'){
 							this.type=3
 						}else{
-							this.type=4
+							this.type=1
 						}
 					} else {
 
 					}
 				}, (err) => {
-					console.log(err)
+					console.log(JSON.stringify(err))
 				})
 			},
 			getAccredit(type){

@@ -14,7 +14,8 @@
 		<div class="main" id="main">
 			<div class="flex">
 				<div class="main-top-left flex">
-					<div class="f28 c3 break_two break" style="height: .84rem;width: 100%;">{{title}}</div>
+					<!--break_two break-->
+					<p class="f28 c3" style="height: .84rem;width: 100%;overflow: hidden;">{{title}}</p>
 					<div class="flex" style="justify-content: space-between;width: 100%;align-items: flex-end;">
 						<div class="share-quan f28">
 							<div style="padding: 0 .2rem;">
@@ -31,11 +32,11 @@
 					</div>
 				</div>
 				<div class="main-top-right">
-					<img :src="ewm" alt="" :onerror="defaultImg" crossOrigin = '*'/>
+					<img :src="ewm" alt="" :onerror="defaultImg" crossOrigin='*' />
 				</div>
 			</div>
 			<div class="main-bottom">
-				<img :src="image_url" alt="" :onerror="defaultImg" crossOrigin = '*'/>
+				<img :src="image_url" alt="" :onerror="defaultImg" crossOrigin='*' />
 				<p class="f20 c9" style="text-align: right;">更多优惠，下载享利客APP</p>
 			</div>
 		</div>
@@ -114,60 +115,63 @@
 			},
 			//分享操作
 			shareAction(id, ex) {
+				plus.nativeUI.showWaiting();
 				console.log(id, ex)
 				var self = this
-				html2canvas(document.getElementById('main'), {useCORS:true}).then(function(canvas) {
+				html2canvas(document.getElementById('main'), {
+					useCORS: true,
+					taintTest: true,
+				}).then(function(canvas) {
 					var dataUrl = canvas.toDataURL("image/png")
 					var b = new plus.nativeObj.Bitmap();
 					b.loadBase64Data(dataUrl, function() {
-						console.log("创建成功");
+						b.save('_www/img1.png', {
+							overwrite: true
+						}, function() {
+							plus.gallery.save('_www/img1.png', function() {
+								plus.nativeUI.closeWaiting();
+								plus.nativeUI.toast("图片保存成功");
+								var s = window.shares[id]
+								if(!id || !s) {
+									plus.nativeUI.toast("分享失败");
+									return;
+								}
+								if(s.authenticated) {
+									self.shareMessage(s, ex);
+								} else {
+									s.authorize(self.shareMessage(s, ex), function(e) {
+	
+									});
+								}
+							}, function() {
+								plus.nativeUI.toast("分享失败");
+
+							});
+						}, function() {
+							plus.nativeUI.toast("分享失败");
+						});
 					}, function() {
-						console.log("创建失败");
-					});
-					b.save('_www/img1.png', {
-						overwrite: true
-					}, function() {
-						console.log("保存成功");
-					}, function() {
-						console.log("保存失败");
+						plus.nativeUI.toast("分享失败");
 					});
 
-					plus.gallery.save('_www/img1.png', function() {
-						console.log("保存图片到相册成功");
-					}, function() {
-						console.log("保存图片到相册失败");
-
-					});
 				})
-				var s = window.shares[id]
-				if(!id || !s) {
-					alert('无效的分享服务！')
-					return;
-				}
-				if(s.authenticated) {
-					self.shareMessage(s, ex);
-				} else {
-					s.authorize(self.shareMessage(s, ex), function(e) {
-						alert("未进行认证");
-					});
-				}
+
 			},
 			//发送分享消息
 			shareMessage(s, ex) {
 				var self = this
 				s.send({
 					//					title: '享利客',
-					content: self.msg + '长按图片识别或扫描二维码，即可复制淘口令打开手机淘宝，领取优惠券购买',
+					content: self.msg+ "                                                    长按图片识别或扫描二维码，即可复制淘口令打开手机淘宝，领取优惠券购买",
 					pictures: ["_www/img1.png"],
 					//					href: self.click_url,
 					extra: {
 						scene: ex
 					}
 				}, function() {
-					alert("分享成功！");
+					plus.nativeUI.toast("分享成功！");
 				}, function(e) {
-					console.log(JSON.stringify(e))
-					alert("分享失败：" + e.message);
+					plus.nativeUI.toast("取消分享");
 				});
 			}
 		},

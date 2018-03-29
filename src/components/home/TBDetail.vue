@@ -70,18 +70,26 @@
 			</div>
 		</div>
 		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
-		<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show">
+		<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show" @click="show=!show">
 		</div>
 		<transition enter-active-class="fadeInUpBig" leave-active-class="fadeOutDownBig">
 			<div v-show="show" class="share-main">
 				<div class="share-main-content">
 					<p class="f28 c6" style="text-align: center;line-height: .94rem;height: .94rem;">———分享至———</p>
 					<div class="share-class flex">
-						<img src="../../../static/images/share/friendshare.png" alt="" />
-						<img src="../../../static/images/share/QQshare.png" alt="" />
-						<!--<img src="../../../static/images/share/QQzoneshare.png" alt="" />-->
-						<img src="../../../static/images/share/weiboshare.png" alt="" />
-						<img src="../../../static/images/share/weixinshare.png" alt="" />
+						<div @click="shareAction('weixin','WXSceneTimeline')">
+							<img src="../../../static/images/share/friendshare.png" alt="" />
+						</div>
+						<div @click="shareAction('qq','')">
+							<img src="../../../static/images/share/QQshare.png" alt="" />
+						</div>
+						<div @click="shareAction('sinaweibo','')">
+							<img src="../../../static/images/share/weiboshare.png" alt="" />
+						</div>
+						<div @click="shareAction('weixin','WXSceneSession')">
+							<img src="../../../static/images/share/weixinshare.png" alt="" />
+						</div>
+
 					</div>
 				</div>
 				<div @click="show=!show" class="f32 c3" style="text-align: center;line-height: .96rem;border-top: .01rem solid #e5e5e5;">取消</div>
@@ -181,15 +189,52 @@ const url='http://xlk.dxvke.com/'
 				//        this.id=id
 				//        this.$router.push({name:'goodsDetail',query:{id:id}})
 				location.href = 'http://www.dxvke.com/goodsDetail/?id=' + id
-				//        this.toTop()
-				//        this.getGoodsDetail()
 			},
 			tobuy(){
 				this.$router.push({name:'TBQuan',query:{url:this.goodsDetail.click_url}})
 			},
 			toquan(){
 				this.$router.push({name:'TBQuan',query:{url:this.goodsDetail.coupon_url}})
-			}
+			},
+			//分享操作
+			shareAction(id, ex) {
+				plus.nativeUI.showWaiting();
+				console.log(id, ex)
+				var self = this
+				var s = window.shares[id]
+				if(!id || !s) {
+					plus.nativeUI.closeWaiting();
+					plus.nativeUI.toast("分享失败");
+					return;
+				}
+				if(s.authenticated) {
+					plus.nativeUI.closeWaiting();
+					self.shareMessage(s, ex);
+				} else {
+					plus.nativeUI.closeWaiting();
+					s.authorize(self.shareMessage(s, ex), function(e) {
+
+					});
+				}
+
+			},
+			//发送分享消息
+			shareMessage(s, ex) {
+				var self = this
+				s.send({
+					title: '享利客——'+self.goodsDetail.product_name,
+					content: self.goodsDetail.product_name,
+					href: self.goodsDetail.share_url,
+					thumbs: self.goodsDetail.small_images, 
+					extra: {
+						scene: ex
+					}
+				}, function() {
+					plus.nativeUI.toast("分享成功！");
+				}, function(e) {
+					plus.nativeUI.toast("取消分享");
+				});
+				}
 		},
 		created: function() {
 			this.getDetail()

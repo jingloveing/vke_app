@@ -120,11 +120,15 @@
 							this.before = this.before.concat(res.data.data.before)
 							this.$refs.myscroller.finishPullToRefresh()
 						}
+						plus.storage.setItem("today",JSON.stringify(this.today))
+						plus.storage.setItem("before",JSON.stringify(this.before))
 					}else{
 						this.noData = true
-							this.$refs.myscroller.finishInfinite(2);
+						this.$refs.myscroller.finishInfinite(2);
 					}
 				}, (err) => {
+					this.today=JSON.parse(plus.storage.getItem("today"))
+					this.before=JSON.parse(plus.storage.getItem("before"))
 					this.noData = true
 					this.$refs.myscroller.finishInfinite(2);
 					console.log(err)

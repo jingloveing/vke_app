@@ -172,6 +172,7 @@
 //      console.log('aa')
       },
       change(e){
+      	console.log(e)
       	if(e==3){
 					this.defaultsort=false
 					this.asc=!this.asc

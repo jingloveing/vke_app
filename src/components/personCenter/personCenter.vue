@@ -285,8 +285,9 @@
 		width: .4rem;
 		height: .4rem;
 		position: absolute;
-		left: .24rem;
-		top: .64rem;
+		left: .04rem;
+        top: .44rem;
+        padding: .2rem;
 	}
 	
 	.user_icon {

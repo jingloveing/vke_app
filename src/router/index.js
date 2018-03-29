@@ -545,10 +545,10 @@ routes: [{
 		path: '/newJD',
 		name: 'NewJD',
 		component: NewJD,
-		meta: {
-			showHeader: true,
-			title:"京东"
-		}
+//		meta: {
+//			showHeader: true,
+//			title:"京东"
+//		}
 	},
 	{
 		path: '/newMogu',

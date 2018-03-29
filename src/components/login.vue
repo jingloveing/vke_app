@@ -6,28 +6,37 @@
 				<img src="../../static/images/login/icon.png" alt="" class="icon" />微信登录
 			</div>
 		</div>
+		<div v-transfer-dom>
+			<confirm v-model="showConfirm" :close-on-confirm="false" title="立即去登录" @on-confirm="onConfirm">
+				
+			</confirm>
+		</div>
 		<loading v-model="showLoading" :text="loadText"></loading>
 	</div>
 </template>
 
 <script>
-	import { Loading } from 'vux'
+	import { Loading, TransferDomDirective as TransferDom, Confirm } from 'vux'
 	const url = 'http://xlk.dxvke.com/'
 	export default {
+		directives: {
+			TransferDom
+		},
 		components: {
-			Loading
+			Loading,
+			Confirm
 		},
 		data() {
 			return {
 				showLoading: false,
-				loadText: ''
+				loadText: '',
+				showConfirm: false,
 			}
 		},
 		methods: {
 			authLogin() {
 				var self = this
 				var s = window.auths[0]
-				console.log(JSON.stringify(s));
 				if(!s.authResult) {
 					s.login(function(e) {
 						s.getUserInfo(function(e) {
@@ -46,6 +55,10 @@
 									self.$router.push({
 										name: 'PersonCenter'
 									})
+								} else if(res.data.code == '201') {
+									//去绑定手机号
+									self.showConfirm = true
+
 								} else {
 									self.$vux.toast.show({
 										text: res.data.error,
@@ -53,7 +66,7 @@
 									})
 								}
 							}, (err) => {
-								console.log(err)
+								console.log(JSON.stringify(err))
 							})
 						}, function(e) {
 							self.$vux.toast.show({
@@ -83,6 +96,11 @@
 							self.$router.push({
 								name: 'PersonCenter'
 							})
+						} else if(res.data.code == '201') {
+							plus.storage.setItem('userInfo',JSON.stringify(s.userInfo))
+							//去绑定手机号
+							self.showConfirm = true
+
 						} else {
 							self.$vux.toast.show({
 								text: res.data.error,
@@ -90,9 +108,16 @@
 							})
 						}
 					}, (err) => {
-						console.log(err)
+						console.log(JSON.stringify(err))
 					})
 				}
+			},
+			onConfirm() {
+				this.showConfirm = false
+				//去绑定手机号
+				this.$router.push({
+					name: 'Accredit'
+				})
 			},
 		},
 		mounted: function() {

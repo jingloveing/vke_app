@@ -129,9 +129,10 @@
 							img: item.image
 						}))
 						this.demoList = demoList
-						//          console.log(imgList)
+						plus.storage.setItem("demoList",JSON.stringify(this.demoList))
 					}
 				}, (err) => {
+					this.demoList=JSON.parse(plus.storage.getItem("demoList"))
 					console.log(err)
 				})
 			},
@@ -143,8 +144,10 @@
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.merchantList = res.data.data
+						plus.storage.setItem("merchantList",JSON.stringify(this.merchantList))
 					}
 				}, (err) => {
+					this.merchantList=JSON.parse(plus.storage.getItem("merchantList"))
 					console.log(err)
 				})
 			},
@@ -166,11 +169,15 @@
 							this.merchantView = this.merchantView.concat(res.data.data.list)
 							this.$refs.myscroller.finishPullToRefresh()
 						}
+						plus.storage.setItem("merchantView",JSON.stringify(this.merchantView))
 					}else{
 						this.noData = true
 							this.$refs.myscroller.finishInfinite(2);
 					}
 				}, (err) => {
+					this.merchantView=JSON.parse(plus.storage.getItem("merchantView"))
+					this.noData = true
+					this.$refs.myscroller.finishInfinite(2);
 					console.log(err)
 				})
 			},

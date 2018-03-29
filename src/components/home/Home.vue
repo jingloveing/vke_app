@@ -16,21 +16,21 @@
 			</router-link>
 		</div>
 		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
-			<swiper auto :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" loop></swiper>
+			<swiper auto :list="bannerList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" loop></swiper>
 			<div style=" margin-top: -.3rem;z-index: 99999;position: relative;">
 				<ul class="nav-small">
 					<router-link tag="li" to="/home/taobao">
 						<img src="static/images/taoBao.png" :onerror="defaultImg">
 						<span>淘宝</span>
 					</router-link>
-					<router-link tag="li" to="/newJD">
+					<li @click="toJD()">
 						<img src="static/images/JD.png" :onerror="defaultImg">
 						<span>京东</span>
-					</router-link>
-					<router-link tag="li" to="/newMogu">
+					</li>
+					<li @click="toMogu()">
 						<img src="static/images/mogu.png" :onerror="defaultImg">
 						<span>蘑菇街</span>
-					</router-link>
+					</li>
 					<router-link tag="li" to="/newVip">
 						<img src="static/images/vip.png" :onerror="defaultImg">
 						<span>唯品会</span>
@@ -113,7 +113,7 @@
 		},
 		data() {
 			return {
-				demoList: [],
+				bannerList: [],
 				merchant: [],
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 				pageIndex: 1,
@@ -143,14 +143,16 @@
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const imgList = res.data.data
-						const demoList = imgList.map((item, index) => ({
+						const bannerList = imgList.map((item, index) => ({
 							url: item.click_url,
 							img: item.image
 						}))
-						this.demoList = demoList
+						this.bannerList = bannerList
+						plus.storage.setItem("bannerList",JSON.stringify(this.bannerList))
 						//          console.log(imgList)
 					}
 				}, (err) => {
+					this.bannerList=JSON.parse(plus.storage.getItem("bannerList"))
 					console.log(err)
 				})
 			},
@@ -162,8 +164,10 @@
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.news = res.data.data
+						plus.storage.setItem("news",JSON.stringify(this.news))
 					}
 				}, (err) => {
+					this.news=JSON.parse(plus.storage.getItem("news"))
 					console.log(err)
 				})
 			},
@@ -184,12 +188,14 @@
 						} else {
 							this.merchant = this.merchant.concat(res.data.data.list)
 							this.$refs.myscroller.finishPullToRefresh()
+							plus.storage.setItem("merchant",JSON.stringify(this.merchant))
 						}
 					} else {
 						this.noData = true
 						this.$refs.myscroller.finishInfinite(2);
 					}
 				}, (err) => {
+					this.merchant=JSON.parse(plus.storage.getItem("merchant"))
 					this.noData = true
 					this.$refs.myscroller.finishInfinite(2);
 					console.log(err)
@@ -222,7 +228,41 @@
 					done()
 				}, 1500)
 			},
-			
+			toJD() {
+				var self = this
+				this.$http.post(url + '/api/getBuyUrl', {
+					type: 2,
+				}).then((res) => {
+					if(res.data.code == '200') {
+						console.log(JSON.stringify(res.data.data))
+						this.$router.push({
+							name: 'NewJD',
+							query: {url:res.data.data.url}
+						})
+					} else if(res.data.code=='601'){
+						plus.nativeUI.toast(res.data.error);
+					}
+				}, (err) => {
+					console.log(JSON.stringify(err))
+				})
+			},
+			toMogu() {
+				var self = this
+				this.$http.post(url + '/api/getBuyUrl', {
+					type: 3,
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.$router.push({
+							name: 'NewMogu',
+							query: {url:res.data.data.url}
+						})
+					} else if(res.data.code=='601'){
+						plus.nativeUI.toast(res.data.error);
+					}
+				}, (err) => {
+					console.log(JSON.stringify(err))
+				})
+			},
 		},
 		mounted: function() {
 
