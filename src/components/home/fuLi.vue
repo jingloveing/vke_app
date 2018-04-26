@@ -2,32 +2,34 @@
 	<div>
 		<x-header :left-options="{backText: ''}" :title="title" style="background-color: #f9f9f9;">
 		</x-header>
-		<div style="font-size: 0;position: fixed;z-index: 9999;top:1.28rem;width: 100%;">
-			<tab :line-width=3 active-color='#ff526d' v-model="index" custom-bar-width="1.2rem" bar-active-color="#ff526d">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
+			<div style="width: 100%;">
+			<swiper auto loop :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
+		</div>
+		<div style="font-size: 0;width: 100%;">
+			<tab :line-width=3 active-color='#f51d46' v-model="index" custom-bar-width="1.2rem" bar-active-color="#f51d46">
 				<tab-item class="vux-center" :selected="demo2 === item" v-for="(item, index) in list2" @on-item-click="change(list2,index)" :key="index">{{item}}
 				</tab-item>
 			</tab>
 		</div>
-		
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 2.16rem;">
 			<div class="main_goods">
 				<div>
 					<ul class="goods">
-						<router-link class="goods_list" v-for="(goodList1,index) in goodList1" :to="{name:'TBDetail',query:{id:goodList1.id,type:1}}" :key="index">
+						<router-link class="goods_list" v-for="(goodList1,index) in goodList1" :to="{name:'TBDetail',query:{id:goodList1.id,type:4}}" :key="index">
 							<img :src="goodList1.pict_url" alt="" :onerror="defaultImg">
 							<div class="content">
 								<div class="des" v-text="goodList1.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
-								<!--<p style="position: relative;margin-top: .2rem;"><span class="left">送{{goodList1.volume}}元宝</span>-->
-								<!--&lt;!&ndash;<span class="right">剩余<span style="color: #ffb205;">&ndash;&gt;-->
-								<!--&lt;!&ndash;{{goodList1.volume}}</span>件</span>&ndash;&gt;-->
-								<!--</p>-->
-								<!--<div style="margin: .15rem 0rem;">
+								<!--<p style="position: relative;margin-top: .2rem;"><span class="left">送{{goodList1.volume}}元宝</span>
+								<span class="right">剩余<span style="color: #ffb205;">
+								{{goodList1.volume}}</span>件</span>
+								</p>-->
+								<div style="margin: .15rem 0rem;">
                       <span class="juan_style">
                       <span class="juan_style_left">券</span>
                       <span class="juan_style_right">{{goodList1.coupon_number}}元</span>
                     </span>
-                <span class="return_num_style"  v-show="goodList1.fans_acer !==0">返{{goodList1.fans_acer}}元宝</span>
-              </div>-->
+               <!-- <span class="return_num_style"  v-show="goodList1.fans_acer !==0">返{{goodList1.fans_acer}}元宝</span>-->
+              </div>
 								<p class="des_b" style="position: relative;margin-top: .1rem;">
 									<span class="price"><span style="font-size: .2rem;">￥</span>{{goodList1.zk_final_price.rmb}}<span v-show="goodList1.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{goodList1.zk_final_price.corner}}</span></span>
 									<span class="num">{{goodList1.volume}}件已售</span>
@@ -44,8 +46,9 @@
 	</div>
 </template>
 <script>
-	import { Tab, TabItem, Swiper, SwiperItem, XHeader, Loading } from 'vux'
+	import { Tab, TabItem, Swiper, XHeader, Loading } from 'vux'
 const url='http://xlk.dxvke.com/'
+//  const url = ''
 	const list = () => ['价格优先', '销量优先', '券额优先', '最新商品']
 	export default {
 		name: 'Exchange',
@@ -53,19 +56,14 @@ const url='http://xlk.dxvke.com/'
 			Tab,
 			TabItem,
 			Swiper,
-			SwiperItem,
 			Loading,
 			XHeader
 		},
 		data() {
 			return {
-
+                demoList:[],
 				goodList1: [],
-				//        goodList2:[],
-				//        goodList3:[],
-				//        goodList4:[],
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
-				banner: '',
 				list2: list(),
 				demo2: '全部',
 				index: 0,
@@ -79,9 +77,29 @@ const url='http://xlk.dxvke.com/'
 				page: 1,
 				limit: 20,
 				noData: false,
+				type:'',
 			}
 		},
 		methods: {
+			//      获取轮播图
+			getBannerList: function() {
+				this.$http({
+					method: 'get',
+					url: url+'/api/indexBanner',
+					params:{type:this.type}
+				}).then((res) => {
+					if(res.data.code == '200') {
+						const imgList = res.data.data
+						const demoList = imgList.map((item, index) => ({
+							url: item.click_url,
+							img: item.image
+						}))
+						this.demoList = demoList
+					}
+				}, (err) => {
+					console.log(JSON.stringify(err))
+				})
+			},
 			//      获取粉丝福利商品列表====价格
 			getList1: function() {
 //				this.showLoading = true
@@ -109,64 +127,9 @@ const url='http://xlk.dxvke.com/'
 					}
 				}, (err) => {
 					this.showLoading = false
-					console.log(err)
+					console.log(JSON.stringify(err))
 				})
 			},
-			//      //      获取粉丝福利商品列表====销量
-			//      getList2:function(){
-			//        this.showLoading=true
-			//        this.$http({
-			//          method:'POST',
-			//          url:'/api/fanswelfare',
-			//          data:{sorts_type:6}
-			//        }).then((res)=>{
-			//         if(res.data.code=='200'){
-			//           this.showLoading=false
-			//           const goodList2 = res.data.data.goods_list
-			//           this.goodList2= goodList2
-			//         }else{
-			//           this.showLoading=false
-			//         }
-			////          console.log(priceList)
-			//        },(err)=>{
-			//          console.log(err)
-			//        })
-			//      },
-			//      //      获取粉丝福利商品列表====元宝
-			//      getList3:function(){
-			//        this.showLoading=true
-			//        this.$http({
-			//          method:'POST',
-			//          url:'/api/fanswelfare',
-			//          data:{sorts_type:7}
-			//        }).then((res)=>{
-			//          if(res.data.code=='200'){
-			//            this.showLoading=false
-			//            const goodList3 = res.data.data.goods_list
-			//            this.goodList3 = goodList3
-			//          }else{
-			//            this.showLoading=false
-			//          }
-			////          console.log(priceList)
-			//        },(err)=>{
-			//          console.log(err)
-			//        })
-			//      },
-			//      //      获取粉丝福利商品列表====时间
-			//      getList4:function(){
-			//        this.showLoading=true
-			//        this.$http({
-			//          method:'POST',
-			//          url:'/api/fanswelfare',
-			//          data:{sorts_type:8}
-			//        }).then((res)=>{
-			//          const goodList4 = res.data.data.goods_list
-			//          this.goodList4 = goodList4
-			////          console.log(priceList)
-			//        },(err)=>{
-			//          console.log(err)
-			//        })
-			//      },
 			infinite(done) {
 				if(this.noData) {
 					setTimeout(() => {
@@ -177,7 +140,7 @@ const url='http://xlk.dxvke.com/'
 					let self = this; //this指向问题
 					setTimeout(() => {
 						self.page += 1
-						self.getList1(1)
+						self.getList1()
 						done()
 					}, 1500)
 				}
@@ -186,6 +149,7 @@ const url='http://xlk.dxvke.com/'
 				var self = this
 				this.page = 1
 				this.goodList1 = []
+				self.getList1()
 				setTimeout(function() {
 					self.top = self.top - 10;
 					done()
@@ -206,12 +170,16 @@ const url='http://xlk.dxvke.com/'
 		created: function() {
 			if(this.$route.query.type == 1) {
 				this.title = "9.9特价"
+				this.type=5
 			} else if(this.$route.query.type == 2) {
 				this.title = '大券额'
+				this.type=6
 			} else {
 				this.title = '聚划算'
+				this.type=7
 			}
-			this.getList1(1);
+			this.getList1();
+			this.getBannerList()
 			//      this.getList2();
 			//      this.getList3();
 			//      this.getList4();
@@ -278,15 +246,15 @@ const url='http://xlk.dxvke.com/'
 	
 	.left {
 		font-size: .20rem;
-		color: #ff526d;
-		border: 1px solid #ff526d;
+		color: #f51d46;
+		border: 1px solid #f51d46;
 		padding: 0 3px;
 		border-radius: .05rem;
 	}
 	
 	.price {
 		font-size: .32rem;
-		color: #ff7171;
+		color: #f51d46;
 	}
 	
 	.num {

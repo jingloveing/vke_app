@@ -67,14 +67,19 @@ const url='http://xlk.dxvke.com/'
           if(res.data.code=='200'){
             this.showLoading=false
             this.$router.go(-1)
-          }else if(res.data.code=='400'){
-            this.$vux.toast.show({
+          }else if(res.data.code=='601'){
+          	this.showLoading=false
+            plus.nativeUI.toast("请登录");
+            
+          }else{
+          	this.showLoading=false
+          	this.$vux.toast.show({
               text:res.data.error,
-              type:'cancel'
+              type:'warn'
             })
-            this.showLoading=false
           }
         },(err)=>{
+        	this.showLoading=false
           console.log(err)
         })
       },
@@ -94,10 +99,18 @@ const url='http://xlk.dxvke.com/'
             this.showLoading=false
 //          this.$router.push({name: 'AddressList',query:{id:this.pro_id,type:this.from}})
             this.$router.go(-1)
-          }else if(res.data.code=='400'){
+          }else if(res.data.code=='601'){
             this.showLoading=false
+            plus.nativeUI.toast("请登录");
+          }else{
+          	this.showLoading=false
+          	self.$vux.toast.show({
+							text: res.data.error,
+							type: 'warn',
+						})
           }
         },(err)=>{
+        	this.showLoading=false
           console.log(err)
         })
       },
@@ -123,10 +136,19 @@ const url='http://xlk.dxvke.com/'
               this.checkValue=[]
             }
             console.log(this.checkValue)
-          }else if(res.data.code=='400'){
+          }else if(res.data.code=='601'){
             this.showLoading=false
+            plus.nativeUI.toast("请登录");
+          }else{
+          	this.showLoading=false
+          	self.$vux.toast.show({
+							text: res.data.error,
+							type: 'warn',
+						})
           }
         },(err)=>{
+        	console.log('bbb')
+        	console.log(JSON.stringify(err))
         	this.showLoading=false
           console.log(err)
         })

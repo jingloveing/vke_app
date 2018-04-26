@@ -37,6 +37,7 @@ new Vue({
 	created() {
 		var self = this
 		document.addEventListener("plusready", function() {
+			plus.navigator.setStatusBarBackground("#9A7BFF");
 			// 扩展API加载完毕，现在可以正常调用扩展API
 			plus.oauth.getServices(function(services) {
 				window.auths = services;
@@ -46,7 +47,6 @@ new Vue({
 			// 扩展API加载完毕，现在可以正常调用扩展API
 			plus.share.getServices(function(s) {
 				window.shares = s;
-				console.log(JSON.stringify(shares))
 				for(var i in s) {
 					var t = s[i]
 					shares[t.id] = t
@@ -66,23 +66,14 @@ new Vue({
 				alert("获取支付通道列表失败：" + e.message);
 			});
 			var webview = plus.webview.currentWebview();
+			var first = null;
 			plus.key.addEventListener('backbutton', function() {
 				webview.canBack(function(e) {
 					if(e.canBack) {
-						var service_comfirm = plus.webview.getWebviewById("new");
-						plus.webview.close(service_comfirm, "none");
-						var view = plus.nativeObj.View.getViewById('test')
-						if(view){
-							view.clear()
-						}else{
-							
-						}
-						webview.back();
-					} else {
-						//首页返回键处理
+						if(self.$route.path=='/home'||self.$route.path=='/shareRoom'||self.$route.path=='/brandSite'||self.$route.path=='/PersonCenter'){
+							//首页返回键处理
 						//处理逻辑：1秒内，连续两次按返回键，则退出应用；
-						var first = null;
-						plus.key.addEventListener('backbutton', function() {
+//						plus.key.addEventListener('backbutton', function() {
 							//首次按键，提示‘再按一次退出应用’
 							if(!first) {
 								first = new Date().getTime();
@@ -95,7 +86,37 @@ new Vue({
 									plus.runtime.quit();
 								}
 							}
-						}, false);
+//						}, false);
+						}else{
+							var service_comfirm = plus.webview.getWebviewById("new");
+						plus.webview.close(service_comfirm, "none");
+						var view = plus.nativeObj.View.getViewById('test')
+						if(view){
+							view.clear()
+						}else{
+							
+						}
+						webview.back();
+						}
+						
+					} else {
+						//首页返回键处理
+						//处理逻辑：1秒内，连续两次按返回键，则退出应用；
+//						var first = null;
+//						plus.key.addEventListener('backbutton', function() {
+							//首次按键，提示‘再按一次退出应用’
+							if(!first) {
+								first = new Date().getTime();
+								plus.nativeUI.toast('再按一次退出应用', "享利客");
+								setTimeout(function() {
+									first = null;
+								}, 2000);
+							} else {
+								if(new Date().getTime() - first < 1500) {
+									plus.runtime.quit();
+								}
+							}
+//						}, false);
 					}
 				})
 			});
@@ -108,7 +129,7 @@ new Vue({
 Vue.http.interceptors.push((request, next) => {
 	//登录成功后将后台返回的TOKEN在本地存下来,每次请求从sessionStorage中拿到存储的TOKEN值  
 	let token = plus.storage.getItem("token")
-	//       let token='aaa'
+//	       let token='eyJ0eXAiOiJKV1QiLCJhbGciOiJTSEEyNTYifQ==.eyJpc3MiOiJKV1QgRlJFRURPTSIsImlhdCI6MTUyNDQ2MTk3OSwiYXVkIjoiTEoiLCJqdGkiOm51bGwsImRhdGEiOnsidXNlcl9pZCI6MTE2LCJ1c2VyX25hbWUiOiJGcmVlZG9tIn19.0dbc92e961b0eb57b711328c5f90b46d8d2cfac6d79f261a73fb967b5f681429'
 	if(token) {
 		//如果请求时TOKEN存在,就为每次请求的headers中设置好TOKEN,后台根据headers中的TOKEN判断是否放行      
 		request.headers.set("token", token);

@@ -61,7 +61,6 @@
 					});
 
 				} else {
-
 					slef.$router.go(-1)
 					plus.storage.removeItem('token')
 					plus.storage.removeItem('userInfo')

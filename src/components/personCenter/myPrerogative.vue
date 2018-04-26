@@ -3,7 +3,9 @@
 		<x-header :left-options="{backText: ''}" title="我的特权" class="header"></x-header>
 		<div class="header-main">
 			<div>
-				<img src="../../../static/images/fans/leve1.png" alt="" class="user_order" />
+				<img src="../../../static/images/fans/leve1.png" alt="" class="user_order" v-show="userInfo.level_id!==2&&userInfo.level_id!==3"/>
+				<img src="../../../static/images/fans/leve2.png" alt="" class="user_order" v-show="userInfo.level_id==2"/>
+				<img src="../../../static/images/fans/leve3.png" alt="" class="user_order" v-show="userInfo.level_id==3"/>
 			</div>
 			<div style="position: relative;">
 				<div class="pro">
@@ -120,7 +122,7 @@
 	
 	.header-main {
 		height: 2.84rem;
-		margin-top: 1.28rem;
+		margin-top: .88rem;
 		text-align: center;
 		background: -webkit-linear-gradient(left, #8721b5, #db3283);
 		/* Safari 5.1 - 6.0 */

@@ -1,7 +1,5 @@
 <template>
 	<div>
-		<!--<x-header :left-options="{backText: ''}" style="padding: 2px 0 ;background-color: white;position: fixed;z-index: 10;width: 100%;top: 0;border-bottom: 1px solid #e1e1e1;">用户信息</x-header>-->
-		<!--<div style="height: .88rem;"></div>-->
 		<div class="userInfo">
 			<p @click="changePhoto" class="cell c3">头像
 				<span><img :src="userInfo.head_image" alt="" class="photo" :onerror="defaultImg">
@@ -13,9 +11,6 @@
 			<p class="cell c3" @click="changeSex">性别 <span class="c9" v-text="userInfo.gender==1?'男':'女'"><img src="../../../static/images/gt_white.png" alt="" class="gt_icon"/></span></p>
 			<p class="cell c3">等级 <span class="c9">{{userInfo.level_title}}</span></p>
 		</div>
-		<!--<div class="btn">-->
-		<!--<x-button @click.native="userInfo()" action-type="reset" style="background-color: #ff526d;color: white;font-size: .32rem;width: 90%;margin: .3rem auto;">同步微信资料</x-button>-->
-		<!--</div>-->
 		<actionsheet v-model="show1" :menus="menus1" @on-click-menu="click1" show-cancel></actionsheet>
 		<actionsheet v-model="show2" :menus="menus2" @on-click-menu="click2" show-cancel></actionsheet>
 		<loading v-model="showLoading" :text="loadText"></loading>
@@ -151,6 +146,9 @@
 
 		},
 		created: function() {
+			this.userInfo = JSON.parse(plus.storage.getItem('userInfo'))
+		},
+		activated: function () {
 			this.userInfo = JSON.parse(plus.storage.getItem('userInfo'))
 		}
 	}

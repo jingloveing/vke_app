@@ -1,10 +1,11 @@
 <template>
 	<div>
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">
 		<div class="header">
 			<div class="nav-header">
 				<!--<img src="../../../static/images/lt_white.png" alt="" />-->
 				<x-icon type="ios-arrow-left" size="30" style="fill: white;width: .91rem;" @click="goback()"></x-icon>
-				<router-link class="serach_p" :to="{name:'searchPage',query:{type:2}}">
+				<router-link class="serach_p" :to="{name:'searchPage',query:{type:2,id:info.info.id}}">
 					<div class="search" style="width: 6rem;">
 						<img src="../../../static/images/personCenter/search_img.png" alt="" class="search_icon" />
 						<span>搜索店内商品</span>
@@ -50,7 +51,6 @@
 						<img src="../../../static/images/store_bd.jpeg" class="img" />
 					</div>
 				</swiper-slide>-->
-			<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 3.46rem;">
 				<div>
 					<div class="tab-swiper" v-show="index1==0">
 						<tab :line-width=0 active-color='#9a7bff' v-model="index2" custom-bar-width="1.3rem">
@@ -105,15 +105,16 @@
 					<div class="tab-swiper" v-show="index1==1">
 						<div>
 							<ul class="video">
-								<router-link tag="li" v-for="(item,index) in viewList" class="video_list" :to="{name:'Vedio',query:{id:item.id,store_id:info.info.id}}" :key="index">
+								<li v-for="(item,index) in viewList" class="video_list" :key="index" @click="toVedioPage(item)">
 									<img :src="item.image" alt="" :onerror="defaultImg">
 									<p>{{item.view_name}}</p>
-								</router-link>
+								</li>
 							</ul>
 						</div>
+						<div class="empty" v-show="viewList.length==0"><img src="../../../static/images/empty/no_video.png" /></div>
 					</div>
 				</div>
-			</scroller>
+			
 			<!--<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show">
 		</div>
 		<transition enter-active-class="fadeInUpBig" leave-active-class="fadeOutDownBig">
@@ -133,6 +134,7 @@
 		</transition>-->
 
 		</div>
+		</scroller>
         <loading v-model="showLoading" :text="loadText"></loading>
 		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
 	</div>
@@ -142,6 +144,7 @@
 	import { Tab, TabItem, Swiper, SwiperItem, PopupPicker, Divider, XSwitch, Toast,Loading } from 'vux'
 	const list = () => ['全部商品', '品牌现场']
 	const url='http://xlk.dxvke.com/'
+//  const url=""
 	export default {
 		name: 'StoreIndex',
 		components: {
@@ -224,13 +227,14 @@
 							this.$refs.myscroller.finishInfinite(2);
 						} else {
 							this.viewList = this.viewList.concat(res.data.data.list)
-							this.$refs.myscroller.finishPullToRefresh()
+							this.$refs.myscroller.finishPullToRefresh(2)
 						}
 					} else {
 						this.noData = true
 						this.$refs.myscroller.finishInfinite(2);
 					}
 				}, (err) => {
+					this.$refs.myscroller.finishInfinite(2);
 					console.log(err)
 				})
 			},
@@ -262,7 +266,7 @@
 							this.$refs.myscroller.finishInfinite(2);
 						} else {
 							this.goodsList = this.goodsList.concat(res.data.data.list)
-							this.$refs.myscroller.finishPullToRefresh()
+							this.$refs.myscroller.finishPullToRefresh(2)
 						}
 					} else {
 						this.noData = true
@@ -271,6 +275,7 @@
 				}, (err) => {
 					this.showLoading = false
 					console.log(err)
+					this.$refs.myscroller.finishInfinite(2);
 				})
 			},
 			doCollect(type, id) {
@@ -296,7 +301,7 @@
 			infinite(done) {
 				if(this.noData) {
 					setTimeout(() => {
-						this.$refs.myscroller1.finishInfinite(2);
+						this.$refs.myscroller.finishInfinite(2);
 					})
 					return;
 				} else {
@@ -354,6 +359,10 @@
 				this.goodsList = []
 				this.getGoodsList()
 				
+			},
+			toVedioPage(item){
+				var items=JSON.stringify(item)
+				this.$router.push({name:'Vedio',query:{item:items}})
 			}
 		},
 		mounted: function() {
@@ -369,9 +378,9 @@
 
 <style scoped="scoped">
 	.header {
-		padding-top: .4rem;
+		/*padding-top: .4rem;*/
 		height: 2.18rem;
-		background-image: url(../../../static/images/store_bd.jpeg);
+		background-image: url(../../../static/images/store_bd.jpg);
 		background-size: 100% 100%;
 		color: white;
 		display: flex;

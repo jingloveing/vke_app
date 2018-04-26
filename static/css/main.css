@@ -70,14 +70,14 @@ ul{
 	width: 100%;
 	background-color:#f9f9f9;
 	padding: 0;
-	border-bottom: .01rem solid #e5e5e5;
+	/*border-bottom: .01rem solid #e5e5e5;*/
 	position: fixed;
 	top: 0;
 	z-index: 999;
 }
 .vux-header-title-area, .vux-header .vux-header-title{
 	height: .88rem;
-	padding-top: .4rem;
+	/*padding-top: .4rem;*/
 }
 .vux-header .vux-header-title {
     line-height: .88rem;
@@ -91,7 +91,7 @@ ul{
 	border-width: 1px 0 0 1px;
 	width: .24rem;
 	height: .24rem;
-	top: .56rem;
+	top: .16rem;
 	left: .14rem;
 }
 .vux-header .vux-header-right{
@@ -198,13 +198,17 @@ textarea:-moz-placeholder{
 
 /*列表为空的样式*/
 .empty{
-	color: #bbbbbb;
 	text-align: center;
 	margin-top: 3rem;
 }
 .empty img{
   	width: 2.5rem;
   	height: 1.4rem;
+  }
+  .empty-word{
+  	font-size: .24rem;
+  	color: #bbb;
+  	text-align: center;
   }
   /*元宝砖石等字体颜色*/
  
@@ -256,11 +260,9 @@ textarea:-moz-placeholder{
 	/*开始停止样式*/
 	.pause{
 		position: absolute;z-index: 99;top: 0;width: 100%;height: 100%;
-		text-align: center;
 	}
 	.pause img{
-		width: 1.14rem;height: 1.14rem;border-radius: 50%;
-		margin-top:1rem;
+		width: 100%;height: 4.2rem;
 	}
 	
 	
@@ -309,3 +311,44 @@ textarea:-moz-placeholder{
 		line-height: .88rem;
 		font-size: .28rem;
 	}
+	/*优惠券样式*/
+    .juan_style {
+		border: .02rem solid #f51d46;
+		display: inline-block;
+		border-radius: .02rem;
+		height: .32rem;
+		font-size: 0;
+	}
+	
+	.juan_style_left {
+		font-size: .20rem;
+		color: #ffeff2;
+		background-color: #f51d46;
+		height: 100%;
+		display: inline-block;
+		padding: 0 .06rem;
+	}
+	
+	.juan_style_right {
+		font-size: .20rem;
+		color: #f51d46;
+		background-color: #ffeff2;
+		height: 100%;
+		display: inline-block;
+		padding: 0 .06rem;
+	}
+	
+	.return_num_style {
+		padding: 0 .05rem;
+		color: #ff8a1e;
+		font-size: .2rem;
+		border-radius: .02rem;
+		border: .01rem solid #ff8a1e;
+		display: inline-block;
+		margin-left: .1rem;
+	}
+	
+
+.weui-dialog__btn_primary{
+	color: #9A7BFF!important;
+}

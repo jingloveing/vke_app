@@ -1,22 +1,27 @@
 <template>
 	<div class="login">
-		<div class="main">
+		<div class="main" v-show="type==1">
 			<img src="../../static/images/login/logo.png" alt="" />
 			<div class="login-btn flex f32" @click="authLogin()">
 				<img src="../../static/images/login/icon.png" alt="" class="icon" />微信登录
 			</div>
 		</div>
 		<div v-transfer-dom>
-			<confirm v-model="showConfirm" :close-on-confirm="false" title="立即去登录" @on-confirm="onConfirm">
+			<confirm v-model="showConfirm" :close-on-confirm="false" title="去绑定手机号？" @on-confirm="onConfirm">
 				
 			</confirm>
+		</div>
+		<div v-show="type==2" style="background: white;height: calc(100vh - .88rem);text-align: center;">
+			<input type="text" placeholder="账号" class="input-info" v-model="username"/>
+			<input type="password" placeholder="密码" class="input-info" v-model="password"/>
+			<x-button action-type="button" class='f32' @click.native="Login()" style="width: 80%;height: 1rem;line-height: 1rem;border-radius: .5rem;">登录</x-button>
 		</div>
 		<loading v-model="showLoading" :text="loadText"></loading>
 	</div>
 </template>
 
 <script>
-	import { Loading, TransferDomDirective as TransferDom, Confirm } from 'vux'
+	import { Loading, TransferDomDirective as TransferDom, Confirm ,XButton} from 'vux'
 	const url = 'http://xlk.dxvke.com/'
 	export default {
 		directives: {
@@ -24,13 +29,17 @@
 		},
 		components: {
 			Loading,
-			Confirm
+			Confirm,
+			XButton
 		},
 		data() {
 			return {
 				showLoading: false,
 				loadText: '',
 				showConfirm: false,
+				type:1,
+				username:'',
+				password:'',
 			}
 		},
 		methods: {
@@ -46,6 +55,7 @@
 								userInfo: JSON.stringify(s.userInfo)
 							}).then((res) => {
 								if(res.data.code == '200') {
+									console.log(JSON.stringify(res.data))
 									self.$vux.toast.show({
 										text: res.data.data.message,
 										type: 'success',
@@ -56,6 +66,7 @@
 										name: 'PersonCenter'
 									})
 								} else if(res.data.code == '201') {
+									plus.storage.setItem('userInfo',JSON.stringify(s.userInfo))
 									//去绑定手机号
 									self.showConfirm = true
 
@@ -75,10 +86,7 @@
 							})
 						});
 					}, function(e) {
-						self.$vux.toast.show({
-							text: "获取用户信息失败！",
-							type: 'warn',
-						})
+					
 					});
 				} else {
 					//后端保存用户信息
@@ -87,6 +95,7 @@
 						userInfo: JSON.stringify(s.userInfo)
 					}).then((res) => {
 						if(res.data.code == '200') {
+							console.log(JSON.stringify(res.data))
 							self.$vux.toast.show({
 								text: res.data.data.message,
 								type: 'success',
@@ -108,6 +117,7 @@
 							})
 						}
 					}, (err) => {
+						alert(JSON.stringify(err))
 						console.log(JSON.stringify(err))
 					})
 				}
@@ -119,12 +129,42 @@
 					name: 'Accredit'
 				})
 			},
+			Login: function() {
+				this.$http.post(url + '/api/loginTest', {
+					username:this.username,
+					password:this.password
+				}).then((res) => {
+					if(res.data.code == '200') {
+						console.log(JSON.stringify(res.data))
+						this.login_type=res.data.data.login_type
+									this.$vux.toast.show({
+										text: res.data.data.message,
+										type: 'success',
+									})
+									plus.storage.setItem("token", res.data.data.token);
+									plus.storage.setItem("unMessage", res.data.data.unMessage);
+									this.$router.push({
+										name: 'PersonCenter'
+									})
+					} else{
+						this.$vux.toast.show({
+										text: res.data.error,
+										type: 'warn',
+									})
+					}
+				}, (err) => {
+					this.$vux.toast.show({
+							text: "登录失败！",
+							type: 'warn',
+						})
+				})
+			},
 		},
 		mounted: function() {
 
 		},
 		created: function() {
-
+            this.type=this.$route.query.type
 		},
 		destroyed() {
 
@@ -167,5 +207,21 @@
 		width: .63rem;
 		height: .59rem;
 		margin-right: .3rem;
+	}
+	.input-info{
+		font-size: .36rem;
+		border: none;
+		outline: none;
+		-webkit-appearance: none;
+		width: 80%;
+		height: 1rem;
+		line-height: 1rem;
+		border-bottom: .02rem solid #dddddd;
+	}
+	.input-info:nth-child(1){
+		margin-top: .4rem;
+	}
+	.input-info:nth-child(2){
+		margin-bottom: .6rem;
 	}
 </style>

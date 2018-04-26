@@ -178,8 +178,7 @@
 
 <script>
 	import { Toast, Loading } from 'vux'
-//	const url='http://xlk.dxvke.com/'
-    const url=''
+	const url='http://xlk.dxvke.com/'
 	export default {
 		components: {
 			Toast,
@@ -224,8 +223,9 @@
 		methods: {
 			//获取用户财宝信息
 			getCount() {
-				this.$http.get(url+'/api/withdrawAcer', {}).then((res) => {
+				this.$http.get(url+'/api/withdrawAcer').then((res) => {
 					if(res.data.code == '200') {
+//						console.log(JSON.stringify(res.data.data))
 						this.chest_acer=res.data.data.chest_acer
 						this.withdraw_acer=res.data.data.withdraw_acer
 						this.withdraw_over=res.data.data.withdraw_over
@@ -237,7 +237,11 @@
 
 					}
 				}, (err) => {
-					console.log(err)
+					console.log(JSON.stringify(err))
+					this.$vux.toast.show({
+							text: "获取数据失败！",
+							type: 'warn',
+						})
 				})
 			},
 		},
@@ -245,6 +249,9 @@
 
 		},
 		created: function() {
+			this.getCount()
+		},
+		activated: function () {
 			this.getCount()
 		}
 	}

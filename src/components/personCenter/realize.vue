@@ -2,12 +2,12 @@
 	<div>
 		<x-header :left-options="{backText: ''}" title="库存挂单" style="background-color: #f9f9f9;">
 			<a slot="right">
-				<router-link to="/personCenter/goldStore/realizeList" style="color: #9A7BFF;font-size: .32rem;padding-top: .4rem;">
+				<router-link to="/personCenter/goldStore/realizeList" style="color: #9A7BFF;font-size: .32rem;">
 					挂单记录
 				</router-link>	
 			</a>
 		</x-header>
-		<div style="height: 1.28rem;"></div>
+		<div style="height: .88rem;"></div>
 		<div class="header" style="position: relative;">
 			<router-link to="/cashRule" class="f24 flex" style="position: absolute;right: .26rem;top: .26rem;z-index: 888;color: white;">
 				<img src="../../../static/images/rule_icon.png" alt=""  style="width: .28rem;height: .28rem;margin-right: .1rem;"/>
@@ -102,7 +102,7 @@
 		</div>
 		<div style="height: .96rem;"></div>
 		<div style="position:fixed;bottom: 0;width: 100%;height: .96rem;">
-			<x-button type="primary" action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32" @click.native="doWithdraw()">确认挂单</x-button>
+			<x-button action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32" @click.native="doWithdraw()">确认挂单</x-button>
 		</div>
 		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
 	</div>

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
 		<div style="position: relative;">
 			<div class="select">
 				<div style="display: flex;align-items: center;" v-on:click="showMenu=!showMenu">
@@ -48,6 +48,7 @@
 				</div>
 			</div>
 		</div>
+		<div class="empty" v-show="dataList.length==0"><img src="../../../static/images/empty/no_list.png" /></div>
 		</scroller>
 		<!--<div style="background: white;" class="bottom" v-if="show">
 			<p class="f32 title"><span @click="cancel()">取消</span><span style="color: #333;" class="f32">选择时间</span><span @click="done()">完成</span></p>

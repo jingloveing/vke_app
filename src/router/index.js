@@ -29,7 +29,7 @@ import Feedback from '@/components/personCenter/feedback'
 import Realize from '@/components/personCenter/realize'
 import RealizeList from '@/components/personCenter/realizeList'
 import SelectDate from '@/components/personCenter/selectDate'
-import Introduce from '@/components/personCenter/introduce'
+//import Introduce from '@/components/personCenter/introduce'
 import FansOffer from '@/components/personCenter/fansOffer'
 import UnderWay from '@/components/personCenter/underWay'
 import Share from '@/components/personCenter/Share'
@@ -39,8 +39,8 @@ import AddressList from '@/components/personCenter/AddressList'
 import AddAddress from '@/components/personCenter/addAddress'
 import MyWorld from '@/components/personCenter/myWorld'
 import Member from '@/components/personCenter/member'
-import ShoppingCart from '@/components/personCenter/shoppingCart'
-import EditShoppingCart from '@/components/personCenter/EditShoppingCart'
+//import ShoppingCart from '@/components/personCenter/shoppingCart'
+//import EditShoppingCart from '@/components/personCenter/EditShoppingCart'
 import HelpCenter from '@/components/personCenter/HelpCenter'
 import Code from '@/components/personCenter/code'
 import ShareList from '@/components/personCenter/shareList'
@@ -113,7 +113,8 @@ routes: [{
 		path: '',
 		redirect: '/home',
 		meta: {
-			showFooter: true
+			showFooter: true,
+			keepAlive: true
 		}
 	},
 	{
@@ -121,7 +122,8 @@ routes: [{
 		name:'Home',
 		component: Home,
 		meta: {
-			showFooter: true
+			showFooter: true,
+			keepAlive: true
 		}
 	},
 	{
@@ -130,12 +132,15 @@ routes: [{
 	},
 	{
 		path: '/home/taobao',
-		component: Taobao
+		component: Taobao,
+		meta:{
+			keepAlive: true
+		}
 	},
 	{
 		path: '/home/assortment/Classify',
 		name:'Classify',
-		component: Classify,
+		component: Classify
 	},
 	{
 		path: '/home/assortment/search',
@@ -155,7 +160,8 @@ routes: [{
 		path: '/shareRoom',
 		component: ShareRoom,
 		meta: {
-			showFooter: true
+			showFooter: true,
+//			keepAlive: true
 		}
 	},
 	{
@@ -167,13 +173,17 @@ routes: [{
 		path: '/brandSite',
 		component: BrandSite,
 		meta: {
-			showFooter: true
+			showFooter: true,
+			keepAlive: true
 		}
 	},
 	{
 		path: '/brandSite/storeIndex',
 		name:'StoreIndex',
 		component: StoreIndex,
+//		meta:{
+//			keepAlive: true
+//		}
 	},
 	{
 		path: '/brandSite/storeIndex/storeClassify',
@@ -190,11 +200,12 @@ routes: [{
 		component: StoreGoods
 	},
 	{
-		path: '/personCenter',
+		path: '/PersonCenter',
 		name: 'PersonCenter',
 		component: PersonCenter,
 		meta: {
-			showFooter: true
+			showFooter: true,
+			keepAlive: true
 		}
 	},
 	{
@@ -203,7 +214,8 @@ routes: [{
 		component: Info,
 		meta: {
 			showHeader: true,
-			title:"江湖邮局"
+			title:"江湖邮局",
+			keepAlive: true
 		}
 	},
 	{
@@ -230,7 +242,8 @@ routes: [{
 		component: Bill,
 		meta: {
 			showHeader: true,
-			title:"消费账单"
+			title:"消费账单",
+			keepAlive: true
 		}
 	},
 	{
@@ -239,7 +252,8 @@ routes: [{
 		component: Setting,
 		meta: {
 			showHeader: true,
-			title:"掌事堂"
+			title:"掌事堂",
+			keepAlive: true
 		}
 	},
 	{
@@ -248,7 +262,8 @@ routes: [{
 		component: UserInfo,
 		meta: {
 			showHeader: true,
-			title:"我的身份"
+			title:"我的身份",
+			keepAlive: true
 		}
 	},
 	{
@@ -257,7 +272,8 @@ routes: [{
 		component: GoldStore,
 		meta: {
 			showHeader: true,
-			title:"小金库"
+			title:"小金库",
+			keepAlive: true
 		}
 	},
 	{
@@ -275,7 +291,8 @@ routes: [{
 		component: Share,
 		meta: {
 			showHeader: true,
-			title:"分享夺宝"
+			title:"分享夺宝",
+			keepAlive: true
 		}
 	},
 	{
@@ -284,34 +301,36 @@ routes: [{
 		component: MyWorld,
 		meta: {
 			showHeader: true,
-			title:"我的江湖"
+			title:"我的江湖",
+			keepAlive: true
 		}
 	},
-	{
-		path: '/personCenter/shoppingCart',
-		name: 'ShoppingCart',
-		component: ShoppingCart,
-		meta: {
-			showHeader: true,
-			title:"购物车"
-		}
-	},
-	{
-		path: '/personCenter/shoppingCart/editShoppingCart',
-		name: 'EditShoppingCart',
-		component: EditShoppingCart,
-		meta: {
-			showHeader: true,
-			title:"购物车"
-		}
-	},
+//	{
+//		path: '/personCenter/shoppingCart',
+//		name: 'ShoppingCart',
+//		component: ShoppingCart,
+//		meta: {
+//			showHeader: true,
+//			title:"购物车"
+//		}
+//	},
+//	{
+//		path: '/personCenter/shoppingCart/editShoppingCart',
+//		name: 'EditShoppingCart',
+//		component: EditShoppingCart,
+//		meta: {
+//			showHeader: true,
+//			title:"购物车"
+//		}
+//	},
 	{
 		path: '/personCenter/helpCenter',
 		name: 'HelpCenter',
 		component: HelpCenter,
 		meta: {
 			showHeader: true,
-			title:"白鹭书院"
+			title:"白鹭书院",
+			keepAlive: true
 		}
 	},
 	{
@@ -320,7 +339,8 @@ routes: [{
 		component: Code,
 		meta: {
 			showHeader: true,
-			title:"启蒙码"
+			title:"启蒙码",
+			keepAlive: true
 		}
 	},
 	{
@@ -343,7 +363,8 @@ routes: [{
 		component: CollectList,
 		meta: {
 			showHeader: true,
-			title:"藏宝阁"
+			title:"藏宝阁",
+			keepAlive: true
 		}
 	},
 	{
@@ -366,7 +387,7 @@ routes: [{
 		component: FansOffer,
 		meta: {
 			showHeader: true,
-			title:"帮众贡献"
+			title:"帮众贡献",
 		}
 	},
 	{
@@ -378,15 +399,15 @@ routes: [{
 //			title:"库存挂单"
 //		}
 	},
-	{
-		path: '/personCenter/goldStore/introduce',
-		name: 'Introduce',
-		component: Introduce,
-		meta: {
-			showHeader: true,
-			title:"查看二维码"
-		}
-	},
+//	{
+//		path: '/personCenter/goldStore/introduce',
+//		name: 'Introduce',
+//		component: Introduce,
+//		meta: {
+//			showHeader: true,
+//			title:"查看二维码"
+//		}
+//	},
 	{
 		path: '/personCenter/goldStore/realizeList',
 		name: 'RealizeList',
@@ -437,7 +458,8 @@ routes: [{
 		name: 'InfoList',
 		component: InfoList,
 		meta: {
-			showHeader: true
+			showHeader: true,
+			keepAlive: true
 		}
 	},
 	{
@@ -496,7 +518,8 @@ routes: [{
 		component: AddressList,
 		meta: {
 			showHeader: true,
-			title:"总坛位置"
+			title:"总坛位置",
+			keepAlive: true
 		}
 	},
 	{
@@ -545,10 +568,10 @@ routes: [{
 		path: '/newJD',
 		name: 'NewJD',
 		component: NewJD,
-//		meta: {
+		meta: {
 //			showHeader: true,
 //			title:"京东"
-//		}
+		}
 	},
 	{
 		path: '/newMogu',
@@ -602,13 +625,17 @@ routes: [{
 		component: NewHand,
 		meta: {
 			showHeader: true,
-			title:"新手秒懂"
+			title:"新手秒懂",
+			keepAlive: true
 		}
 	},
 	{
 		path: '/selfSupport',
 		name: 'SelfSupport',
 		component: SelfSupport,
+		meta:{
+			keepAlive: true
+		}
 	},
 	{
 		path: '/selectReason',
@@ -625,7 +652,8 @@ routes: [{
 		component: Rule,
 		meta: {
 			showHeader: true,
-			title:"江湖规矩"
+			title:"江湖规矩",
+			keepAlive: true
 		}
 	},
 	{
@@ -634,7 +662,8 @@ routes: [{
 		component: AboutUs,
 		meta: {
 			showHeader: true,
-			title:"自报家门"
+			title:"自报家门",
+			keepAlive: true
 		}
 	},
 	{
@@ -643,7 +672,8 @@ routes: [{
 		component: CashRule,
 		meta: {
 			showHeader: true,
-			title:"挂单规则"
+			title:"挂单规则",
+			keepAlive: true
 		}
 	},
 	{
@@ -652,7 +682,8 @@ routes: [{
 		component: Upgrade,
 		meta: {
 			showHeader: true,
-			title:"升级地位"
+			title:"升级地位",
+			keepAlive: true
 		}
 	},
 	{
@@ -670,7 +701,8 @@ routes: [{
 		component: Vedio,
 		meta: {
 			showHeader: true,
-			title:"视频"
+			title:"视频",
+//			keepAlive: true
 		}
 	},
 	{
@@ -688,7 +720,8 @@ routes: [{
 		component: OrderTaobao,
 		meta: {
 			showHeader: true,
-			title:"我的淘宝订单"
+			title:"我的淘宝订单",
+			keepAlive: true
 		}
 	},
 	{
@@ -697,7 +730,8 @@ routes: [{
 		component: OrderVip,
 		meta: {
 			showHeader: true,
-			title:"我的唯品会订单"
+			title:"我的唯品会订单",
+			keepAlive: true
 		}
 	},
 	{
@@ -706,7 +740,8 @@ routes: [{
 		component: OrderMogu,
 		meta: {
 			showHeader: true,
-			title:"我的蘑菇街订单"
+			title:"我的蘑菇街订单",
+			keepAlive: true
 		}
 	},
 	{
@@ -715,7 +750,8 @@ routes: [{
 		component: OrderJD,
 		meta: {
 			showHeader: true,
-			title:"我的京东订单"
+			title:"我的京东订单",
+			keepAlive: true
 		}
 	},
 	{

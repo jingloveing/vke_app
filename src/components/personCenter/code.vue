@@ -4,7 +4,7 @@
 			<div style="overflow: hidden;">
 				<group class="weui-cells_form">
 					<x-input class="weui-vcode code" placeholder="请输入启蒙码" novalidate :show-clear="false" v-model="invite_code">
-						<x-button slot="right" mini class="f28" style="width: 1.2rem;padding: 0 0;" @click.native="invite()" v-show="is_fans==1">确定</x-button>
+						<x-button slot="right" mini class="f28" style="width: 1.2rem;padding: 0 0;" @click.native="invite()" v-show="is_fans!==1">确定</x-button>
 						<x-button slot="right" mini class="f28" disabled style="margin-top:0;background-color: #999;color: white;width: 1.2rem;padding: 0 0;" v-show="is_fans==1">已开启</x-button>
 					</x-input>
 				</group>
@@ -37,7 +37,7 @@
 		},
 		data() {
 			return {
-				is_fans: true,
+				is_fans: 1,
 				code:'',
                 showToast: false,
                 text:'',
@@ -68,6 +68,7 @@
                              text: res.data.data.message,
                              type:'success',
                         })
+						this.invite_code=''
 						this.getCode()
 					}else{
 						this.$vux.toast.show({
@@ -96,6 +97,9 @@
 				})
 		},
 		created:function(){
+			this.getCode()
+		},
+		activated: function () {
 			this.getCode()
 		}
 	}

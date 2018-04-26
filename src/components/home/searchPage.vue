@@ -44,26 +44,15 @@
           return (index + 1) * 22 + 'px'
         },
         key:'',
-        type:'',
       }
     },
     mounted() {
       this.$nextTick(function () {
-//        // 返回顶部
-//        let back_btn = document.getElementsByClassName('toTop')[0];
-//        window.onscroll = function () {
-//          let top = document.documentElement.scrollTop || document.body.scrollTop;
-//          if (top > 800) {
-//            back_btn.style.display = 'block';
-//          } else {
-//            back_btn.style.display = 'none';
-//          }
-//        }
         var oForm =  document.getElementsByTagName("form")[0];
         var self =this
         oForm.onsubmit = function(e){
           e.preventDefault();
-          self.$router.push({name:'searchResult',query:{keyword:self.key}})
+          self.$router.push({name:'searchResult',query:{keyword:self.key,type:self.$route.query.type,id:self.$route.query.id}})
         };
       })
     },
@@ -135,7 +124,7 @@
 //      },
       onSubmit(e) {
 //        this.showLoading=true
-        this.$router.push({name:'searchResult',query:{keyword:e,type:this.type}})
+       this.$router.push({name:'searchResult',query:{keyword:e,type:this.$route.query.type,id:this.$route.query.id}})
 
       },
     },
@@ -165,10 +154,10 @@ ul li{
     margin: 0 .2rem .2rem 0;
   }
   .searchDiv{
-    background-color: #f4f4f4;padding: .5rem .1rem .1rem;font-size: 0;
+    background-color: #f4f4f4;padding: .1rem .1rem .1rem;font-size: 0;
   }
   .searchDiv>img{
-    width: .4rem;height: .4rem;vertical-align: middle;position: absolute;top: .62rem;left: .2rem;
+    width: .4rem;height: .4rem;vertical-align: middle;position: absolute;top: .22rem;left: .2rem;
   }
   .searchDiv>form{
     width: 80%;display: inline-block;margin-right: .6rem;

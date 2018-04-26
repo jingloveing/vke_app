@@ -1,36 +1,34 @@
 <template>
 	<div>
-		<!--<div class="share" @click="showShare=!showShare">
-			<img src="../../../static/images/share_black_icon.png" alt="" />
-		</div>-->
-		<div style="position: relative;font-size: 0;" @click="play()">
-			<!--controls---video的控制条-->
-			<video controls id="myVideo" width="100%" style="height: 4.2rem;background: black;">
-				<source :src="viewDes.view" type="video/mp4">
-				<source src="/i/movie.ogg" type="video/ogg">
-			</video>
-			<div class="pause">
-				<img src="/static/images/play.png" alt="" />
+			<div style="position: relative;width: 100%;font-size: 0;" @click="plays()">
+				<!--controls---video的控制条-->
+				<video controls id="myVideo" width="100%" style="height: 4.2rem;background: black;" :poster="viewDes.image
+">
+					<source :src="viewDes.view" type="video/mp4">
+					<source src="/i/movie.ogg" type="video/ogg">
+				</video>
+				<div class="pause">
+					<img src="/static/images/play.png" alt="" />
+				</div>
 			</div>
-		</div>
 		<div class="f28 c3" style="padding: .3rem .26rem;background: white;">{{viewDes.view_name}}</div>
 		<div style="background: white;margin-top: .2rem;">
 			<p class="f28 c3" style="line-height: .88rem;height: .88rem;padding: 0 .26rem;">商品链接</p>
-				<div v-for="(item,index) in list" :key="index">
+			<div>
 				<swipers :options="swiperOptionB">
-					<swiper-slide v-for="(list,index) in list" :key="index"  class="box_content">
+					<swiper-slide v-for="(list,index) in list" :key="index" class="box_content">
 						<router-link :to="{name:'BrandDetail',query:{id:list.id,store_id:store_id}}">
 							<img :src="list.thumb_url" alt="" :onerror="defaultImg">
-								<span class="dess">
+							<span class="dess">
                                 <p class="des_name break">{{list.product_name}}</p>
                                 <p class="des_price">
                                 	<span class="new_price">
                                 		<span class="f20">￥</span>{{list.reserve_price}}
-                                	</span>
-								
-								</p>
-								</span>
-								<div class="ticket">券{{list.coupon_number}}元</div>
+							</span>
+
+							</p>
+							</span>
+							<div class="ticket">券{{list.coupon_number}}元</div>
 						</router-link>
 					</swiper-slide>
 					<swiper-slide>
@@ -48,29 +46,27 @@
 <script>
 	import {} from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
-	const url='http://xlk.dxvke.com/'
+	const url = 'http://xlk.dxvke.com/'
 	export default {
 		name: 'shareRoom',
 		components: {
-            swipers: swiper,
+			swipers: swiper,
 			swiperSlide,
 		},
 		data() {
 			return {
-				store_id:'',
+				store_id: '',
 				viewDes: {
 					view: null,
 					view_name: null,
 				},
-				list:[
-				   {
-				   	id:null,
-				   	thumb_url:null,
-				   	coupon_number:null,
-				   	product_name:null,
-				   	reserve_price:null
-				   }
-				],
+				list: [{
+					id: null,
+					thumb_url: null,
+					coupon_number: null,
+					product_name: null,
+					reserve_price: null
+				}],
 				swiperOptionB: {
 					// 如果需要滚动条
 					slidesPerView: 3,
@@ -81,45 +77,36 @@
 			}
 		},
 		methods: {
-			//      获取视频详细信息
-			getViewDes: function() {
-				this.$http({
-					method: 'get',
-					url: url+'/api/merViewUrl',
-					params:{id:this.$route.query.id}
-				}).then((res) => {
-					if(res.data.code == '200') {
-						this.viewDes = res.data.data
-					}
-				}, (err) => {
-					console.log(err)
-				})
-			},
-			//      获取视频详细信息
+			//      获取商品信息
 			getMerViewPro: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/merViewPro',
-					params:{id:this.$route.query.id}
+					url: url + '/api/merViewPro',
+					params: {
+						id: this.viewDes.id
+					}
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.list = res.data.data.list
+						
 					}
 				}, (err) => {
 					console.log(err)
 				})
 			},
-			play() {
+			plays() {
 				var video = document.getElementById('myVideo')
 				if(video.paused) {
+					console.log('111');
 					video.play()
 					video.parentNode.children[1].style.display = "none"
 				} else {
+					console.log('222');
 					video.pause();
 					video.parentNode.children[1].style.display = "inline-block"
 				}
 			},
-			goBack(){
+			goBack() {
 				this.$router.go(-1)
 			}
 		},
@@ -127,8 +114,8 @@
 
 		},
 		created: function() {
-			this.store_id=this.$route.query.store_id
-			this.getViewDes()
+			this.viewDes = JSON.parse(this.$route.query.item)
+			console.log(this.viewDes)
 			this.getMerViewPro()
 		},
 		destroyed() {
@@ -167,6 +154,7 @@
 	video::-webkit-media-controls-panel {
 		width: calc(100% + 30px);
 	}
+	
 	.box_content {
 		margin: 0 0 0 .18rem;
 		width: 2rem!important;

@@ -3,7 +3,7 @@
 		<tab :line-width=2 active-color='#9a7bff' v-model="index" custom-bar-width=".8rem" style="height: .88rem;line-height: .88rem;">
 			<tab-item class="vux-center" v-for="(item, index) in list" :key="index" @on-item-click="change(item,index)">{{item}}</tab-item>
 		</tab>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 2.16rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.76rem;">
 			<div class="goods_list" v-show="index==0">
 				<ul class="goods">
 					<li v-for="(list,index) in goodsList" :key="index">
@@ -22,10 +22,10 @@
 								</div>
 								<div style="display: flex;justify-content: space-between;align-items: center;">
 									<div>
-										<span class="new_num f28"><span class="f24">￥</span>{{list.product_price.rmb}}<span v-show="list.product_price.corner!=='00'" class="f24">.{{list.product_price}}</span></span>
+										<span class="new_num f28"><span class="f24">￥</span>{{list.product_price.rmb}}<span v-show="list.product_price.corner!=='00'" class="f24">.{{list.product_price.corner}}</span></span>
 										<del class="old_num f24">￥{{list.market_price.rmb}}<span v-show="list.market_price!=='00'">.{{list.market_price.corner}}</span></del>
 									</div>
-									<div @click="del(list.type,list.collect_id)">
+									<div @click="del(list.type,list.collect_id,index)">
 										<img src="../../../static/images/collect_del.png" alt="" style="width: .32rem;height: .32rem;" />
 									</div>
 								</div>
@@ -47,13 +47,14 @@
                 <span class="type vipshop">唯品会</span>
                 <span class="type self">自营</span>-->
 							</div>
-							<div style="line-height: 1rem;padding:0 .26rem;" @click="del(list.type,list.collect_id)">
+							<div style="line-height: 1rem;padding:0 .26rem;" @click="del(list.type,list.collect_id,index)">
 								<img src="../../../static/images/collect_del.png" alt="" style="width: .32rem;height: .32rem;vertical-align: middle;" />
 							</div>
 						</div>
 					</li>
 				</ul>
 			</div>
+			<div class="empty" v-show="goodsList.length==0"><img src="../../../static/images/empty/collect.png" /></div>
 		</scroller>
 		<loading v-model="showLoading" :text="loadText"></loading>
 		<toast v-model="showToast" type="text" :time="800" is-show-mask :text="toast" ></toast>
@@ -156,7 +157,9 @@
 				}, 1500)
 			},
 			//      收藏----取消收藏
-			del(type,id) {
+			del(type,id,index) {
+				console.log(type)
+				console.log(id)
 				this.$http.post(url+'/api/doCollect', {
 						id: id,
 						type: type,
@@ -165,13 +168,13 @@
 						this.toast=res.data.data.message
 						this.showToast=true
 						this.page=1
-						this.getGoods()
+						this.goodsList.splice(index,1)
 					}else{
 						this.toast=res.data.error
 						this.showToast=true
 					}
 				}, (err) => {
-					console.log(err)
+					console.log(JSON.stringify(err))
 				})
 			},
 			change(item, index) {

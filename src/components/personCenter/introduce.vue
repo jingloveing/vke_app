@@ -1,4 +1,4 @@
-<template>
+<!--<template>
 	<div class="introduce">
 		<p class="f28 c3">1. 打开微信——个人(我)——钱包</p>
 		<img src="../../../static/images/personCenter/introduce_icon2.png" alt="" style="width: 3.77rem;height: 4.88rem;"/>
@@ -23,4 +23,4 @@
 		padding-top:.4rem;
 		padding-bottom: .34rem;
 	}
-</style>
+</style>-->

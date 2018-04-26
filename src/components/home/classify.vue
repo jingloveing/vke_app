@@ -23,10 +23,10 @@
     <!--</div>-->
     <x-header :left-options="{backText: ''}" :title="title" style="background-color: #f9f9f9;">
 		</x-header>
-    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
+    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
       <div class="main_goods">
         <ul class="goods">
-          <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :to="{name:'TBDetail',query:{id:goods.id,type:1}}" :key="index">
+          <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :to="{name:'TBDetail',query:{id:goods.id,type:4}}" :key="index">
             <img :src="goods.pict_url" alt="" :onerror="defaultImg">
             <div class="content">
               <div class="des" v-text="goods.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
@@ -58,6 +58,7 @@
 //  import VueScroller from 'vue-scroller'
 //  Vue.use(VueScroller)
 const url='http://xlk.dxvke.com/'
+// const url =''
   export default {
     name: 'jiFen',
     components: {
@@ -284,7 +285,7 @@ const url='http://xlk.dxvke.com/'
 
   .price {
     font-size: .32rem;
-    color: #ff425f;
+    color: #f51d46;
   }
 
   .num {

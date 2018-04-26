@@ -170,23 +170,39 @@
 			}
 		},
 		methods: {
-			//      商品详情
+//			//      商品详情
+//			getGoodsDetail: function() {
+//				this.id = this.$route.query.id;
+//				this.type = this.$route.query.type
+//				this.$http({
+//					method: 'get',
+//					url: url+'/api/productInfo',
+//					params: {
+//						id: this.id,
+//						type: this.type
+//					}
+//				}).then((res) => {
+//					if(res.data.code == '200') {
+//						this.goodsDetail = res.data.data
+//					}
+//				}, (err) => {
+//					console.log(JSON.stringify(err))
+//				})
+//			},
+            //      商品详情
 			getGoodsDetail: function() {
-				this.id = this.$route.query.id;
-				this.type = this.$route.query.type
 				this.$http({
 					method: 'get',
-					url: url+'/api/productInfo',
-					params: {
-						id: this.id,
-						type: this.type
-					}
+					url: url+'/api/checkLevelProduct'
 				}).then((res) => {
 					if(res.data.code == '200') {
+						console.log(JSON.stringify(res.data.data))
 						this.goodsDetail = res.data.data
+					}else{
+						console.log(JSON.stringify(res.data))
 					}
 				}, (err) => {
-					console.log(err)
+					console.log(JSON.stringify(err))
 				})
 			},
 //			toHome() {
@@ -229,8 +245,8 @@
             }
 		},
 		created: function() {
-			this.id = this.$route.query.id
-			this.type = this.$route.query.type
+//			this.id = this.$route.query.id
+//			this.type = this.$route.query.type
 			this.getGoodsDetail()
   
 		},

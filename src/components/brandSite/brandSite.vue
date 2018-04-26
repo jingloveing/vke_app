@@ -10,12 +10,12 @@
 				</router-link>
 			</a>
 		</x-header>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
 		<swiper auto loop :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
 		<div style="background: white;">
 			<div class="main_title">
 				<img src="../../../static/images/brandSite_icon.png" alt="" />
-				<span>入驻品牌</span>
+				<span>品牌直达</span>
 			</div>
 			<div style="height: 1.92rem;" class="f28 c3">
 				<swipers :options="swiperOptionA" class="store">
@@ -35,14 +35,15 @@
 			<div class="list" v-for="(item,index) in merchantView" :key="index">
 				<div class="list-title">
 					<div class="list-title-left">
-						<img :src="item.logo" alt="" class="small-icon" />
+						<img :src="item.logo" alt="" class="small-icon" :onerror="defaultImg"/>
 						<span class="f28 c3" style="margin-left: .1rem;">{{item.name}}</span>
 					</div>
 					<router-link class="f24 c3 store-btn" :to="{name:'StoreIndex',query:{id:item.id}}">进店逛逛</router-link>
 				</div>
 				<div style="position: relative;" @click="play(item.id)">
 					<!--controls---video的控制条-->
-					<video controls :id="'myVideo'+item.id" width="100%" style="height: 4.2rem;background: black;" :poster="item.poster">
+					<video controls :id="'myVideo'+item.id" width="100%" style="height: 4.2rem;background: black;" :poster="item.image
+">
 						<source :src="item.view" type="video/mp4">
 						<source src="/i/movie.ogg" type="video/ogg">
 					</video>
@@ -50,9 +51,9 @@
 						<img src="/static/images/play.png" alt=""/>
 					</div>
 				</div>
-				<swipers :options="swiperOptionB" style="margin-top: .1rem;">
+				<swipers :options="swiperOptionB" style="margin-top: .1rem;height: 3.07rem;">
 					<swiper-slide v-for="(list,index) in item.product_list" :key="index" class="box_content">
-						<router-link :to="{name:'BrandDetail',query:{}}">
+						<router-link :to="{name:'BrandDetail',query:{id:list.id,store_id:item.id}}">
 							<img :src="list.thumb_url" alt="" :onerror="defaultImg">
 							<span class="dess">
                             <p class="des_name break">{{list.product_name}}</p>
@@ -218,23 +219,9 @@
 					done()
 				}, 1500)
 			},
-			//获取视频第一帧为封面
-			captureImage(){
-				var video = document.getElementsByTagName('video')
-				var canvas = document.createElement("canvas");
-				 console.log(this.merchantView)
-				for(var i = 0;i<video.length; i++){
-					canvas.width = video[i].videoWidth * scale;
-                    canvas.height = video[i].videoHeight * scale;
-                    canvas.getContext('2d').drawImage(video[i], 0, 0, canvas.width, canvas.height);
-                    this.merchantView[i].poster=canvas.toDataURL("image/png");
-				}
-			    console.log(this.merchantView)
-				
-			}
 		},
 		mounted: function() {
-            this.captureImage()
+           
 		},
 		created: function() {
 			this.getBannerList()
@@ -264,7 +251,7 @@
 		line-height: 100%;
 		position: absolute;
 		right: -.2rem;
-		top: .4rem;
+		top: .0rem;
 	}
 	
 	.info {

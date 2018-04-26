@@ -15,7 +15,7 @@
 				<span class="info_num" v-show="unMessage && unMessage !=='0'">{{unMessage}}</span>
 			</router-link>
 		</div>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
 			<swiper auto :list="bannerList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" loop></swiper>
 			<div style=" margin-top: -.3rem;z-index: 99999;position: relative;">
 				<ul class="nav-small">
@@ -36,7 +36,7 @@
 						<span>唯品会</span>
 					</router-link>
 					<router-link tag="li" to="">
-						<img src="static/images/vke.png" :onerror="defaultImg">
+						<img src="static/images/vke_icon.png" :onerror="defaultImg">
 						<span>自营商城</span>
 					</router-link>
 				</ul>
@@ -60,16 +60,16 @@
 					<img src="static/images/icon.png" alt="" />
 					<span>品牌精选</span>
 				</div>
-				<div v-for="(item,index) in merchant" :key="index">
+				<div v-for="(item,index) in merchant" :key="index" style="margin-bottom: .2rem;">
 					<router-link class="nav" :to="{name:'StoreIndex',query:{id:item.id}}">
 						<img :src="item.image" style="width: 100%;height: 100%;" :onerror="defaultImg">
 						<div class="nav_name">
 							<img :src="item.logo" class="nav_pic" />
 							<span class="break">{{item.name}}</span>
 						</div>
-						<div class="bd"></div>
+						<!--<div class="bd"></div>-->
 					</router-link>
-					<swipers :options="swiperOptionB" style="margin-top: .2rem;">
+					<swipers :options="swiperOptionB" style="padding-top: .2rem;height: 3.07rem;background: white;">
 						<swiper-slide v-for="(list,index) in item.product_list" :key="index" class="box_content">
 							<router-link :to="{name:'BrandDetail',query:{id:list.id,store_id:item.id}}">
 								<img :src="list.thumb_url" alt="" :onerror="defaultImg">
@@ -307,11 +307,9 @@
 		color: #333333;
 		display: block;
 	}
-	
-	.main {
-		background: white;
+	.main{
+		font-size: 0;
 	}
-	
 	.main_title {
 		font-size: .3rem;
 		color: #f51d46;
@@ -319,6 +317,7 @@
 		vertical-align: middle;
 		height: .92rem;
 		line-height: .92rem;
+		background: white;
 	}
 	
 	.main_title>img {
@@ -345,7 +344,7 @@
 		/* Firefox 3.6 - 15 */
 		background: linear-gradient(left, #8721b5, #db3283);
 		/* 标准的语法 */
-		padding-top: .4rem;
+		/*padding-top: .4rem;*/
 	}
 	
 	.searchDiv .left {
@@ -411,7 +410,7 @@
 	}
 	
 	.news_left {
-		width: 1.1rem;
+		width: 1.44rem;
 		/*height: 100%;
   	line-height: 1.1rem;*/
 		text-align: center;
@@ -420,15 +419,15 @@
 	}
 	
 	.news_left>img {
-		width: .5rem;
-		height: .46rem;
+		width: 1.06rem;
+		height: .22rem;
 		vertical-align: middle;
 	}
 	
 	.news_right {
-		width: calc(100% - 1.1rem);
-		width: -moz-calc(100% - 1.1rem);
-		width: -webkit-calc(100% - 1.1rem);
+		width: calc(100% - 1.44rem);
+		width: -moz-calc(100% - 1.44rem);
+		width: -webkit-calc(100% - 1.44rem);
 		height: 25px;
 	}
 	
@@ -459,7 +458,7 @@
 		color: #fff;
 		height: .5rem;
 		position: absolute;
-		background: rgba(255, 255, 255, 0.3);
+		background: rgba(0, 0, 0, 0.3);
 		border-radius: .5rem;
 		top: .2rem;
 		left: .2rem;
@@ -577,43 +576,11 @@
 	.vux-slider>.vux-indicator>a>.vux-icon-dot {
 		background-color: #dbdada !important;
 	}
-	
-	.juan_style {
-		border: .01rem solid #ff425f;
-		display: inline-block;
-		border-radius: .02rem;
-	}
-	
-	.juan_style_left {
-		font-size: .20rem;
-		color: #ffeff2;
-		background-color: #ff425f;
-		height: 100%;
-		display: inline-block;
-		padding: 0 .05rem;
-	}
-	
-	.juan_style_right {
-		font-size: .20rem;
-		color: #ff425f;
-		background-color: #ffeff2;
-		height: 100%;
-		display: inline-block;
-		padding: 0 .05rem;
-	}
-	
-	.return_num_style {
-		padding: 0 .05rem;
-		color: #ff8a1e;
-		font-size: .2rem;
-		border-radius: .02rem;
-		border: .01rem solid #ff8a1e;
-		display: inline-block;
-		margin-left: .1rem;
-	}
-	
 	.vux-slider>.vux-indicator,
 	.vux-slider .vux-indicator-right {
 		bottom: .25rem!important;
 	}
 </style>
+<!--"statusbar":{
+    		"immersed":true
+    	},-->

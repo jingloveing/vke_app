@@ -1,11 +1,11 @@
 <template>
 	<div class="indexSearch">
 		<x-header :left-options="{backText: ''}"></x-header>
-		<button-tab v-model="type" class="nav">
-			<button-tab-item @on-item-click="consoleIndex()">淘宝商品</button-tab-item>
-			<button-tab-item @on-item-click="consoleIndex()">品牌商品</button-tab-item>
+		<button-tab v-model="index" class="nav">
+			<button-tab-item @on-item-click="consoleIndex(3)">淘宝商品</button-tab-item>
+			<button-tab-item @on-item-click="consoleIndex(2)">品牌商品</button-tab-item>
 		</button-tab>
-		<div style="height: 1.28rem;"></div>
+		<div style="height: .88rem;"></div>
 		<div class="searchDiv">
 			<img src="../../../static/images/personCenter/search_img.png" alt="">
 			<form action="">
@@ -24,7 +24,6 @@
 			</ul>
 		</div>
 		<loading v-model="showLoading" :text="loadText"></loading>
-		<!--<div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>-->
 	</div>
 </template>
 
@@ -41,7 +40,7 @@
 		},
 		data() {
 			return {
-				type: 0,
+				type: 3,
 				sort_id: '',
 				goodsList: [],
 				showLoading: false,
@@ -79,7 +78,7 @@
 					method: 'get',
 					url: url+'/api/searchHistory',
 					params: {
-						type: 3
+						type: this.type
 					}
 				}).then((res) => {
 					if(res.data.code == '200') {
@@ -94,7 +93,7 @@
 			//      清除历史列表
 			del: function() {
 				this.$http.post(url+'/api/delSearchHistory', {
-					type: 3
+					type: this.type
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.$vux.toast.show({
@@ -115,30 +114,19 @@
 
 			},
 			onSubmit(e) {
-				//        this.showLoading=true
-				if(this.type==0){
 					this.$router.push({
 					name: 'searchResult',
 					query: {
 						keyword: e,
-						type: 3
+						type: this.type
 					}
 				})
-				}else{
-					this.$router.push({
-					name: 'searchResult',
-					query: {
-						keyword: e,
-						type: 2
-					}
-				})
-				}
-				
-
 			},
 			//点击头部事件
-			consoleIndex() {
+			consoleIndex(type) {
 				this.key=''
+				this.type=type
+				console.log(this.type)
 			}
 		},
 		created: function() {
@@ -151,23 +139,13 @@
 				var self = this
 				oForm.onsubmit = function(e) {
 					e.preventDefault();
-					if(self.type==0){
 						self.$router.push({
 						name: 'searchResult',
 						query: {
 							keyword: self.key,
-							type: 3
+							type: self.type
 						}
 					})
-					}else{
-						self.$router.push({
-						name: 'searchResult',
-						query: {
-							keyword: self.key,
-							type: 2
-						}
-					})
-					}
 				};
 			})
 		}
@@ -238,7 +216,7 @@
 		top: 0;
 		z-index: 99999;
 		left: calc((100% - 3.34rem)/2);
-		top: calc((.88rem - .6rem)/2 + .4rem);
+		top: calc((.88rem - .6rem)/2);
 	}
 	
 </style>

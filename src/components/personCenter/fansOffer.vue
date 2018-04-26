@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
 			<div class="header">
 				<p class="f24">帮众贡献财宝总值</p>
 				<p style="font-size: .52rem;display: flex;justify-content: center;align-items: center;">{{totalAcer.acer}}<span style="font-size: .4rem;">
@@ -51,6 +51,7 @@
 					</div>
 				</div>
 			</div>
+			<div class="empty" v-show="dataList.length==0"><img src="../../../static/images/empty/no_list.png" /></div>
 		</scroller>
 		<!--<div style="background: white;" class="bottom" v-if="show">
 			<p class="f32 title"><span @click="cancel()">取消</span><span style="color: #333;" class="f32">选择时间</span><span @click="done()">完成</span></p>
@@ -205,6 +206,9 @@
 		},
 		mounted: function() {
 
+		},
+		activated: function () {
+			this.getList()
 		}
 	}
 </script>

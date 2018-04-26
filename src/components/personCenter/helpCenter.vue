@@ -243,7 +243,7 @@
 	}
 	
 	.cell {
-		border-top: .01rem solid #e5e5e5;
+		border-top: .02rem solid #e5e5e5;
 	}
 	
 	.cell:nth-child(1) {

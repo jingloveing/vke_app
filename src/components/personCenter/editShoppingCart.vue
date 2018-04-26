@@ -1,4 +1,4 @@
-<template>
+<!--<template>
 	<div>
 		<span class="f32 c_f done-btn" @click="goback()">完成</span>
 		<div class="main">
@@ -220,4 +220,4 @@ input[type="checkbox"]:checked {
 	background-color: #F51D46;
 	color: white;
 }
-</style>
+</style>-->

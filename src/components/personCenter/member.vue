@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<x-header :left-options="{backText: ''}" :title="title" style="background-color: #f9f9f9;"></x-header>
-		<div style="height: 1.28rem;"></div>
+		<div style="height: .88rem;"></div>
 		<div>
 			<div class="list" v-for="(item,index) in list" :key="index">
 				<div class="list_left">
@@ -15,6 +15,9 @@
 						<span v-show="item.level_id==3">帮主</span>
 					</p>
 				</div>
+			</div>
+			<div class="empty" v-show="list.length==0"><img src="../../../static/images/empty/no_member.png" />
+			<p class="empty-word">暂无帮众</p>
 			</div>
 		</div>
 	</div>

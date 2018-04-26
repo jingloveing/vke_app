@@ -9,7 +9,7 @@
 		</x-header>-->
 		<div class="nav-header">
 				<x-icon type="ios-arrow-left" size="30" style="fill: white;width: .86rem;" @click="goback()"></x-icon>
-				<router-link class="serach_p" to="/home/assortment/searchPage">
+				<router-link class="serach_p" :to="{path:'/home/assortment/searchPage',query:{type:4}}">
 					<div class="search">
 						<img src="../../../static/images/search_icon.png" alt="" class="search_icon" />
 						<span>输入商品名/关键字</span>
@@ -19,7 +19,7 @@
 					<img src="../../../static/images/taobao_logo.png" alt="" style="width: .7rem; height: .5rem;"/>
 				</router-link>
 			</div>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top:.88rem;">
 			<swiper auto loop :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
 			<div>
 				<ul class="nav-small">
@@ -46,7 +46,7 @@
 				</div>
 				<div class="main_goods">
 					<ul class="goods">
-						<router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'TBDetail',query:{id:goods.id,type:1}}" :key="index">
+						<router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'TBDetail',query:{id:goods.id,type:4}}" :key="index">
 							<img :src="goods.pict_url" alt="" :onerror="defaultImg" class="goods-pic">
 							<div class="content">
 								<div class="des">{{goods.title}}</div>
@@ -206,7 +206,7 @@
 		
 	}
 	.nav-header {
-		padding-top: .4rem;
+		padding-top: .0rem;
 		width: 100%;
 		position: fixed;
 		top: 0;
@@ -343,7 +343,7 @@
 	
 	.price {
 		font-size: .32rem;
-		color: #ff425f;
+		color: #f51d46;
 	}
 	
 	.num {

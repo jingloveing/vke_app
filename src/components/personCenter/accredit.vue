@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<p class="f28 c9" style="line-height: 1rem;padding-left: .26rem;">淘宝、京东账号授权登录仅供购物方便，授权可解除</p>
+		<!--<p class="f28 c9" style="line-height: 1rem;padding-left: .26rem;">淘宝、京东账号授权登录仅供购物方便，授权可解除</p>
 		<div class="myOrders">
 			<p class="flex f32 c3">
 				<span v-text="tb_auth?'淘宝账号已授权':'淘宝账号未授权'"></span>
@@ -12,9 +12,9 @@
 				<span v-text="jd_auth?'京东账号已授权':'京东账号未授权'"></span>
 				<span class="f28 c9" @click="getAccredit(2)" v-text="jd_auth?'退出授权':'授权登录'">授权登录</span>
 			</p>
-		</div>
+		</div>-->
 		<group class="myOrder" style="margin-bottom: .2rem;">
-			<cell :link="{path:'/personCenter/setting/bindTel',query:{type:type,tel:telephone}}" title="手机绑定" :value="type=='3'?'':telephone" style="border-top: .01rem solid #e5e5e5;" is-link></cell>
+			<cell :link="{path:'/personCenter/setting/bindTel',query:{type:type,tel:telephone}}" title="手机绑定" :value="type=='4'?telephone:''" style="border-top: .01rem solid #e5e5e5;" is-link></cell>
 		</group>
 	</div>
 </template>

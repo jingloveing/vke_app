@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div style="position: fixed;z-index: 99999;right: 0;top: .4rem;height: .88rem;line-height: .88rem;" @click="show=!show">
+		<div style="position: fixed;z-index: 99999;right: 0;top: .0rem;height: .88rem;line-height: .88rem;" @click="show=!show">
 			<img src="../../../static/images/share_black_icon.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;padding: .1rem .26rem;" />
 		</div>
 		<div>
@@ -139,7 +139,7 @@
 				},
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 				command: '',
-
+                token:'',
 			}
 		},
 		methods: {
@@ -150,14 +150,14 @@
 					url: url + '/api/productInfo',
 					params: {
 						id: this.$route.query.id,
-						type: 6
+						type: 2
 					}
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.goodsDetail = res.data.data
 					}
 				}, (err) => {
-					console.log(err)
+					console.log(JSON.stringify(err))
 				})
 			},
 			toHome() {
@@ -198,36 +198,60 @@
 				console.log(id, ex)
 				var self = this
 				var s = window.shares[id]
-				if(!id || !s) {
-					plus.nativeUI.closeWaiting();
-					plus.nativeUI.toast("分享失败");
-					return;
-				}
-				if(s.authenticated) {
-					plus.nativeUI.closeWaiting();
-					self.shareMessage(s, ex);
-				} else {
-					plus.nativeUI.closeWaiting();
-					s.authorize(self.shareMessage(s, ex), function(e) {
+				self.$http.post(url + '/api/getShareImage', {
+					type: 2,
+					id: self.$route.query.id,
+				}).then((res) => {
+					if(res.data.code == '200') {
+						var picUrl = res.data.data.url
+						var dtask = plus.downloader.createDownload(picUrl, {}, function(d, status) {
+							// 下载完成
+							if(status == 200) {
+								var s = window.shares[id]
+								if(!id || !s) {
+									plus.nativeUI.closeWaiting();
+									plus.nativeUI.toast("分享失败");
+									return;
+								}
+								if(s.authenticated) {
+									plus.nativeUI.closeWaiting();
+									self.shareMessage(s, ex, d.filename);
+								} else {
+									plus.nativeUI.closeWaiting();
+									s.authorize(self.shareMessage(s, ex, d.filename), function(e) {
 
-					});
-				}
+									});
+								}
+							} else {
+								plus.nativeUI.closeWaiting();
+								plus.nativeUI.toast("分享失败");
+							}
+						});
+						dtask.start();
+
+					} else {
+						plus.nativeUI.closeWaiting();
+						plus.nativeUI.toast("分享失败，请重试");
+					}
+				}, (err) => {
+					plus.nativeUI.closeWaiting();
+					plus.nativeUI.toast("分享失败，请重试");
+				})
 
 			},
 			//发送分享消息
-			shareMessage(s, ex) {
+			shareMessage(s, ex,d) {
 				var self = this
 				s.send({
-					title: '享利客——'+self.goodsDetail.product_name,
-					content: self.goodsDetail.product_name,
-					href: self.goodsDetail.share_url,
-					thumbs: self.goodsDetail.small_images, 
+					content:self.goodsDetail.product_name,
+					pictures: [d],
 					extra: {
 						scene: ex
 					}
 				}, function() {
 					plus.nativeUI.toast("分享成功！");
 				}, function(e) {
+					console.log(JSON.stringify(e))
 					plus.nativeUI.toast("取消分享");
 				});
 			},
@@ -251,7 +275,15 @@
 			
 		},
 		created: function() {
-			this.getGoodsDetail()
+			this.token=plus.storage.getItem("token")
+			if(this.token){
+				this.getGoodsDetail()
+			}else{
+				plus.nativeUI.toast("请登录");
+				this.$router.go(-1)
+				
+			}
+			
 
 		},
 		mounted: function() {

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<x-header :left-options="{backText: ''}" title="选择收货地址" style="background-color: #f9f9f9;">
-			<a slot="right" style="color: #9A7BFF;font-size: .32rem;margin-top: .4rem;">
+			<a slot="right" style="color: #9A7BFF;font-size: .32rem;">
 				<router-link to="/personCenter/myOrder/addressList">
 					管理
 				</router-link>
@@ -13,9 +13,12 @@
 				<h5 class="f28 c3"><span class="left"><span class="default" v-show="item.is_default==1">默认</span><span>{{item.consignee}}</span></span><small class="f28" style="font-family: arial;">{{item.telephone}}</small></h5>
 				<p class="f26 c9">{{item.province}}{{item.city}}{{item.country}}{{item.address}}</p>
 			</div>
+			<div class="empty" v-show="list.length==0"><img src="../../../static/images/empty/address.png" />
+			<p class="empty-word">您还未添加地址</p>
+			</div>
 		</div>
 		<div style="position:fixed;bottom: 0;width: 100%;height: .96rem;">
-			<x-button @click.native="click()" type="primary" action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32">添加新地址</x-button>
+			<x-button @click.native="click()" action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32">添加新地址</x-button>
 		</div>
 	</div>
 </template>

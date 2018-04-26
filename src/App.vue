@@ -1,8 +1,11 @@
 <template>
 	<div id="app">
 		<x-header :left-options="{backText: ''}" :title="$route.meta.title" v-show="$route.meta.showHeader"></x-header>
-		<div style="height: 1.28rem;" v-show="$route.meta.showHeader"></div>
-		<router-view></router-view>
+		<div style="height: .88rem;" v-show="$route.meta.showHeader"></div>
+		<keep-alive>
+			<router-view v-if="$route.meta.keepAlive"></router-view>
+		</keep-alive>
+		<router-view v-if="!$route.meta.keepAlive"></router-view>
 		<app-footer v-show="$route.meta.showFooter"></app-footer>
 		<div class="toTop" @click="toTop()">
 			<img src="../static/images/top.png" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;">

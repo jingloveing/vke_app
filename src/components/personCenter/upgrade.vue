@@ -18,7 +18,7 @@
 					<td>长老</td>
 					<td style="padding:.24rem .2rem;">
 						<p>两种方法：</p>
-						<p>a.在特工商品赚取一次性或积累购买产品188元产品免费升级正式长老</p>
+						<p>a.在特供商品赚取一次性或积累购买产品188元产品免费升级正式长老</p>
 						<p>b.旗下团队规模拥有150位以上帮众即可免费成为代理长老(代理长老考核规则详见白鹭书院)</p>
 					</td>
 				</tr>
@@ -28,7 +28,7 @@
 				</tr>
 			</table>
 		</div>
-		<router-link to="/selfsupport" class="flex f28 c3 footer">
+		<router-link :to="{name:'GoodsDetail'}" class="flex f28 c3 footer">
 			<img src="../../../static/images/login/cart_s_f.png" alt="" />
 			<span>购买特供商品，升级地位</span>
 		</router-link>

@@ -1,30 +1,20 @@
 <template>
   <div style="background-color: white;">
-   <div style="position: fixed;z-index: 999999;width: 100%;background:#f9f9f9;padding-top: .4rem;height: .88rem;">
+   <div style="position: fixed;z-index: 999999;width: 100%;background:#f9f9f9;height: .88rem;">
      <div class="goHome" @click="goHome()">
-       <x-icon type="ios-arrow-left" size="30" style="fill: #333;width: .86rem;margin-top: 6px;" @click="goback()"></x-icon>
+       <x-icon type="ios-arrow-left" size="30" style="fill: #333;width: .86rem;margin-top: 6px;"></x-icon>
      </div>
      
-     <div @click="onFocus">
+     <div @click="onFocus()">
        <search placeholder="请输入商品名称" cancel-text="取消"
                :results="results"
                v-model="keywords"
                ref="search"  style="width: 90%;margin-left: 10%;"></search>
      </div>
    </div>
-    <!--<div v-show="searchResults" id="hot">-->
-      <!--<p style="font-size: .28rem;color: #666;padding: .2rem .3rem">热门搜索</p>-->
-      <!--<ul class="hot_list">-->
-        <!--<li v-for="hotList in hotList" v-text="hotList.keywords" @click="onSubmit(hotList.keywords)">冬装</li>-->
-      <!--</ul>-->
-      <!--<p style="font-size: .28rem;color: #666;padding:0 .3rem .2rem ;">历史搜索 <img src="../assets/trash.png" alt="" style="margin-top:.05rem;width: .28rem;height: .28rem;float: right;" @click="del"></p>-->
-      <!--<ul class="hot_list">-->
-        <!--<li v-for="historyList in historyList" v-text="historyList.keywords" @click="onSubmit(historyList.keywords)">冬装</li>-->
-      <!--</ul>-->
-    <!--</div>-->
+    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
     <div id="results" style="overflow: hidden;">
-      <tab :line-width=0 active-color='#9a7bff' v-model="index" custom-bar-width="1.2rem" bar-active-color="#9a7bff"
-           style="margin-top: 1.28rem;">
+      <tab :line-width=0 active-color='#9a7bff' v-model="index" custom-bar-width="1.2rem" bar-active-color="#9a7bff">
         <tab-item class="vux-center" v-for="(item, index) in list" @on-item-click="change(index)" :key="index">{{item}}
         </tab-item>
         <tab-item class="vux-center" @on-item-click="change(3)">价格 <div style="display: inline-block;">
@@ -33,11 +23,10 @@
 				<img src="../../../static/images/sort_price_desc.png" style="width: .12rem;height: .19rem;" v-show="asc && !defaultsort"/>
 			</div>
 							</tab-item>
-      </tab>
-      <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 2.16rem;">
+     </tab>
       <div class="main_goods">
         <ul class="goods">
-          <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :key="index" :to="{name:'TBDetail',query:{id:goods.id,type:7}}">
+          <li class="goods_list" v-for="(goods,index) in goodsList" :key="index" @click="todetail(goods.id,type,goods.store_id)">
             <img :src="goods.thumb_url" alt="" :onerror="defaultImg">
             <div class="content">
               <div class="des" v-text="goods.product_name">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
@@ -52,13 +41,14 @@
                 <span class="num">{{goods.volume}}件已售</span>
               </div>
             </div>
-          </router-link>
+          </li>
         </ul>
       </div>
-      </scroller>
     </div>
+    <div class="empty" v-show="goodsList.length==0"><img src="../../../static/images/empty/no_goods.png" />
+			</div>
+    </scroller>
     <loading v-model="showLoading" :text="loadText"></loading>
-    <!--<div class="toTop" @click="toTop()"><img src="/static/images/top.png" alt="" style="width: .35rem;height: .15rem;display: block;margin: .2rem auto .1rem;"><span>顶部</span></div>-->
 
   </div>
 </template>
@@ -97,6 +87,7 @@
         order:1,
         defaultsort:true,
 				asc:true,
+				type:''
       }
     },
     mounted() {
@@ -106,6 +97,7 @@
     methods: {
       //      执行搜索
       doSearch:function(){
+      	this.showLoading=true
       	if(this.asc==true){
 					this.sort='desc'
 				}else if(this.asc==false){
@@ -116,7 +108,7 @@
         this.$http({
           method:'get',
           url:url+'/api/searchProdcut',
-          params:{keywords:this.keywords,sort:this.sort,page:this.pageIndex,limit:this.limit,type:this.$route.query.type,order:this.order}
+params:{keywords:this.keywords,sort:this.sort,page:this.pageIndex,limit:this.limit,type:this.$route.query.type,order:this.order,store_id:this.$route.query.id}
         }).then((res)=>{
           this.showLoading=false
           if(res.data.code=='200'){
@@ -124,55 +116,35 @@
               this.noData=true
               this.$refs.myscroller.finishInfinite(2);
             }else{
+//          	this.goodsList=[]
               this.goodsList=this.goodsList.concat(res.data.data.list)
+              this.type=res.data.data.type
               this.$refs.myscroller.finishPullToRefresh()
             }
           }else if(res.data.code=='400'){
           	  this.noData=true
               this.$refs.myscroller.finishInfinite(2);
-//            this.$vux.toast.show({
-//              type:"cancel",
-//              text:res.data.message
-//            })
           }
         },(err)=>{
+        	this.showLoading=false
           console.log(err)
         })
       },
-//      //      热门推荐列表
-//      getType:function(){
-//        this.$http({
-//          method:'POST',
-//          url:'/api/serrchSort'
-//        }).then((res)=>{
-//          if(res.data.code=='200'){
-//            this.list = res.data.data.sorts_type
-//          }else{
+//    onSubmit(e) {
+//      this.$refs.search.setBlur();
+//      this.keywords=e
+//      this.showLoading=true
+//      this.doSearch()
 //
-//          }
-//        },(err)=>{
-//          console.log(err)
-//        })
-//      },
-//      },
-      onSubmit(e) {
-        console.log(e)
-        this.$refs.search.setBlur();
-        this.keywords=e
-        this.showLoading=true
-        this.doSearch()
-
-      },
-      onFocus() {
-        this.$router.go(-1)
+//    },
+      onFocus(ev) {
+        window.history.back()
       },
       onCancel() {
 //  应该返回到智搜首页
-        history.go(-1)
-//      console.log('aa')
+         window.history.back()
       },
       change(e){
-      	console.log(e)
       	if(e==3){
 					this.defaultsort=false
 					this.asc=!this.asc
@@ -186,11 +158,8 @@
         this.doSearch()
 
       },
-//      toTop(){
-//        document.documentElement.scrollTop = document.body.scrollTop =0;
-//      },
       goHome(){
-        this.$router.push({path:'/home'})
+        this.$router.go(-1)
       },
       infinite(done) {
         if (this.noData) {
@@ -219,11 +188,19 @@
           done()
         }, 1500)
       },
+      todetail(id,type,store_id){
+      	if(type==2){
+      		//品牌店铺
+		this.$router.push({name:'BrandDetail',query:{id:id,type:type,store_id:store_id}})
+      	}else{
+      		//淘宝
+      		this.$router.push({name:'TBDetail',query:{id:id,type:type}})
+      	}
+      }
     },
     created:function(){
       this.keywords = this.$route.query.keyword
       this.doSearch()
-//      this.getType()
     },
 
   }

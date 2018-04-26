@@ -18,6 +18,9 @@
 					<span style="color: #927BFF;" v-show="item.is_default==1">默认地址</span>
 				</div>
 			</div>
+			<div class="empty" v-show="list.length==0"><img src="../../../static/images/empty/address.png" />
+			<p class="empty-word">您还未添加地址</p>
+			</div>
 		</div>
 		<div style="height: .96rem;"></div>
 		<div style="position:fixed;bottom: 0;width: 100%;height: .96rem;">

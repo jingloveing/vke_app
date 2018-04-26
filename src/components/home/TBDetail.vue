@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<div style="position: fixed;z-index: 99999;right: 0;top: .4rem;height: .88rem;line-height: .88rem;" @click="show=!show">
+	<div v-show="token">
+		<div style="position: fixed;z-index: 99999;right: 0;top: .0rem;height: .88rem;line-height: .88rem;" @click="show=!show">
 			<img src="../../../static/images/share_black_icon.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;padding: .1rem .26rem;" />
 		</div>
 		<div>
@@ -8,26 +8,10 @@
 				<swiper auto loop :list="goodsDetail.pict_url" style="width:100%;" height="7.5rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" :onerror="defaultImg"></swiper>
 			</div>
 			<div class="detail">
-				<p class="name">{{goodsDetail.title}}</p>
+				<p class="name">{{goodsDetail.product_name}}</p>
 				<div class="flex" style="align-items: flex-end;">
-					<span class="prices"><small>￥</small><span>{{goodsDetail.reserve_price.rmb}}</span><small v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</small></span>
-					<!--<div class="f28 flex c9" style="margin:0 0 .08rem .3rem;">可返
-						<div class="header_list_num jewel" style="margin-left: .1rem;">
-							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
-						</div>
-						<div class="header_list_num gold">
-                	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
-                	       8.86
-                	     </div>
-                	     <div class="header_list_num silver">
-                	   	   <img src="../../../static/images/personCenter/silver.png" alt="" />
-                	       8.86
-                	     </div>
-                	     <div class="header_list_num coppers">
-                	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
-                	       8.86
-                	     </div>
-					</div>-->
+					<span class="prices">券后：<small>￥</small><span>{{goodsDetail.reserve_price.rmb}}</span><small v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</small></span>
+					<span class="f28" style="margin:0 0 .08rem .3rem;color: #fbac03;">分享预估赚：2.22元</span>
 				</div>
 				<div style="margin-left: .2rem;display: inline-block;">
 
@@ -100,7 +84,8 @@
 <script>
 	import { XHeader, Cell, CellBox, CellFormPreview, Group, Badge, Loading, Swiper, Toast, XNumber } from 'vux'
 	import Clipboard from 'clipboard'
-const url='http://xlk.dxvke.com/'
+	const url = 'http://xlk.dxvke.com/'
+	// const url=""
 	export default {
 		components: {
 			Group,
@@ -116,6 +101,7 @@ const url='http://xlk.dxvke.com/'
 		},
 		data() {
 			return {
+				token: '',
 				showDetail: false,
 				showActionsheet: true,
 				collect: true,
@@ -148,7 +134,7 @@ const url='http://xlk.dxvke.com/'
 				this.id = this.$route.query.id;
 				this.$http({
 					method: 'get',
-					url: url+'/api/productInfo',
+					url: url + '/api/productInfo',
 					params: {
 						id: this.$route.query.id,
 						type: this.$route.query.type
@@ -158,26 +144,27 @@ const url='http://xlk.dxvke.com/'
 						this.goodsDetail = res.data.data
 					}
 				}, (err) => {
-					console.log(err)
+					console.log(JSON.stringify(err))
 				})
 			},
 			//      收藏----取消收藏
-			toCollect: function() {
-				this.id = this.$route.query.id;
-				this.$http.post(url+'/api/doCollect', {
-						id: this.$route.query.id,
-						type: 4
-				}).then((res) => {
+			toCollect() {
+				var data = {
+					id: this.$route.query.id,
+					type: 4
+				}
+				console.log(JSON.stringify(data))
+				this.$http.post(url + '/api/doCollect', data).then((res) => {
 					if(res.data.code == '200') {
-						this.toast=res.data.data.message
-						this.showToast=true
-						this.goodsDetail.is_collect=res.data.data.is_collect
-					}else{
-						this.toast=res.data.error
-						this.showToast=true
+						this.toast = res.data.data.message
+						this.showToast = true
+						this.goodsDetail.is_collect = res.data.data.is_collect
+					} else {
+						this.toast = res.data.error
+						this.showToast = true
 					}
 				}, (err) => {
-					console.log(err)
+					console.log(JSON.stringify(err))
 				})
 			},
 			toHome() {
@@ -190,11 +177,21 @@ const url='http://xlk.dxvke.com/'
 				//        this.$router.push({name:'goodsDetail',query:{id:id}})
 				location.href = 'http://www.dxvke.com/goodsDetail/?id=' + id
 			},
-			tobuy(){
-				this.$router.push({name:'TBQuan',query:{url:this.goodsDetail.click_url}})
+			tobuy() {
+				this.$router.push({
+					name: 'TBQuan',
+					query: {
+						url: this.goodsDetail.click_url
+					}
+				})
 			},
-			toquan(){
-				this.$router.push({name:'TBQuan',query:{url:this.goodsDetail.coupon_url}})
+			toquan() {
+				this.$router.push({
+					name: 'TBQuan',
+					query: {
+						url: this.goodsDetail.coupon_url
+					}
+				})
 			},
 			//分享操作
 			shareAction(id, ex) {
@@ -202,30 +199,56 @@ const url='http://xlk.dxvke.com/'
 				console.log(id, ex)
 				var self = this
 				var s = window.shares[id]
-				if(!id || !s) {
-					plus.nativeUI.closeWaiting();
-					plus.nativeUI.toast("分享失败");
-					return;
-				}
-				if(s.authenticated) {
-					plus.nativeUI.closeWaiting();
-					self.shareMessage(s, ex);
-				} else {
-					plus.nativeUI.closeWaiting();
-					s.authorize(self.shareMessage(s, ex), function(e) {
+				self.$http.post(url + '/api/getShareImage', {
+					type: 4,
+					id: self.$route.query.id,
+				}).then((res) => {
+					if(res.data.code == '200') {
+						var picUrl = res.data.data.url
+						var dtask = plus.downloader.createDownload(picUrl, {}, function(d, status) {
+							// 下载完成
+							if(status == 200) {
+								var s = window.shares[id]
+								if(!id || !s) {
+									plus.nativeUI.closeWaiting();
+									plus.nativeUI.toast("分享失败");
+									return;
+								}
+								if(s.authenticated) {
+									plus.nativeUI.closeWaiting();
+									self.shareMessage(s, ex, d.filename);
+								} else {
+									plus.nativeUI.closeWaiting();
+									s.authorize(self.shareMessage(s, ex, d.filename), function(e) {
 
-					});
-				}
+									});
+								}
+							} else {
+								plus.nativeUI.closeWaiting();
+								plus.nativeUI.toast("分享失败");
+							}
+						});
+						dtask.start();
+
+					} else {
+						plus.nativeUI.closeWaiting();
+						plus.nativeUI.toast("分享失败，请重试");
+					}
+				}, (err) => {
+					plus.nativeUI.closeWaiting();
+					plus.nativeUI.toast("分享失败，请重试");
+				})
 
 			},
 			//发送分享消息
-			shareMessage(s, ex) {
+			shareMessage(s, ex, d) {
 				var self = this
 				s.send({
-					title: '享利客——'+self.goodsDetail.product_name,
+					//					title: '享利客——'+self.goodsDetail.product_name,
 					content: self.goodsDetail.product_name,
-					href: self.goodsDetail.share_url,
-					thumbs: self.goodsDetail.small_images, 
+					pictures: [d],
+					//					href: self.goodsDetail.share_url,
+					//					thumbs: self.goodsDetail.small_images, 
 					extra: {
 						scene: ex
 					}
@@ -234,10 +257,16 @@ const url='http://xlk.dxvke.com/'
 				}, function(e) {
 					plus.nativeUI.toast("取消分享");
 				});
-				}
+			}
 		},
 		created: function() {
-			this.getDetail()
+			this.token = plus.storage.getItem("token")
+			if(this.token) {
+				this.getDetail()
+			} else {
+				plus.nativeUI.toast("请登录");
+				this.$router.go(-1)
+			}
 
 		},
 		mounted: function() {
@@ -504,7 +533,8 @@ const url='http://xlk.dxvke.com/'
 		vertical-align: middle;
 		color: #ff5200;
 	}
-	.tb-quan div{
+	
+	.tb-quan div {
 		padding: 0 .04rem;
 	}
 	

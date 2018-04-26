@@ -5,16 +5,18 @@
 				<img src="../../../static/images/address_icon.png" alt="" class="icon" />
 			</div>
 			<div class="user-des">
-				<div>
+				<div v-show="address.length==0" class="f28 c3">请添加收货地址</div>
+				<div v-show="address.length!==0">
 					<p class="user-info1"><span class="name">{{address.consignee}}</span><span>{{address.telephone}}</span></p>
 					<p class="user-address">{{address.province}}{{address.city}}{{address.country}}{{address.address}}</p>
+					
 				</div>
 				<img src="../../../static/images/gt_white.png" alt="" class="gt-icon" />
 			</div>
 		</router-link>
 		<div class="list">
 			<router-link class="order_des" to="">
-				<img :src="data.small_images" alt="" class="order_pic" />
+				<img :src="data.pict_url[0].img" alt="" class="order_pic" />
 				<div class="order_des_m flex">
 					<p class="break break_two order_name">{{data.product_name}}</p>
 					<p class="price">
@@ -78,6 +80,7 @@
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.address = res.data.data
+						console.log(JSON.stringify(this.address))
 					}
 				}, (err) => {
 					console.log(err)

@@ -100,13 +100,13 @@
 				})
 			},
 			save() {
+				var self = this
 				var img = this.list[activeIndex].image
+				console.log(img)
 				plus.gallery.save(img, function() {
-					this.toast = "保存成功"
-					this.showToast = true
+					plus.nativeUI.toast("保存成功");
 				}, function() {
-					this.toast = "保存失败"
-					this.showToast = true
+					plus.nativeUI.toast("保存失败");
 				})
 			},
 			//分享操作
@@ -141,7 +141,6 @@
 			},
 			//发送分享消息
 			shareMessage(s,ex,d) {
-				console.log(JSON.stringify(d))
 				var self = this
 				s.send({
 					content: "精打细算不如能省会赚，享利客APP一款能赚钱的购物APP",
@@ -150,9 +149,10 @@
 						scene: ex
 					}
 				}, function() {
+					self.show=false
 					plus.nativeUI.toast("分享成功！");
 				}, function(e) {
-					console.log(JSON.stringify(e))
+					self.show=false
 					plus.nativeUI.toast("取消分享");
 				});
 			}
@@ -163,8 +163,8 @@
 		mounted: function() {
 
 		},
-		computed: {
-
+		activated: function () {
+              this.show=false
 		}
 	}
 </script>

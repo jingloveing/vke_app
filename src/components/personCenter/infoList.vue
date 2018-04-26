@@ -7,12 +7,16 @@
 				<small class="f24 c9" style="font-family: arial;">{{item.create_time}}</small></h5>
 			<p class="f26 c9">{{item.content}}</p>
 		</div>
+		<div class="empty" v-show="list.length==0"><img src="../../../static/images/empty/info.png" />
+			<p class="empty-word">暂无消息</p>
+		</div>
 	</div>
 </template>
 
 <script>
-	import { XHeader} from 'vux'
-	const url='http://xlk.dxvke.com/'
+	import { XHeader } from 'vux'
+	const url = 'http://xlk.dxvke.com/'
+	//  const url=""
 	export default {
 		name: 'Member',
 		components: {
@@ -20,23 +24,23 @@
 		},
 		data() {
 			return {
-               title:'',
-               type:'',
-               list:[],
+				title: '',
+				type: '',
+				list: [],
 			}
 		},
 		methods: {
-            //获取消息列表
+			//获取消息列表
 			getList() {
 				this.$http({
-					methods:'get',
-					url:url+'/api/messageList',
-					params:{
-						cate:this.type
+					methods: 'get',
+					url: url + '/api/messageList',
+					params: {
+						cate: this.type
 					}
-					}).then((res) => {
+				}).then((res) => {
 					if(res.data.code == '200') {
-						this.list = res.data.data
+						this.list = res.data.data.list
 					} else {
 
 					}
@@ -46,35 +50,45 @@
 			},
 		},
 		created: function() {
-            this.type=this.$route.query.type
-            this.getList()
+			this.type = this.$route.query.type
+			this.getList()
 		},
 		mounted: function() {
-            if(this.type==1){
-            	this.title='商品发货'
-            }else if(this.type==2){
-            	this.title='财宝入库'
-            }else{
-            	this.title='官方信件'
-            }
-		}
+			if(this.type == 1) {
+				this.title = '商品发货'
+			} else if(this.type == 2) {
+				this.title = '财宝入库'
+			} else {
+				this.title = '官方信件'
+			}
+		},
+		activated: function() {
+			this.type = this.$route.query.type
+			if(this.type == 1) {
+				this.title = '商品发货'
+			} else if(this.type == 2) {
+				this.title = '财宝入库'
+			} else {
+				this.title = '官方信件'
+			}
+			this.getList()
+		},
 	}
 </script>
 
 <style scoped="scoped">
-	.list{
+	.list {
 		background: white;
 		border-radius: .06rem;
 		margin: .3rem .26rem;
 		padding: .27rem .29rem;
 	}
-	.list h5{
+	
+	.list h5 {
 		font-weight: normal;
 		margin-bottom: .1rem;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 	}
-	
-
 </style>

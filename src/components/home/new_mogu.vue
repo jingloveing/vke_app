@@ -68,7 +68,7 @@
 	<div>
 		<x-header title="蘑菇街" :left-options="{showBack: false}">
 		</x-header>
-		<x-icon type="ios-arrow-left" size="30" style="fill: #666;width: .91rem;position: fixed;left: 0;top: .6rem;z-index: 9999;" @click="goHome()"></x-icon>
+		<x-icon type="ios-arrow-left" size="30" style="fill: #666;width: .91rem;position: fixed;left: 0;top: .2rem;z-index: 9999;" @click="goHome()"></x-icon>
 		<!--<iframe src="https://m.jd.com/?cu=true&utm_source=kong&utm_medium=tuiguang&utm_campaign=t_1000379762_&utm_term=1ddc6418e42347398c152c4dbbe036ab&abt=3" id="Iframe" frameborder="0" scrolling="" style="border:0px;" width="100%" height=""></iframe>-->
 
 		<div class="return flex" @click="goHome()">
@@ -117,7 +117,7 @@
 				this.showLoading=true
 				var self = this
 				this.webview = plus.webview.create(self.$route.query.url, 'new', {
-					top: "65px",
+					top: "45px",
 					bottom: "0",
 				});
 				this.webview.addEventListener('close', function() {
@@ -160,10 +160,10 @@
 
 				}]);
 					console.log("显示",JSON.stringify(self.view))
-					self.webview.setStyle({top:"65px",bottom:"25px"});
+					self.webview.setStyle({top:"45px",bottom:"25px"});
 					self.view.show();
 				} else {
-					self.webview.setStyle({top:"65px",bottom:"0"});
+					self.webview.setStyle({top:"45px",bottom:"0"});
 					self.view.clear()
 				}
 			},

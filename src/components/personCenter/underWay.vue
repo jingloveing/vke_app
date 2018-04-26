@@ -13,7 +13,7 @@
 		<tab :line-width=2 active-color='#9a7bff' v-model="index" custom-bar-width="1rem">
 			<tab-item class="vux-center" v-for="(item, index) in list2" @on-item-click="change(item,index)" :key="index">{{item}}</tab-item>
 		</tab>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 4.84rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 4.44rem;">
 			<div class="tab-swiper" v-show="index==0">
 				<div class="title">
 					<span class="f30 c3">帮众贡献押运中财宝总计</span>
@@ -32,6 +32,7 @@
 					<div class="header_list_num coppers" v-show="totalAcer.type==1">
 						<img src="../../../static/images/personCenter/coppers.png" alt="" />{{totalAcer.acer}}
 					</div>
+					<div class="header_list_num coppers" v-show="totalAcer.type==''">0</div>
 				</div>
 				<div>
 					<div class="list" v-for="(item,index) in dataList" :key="index">
@@ -162,8 +163,8 @@
 <script>
 	import { Tab, TabItem, } from 'vux'
 	const list = () => ['帮众', '京东', '蘑菇街']
-	//	const url = 'http://xlk.dxvke.com'
-	const url = ''
+	const url = 'http://xlk.dxvke.com'
+//	const url = ''
 	export default {
 		components: {
 			Tab,
@@ -214,12 +215,12 @@
 					}
 				}).then((res) => {
 					if(res.data.code == '200') {
+						this.totalAcer=res.data.data.totalAcer
 						if(res.data.data.list.length == 0) {
 							this.noData = true
 							this.$refs.myscroller.finishInfinite(2);
 						} else {
 							this.dataList = this.dataList.concat(res.data.data.list)
-							this.totalAcer=res.data.data.totalAcer
 							this.$refs.myscroller.finishPullToRefresh()
 						}
 					} else {

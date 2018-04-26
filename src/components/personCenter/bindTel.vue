@@ -113,8 +113,8 @@
 				self.$http.post(url + '/api/login', {
 					type: "1",
 					userInfo: plus.storage.getItem('userInfo'),
-					telephone: self.tel
-
+					telephone: self.tel,
+                    code:self.code
 				}).then((res) => {
 					if(res.data.code == '200') {
 						self.$vux.toast.show({

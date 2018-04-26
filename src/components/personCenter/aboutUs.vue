@@ -51,9 +51,11 @@
 	h5{
 		font-size: .36rem;
 		padding: .4rem 0 .3rem;
+		font-weight: normal;
 	}
 	h6{
 		font-size: .3rem;
+		font-weight: normal;
 	}
 	.main{
 		background: white;
