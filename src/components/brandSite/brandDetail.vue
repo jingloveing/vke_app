@@ -11,7 +11,8 @@
 			<div class="detail">
 				<p class="name">{{goodsDetail.product_name}}</p>
 				<div class="flex" style="align-items: flex-end;">
-					<span class="prices"><small>￥</small><span>{{goodsDetail.reserve_price.rmb}}</span><small v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</small></span>
+					<span class="prices">券后：<small>￥</small><span>{{goodsDetail.reserve_price.rmb}}</span><small v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</small></span>
+					<span class="f28" style="margin:0 0 .08rem .3rem;color: #fbac03;">分享预估赚：{{goodsDetail.share_commission}}元</span>
 					<!--<div class="f28 flex c9" style="margin:0 0 .08rem .3rem;">可返
 						<div class="header_list_num jewel" style="margin-left: .1rem;">
 							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
@@ -96,6 +97,23 @@
 				<div @click="show=!show" class="f32 c3" style="text-align: center;line-height: .96rem;border-top: .01rem solid #e5e5e5;">取消</div>
 			</div>
 		</transition>
+		<!--ios领券-->
+		<div v-show="show1" class="ios-tkl">
+			<div class="ios-tkl-bd">
+			</div>
+			<div class="ios-tkl-main">
+				<div class="ios-tkl-main-des">
+					<p class="ios-tkl-main-title">淘口令购买</p>
+					<input type="text" :value="command" class="ios-tkl-main-word" id="kouling">
+					<p class="des">在点击复制后，打开淘宝APP购买</p>
+					<p class="des">若一键复制失败，请长按虚线内文字</p>
+					<button class="m_btn" data-clipboard-target="#kouling">
+            一键复制
+          </button>
+				</div>
+				<img src="../../../static/images/cancel_img.png" alt="" @click="cancel1">
+			</div>
+		</div>
 	</div>
 </template>
 <script>
@@ -123,6 +141,7 @@
 				toast: '',
 				showLoading: false,
 				show: false,
+				show1: false,
 				goodsDetail: {
 					product_name: '',
 					pict_url: [],
@@ -139,7 +158,7 @@
 				},
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 				command: '',
-                token:'',
+				token: '',
 			}
 		},
 		methods: {
@@ -158,6 +177,24 @@
 					}
 				}, (err) => {
 					console.log(JSON.stringify(err))
+				})
+			},
+			//     淘口令
+			getCommand: function() {
+				this.$http({
+					method: 'POST',
+					url: url+'/api/productCreateCommand',
+					data: {
+						coupon_url: this.goodsDetail.coupon_url,
+						pict_url: this.goodsDetail.pict_url,
+						product_name: this.goodsDetail.product_name
+					}
+				}).then((res) => {
+					if(res.data.code == '200') {
+						this.command = res.data.data.command
+					}
+				}, (err) => {
+					console.log(err)
 				})
 			},
 			toHome() {
@@ -240,10 +277,10 @@
 
 			},
 			//发送分享消息
-			shareMessage(s, ex,d) {
+			shareMessage(s, ex, d) {
 				var self = this
 				s.send({
-					content:self.goodsDetail.product_name,
+					content: self.goodsDetail.product_name,
 					pictures: [d],
 					extra: {
 						scene: ex
@@ -256,38 +293,69 @@
 				});
 			},
 			tobuy() {
-				this.$router.push({
-					name: 'TBQuan',
-					query: {
-						url: this.goodsDetail.click_url
-					}
-				})
+				var u = navigator.userAgent;
+				var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+				var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+				if(isAndroid) {
+					this.$router.push({
+						name: 'TBQuan',
+						query: {
+							url: this.goodsDetail.click_url
+						}
+					})
+				}
+				if(isiOS) {
+					this.show1 = true
+					this.getCommand()
+				}
+
 			},
 			toquan() {
-				this.$router.push({
-					name: 'TBQuan',
-					query: {
-						url: this.goodsDetail.coupon_url
-					}
-				})
+				var u = navigator.userAgent;
+				var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+				var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+				if(isAndroid) {
+					this.$router.push({
+						name: 'TBQuan',
+						query: {
+							url: this.goodsDetail.coupon_url
+						}
+					})
+				}
+				if(isiOS) {
+					this.show1 = true
+					this.getCommand()
+				}
+			},
+			cancel1() {
+				document.body.style.overflow = 'scroll';
+				this.show1 = false
 			},
 
-			
 		},
 		created: function() {
-			this.token=plus.storage.getItem("token")
-			if(this.token){
+			this.token = plus.storage.getItem("token")
+			if(this.token) {
 				this.getGoodsDetail()
-			}else{
+			} else {
 				plus.nativeUI.toast("请登录");
 				this.$router.go(-1)
-				
+
 			}
-			
 
 		},
 		mounted: function() {
-
+			this.$nextTick(function() {
+				let self = this
+				const clipboard = new Clipboard('.m_btn')
+				clipboard.on('success', function(e) {
+					plus.nativeUI.toast("复制成功");
+					e.clearSelection();
+				});
+				clipboard.on('error', function(e) {
+					plus.nativeUI.toast("请选择“拷贝”进行复制");
+				});
+			})
 		},
 	}
 </script>
@@ -569,5 +637,107 @@
 		border-style: solid;
 		-webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
 		transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+	}
+	/*ios领券*/
+	
+	.ios-tkl-bd {
+		width: 100%;
+		height: 100%;
+		opacity: .5;
+		background-color: black;
+		position: fixed;
+		top: 0;
+		z-index: 100;
+	}
+	
+	.ios-tkl-main {
+		z-index: 200;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 5.98rem;
+		height: 3.64rem;
+		margin: 2.5rem calc((100% - 5.98rem) / 2);
+		background-color: white;
+		border-radius: .15rem;
+	}
+	
+	.ios-tkl-main-des {
+		position: absolute;
+		text-align: center;
+		width: 100%;
+	}
+	
+	.ios-tkl-main-des>.des {
+		font-size: .2rem;
+		color: #666666;
+		margin: 0 .16rem;
+		line-height: .40rem;
+		height: .40rem;
+	}
+	
+	.m_btn {
+		display: inline-block;
+		font-size: .26rem;
+		color: white;
+		width: 4.64rem;
+		line-height: .68rem;
+		border-radius: .8rem;
+		border: none;
+		background: -webkit-linear-gradient(left, #ff526d, #f8214f);
+		/* Safari 5.1 - 6.0 */
+		background: -o-linear-gradient(left, #ff526d, #f8214f);
+		/* Opera 11.1 - 12.0 */
+		background: -moz-linear-gradient(left, #ff526d, #f8214f);
+		/* Firefox 3.6 - 15 */
+		background: linear-gradient(left, #ff526d, #f8214f);
+		/* 标准的语法 */
+		margin: .1rem 0;
+	}
+	
+	.ios-tkl-main img {
+		width: .5rem;
+		height: .5rem;
+		position: absolute;
+		top: -.7rem;
+		right: -.6rem;
+	}
+	
+	.ios-tkl-main-title {
+		color: white;
+		font-size: .32rem;
+		text-align: center;
+		line-height: .72rem;
+		border-radius: .15rem .15rem 0 0;
+		background: -webkit-linear-gradient(left, #ff526d, #f8214f);
+		/* Safari 5.1 - 6.0 */
+		background: -o-linear-gradient(left, #ff526d, #f8214f);
+		/* Opera 11.1 - 12.0 */
+		background: -moz-linear-gradient(left, #ff526d, #f8214f);
+		/* Firefox 3.6 - 15 */
+		background: linear-gradient(left, #ff526d, #f8214f);
+		/* 标准的语法 */
+	}
+	
+	.ios-tkl-main-word {
+		-webkit-appearance: none;
+		-webkit-tap-highlight-color: rgba(255, 0, 0, 0);
+		border: .01rem dotted #ff425f;
+		text-align: center;
+		background-color: #ffe7eb;
+		font-size: .32rem;
+		line-height: .88rem;
+		color: #666666;
+		margin: .10rem .16rem;
+		border-radius: .1rem;
+	}
+	
+	.cancel {
+		width: .5rem;
+		height: .5rem;
+		position: fixed;
+		right: calc(((100% - 3.2rem) / 2) - .5rem);
+		top: calc(((100% - 3.2rem) / 2) - 3rem);
+		z-index: 200;
 	}
 </style>

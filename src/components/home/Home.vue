@@ -101,7 +101,7 @@
 	import { Swiper, SwiperItem, Loading } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 	const url = 'http://xlk.dxvke.com'
-	//	const url = ''
+//		const url = ''
 	export default {
 		name: 'Home',
 		components: {

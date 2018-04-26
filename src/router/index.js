@@ -161,7 +161,7 @@ routes: [{
 		component: ShareRoom,
 		meta: {
 			showFooter: true,
-//			keepAlive: true
+			keepAlive: true
 		}
 	},
 	{
