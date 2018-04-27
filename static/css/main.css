@@ -352,3 +352,9 @@ textarea:-moz-placeholder{
 .weui-dialog__btn_primary{
 	color: #9A7BFF!important;
 }
+
+
+
+.vux-slider .vux-indicator-right, .vux-slider>.vux-indicator{
+	bottom: 0rem!important;
+}

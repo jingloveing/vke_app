@@ -115,7 +115,6 @@
 		},
 		created: function() {
 			this.viewDes = JSON.parse(this.$route.query.item)
-			console.log(this.viewDes)
 			this.getMerViewPro()
 		},
 		destroyed() {

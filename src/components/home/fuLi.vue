@@ -4,7 +4,9 @@
 		</x-header>
 		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
 			<div style="width: 100%;">
-			<swiper auto loop :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
+			<div style="height: 1.8rem;">
+				<img :src="image" alt="" style="width: 100%;height: 100%;" :onerror="defaultImg"/>
+			</div>
 		</div>
 		<div style="font-size: 0;width: 100%;">
 			<tab :line-width=3 active-color='#f51d46' v-model="index" custom-bar-width="1.2rem" bar-active-color="#f51d46">
@@ -61,7 +63,7 @@ const url='http://xlk.dxvke.com/'
 		},
 		data() {
 			return {
-                demoList:[],
+                image:'',
 				goodList1: [],
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 				list2: list(),
@@ -89,12 +91,7 @@ const url='http://xlk.dxvke.com/'
 					params:{type:this.type}
 				}).then((res) => {
 					if(res.data.code == '200') {
-						const imgList = res.data.data
-						const demoList = imgList.map((item, index) => ({
-							url: item.click_url,
-							img: item.image
-						}))
-						this.demoList = demoList
+						this.image = res.data.data.image
 					}
 				}, (err) => {
 					console.log(JSON.stringify(err))

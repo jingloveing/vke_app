@@ -12,8 +12,8 @@
 					<img src="../../../static/images/share/quan_gray.png" alt="" v-show="active" /> 话题圈
 				</div>
 			</div>
-			<div v-show="active" style="background: white;">
-				<div class="searchDiv">
+			<div v-show="active">
+				<div class="searchDiv" style="background: white;">
 					<img src="../../../static/images/personCenter/search_img.png" alt="">
 					<form action="">
 						<input type="text" placeholder="输入商品名称/关键字" v-model="keywords">
@@ -25,11 +25,11 @@
 					<tab-item class="vux-center" v-for="(item, index) in list1" @on-item-click="change(item,index)" :key="index">{{item}}
 					</tab-item>
 				</tab>
-				<ul class="goods">
-					<li v-for="(list,index) in goodsList" :key="index" class="flex">
-						<router-link :to="{name:'TBDetail',query:{type:4,id:list.id}}">
-							<img :src="list.pict_url" alt="" class="pic" :onerror="defaultImg">
-						</router-link>
+				<ul class="goods" style="background: white;">
+					<router-link :to="{name:'TBDetail',query:{type:3,id:list.id}}" v-for="(list,index) in goodsList" :key="index" class="flex" tag="li">
+						<!--<router-link :to="{name:'TBDetail',query:{type:3,id:list.id}}">-->
+						<img :src="list.pict_url" alt="" class="pic" :onerror="defaultImg">
+						<!--</router-link>-->
 						<div class="content">
 							<p class="title" v-text="list.title"></p>
 							<div class="flex">
@@ -46,18 +46,20 @@
 										<del class="old_num">￥{{list.reserve_price.rmb}}<span v-show="list.reserve_price.corner!=='00'">.{{list.reserve_price.corner}}</span></del>
 									</div>
 								</div>
-								<div class="to-share" @click="toSingleShare(list.id)">立即分享</div>
+								<div class="to-share" @click.stop="toSingleShare(list.id)">立即分享</div>
 							</div>
 						</div>
-					</li>
+					</router-link>
 				</ul>
+				<div class="empty" v-show="goodsList.length==0"><img src="../../../static/images/empty/nothing.png" />
+				</div>
 			</div>
-			<div v-show="!active" style="background: white;">
+			<div v-show="!active">
 				<tab :line-width=3 active-color='#333' v-model="type2" custom-bar-width="1.2rem" bar-active-color="#333" id="tip2">
 					<tab-item class="vux-center" v-for="(item, index) in list2" @on-item-click="change2(item,index)" :key="index">{{item}}
 					</tab-item>
 				</tab>
-				<div class="main">
+				<div class="main" style="background: white;">
 					<div class="list" v-for="(item,index) in circleList" :key="index">
 						<div style="display: flex;">
 							<div class="left">
@@ -89,6 +91,8 @@
 						</div>
 					</div>
 				</div>
+				<div class="empty" v-show="circleList.length==0"><img src="../../../static/images/empty/list.png" />
+					</div>
 			</div>
 		</scroller>
 		<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show" @click="show=!show">
@@ -98,17 +102,21 @@
 				<div class="share-main-content">
 					<p class="f28 c6" style="text-align: center;line-height: .94rem;height: .94rem;">———分享至———</p>
 					<div class="share-class flex">
-						<div @click="shareAction('weixin','WXSceneTimeline')">
-							<img src="../../../static/images/share/friendshare.png" alt="" />
-						</div>
-						<div @click="shareAction('qq','')">
-							<img src="../../../static/images/share/QQshare.png" alt="" />
-						</div>
-						<div @click="shareAction('sinaweibo','')">
-							<img src="../../../static/images/share/weiboshare.png" alt="" />
-						</div>
-						<div @click="shareAction('weixin','WXSceneSession')">
+						<div @click="shareAction('weixin','WXSceneSession')" class="flex share-btn">
 							<img src="../../../static/images/share/weixinshare.png" alt="" />
+							<span class="f28 c3">微信</span>
+						</div>
+						<div @click="shareAction('weixin','WXSceneTimeline')" class="flex share-btn">
+							<img src="../../../static/images/share/friendshare.png" alt="" />
+							<span class="f28 c3">朋友圈</span>
+						</div>
+						<div @click="shareAction('qq','')" class="flex share-btn">
+							<img src="../../../static/images/share/QQshare.png" alt="" />
+							<span class="f28 c3">QQ</span>
+						</div>
+						<div @click="shareAction('sinaweibo','')" class="flex share-btn">
+							<img src="../../../static/images/share/weiboshare.png" alt="" />
+							<span class="f28 c3">微博</span>
 						</div>
 
 					</div>
@@ -231,14 +239,14 @@
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.level_id = res.data.data.level_id
-						if(this.level_id ==1) {
-						this.level = false
-					} else {
-						this.level = true
-						this.showLoading = true
-						this.getBannerList()
-						this.getList()
-					}
+						if(this.level_id == 1) {
+							this.level = false
+						} else {
+							this.level = true
+							this.showLoading = true
+							this.getBannerList()
+							this.getList()
+						}
 						plus.storage.setItem('level_id', res.data.data.level_id)
 					} else {
 						this.level_id = plus.storage.getItem('level_id')
@@ -305,7 +313,7 @@
 			toSearch() {
 				this.showLoading = true
 				this.noData = false
-				this.page=1
+				this.page = 1
 				this.goodsList = []
 				this.getList()
 			},
@@ -341,23 +349,23 @@
 					plus.nativeUI.toast("加载失败");
 				})
 			},
-//			handleScroll() {
-//				console.log('aaa')
-//				var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-//
-//				if(scrollTop > this.offsetTop1) {
-//					this.tipFixed1 = true
-//				} else {
-//					this.tipFixed1 = false
-//				}
-//
-//				if(scrollTop > this.offsetTop2) {
-//					this.tipFixed2 = true
-//				} else {
-//					this.tipFixed2 = false
-//				}
-//
-//			},
+			//			handleScroll() {
+			//				console.log('aaa')
+			//				var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+			//
+			//				if(scrollTop > this.offsetTop1) {
+			//					this.tipFixed1 = true
+			//				} else {
+			//					this.tipFixed1 = false
+			//				}
+			//
+			//				if(scrollTop > this.offsetTop2) {
+			//					this.tipFixed2 = true
+			//				} else {
+			//					this.tipFixed2 = false
+			//				}
+			//
+			//			},
 			infinite(done) {
 				if(this.noData) {
 					setTimeout(() => {
@@ -617,6 +625,31 @@
 		destroyed() {
 			//			window.removeEventListener('scroll', this.handleScroll)
 		},
+		activated: function() {
+			this.token = plus.storage.getItem('token')
+			if(this.token) {
+				this.level_id = plus.storage.getItem('level_id')
+				if(this.level_id) {
+					if(this.level_id !== 1) {
+						console.log('aaa')
+						this.level = true
+						this.showLoading = true
+						this.getBannerList()
+						this.getList()
+					} else {
+						console.log('bbb')
+						this.level = false
+					}
+				} else {
+					this.getLevel()
+				}
+
+			} else {
+				console.log('eee')
+				this.level = false
+			}
+		}
+
 	}
 </script>
 
@@ -939,5 +972,11 @@
 	
 	.rule-title {
 		margin: .1rem 0;
+	}
+	
+	.share-btn {
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 	}
 </style>

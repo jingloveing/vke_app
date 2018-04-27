@@ -19,26 +19,30 @@
 		<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show || showPicture" @click="show=!show">
 		</div>
 		<div v-show="showPicture" class="big-pic" @click="showPicture=!showPicture">
-			<img :src="image" alt="" />
+			<img :src="image" alt=""/>
 		</div>
 		<transition enter-active-class="fadeInUpBig" leave-active-class="fadeOutDownBig">
 			<div v-show="show" class="share-main">
 				<div class="share-main-content">
 					<p class="f28 c6" style="text-align: center;line-height: .94rem;height: .94rem;">———分享至———</p>
 					<div class="share-class flex">
-						<div @click="shareMessage('com.tencent.mm','com.tencent.mm.ui.tools.ShareToTimeLineUI')">
-							<img src="../../../static/images/share/friendshare.png" alt="" />
-						</div>
-						<div @click="shareMessage('com.tencent.mobileqq','com.tencent.mobileqq.activity.JumpActivity')">
-							<img src="../../../static/images/share/QQshare.png" alt="" />
-						</div>
-						<div @click="shareMessage('com.sina.weibo','com.sina.weibo.composerinde.ComposerDispatchActivity')">
-							<img src="../../../static/images/share/weiboshare.png" alt="" />
-						</div>
-						<div @click="shareMessage('com.tencent.mm','com.tencent.mm.ui.tools.ShareImgUI')">
+						<div @click="shareMessage('com.tencent.mm','com.tencent.mm.ui.tools.ShareImgUI')" class="flex share-btn">
 							<img src="../../../static/images/share/weixinshare.png" alt="" />
+							<span class="f28 c3">微信</span>
 						</div>
-
+						<div @click="shareMessage('com.tencent.mm','com.tencent.mm.ui.tools.ShareToTimeLineUI')" class="flex share-btn">
+							<img src="../../../static/images/share/friendshare.png" alt="" />
+							<span class="f28 c3">朋友圈</span>
+						</div>
+						<div @click="shareMessage('com.tencent.mobileqq','com.tencent.mobileqq.activity.JumpActivity')" class="flex share-btn">
+							<img src="../../../static/images/share/QQshare.png" alt="" />
+							<span class="f28 c3">QQ</span>
+						</div>
+						<div @click="shareMessage('com.sina.weibo','com.sina.weibo.composerinde.ComposerDispatchActivity')" class="flex share-btn">
+							<img src="../../../static/images/share/weiboshare.png" alt="" />
+							<span class="f28 c3">微博</span>
+						</div>
+						
 					</div>
 				</div>
 				<div @click="show=!show" class="f32 c3" style="text-align: center;line-height: .96rem;border-top: .01rem solid #e5e5e5;">取消</div>
@@ -51,11 +55,11 @@
 	import html2canvas from 'html2canvas'
 	import { XHeader } from 'vux'
 	const url = 'http://xlk.dxvke.com'
-	const msg={
-		content:'',
-		pictures:[]
+	const msg = {
+		content: '',
+		pictures: []
 	}
-	const pictures=[]
+	const pictures = []
 	//			const url = ''
 	export default {
 		name: 'shareRoom',
@@ -80,60 +84,57 @@
 				var s = window.shares[id]
 				var pic_unloaded = 9;
 				plus.nativeUI.toast("下载图片中，即将打开分享...");
-            this.goods.share_list.forEach(function(val,index,arr){
-                // 创建下载任务
-                var dtask = plus.downloader.createDownload(val.image);
-                dtask.addEventListener( "statechanged", function(d,status){
-                	switch(d.state){
-                    case 4:
-                        if(status == 200){
-                            console.log("图片下载完成：" + d.filename);
-                            pictures.push( plus.io.convertLocalFileSystemURL(d.filename) );
-                            pic_unloaded --;
-                            if(pic_unloaded == 0){
-                                if(!id || !s) {
-									plus.nativeUI.closeWaiting();
-									plus.nativeUI.toast("分享失败");
-									return;
-								}
-								if(s.authenticated) {
-									plus.nativeUI.closeWaiting();
-									self.shareMessages(s, ex);
+				this.goods.share_list.forEach(function(val, index, arr) {
+					// 创建下载任务
+					var dtask = plus.downloader.createDownload(val.image);
+					dtask.addEventListener("statechanged", function(d, status) {
+						switch(d.state) {
+							case 4:
+								if(status == 200) {
+									console.log("图片下载完成：" + d.filename);
+									pictures.push(plus.io.convertLocalFileSystemURL(d.filename));
+									pic_unloaded--;
+									if(pic_unloaded == 0) {
+										if(!id || !s) {
+											plus.nativeUI.closeWaiting();
+											plus.nativeUI.toast("分享失败");
+											return;
+										}
+										if(s.authenticated) {
+											plus.nativeUI.closeWaiting();
+											self.shareMessages(s, ex);
+										} else {
+											plus.nativeUI.closeWaiting();
+											s.authorize(self.shareMessages(s, ex), function(e) {});
+										}
+
+									}
 								} else {
-									plus.nativeUI.closeWaiting();
-									s.authorize(self.shareMessages(s, ex), function(e) {
-									});
+									plus.nativeUI.toast("下载图片失败");
 								}
-                                
-                                
-                                
-                            }
-                        } else {
-                            plus.nativeUI.toast("下载图片失败");
-                        }
-                        break;
-                    case 1:
-                        console.log("下载开始");
-                        break;
-                    case 2:
-                        console.log("请求已响应"); 
-                        break;
-                    case 3:
-                        console.log("下载进行中");
-                        break;
-                    default:
-                        console.log("state: " + d.state);
-                        break;
-                }
-                }, false );
-                dtask.start();
-            });
+								break;
+							case 1:
+								console.log("下载开始");
+								break;
+							case 2:
+								console.log("请求已响应");
+								break;
+							case 3:
+								console.log("下载进行中");
+								break;
+							default:
+								console.log("state: " + d.state);
+								break;
+						}
+					}, false);
+					dtask.start();
+				});
 			},
 			// 5+share发送分享消息
 			shareMessages(s, ex) {
 				var self = this
 				s.send({
-					content:self.goods.msg+"             长按图片识别或扫描二维码，即可复制淘口令打开手机淘宝，领取优惠券购买",
+					content: self.goods.msg + "             长按图片识别或扫描二维码，即可复制淘口令打开手机淘宝，领取优惠券购买",
 					pictures: pictures,
 					extra: {
 						scene: ex
@@ -149,101 +150,83 @@
 				this.showPicture = !this.showPicture
 
 			},
-			
-			
-			 
-//        安卓一键分享9张图片
-        shareMessage(ev,ex) {
-        	var u = navigator.userAgent;
-            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
-            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-             if(isAndroid){
-               	      	var self = this
-            var pictures = [];
-            var pic_unloaded = 9;
-            plus.nativeUI.toast("下载图片中，即将开始分享...");
-            this.goods.share_list.forEach(function(val,index,arr){
-            	plus.nativeUI.showWaiting();
-                // 创建下载任务
-                var dtask = plus.downloader.createDownload(val.image);
-                dtask.addEventListener( "statechanged", function(d,status){
-                	switch(d.state){
-                    case 4:
-                        if(status == 200){
-                            console.log("图片下载完成：" + d.filename);
-                            pictures.push( plus.io.convertLocalFileSystemURL(d.filename) );
-                            pic_unloaded --;
-                            if(pic_unloaded == 0){
-                            	plus.nativeUI.closeWaiting();
-                            	msg.content=self.goods.msg+"             长按图片识别或扫描二维码，即可复制淘口令打开手机淘宝，领取优惠券购买"
-                                self.test_weixin_share_mul_pic(ev,ex, pictures);
-                            }
-                        } else {
-                            plus.nativeUI.toast("下载图片失败");
-                        }
-                        break;
-                    case 1:
-                        console.log("下载开始");
-                        break;
-                    case 2:
-                        console.log("请求已响应"); 
-                        break;
-                    case 3:
-                        console.log("下载进行中");
-                        break;
-                    default:
-                        console.log("state: " + d.state);
-                        break;
-                }
-                }, false );
-                dtask.start();
-            });
-             }
-             if(isiOS){
-             	plus.nativeUI.toast("正在开发中")
-             }
 
-        },
-        test_weixin_share_mul_pic(ev,ex, pics){
-        	console.log(ev)
-            var Intent = plus.android.importClass('android.content.Intent');
-            var ComponentName = plus.android.importClass('android.content.ComponentName');
-            var ArrayList = plus.android.importClass('java.util.ArrayList');
-            var Uri = plus.android.importClass('android.net.Uri');
-            var Environment = plus.android.importClass('android.os.Environment');
-            var File = plus.android.importClass('java.io.File');
-            var intent = new Intent();
-            var localComponentName = new ComponentName(ev, ex);
-            intent.setComponent(localComponentName);
-            intent.setAction("android.intent.action.SEND_MULTIPLE");
-            intent.setType("image/*");
-            var localArrayList = new ArrayList();
-            for(var i =0;i< pics.length;i++){
-                var filePath = pics[i];  
-                localArrayList.add(Uri.fromFile(new File(filePath)));
-            }
-            intent.putParcelableArrayListExtra("android.intent.extra.STREAM", localArrayList);
-            intent.putExtra('Kdescription', msg.content);   
-            var act = plus.android.runtimeMainActivity();
-            act.startActivity(intent);
-        }
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+			//        安卓一键分享9张图片
+			shareMessage(ev, ex) {
+				var u = navigator.userAgent;
+				var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+				var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+				if(isAndroid) {
+					var self = this
+					var pictures = [];
+					var pic_unloaded = 9;
+					plus.nativeUI.toast("下载图片中，即将开始分享...");
+					this.goods.share_list.forEach(function(val, index, arr) {
+						plus.nativeUI.showWaiting();
+						// 创建下载任务
+						var dtask = plus.downloader.createDownload(val.image);
+						dtask.addEventListener("statechanged", function(d, status) {
+							switch(d.state) {
+								case 4:
+									if(status == 200) {
+										console.log("图片下载完成：" + d.filename);
+										pictures.push(plus.io.convertLocalFileSystemURL(d.filename));
+										pic_unloaded--;
+										if(pic_unloaded == 0) {
+											plus.nativeUI.closeWaiting();
+											msg.content = self.goods.msg + "             长按图片识别或扫描二维码，即可复制淘口令打开手机淘宝，领取优惠券购买"
+											self.test_weixin_share_mul_pic(ev, ex, pictures);
+										}
+									} else {
+										plus.nativeUI.toast("下载图片失败");
+									}
+									break;
+								case 1:
+									console.log("下载开始");
+									break;
+								case 2:
+									console.log("请求已响应");
+									break;
+								case 3:
+									console.log("下载进行中");
+									break;
+								default:
+									console.log("state: " + d.state);
+									break;
+							}
+						}, false);
+						dtask.start();
+					});
+				}
+				if(isiOS) {
+					plus.nativeUI.toast("正在开发中")
+				}
+
+			},
+			test_weixin_share_mul_pic(ev, ex, pics) {
+				console.log(ev)
+				var Intent = plus.android.importClass('android.content.Intent');
+				var ComponentName = plus.android.importClass('android.content.ComponentName');
+				var ArrayList = plus.android.importClass('java.util.ArrayList');
+				var Uri = plus.android.importClass('android.net.Uri');
+				var Environment = plus.android.importClass('android.os.Environment');
+				var File = plus.android.importClass('java.io.File');
+				var intent = new Intent();
+				var localComponentName = new ComponentName(ev, ex);
+				intent.setComponent(localComponentName);
+				intent.setAction("android.intent.action.SEND_MULTIPLE");
+				intent.setType("image/*");
+				var localArrayList = new ArrayList();
+				for(var i = 0; i < pics.length; i++) {
+					var filePath = pics[i];
+					localArrayList.add(Uri.fromFile(new File(filePath)));
+				}
+				intent.putParcelableArrayListExtra("android.intent.extra.STREAM", localArrayList);
+				intent.putExtra('Kdescription', msg.content);
+				var act = plus.android.runtimeMainActivity();
+				act.startActivity(intent);
+			}
+
 		},
 		mounted: function() {
 
@@ -348,5 +331,10 @@
 		background: -o-linear-gradient(left, #8721b5, #db3283);
 		background: -moz-linear-gradient(left, #8721b5, #db3283);
 		background: linear-gradient(left, #8721b5, #db3283);
+	}
+	.share-btn{
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 	}
 </style>

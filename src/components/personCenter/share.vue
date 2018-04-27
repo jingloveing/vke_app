@@ -23,17 +23,21 @@
 				<div class="share-main-content">
 					<p class="f28 c6" style="text-align: center;line-height: .94rem;height: .94rem;">———分享至———</p>
 					<div class="share-class flex">
-						<div @click="shareAction('weixin','WXSceneTimeline')">
-							<img src="../../../static/images/share/friendshare.png" alt="" />
-						</div>
-						<div @click="shareAction('qq','')">
-							<img src="../../../static/images/share/QQshare.png" alt="" />
-						</div>
-						<div @click="shareAction('sinaweibo','')">
-							<img src="../../../static/images/share/weiboshare.png" alt="" />
-						</div>
-						<div @click="shareAction('weixin','WXSceneSession')">
+						<div @click="shareAction('weixin','WXSceneSession')" class="flex share-btns">
 							<img src="../../../static/images/share/weixinshare.png" alt="" />
+							<span class="f28 c3">微信</span>
+						</div>
+						<div @click="shareAction('weixin','WXSceneTimeline')" class="flex share-btns">
+							<img src="../../../static/images/share/friendshare.png" alt="" />
+							<span class="f28 c3">朋友圈</span>
+						</div>
+						<div @click="shareAction('qq','')" class="flex share-btns">
+							<img src="../../../static/images/share/QQshare.png" alt="" />
+							<span class="f28 c3">QQ</span>
+						</div>
+						<div @click="shareAction('sinaweibo','')" class="flex share-btns">
+							<img src="../../../static/images/share/weiboshare.png" alt="" />
+							<span class="f28 c3">微博</span>
 						</div>
 
 					</div>
@@ -191,6 +195,11 @@
 	.tabs img {
 		width: 5.04rem;
 		height: 7.56rem;
+	}
+	.share-btns{
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 	}
 </style>
 <style type="text/css">

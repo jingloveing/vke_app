@@ -16,7 +16,7 @@
 			</router-link>
 		</div>
 		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
-			<swiper auto :list="bannerList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" loop></swiper>
+			<swiper auto :list="bannerList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" loop class="index-swiper"></swiper>
 			<div style=" margin-top: -.3rem;z-index: 99999;position: relative;">
 				<ul class="nav-small">
 					<router-link tag="li" to="/home/taobao">
@@ -101,7 +101,7 @@
 	import { Swiper, SwiperItem, Loading } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
 	const url = 'http://xlk.dxvke.com'
-//		const url = ''
+//			const url = ''
 	export default {
 		name: 'Home',
 		components: {
@@ -148,12 +148,12 @@
 							img: item.image
 						}))
 						this.bannerList = bannerList
-						plus.storage.setItem("bannerList",JSON.stringify(this.bannerList))
-						//          console.log(imgList)
+						plus.storage.setItem("bannerList", JSON.stringify(this.bannerList))
+						
 					}
 				}, (err) => {
-					this.bannerList=JSON.parse(plus.storage.getItem("bannerList"))
-					console.log(err)
+					this.bannerList = JSON.parse(plus.storage.getItem("bannerList"))
+					console.log(JSON.stringify(err))
 				})
 			},
 			//      获取享利快报
@@ -164,15 +164,15 @@
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.news = res.data.data
-						plus.storage.setItem("news",JSON.stringify(this.news))
+						plus.storage.setItem("news", JSON.stringify(this.news))
 					}
 				}, (err) => {
-					this.news=JSON.parse(plus.storage.getItem("news"))
-					console.log(err)
+					this.news = JSON.parse(plus.storage.getItem("news"))
+					console.log(JSON.stringify(err))
 				})
 			},
 			//      获取商品分类
-			getMerchantList: function() {
+			getMerchantList: function(done) {
 				this.$http({
 					method: 'get',
 					url: url + '/api/indexMerchant',
@@ -183,22 +183,27 @@
 				}).then((res) => {
 					if(res.data.code == '200') {
 						if(res.data.data.list.length == 0) {
-							this.noData = true
+//							this.noData = true
 							this.$refs.myscroller.finishInfinite(2);
 						} else {
 							this.merchant = this.merchant.concat(res.data.data.list)
-							this.$refs.myscroller.finishPullToRefresh()
-							plus.storage.setItem("merchant",JSON.stringify(this.merchant))
+							if(this.$refs.myscroller) {
+								this.$refs.myscroller.finishPullToRefresh()
+							}
+							if(done) {
+								done()
+							}
+							plus.storage.setItem("merchant", JSON.stringify(this.merchant))
 						}
 					} else {
-						this.noData = true
+//						this.noData = true
 						this.$refs.myscroller.finishInfinite(2);
 					}
 				}, (err) => {
-					this.merchant=JSON.parse(plus.storage.getItem("merchant"))
+					this.merchant = JSON.parse(plus.storage.getItem("merchant"))
 					this.noData = true
 					this.$refs.myscroller.finishInfinite(2);
-					console.log(err)
+					console.log(JSON.stringify(err))
 				})
 			},
 			infinite(done) {
@@ -211,7 +216,7 @@
 					let self = this; //this指向问题
 					setTimeout(() => {
 						self.pageIndex += 1
-						self.getMerchantList()
+						self.getMerchantList(done)
 						done()
 					}, 1500)
 				}
@@ -237,9 +242,11 @@
 						console.log(JSON.stringify(res.data.data))
 						this.$router.push({
 							name: 'NewJD',
-							query: {url:res.data.data.url}
+							query: {
+								url: res.data.data.url
+							}
 						})
-					} else if(res.data.code=='601'){
+					} else if(res.data.code == '601') {
 						plus.nativeUI.toast(res.data.error);
 					}
 				}, (err) => {
@@ -254,9 +261,11 @@
 					if(res.data.code == '200') {
 						this.$router.push({
 							name: 'NewMogu',
-							query: {url:res.data.data.url}
+							query: {
+								url: res.data.data.url
+							}
 						})
-					} else if(res.data.code=='601'){
+					} else if(res.data.code == '601') {
 						plus.nativeUI.toast(res.data.error);
 					}
 				}, (err) => {
@@ -307,9 +316,11 @@
 		color: #333333;
 		display: block;
 	}
-	.main{
+	
+	.main {
 		font-size: 0;
 	}
+	
 	.main_title {
 		font-size: .3rem;
 		color: #f51d46;
@@ -576,8 +587,9 @@
 	.vux-slider>.vux-indicator>a>.vux-icon-dot {
 		background-color: #dbdada !important;
 	}
-	.vux-slider>.vux-indicator,
-	.vux-slider .vux-indicator-right {
+	
+	.index-swiper.vux-slider>.vux-indicator,
+	.index-swiper.vux-slider .vux-indicator-right {
 		bottom: .25rem!important;
 	}
 </style>

@@ -11,7 +11,7 @@
 			<div class="detail">
 				<p class="name">{{goodsDetail.product_name}}</p>
 				<div class="flex" style="align-items: flex-end;">
-					<span class="prices">券后：<small>￥</small><span>{{goodsDetail.reserve_price.rmb}}</span><small v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</small></span>
+					<span class="prices"><span class="f28">券后: </span> <small>￥</small><span>{{goodsDetail.reserve_price.rmb}}</span><small v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</small></span>
 					<span class="f28" style="margin:0 0 .08rem .3rem;color: #fbac03;">分享预估赚：{{goodsDetail.share_commission}}元</span>
 					<!--<div class="f28 flex c9" style="margin:0 0 .08rem .3rem;">可返
 						<div class="header_list_num jewel" style="margin-left: .1rem;">
@@ -79,18 +79,23 @@
 				<div class="share-main-content">
 					<p class="f28 c6" style="text-align: center;line-height: .94rem;height: .94rem;">———分享至———</p>
 					<div class="share-class flex">
-						<div @click="shareAction('weixin','WXSceneTimeline')">
-							<img src="../../../static/images/share/friendshare.png" alt="" />
-						</div>
-						<div @click="shareAction('qq','')">
-							<img src="../../../static/images/share/QQshare.png" alt="" />
-						</div>
-						<div @click="shareAction('sinaweibo','')">
-							<img src="../../../static/images/share/weiboshare.png" alt="" />
-						</div>
-						<div @click="shareAction('weixin','WXSceneSession')">
+						<div @click="shareAction('weixin','WXSceneSession')" class="flex share-btn">
 							<img src="../../../static/images/share/weixinshare.png" alt="" />
+							<span class="f28 c3">微信</span>
 						</div>
+						<div @click="shareAction('weixin','WXSceneTimeline')" class="flex share-btn">
+							<img src="../../../static/images/share/friendshare.png" alt="" />
+							<span class="f28 c3">朋友圈</span>
+						</div>
+						<div @click="shareAction('qq','')" class="flex share-btn">
+							<img src="../../../static/images/share/QQshare.png" alt="" />
+							<span class="f28 c3">QQ</span>
+						</div>
+						<div @click="shareAction('sinaweibo','')" class="flex share-btn">
+							<img src="../../../static/images/share/weiboshare.png" alt="" />
+							<span class="f28 c3">微博</span>
+						</div>
+
 
 					</div>
 				</div>
@@ -181,20 +186,22 @@
 			},
 			//     淘口令
 			getCommand: function() {
-				this.$http({
-					method: 'POST',
-					url: url+'/api/productCreateCommand',
-					data: {
+				var data={
 						coupon_url: this.goodsDetail.coupon_url,
 						pict_url: this.goodsDetail.pict_url,
 						product_name: this.goodsDetail.product_name
-					}
-				}).then((res) => {
+				}
+				this.$http.post(url+'/api/productCreateCommand',data
+				).then((res) => {
 					if(res.data.code == '200') {
 						this.command = res.data.data.command
+						console.log(this.command)
+					}else{
+						console.log(JSON.stringify(res))
 					}
 				}, (err) => {
 					console.log(err)
+					console.log(JSON.stringify(err))
 				})
 			},
 			toHome() {
@@ -303,6 +310,7 @@
 							url: this.goodsDetail.click_url
 						}
 					})
+					
 				}
 				if(isiOS) {
 					this.show1 = true
@@ -739,5 +747,10 @@
 		right: calc(((100% - 3.2rem) / 2) - .5rem);
 		top: calc(((100% - 3.2rem) / 2) - 3rem);
 		z-index: 200;
+	}
+	.share-btn{
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 	}
 </style>
