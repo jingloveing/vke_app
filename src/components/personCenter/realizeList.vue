@@ -75,8 +75,6 @@
 <script>
 	var list = ["全部", "支付宝", "微信", "银行卡"]
 	import { DatetimeView, } from 'vux'
-	const url='http://xlk.dxvke.com/'
-//  const url=''
 	export default {
 		name: 'RealizeList',
 		components: {
@@ -106,7 +104,7 @@
 			getList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/withdrawNotes',
+					url: this.http+'/api/withdrawNotes',
 					params:{page:this.page,limit:this.limit,type:this.type}
 				}).then((res) => {
 					if(res.data.code == '200') {

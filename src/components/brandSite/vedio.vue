@@ -15,7 +15,7 @@
 		<div style="background: white;margin-top: .2rem;">
 			<p class="f28 c3" style="line-height: .88rem;height: .88rem;padding: 0 .26rem;">商品链接</p>
 			<div>
-				<swipers :options="swiperOptionB">
+				<swipers :options="swiperOptionB" style="height: 3.07rem;">
 					<swiper-slide v-for="(list,index) in list" :key="index" class="box_content">
 						<router-link :to="{name:'BrandDetail',query:{id:list.id,store_id:store_id}}">
 							<img :src="list.thumb_url" alt="" :onerror="defaultImg">
@@ -46,7 +46,6 @@
 <script>
 	import {} from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
-	const url = 'http://xlk.dxvke.com/'
 	export default {
 		name: 'shareRoom',
 		components: {
@@ -81,7 +80,7 @@
 			getMerViewPro: function() {
 				this.$http({
 					method: 'get',
-					url: url + '/api/merViewPro',
+					url: this.http + '/api/merViewPro',
 					params: {
 						id: this.viewDes.id
 					}
@@ -97,11 +96,9 @@
 			plays() {
 				var video = document.getElementById('myVideo')
 				if(video.paused) {
-					console.log('111');
 					video.play()
 					video.parentNode.children[1].style.display = "none"
 				} else {
-					console.log('222');
 					video.pause();
 					video.parentNode.children[1].style.display = "inline-block"
 				}

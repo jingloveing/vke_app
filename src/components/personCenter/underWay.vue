@@ -163,8 +163,6 @@
 <script>
 	import { Tab, TabItem, } from 'vux'
 	const list = () => ['帮众', '京东', '蘑菇街']
-	const url = 'http://xlk.dxvke.com'
-//	const url = ''
 	export default {
 		components: {
 			Tab,
@@ -194,7 +192,7 @@
 			getCountAcer: function() {
 				this.$http({
 					method: 'get',
-					url: url + '/api/transportAcer'
+					url: this.http + '/api/transportAcer'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.data = res.data.data
@@ -207,7 +205,7 @@
 			getList: function() {
 				this.$http({
 					method: 'get',
-					url: url + '/api/transportList',
+					url: this.http + '/api/transportList',
 					params: {
 						page: this.page,
 						limit: this.limit,

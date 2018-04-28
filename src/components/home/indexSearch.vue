@@ -29,7 +29,6 @@
 
 <script>
 	import { XHeader, ButtonTab, ButtonTabItem, Loading } from 'vux'
-	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Realize',
 		components: {
@@ -61,7 +60,7 @@
 			getHotList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/hotKeywords'
+					url: this.http+'/api/hotKeywords'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.hotList = res.data.data
@@ -76,7 +75,7 @@
 			getHistoryList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/searchHistory',
+					url: this.http+'/api/searchHistory',
 					params: {
 						type: this.type
 					}
@@ -92,7 +91,7 @@
 			},
 			//      清除历史列表
 			del: function() {
-				this.$http.post(url+'/api/delSearchHistory', {
+				this.$http.post(this.http+'/api/delSearchHistory', {
 					type: this.type
 				}).then((res) => {
 					if(res.data.code == '200') {
@@ -148,6 +147,10 @@
 					})
 				};
 			})
+		},
+		activated:function(){
+			this.getHotList()
+			this.getHistoryList()
 		}
 	}
 </script>

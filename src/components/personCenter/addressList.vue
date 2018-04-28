@@ -33,8 +33,6 @@
 
 <script>
 	import { XHeader, XInput, XButton, Group,Toast,Loading} from 'vux'
-	const url='http://xlk.dxvke.com/'
-//  const url=''
 	export default {
 		name: 'Realize',
 		components: {
@@ -60,7 +58,7 @@
 			getAddressList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/addressList',
+					url: this.http+'/api/addressList',
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.list = res.data.data
@@ -72,7 +70,7 @@
 			//      删除收货地址列表
 			del(id) {
 				this.showLoading=true
-				this.$http.post(url+'/api/delAddress',{id:id}).then((res) => {
+				this.$http.post(this.http+'/api/delAddress',{id:id}).then((res) => {
 					this.showLoading=false
 					if(res.data.code == '200') {
 						this.$vux.toast.show({

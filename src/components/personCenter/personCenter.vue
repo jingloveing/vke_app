@@ -35,7 +35,7 @@
 						<img src="static/images/personCenter/vip0.png" alt="" class="level" v-show="userInfo.level_id==1" />
 						<img src="static/images/personCenter/vip1.png" alt="" class="level" v-show="userInfo.level_id==2" />
 						<img src="static/images/personCenter/vip2.png" alt="" class="level" v-show="userInfo.level_id==3" />
-						<span>享有特权</span>
+						<span>我的特权</span>
 					</div>
 				</router-link>
 			</div>
@@ -169,7 +169,6 @@
 
 <script>
 	import { Toast } from 'vux'
-	const url = 'http://xlk.dxvke.com/'
 	export default {
 		name: 'personCenter',
 		components: {
@@ -202,7 +201,7 @@
 		methods: {
 			//获取用户信息
 			getUserInfo: function() {
-				this.$http.get(url + '/api/userInfo', {}).then((res) => {
+				this.$http.get(this.http + '/api/userInfo', {}).then((res) => {
 					if(res.data.code == '200') {
 //						console.log(JSON.stringify(res.data))
 						this.userInfo = res.data.data
@@ -218,7 +217,7 @@
 			},
 			//获取登录类型
 			getLoginType: function() {
-				this.$http.get(url + '/api/getLoginType', {}).then((res) => {
+				this.$http.get(this.http + '/api/getLoginType', {}).then((res) => {
 					if(res.data.code == '200') {
 						this.login_type=res.data.data.login_type
 					} else{

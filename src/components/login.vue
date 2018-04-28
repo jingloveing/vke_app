@@ -22,7 +22,6 @@
 
 <script>
 	import { Loading, TransferDomDirective as TransferDom, Confirm ,XButton} from 'vux'
-	const url = 'http://xlk.dxvke.com/'
 	export default {
 		directives: {
 			TransferDom
@@ -50,7 +49,7 @@
 					s.login(function(e) {
 						s.getUserInfo(function(e) {
 							//后端保存用户信息
-							self.$http.post(url + '/api/login', {
+							self.$http.post(self.http + '/api/login', {
 								type: "1",
 								userInfo: JSON.stringify(s.userInfo)
 							}).then((res) => {
@@ -90,7 +89,7 @@
 					});
 				} else {
 					//后端保存用户信息
-					self.$http.post(url + '/api/login', {
+					self.$http.post(self.http + '/api/login', {
 						type: "1",
 						userInfo: JSON.stringify(s.userInfo)
 					}).then((res) => {
@@ -130,7 +129,7 @@
 				})
 			},
 			Login: function() {
-				this.$http.post(url + '/api/loginTest', {
+				this.$http.post(this.http + '/api/loginTest', {
 					username:this.username,
 					password:this.password
 				}).then((res) => {

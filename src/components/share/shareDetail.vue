@@ -54,13 +54,11 @@
 <script>
 	import html2canvas from 'html2canvas'
 	import { XHeader } from 'vux'
-	const url = 'http://xlk.dxvke.com'
 	const msg = {
 		content: '',
 		pictures: []
 	}
 	const pictures = []
-	//			const url = ''
 	export default {
 		name: 'shareRoom',
 		components: {

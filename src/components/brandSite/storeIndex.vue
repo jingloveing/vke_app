@@ -143,8 +143,6 @@
 <script>
 	import { Tab, TabItem, Swiper, SwiperItem, PopupPicker, Divider, XSwitch, Toast,Loading } from 'vux'
 	const list = () => ['全部商品', '品牌现场']
-	const url='http://xlk.dxvke.com/'
-//  const url=""
 	export default {
 		name: 'StoreIndex',
 		components: {
@@ -197,7 +195,7 @@
 			getMerchantInfo: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/merchantInfo',
+					url: this.http+'/api/merchantInfo',
 					params: {
 						id: this.$route.query.id
 					}
@@ -214,7 +212,7 @@
 				const self = this
 				this.$http({
 					method: 'get',
-					url: url+'/api/viewList',
+					url: this.http+'/api/viewList',
 					params: {
 						page: this.page2,
 						limit: this.limit,
@@ -250,7 +248,7 @@
 				}
 				this.$http({
 					method: 'get',
-					url: url+'/api/merProList',
+					url: this.http+'/api/merProList',
 					params: {
 						page: this.page1,
 						limit: this.limit,
@@ -279,7 +277,7 @@
 				})
 			},
 			doCollect(type, id) {
-				this.$http.post(url+'/api/doCollect', {
+				this.$http.post(this.http+'/api/doCollect', {
 					type: type,
 					id: id,
 				}).then((res) => {

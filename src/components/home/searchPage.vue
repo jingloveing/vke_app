@@ -23,7 +23,6 @@
 </template>
 <script>
   import {Loading} from 'vux'
-  const url='http://xlk.dxvke.com/'
   export default {
     name: 'searchPage',
     components: {
@@ -61,7 +60,7 @@
 			getHotList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/hotKeywords'
+					url: this.http+'/api/hotKeywords'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.hotList = res.data.data
@@ -76,7 +75,7 @@
 			getHistoryList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/searchHistory',
+					url:this.http+'/api/searchHistory',
 					params: {
 						type: this.$route.query.type
 					}
@@ -92,7 +91,7 @@
 			},
 			//      清除历史列表
 			del: function() {
-				this.$http.post(url+'/api/delSearchHistory', {
+				this.$http.post(this.http+'/api/delSearchHistory', {
 					type: this.$route.query.type
 				}).then((res) => {
 					if(res.data.code == '200') {

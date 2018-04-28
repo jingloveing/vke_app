@@ -80,7 +80,6 @@
 
 <script>
 	import { XHeader, XNumber,Toast} from 'vux'
-	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'ShoppingCart',
 		components: {
@@ -103,7 +102,7 @@
 			getShopCar: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/shopCar'
+					url: this.http+'/api/shopCar'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.list=res.data.data
@@ -114,7 +113,7 @@
 			},
 			//删除购物车商品
 			remove: function(id) {
-				this.$http.post('/api/delCar',{id:id}).then((res) => {
+				this.$http.post(this.http+'/api/delCar',{id:id}).then((res) => {
 					if(res.data.code == '200') {
 						this.toast = res.data.data.message
 					    this.showToast = true

@@ -54,7 +54,6 @@
 </template>
 <script>
   import {Search, Tab, TabItem,Loading} from 'vux'
-  const url='http://xlk.dxvke.com/'
   export default {
     name: 'searchPage',
     components: {
@@ -74,7 +73,7 @@
 //        searchResults:true,
         results: [],
         keywords: '',
-        list:['综合','热门','新品'],
+        list:['综合','券额','新品'],
         index: 0,
         getBarWidth: function (index) {
           return (index + 1) * 22 + 'px'
@@ -107,7 +106,7 @@
 				}
         this.$http({
           method:'get',
-          url:url+'/api/searchProdcut',
+          url:this.http+'/api/searchProdcut',
 params:{keywords:this.keywords,sort:this.sort,page:this.pageIndex,limit:this.limit,type:this.$route.query.type,order:this.order,store_id:this.$route.query.id}
         }).then((res)=>{
           this.showLoading=false

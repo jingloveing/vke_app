@@ -25,7 +25,7 @@
 					<img src="../../../static/images/aboutUs/inter.png" alt="" />
 					<span>官方网站</span>
 				</div>
-				<span class="c_f">web.dxvke.com</span>
+				<span class="c_f">www.dxvke.com</span>
 			</div>
 		</div>
 		<div class="main-b flex f28 c3">

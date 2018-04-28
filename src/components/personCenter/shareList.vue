@@ -60,7 +60,6 @@
 </template>
 <script>
   import {XHeader,Tab, TabItem, XButton,Loading} from 'vux'
-  const url='http://xlk.dxvke.com/'
   const list = () => [
     {
       title:'晒单广场',
@@ -99,7 +98,7 @@
       getOrderSquareList:function(){
         this.$http({
           method:'POST',
-          url:url+'/api/orderSquare',
+          url:this.http+'/api/orderSquare',
         }).then((res)=>{
           if(res.data.code=='200'){
             this.orderSquareList = res.data.data.order_square
@@ -113,7 +112,7 @@
       getMyShareOrder:function(){
         this.$http({
           method:'POST',
-          url:url+'/api/myShareOrder',
+          url:this.http+'/api/myShareOrder',
         }).then((res)=>{
           if(res.data.code=='200'){
             this.myOrderList = res.data.data.my_order

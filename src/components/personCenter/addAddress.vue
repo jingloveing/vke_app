@@ -19,8 +19,6 @@
 </template>
 <script>
   import {Cell,ChinaAddressV4Data,Group,XAddress,XInput,Checklist,XButton,Loading,Value2nameFilter as value2name } from 'vux'
-const url='http://xlk.dxvke.com/'
-//const url=''
   export default {
     name: 'addAddress',
     components: {
@@ -57,7 +55,7 @@ const url='http://xlk.dxvke.com/'
       addAddress:function(){
         this.getName(this.address)
         this.showLoading=true
-        this.$http.post(url+'/api/updateAddress',{
+        this.$http.post(this.http+'/api/updateAddress',{
             consignee:this.name,
             telephone:this.tel,
             detail:this.detail,
@@ -87,7 +85,7 @@ const url='http://xlk.dxvke.com/'
       update:function(){
         this.getName(this.address)
         this.showLoading=true
-        this.$http.post(url+'/api/updateAddress',{
+        this.$http.post(this.http+'/api/updateAddress',{
             id:this.address_id,
             consignee:this.name,
             telephone:this.tel,
@@ -119,7 +117,7 @@ const url='http://xlk.dxvke.com/'
         this.showLoading=true
         this.$http({
           method:'GET',
-          url:url+'/api/updateAddress',
+          url:this.http+'/api/updateAddress',
           params:{id:this.address_id}
         }).then((res)=>{
           if(res.data.code=='200'){

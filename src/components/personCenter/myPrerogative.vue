@@ -3,23 +3,23 @@
 		<x-header :left-options="{backText: ''}" title="我的特权" class="header"></x-header>
 		<div class="header-main">
 			<div>
-				<img src="../../../static/images/fans/leve1.png" alt="" class="user_order" v-show="userInfo.level_id!==2&&userInfo.level_id!==3"/>
-				<img src="../../../static/images/fans/leve2.png" alt="" class="user_order" v-show="userInfo.level_id==2"/>
-				<img src="../../../static/images/fans/leve3.png" alt="" class="user_order" v-show="userInfo.level_id==3"/>
+				<img src="../../../static/images/fans/leve1.png" alt="" class="user_order" v-show="userInfo.level_id!==2&&userInfo.level_id!==3" />
+				<img src="../../../static/images/fans/leve2.png" alt="" class="user_order" v-show="userInfo.level_id==2" />
+				<img src="../../../static/images/fans/leve3.png" alt="" class="user_order" v-show="userInfo.level_id==3" />
 			</div>
 			<div style="position: relative;">
 				<div class="pro">
 					<div>
-						<img src="../../../static/images/fans/vip0_gray.png" alt="" class="icon" v-show="userInfo.level_id!==1"/>
-						<img src="../../../static/images/fans/vip0.png" alt="" class="icon" v-show="userInfo.level_id==1"/>
+						<img src="../../../static/images/fans/vip0_gray.png" alt="" class="icon" v-show="userInfo.level_id!==1" />
+						<img src="../../../static/images/fans/vip0.png" alt="" class="icon" v-show="userInfo.level_id==1" />
 					</div>
 					<div>
-						<img src="../../../static/images/fans/vip1_gray.png" alt="" class="icon" v-show="userInfo.level_id!==2"/>
-						<img src="../../../static/images/fans/vip1.png" alt="" class="icon" v-show="userInfo.level_id==2"/>
+						<img src="../../../static/images/fans/vip1_gray.png" alt="" class="icon" v-show="userInfo.level_id!==2" />
+						<img src="../../../static/images/fans/vip1.png" alt="" class="icon" v-show="userInfo.level_id==2" />
 					</div>
 					<div>
-						<img src="../../../static/images/fans/vip2_gray.png" alt="" class="icon" v-show="userInfo.level_id!==3"/>
-						<img src="../../../static/images/fans/vip2.png" alt="" class="icon" v-show="userInfo.level_id==3"/>
+						<img src="../../../static/images/fans/vip2_gray.png" alt="" class="icon" v-show="userInfo.level_id!==3" />
+						<img src="../../../static/images/fans/vip2.png" alt="" class="icon" v-show="userInfo.level_id==3" />
 					</div>
 
 				</div>
@@ -34,49 +34,49 @@
 				<span :class="userInfo.level_id==3?'active':''">帮主</span>
 			</div>
 		</div>
-	     <div class="main" v-show="userInfo.level_id==1">
-	     	<div class="tip">
-	     		<span class="border"></span><p class="f30 c3">帮众特权</p>
-	     	</div>
-	     	<div class="des f26 c3">
-	     		<p>1. 自用40%的利润奖励</p>
-	     		<p>2. 享受直属粉丝购物利润的20%奖励</p>
-	     		<p>3. 享受不定期平台内各项奖励或免费活动（如：0元购等“包含但不限于”）</p>
-	     	</div>
-	     </div>
-	     <div class="main" v-show="userInfo.level_id==2">
-	     	<div class="tip">
-	     		<span class="border border2"></span><p class="f30 c3">长老特权</p>
-	     	</div>
-	     	<div class="des des2 f26 c3">
-	     		<p>1. 自用50%利润返佣（限京东、蘑菇街与唯品）</p>
-	     		<p>2. 享受直属粉丝购物利润的20%</p>
-	     		<p>3. 享受直属粉丝指定商品分销权限，每单净赚50元</p>
-	     		<p>4. 享受申请成立帮派权限</p>
-	     		<p>5. 解锁推广佣金或粉丝贡献奖励佣金</p>
-	     		<p>6. 享受不定期平台内各项奖励或免费活动</p>
-	     	</div>
-	     </div>
-	     <div class="main" v-show="userInfo.level_id==3">
-	     	<div class="tip">
-	     		<span class="border border3"></span><p class="f30 c3">帮主特权</p>
-	     	</div>
-	     	<div class="des des3 f26 c3">
-	     		<p>1. 自用90%的利润奖励</p>
-	     		<p>2. 享受旗下长老帮众等帮派好友购物利润的20%奖励</p>
-	     		<p>3. 享受2代好友购物利润20%奖励</p>
-	     		<p>4. 享受直属粉丝自营商城购物利润的30%分销奖励</p>
-	     		<p>5. 享受指定商品总代权限，成本进货直营推广赚120元/件</p>
-	     		<p>6. 享受指定商品总代权限，帮内好友分销后总代分佣赚60元/件</p>
-	     		<p>7. 享受平台营销类或市场运营类平台功能插件使用申请权</p>
-	     		<p>8. 享受平台内不定期悬赏活动（官方补贴／激励活动）权限</p>
-	     		<p>9. 享受不定期平台内各项奖励或免费活动（如；0元购等“包含但不限于”）</p>
-	     	</div>
-	     </div>
-	     <router-link to="/upgrade" class="flex f28 c3 footer">
-			<img src="../../../static/images/upgrade_icon.png" alt="" />
-			<span>升级地位,获得更多特权</span>
-		</router-link>
+		<div class="main" v-show="userInfo.level_id==1">
+			<div class="tip">
+				<span class="border"></span>
+				<p class="f30 c3">帮众特权</p>
+			</div>
+			<div class="des f26 c3">
+				<p>1. 自用40%的利润奖励</p>
+				<p>2. 享受直属粉丝购物利润的20%奖励</p>
+				<p>3. 享受不定期平台内各项奖励或免费活动（如：0元购等“包含但不限于”）</p>
+			</div>
+		</div>
+		<div class="main" v-show="userInfo.level_id==2">
+			<div class="tip">
+				<span class="border border2"></span>
+				<p class="f30 c3">长老特权</p>
+			</div>
+			<div class="des des2 f26 c3">
+				<p>1. 自用50%利润返佣（限京东、蘑菇街）</p>
+				<p>2. 享受直属粉丝购物利润的20%</p>
+				<p>3. 享受直属粉丝指定商品分销权限，每单净赚50元</p>
+				<p>4. 享受申请成立帮派权限</p>
+				<p>5. 解锁推广佣金或粉丝贡献奖励佣金</p>
+				<p>6. 享受不定期平台内各项奖励或免费活动</p>
+			</div>
+		</div>
+		<div class="main" v-show="userInfo.level_id==3">
+			<div class="tip">
+				<span class="border border3"></span>
+				<p class="f30 c3">帮主特权</p>
+			</div>
+			<div class="des des3 f26 c3">
+				<p>1. 自用90%的利润奖励</p>
+				<p>2. 享受旗下长老帮众等帮派好友购物利润的20%奖励</p>
+				<p>3. 享受2代好友购物利润20%奖励</p>
+				<p>4. 享受直属粉丝自营商城购物利润的30%分销奖励</p>
+				<p>5. 享受指定商品总代权限，成本进货直营推广赚100元/件</p>
+				<p>6. 享受指定商品总代权限，帮内好友分销后总代分佣赚50 元/件
+				</p>
+				<p>7. 享受平台营销类或市场运营类平台功能插件使用申请权</p>
+				<p>8. 享受直属会员升任帮主的培训奖励每人/200元</p>
+				<p>9. 享受不定期平台内各项奖励或免费活动</p>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -89,20 +89,20 @@
 		},
 		data() {
 			return {
-				userInfo:{
-					level_id:null,
+				userInfo: {
+					level_id: null,
 				},
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
 			}
 		},
 		methods: {
-			
+
 		},
 		mounted: function() {
 
 		},
 		created: function() {
-			this.userInfo=JSON.parse(plus.storage.getItem('userInfo'))
+			this.userInfo = JSON.parse(plus.storage.getItem('userInfo'))
 		}
 	}
 </script>
@@ -148,7 +148,8 @@
 		height: .46rem;
 		color: #d9a4cd;
 	}
-	.line_p{
+	
+	.line_p {
 		width: calc(100% - 2.4rem);
 		width: -moz-calc(100% - 2.4rem);
 		width: -webkit-calc(100% - 2.4rem);
@@ -158,19 +159,20 @@
 		margin: 0rem 1.2rem;
 		display: flex;
 	}
-	.line{
+	
+	.line {
 		width: calc((100% - 1.38rem)/2);
 		width: -moz-calc((100% - 1.38rem));
 		width: -webkit-calc((100% - 1.38rem)/2);
 		height: .04rem;
 		background-color: #fd8ee2;
-		
-		
 	}
-	.line:nth-of-type(1){
+	
+	.line:nth-of-type(1) {
 		margin: 0 .23rem 0 .46rem;
 	}
-	.line:nth-of-type(2){
+	
+	.line:nth-of-type(2) {
 		margin: 0 .46rem 0 .23rem;
 	}
 	
@@ -178,53 +180,64 @@
 		width: .46rem;
 		height: .46rem;
 	}
-	.active{
+	
+	.active {
 		color: white;
 	}
-	.main{
+	
+	.main {
 		background: white;
 		margin-bottom: .2rem;
 		padding-bottom: .4rem;
 	}
-	.tip{
+	
+	.tip {
 		height: 1rem;
 		display: flex;
 		align-items: center;
 		padding: 0 .26rem;
 	}
-	.border{
+	
+	.border {
 		display: inline-block;
 		width: .06rem;
 		height: .32rem;
 		background: #c0c0c0;
 		margin-right: .12rem;
 	}
-	.border2{
+	
+	.border2 {
 		background: #84c1fd;
 	}
-	.border3{
+	
+	.border3 {
 		background: #f9c404;
 	}
-	.des{
+	
+	.des {
 		margin: .1rem .67rem;
 		border-radius: .06rem;
 		border: .01rem solid #c0c0c0;
 		padding: .2rem;
 		line-height: .4rem;
 	}
-	.des2{
+	
+	.des2 {
 		border: .01rem solid #84c1fd;
 	}
-	.des3{
+	
+	.des3 {
 		border: .01rem solid #f9c404;
 	}
-	.footer{
+	
+	.footer {
 		line-height: .78rem;
 		background: white;
 		margin-top: .3rem;
 		justify-content: center;
 	}
-	.footer img{
+	
+	.footer img {
 		width: .32rem;
 		height: .32rem;
 		margin-right: .14rem;

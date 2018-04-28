@@ -128,7 +128,10 @@ routes: [{
 	},
 	{
 		path: '/home/indexSearch',
-		component: IndexSearch
+		component: IndexSearch,
+		meta:{
+			keepAlive: true
+		}
 	},
 	{
 		path: '/home/taobao',
@@ -140,7 +143,10 @@ routes: [{
 	{
 		path: '/home/assortment/Classify',
 		name:'Classify',
-		component: Classify
+		component: Classify,
+		meta:{
+			keepAlive: true
+		}
 	},
 	{
 		path: '/home/assortment/search',
@@ -158,6 +164,7 @@ routes: [{
 	},
 	{
 		path: '/shareRoom',
+		name:'ShareRoom',
 		component: ShareRoom,
 		meta: {
 			showFooter: true,

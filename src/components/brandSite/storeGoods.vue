@@ -60,7 +60,6 @@
 <script>
 	import { Tab, TabItem, Swiper, SwiperItem, PopupPicker, Divider, XSwitch } from 'vux'
 	const list = () => ['首页', '全部商品', '品牌现场']
-	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'StoreIndex',
 		components: {
@@ -95,7 +94,7 @@
 				const self = this
 				this.$http({
 					method: 'POST',
-					url: url+'/api/index_goods',
+					url: this.http+'/api/index_goods',
 					data: {
 						page: this.pageIndex,
 						limit: this.limit

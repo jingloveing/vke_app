@@ -75,8 +75,6 @@
 </template>
 <script>
 	import { XHeader, Swiper } from 'vux'
-	const url='http://xlk.dxvke.com/'
-//  const url=''
 	export default {
 		name: 'Home',
 		components: {
@@ -100,7 +98,7 @@
 			getBannerList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/tbBanner'
+					url: this.http+'/api/tbBanner'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const imgList = res.data.data
@@ -118,7 +116,7 @@
 			getTypeList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/tbCate'
+					url: this.http+'/api/tbCate'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const typeList = res.data.data
@@ -133,7 +131,7 @@
 				const self = this
 				this.$http({
 					method: 'get',
-					url: url+'/api/tbList',
+					url: this.http+'/api/tbList',
 					params: {
 						page: this.pageIndex,
 						limit: this.limit,
@@ -194,6 +192,11 @@
 			})
 		},
 		created: function() {
+			this.getBannerList()
+			this.getTypeList()
+			this.getGoodsList()
+		},
+		activated: function () {
 			this.getBannerList()
 			this.getTypeList()
 			this.getGoodsList()

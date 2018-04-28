@@ -15,7 +15,6 @@
 
 <script>
 	import { XHeader,Loading } from 'vux'
-	const url = 'http://xlk.dxvke.com/'
 	export default {
 		components: {
 			XHeader,
@@ -122,7 +121,7 @@
 			},
 			//      获取商品返利信息
 			getProductAcer(urls) {
-				this.$http.post(url + '/api/getProductAcer', {
+				this.$http.post(this.http + '/api/getProductAcer', {
 					type: 2,
 					product: urls
 				}).then((res) => {
@@ -141,7 +140,7 @@
 			//      够买给后台传参
 			toBuy() {
 				var self = this
-				this.$http.post(url + '/api/toBuy', {
+				this.$http.post(this.http + '/api/toBuy', {
 					type: 2,
 					id: self.product_id
 				}).then((res) => {

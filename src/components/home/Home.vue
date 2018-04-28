@@ -95,13 +95,26 @@
 			</div>
 		</scroller>
 		<loading v-model="showLoading" :text="loadText"></loading>
+		<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;z-index: 9999999;" v-show="upgrade==1">
+		</div>
+		<transition enter-active-class="fadeInUpBig" leave-active-class="fadeOutDownBig">
+			<div v-show="upgrade==1" class="update-main">
+				<span style="display: inline-block;width: .6rem;height: .6rem;right:calc(((100% - 5.37rem)/2) + .14rem);position: fixed;" @click="cancel()"></span>
+				<div class="update-main-content">
+					<p class="f28 c3" style="padding: .1rem 0 0 .5rem;">最新版本：{{app_version}}</p>
+					<p class="f28 c3" style="padding: .1rem 0 0 .5rem;">新版本大小：{{app_size}}</p>
+					<div style="margin: .5rem .5rem 0;">
+		<x-button type="default" class="f32 c3" @click.native="toUpdate()">立即更新</x-button>
+	</div>
+				</div>
+				
+			</div>
+		</transition>
 	</div>
 </template>
 <script>
-	import { Swiper, SwiperItem, Loading } from 'vux'
+	import { Swiper, SwiperItem, Loading,XButton } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
-	const url = 'http://xlk.dxvke.com'
-//			const url = ''
 	export default {
 		name: 'Home',
 		components: {
@@ -110,6 +123,7 @@
 			Loading,
 			swipers: swiper,
 			swiperSlide,
+			XButton
 		},
 		data() {
 			return {
@@ -132,6 +146,10 @@
 					preventClicksPropagation: true,
 				},
 				unMessage: null,
+				app_size:'',
+				app_version:'',
+				updateUrl:'',
+				upgrade:0,
 			}
 		},
 		methods: {
@@ -139,7 +157,7 @@
 			getBannerList: function() {
 				this.$http({
 					method: 'get',
-					url: url + '/api/indexBanner'
+					url: this.http+ '/api/indexBanner'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const imgList = res.data.data
@@ -160,7 +178,7 @@
 			getNews: function() {
 				this.$http({
 					method: 'get',
-					url: url + '/api/indexNews'
+					url: this.http + '/api/indexNews'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.news = res.data.data
@@ -175,7 +193,7 @@
 			getMerchantList: function(done) {
 				this.$http({
 					method: 'get',
-					url: url + '/api/indexMerchant',
+					url: this.http + '/api/indexMerchant',
 					params: {
 						page: this.pageIndex,
 						limit: this.limit
@@ -203,6 +221,19 @@
 					this.merchant = JSON.parse(plus.storage.getItem("merchant"))
 					this.noData = true
 					this.$refs.myscroller.finishInfinite(2);
+					console.log(JSON.stringify(err))
+				})
+			},
+			//是否有新版本号
+			getUpdate(){
+				this.$http.get( this.http + '/api/checkAppUpgrade',{version:1.5}).then((res) => {
+					if(res.data.code == '200') {
+						this.upgrade=res.data.data.upgrade
+						this.updateUrl=res.data.data.url
+						this.app_version=res.data.data.app_version
+                        this.app_size=res.data.data.app_size
+					}
+				}, (err) => {
 					console.log(JSON.stringify(err))
 				})
 			},
@@ -235,7 +266,7 @@
 			},
 			toJD() {
 				var self = this
-				this.$http.post(url + '/api/getBuyUrl', {
+				this.$http.post(this.http + '/api/getBuyUrl', {
 					type: 2,
 				}).then((res) => {
 					if(res.data.code == '200') {
@@ -255,7 +286,7 @@
 			},
 			toMogu() {
 				var self = this
-				this.$http.post(url + '/api/getBuyUrl', {
+				this.$http.post(this.http + '/api/getBuyUrl', {
 					type: 3,
 				}).then((res) => {
 					if(res.data.code == '200') {
@@ -272,11 +303,35 @@
 					console.log(JSON.stringify(err))
 				})
 			},
+			toUpdate(){
+				if(plus.os.name == "Android") {
+					var self = this
+					plus.runtime.openURL(self.updateUrl, function(err) {
+
+					});
+				} else if(plus.os.name == "iOS") {
+					var self = this
+					plus.runtime.openURL(self.updateUrl, function(err) {
+
+					});
+				}
+
+ 			},
+ 			cancel(){
+ 				this.upgrade=0
+ 			}
 		},
 		mounted: function() {
 
 		},
 		created: function() {
+			this.getUpdate()
+			this.getBannerList()
+			this.getNews()
+			this.getMerchantList()
+			this.unMessage = plus.storage.getItem("unMessage")
+		},
+		activated:function(){
 			this.getBannerList()
 			this.getNews()
 			this.getMerchantList()
@@ -577,6 +632,20 @@
 		border-bottom-right-radius: .5rem;
 		bottom: .95rem;
 		left: -.1rem;
+	}
+	.update-main{
+		width: 5.37rem;
+		height: 6.24rem;
+		background: url(../../../static/images/update.png);
+		background-size: 100%;
+		background-repeat:no-repeat ;
+		z-index: 9999999;
+		position: fixed;
+		top: 2rem;
+		left: calc((100% - 5.37rem)/2);
+	}
+	.update-main-content{
+		margin-top: 3.5rem;
 	}
 </style>
 <style>

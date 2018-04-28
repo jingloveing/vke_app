@@ -29,7 +29,7 @@ Vue.use(ConfirmPlugin)
 FastClick.attach(document.body)
 
 Vue.config.productionTip = false
-
+Vue.prototype.http='http://xlk.dxvke.com'
 /* eslint-disable no-new */
 new Vue({
 	router,

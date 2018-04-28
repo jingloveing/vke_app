@@ -81,7 +81,6 @@
 
 <script>
 	import { XHeader,Loading} from 'vux'
-	const url = 'http://xlk.dxvke.com/'
 	export default {
 		components: {
 			XHeader,
@@ -169,7 +168,7 @@
 			},
 			//      获取商品返利信息
 			getProductAcer(urls) {
-				this.$http.post(url + '/api/getProductAcer', {
+				this.$http.post(this.http + '/api/getProductAcer', {
 					type: 3,
 					product: urls
 				}).then((res) => {

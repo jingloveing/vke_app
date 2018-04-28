@@ -118,7 +118,6 @@
 
 <script>
 	import { XHeader, XInput, XButton, Group, Loading } from 'vux'
-	const url = 'http://xlk.dxvke.com/'
 	export default {
 		name: 'Realize',
 		components: {
@@ -151,7 +150,7 @@
 				var alipay = window.alipay
 				this.$http({
 					method: 'get',
-					url: url + 'api/pay',
+					url: this.http+ 'api/pay',
 					params: {order:this.order.order_id,type:1}
 				}).then((res) => {
 					plus.nativeUI.closeWaiting();
@@ -175,7 +174,7 @@
 			paySuccess(){
 				this.$http({
 					method: 'get',
-					url: url + 'api/paySuccess',
+					url: this.http+ 'api/paySuccess',
 					params: {order:this.order.order_id}
 				}).then((res) => {
 					plus.nativeUI.closeWaiting();

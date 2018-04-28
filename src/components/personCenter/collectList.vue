@@ -6,7 +6,7 @@
 		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.76rem;">
 			<div class="goods_list" v-show="index==0">
 				<ul class="goods">
-					<li v-for="(list,index) in goodsList" :key="index">
+					<li v-for="(list,index) in goodsList" :key="index" @click="toDetail(list)">
 						<router-link to="">
 							<img :src="list.image" alt="" class="pic" :onerror="defaultImg">
 						</router-link>
@@ -25,7 +25,7 @@
 										<span class="new_num f28"><span class="f24">￥</span>{{list.product_price.rmb}}<span v-show="list.product_price.corner!=='00'" class="f24">.{{list.product_price.corner}}</span></span>
 										<del class="old_num f24">￥{{list.market_price.rmb}}<span v-show="list.market_price!=='00'">.{{list.market_price.corner}}</span></del>
 									</div>
-									<div @click="del(list.type,list.collect_id,index)">
+									<div @click.stop="del(list.type,list.collect_id,index)">
 										<img src="../../../static/images/collect_del.png" alt="" style="width: .32rem;height: .32rem;" />
 									</div>
 								</div>
@@ -36,7 +36,7 @@
 			</div>
 			<div v-show="index==1" style="background: white;">
 				<ul class="brand">
-					<li v-for="(list,index) in goodsList" :key="index">
+					<li v-for="(list,index) in goodsList" :key="index" @click="toStore(list)">
 						<img :src="list.image" alt="" alt="" :onerror="defaultImg" class="brand-pic"/>
 						<div class="brand-main">
 							<div class="brand-main-left">
@@ -47,7 +47,7 @@
                 <span class="type vipshop">唯品会</span>
                 <span class="type self">自营</span>-->
 							</div>
-							<div style="line-height: 1rem;padding:0 .26rem;" @click="del(list.type,list.collect_id,index)">
+							<div style="line-height: 1rem;padding:0 .26rem;" @click.stop="del(list.type,list.collect_id,index)">
 								<img src="../../../static/images/collect_del.png" alt="" style="width: .32rem;height: .32rem;vertical-align: middle;" />
 							</div>
 						</div>
@@ -65,8 +65,6 @@
 <script>
 	import { Tab, TabItem, Loading, Toast } from 'vux'
 	const list = () => ['宝贝', '品牌']
-    const url='http://xlk.dxvke.com'
-//  const url=""
 	export default {
 		name: 'subject',
 		components: {
@@ -102,7 +100,7 @@
 			getGoods: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/collection',
+					url: this.http+'/api/collection',
 					params: {
 						type:this.index+1,
 						page:this.page,
@@ -158,9 +156,7 @@
 			},
 			//      收藏----取消收藏
 			del(type,id,index) {
-				console.log(type)
-				console.log(id)
-				this.$http.post(url+'/api/doCollect', {
+				this.$http.post(this.http+'/api/doCollect', {
 						id: id,
 						type: type,
 				}).then((res) => {
@@ -183,11 +179,28 @@
 				this.goodsList =[]
 				this.getGoods()
 			},
+			toDetail(item){
+				if(item.product_class==1){
+					//跳转到淘宝商品详情
+					this.$router.push({name:'TBDetail',query:{id:item.collect_id,type:4}})
+					
+				}else if(item.product_class==1){
+					//跳转到店铺商品详情
+					this.$router.push({name:'BrandDetail',query:{id:item.collect_id,store_id:item.store_id}})
+					
+				}
+			},
+			toStore(item){
+				this.$router.push({name:'StoreIndex',query:{id:item.collect_id}})			
+			}
 		},
 		mounted() {
 
 		},
 		created: function() {
+			this.getGoods()
+		},
+		activated:function(){
 			this.getGoods()
 		}
 	}

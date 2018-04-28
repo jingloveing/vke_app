@@ -77,8 +77,6 @@
 <script>
 	var list = ["今日", "昨日", "本月", "全部"]
 	import { DatetimeView, } from 'vux'
-		const url='http://xlk.dxvke.com'
-//	const url = ""
 	export default {
 		name: 'Realize',
 		components: {
@@ -113,7 +111,7 @@
 			getList() {
 				this.$http({
 					mothed: 'get',
-					url: url + '/api/getFansAcerList',
+					url: this.http + '/api/getFansAcerList',
 					params: {
 						type: this.type,
 						page:this.page,

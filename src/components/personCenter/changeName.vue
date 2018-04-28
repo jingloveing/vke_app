@@ -13,7 +13,6 @@
 
 <script>
 	import { XInput, Group,XButton,Toast} from 'vux'
-	const url='http://xlk.dxvke.com/'
 	export default {
 		components: {
 			XInput,
@@ -33,7 +32,7 @@
 		methods: {
             	//      修改用户信息
 			editInfo: function() {
-				this.$http.post(url+'/api/updateInfo',{nickname:this.userInfo.nickname}).then((res) => {
+				this.$http.post(this.http+'/api/updateInfo',{nickname:this.userInfo.nickname}).then((res) => {
 					if(res.data.code == '200') {
 						this.toast = res.data.data.message
 					    this.showToast = true

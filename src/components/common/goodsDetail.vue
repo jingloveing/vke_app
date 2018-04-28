@@ -121,7 +121,6 @@
 </template>
 <script>
 	import { XHeader, Cell, CellBox, CellFormPreview, Group, Badge, Loading, Swiper, Toast,XNumber} from 'vux'
-	const url='http://xlk.dxvke.com/'
 	export default {
 		components: {
 			Group,
@@ -193,7 +192,7 @@
 			getGoodsDetail: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/checkLevelProduct'
+					url: this.http+'/api/checkLevelProduct'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						console.log(JSON.stringify(res.data.data))

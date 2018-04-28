@@ -9,8 +9,6 @@
 </template>
 
 <script>
-	const url='http://xlk.dxvke.com/'
-//  const url=''
 	export default {
 		components: {
 			
@@ -30,7 +28,7 @@
 					if(this.tb_auth == 0) {
 						this.$http({
 							method: 'get',
-							url: url+'/api/doAccredit',
+							url: this.http+'/api/doAccredit',
 							params: {
 								type: type
 							}
@@ -46,7 +44,7 @@
 					} else {
 						this.$http({
 							method: 'get',
-							url: url+'/api/exitAccredit',
+							url: this.http+'/api/exitAccredit',
 							params: {
 								type: type
 							}
@@ -64,7 +62,7 @@
 					if(this.jd_auth == 0) {
 						this.$http({
 							method: 'get',
-							url: url+'/api/doAccredit',
+							url: this.http+'/api/doAccredit',
 							params: {
 								type: type
 							}
@@ -80,7 +78,7 @@
 					} else {
 						this.$http({
 							method: 'get',
-							url: url+'/api/exitAccredit',
+							url: this.http+'/api/exitAccredit',
 							params: {
 								type: type
 							}

@@ -17,7 +17,6 @@
 
 <script>
 	import {Group, XTextarea, XInput, Loading,XButton} from 'vux'
-	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Home',
 		components: {
@@ -38,7 +37,7 @@
 		methods: {
              //提交意见反馈
 			feedback(){
-				this.$http.post(url+'/api/feedback', {
+				this.$http.post(this.http+'/api/feedback', {
 					msg: this.msg,
 					telephone: this.telephone
 				}).then((res) => {

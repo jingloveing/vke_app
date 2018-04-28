@@ -79,7 +79,6 @@
 <script>
 	import { XHeader, Cell, CellBox, CellFormPreview, Group, Badge, Loading, Swiper, Toast,XNumber} from 'vux'
 	import Clipboard from 'clipboard'
-    const url='http://xlk.dxvke.com/'
 	export default {
 		components: {
 			Group,
@@ -146,7 +145,7 @@
 				this.type = this.$route.query.type
 				this.$http({
 					method: 'POST',
-					url: url+'/api/goodsDetail',
+					url: this.http+'/api/goodsDetail',
 					data: {
 						goods_id: this.id,
 						type: this.type

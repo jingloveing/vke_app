@@ -5,7 +5,7 @@
 		</tab>
 		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.76rem;">
 		<div class="tab-swiper" v-show="index==0">
-			<p class="tip f28 c9">目前您领券节省总计为{{total_pay}}元</p>
+			<p class="tip f28 c9">目前您的消费总计为{{total_pay}}元</p>
 			<div class="list" v-for="(item,index) in dataList" :key="index">
 				<h5 class="f32 c3 list-title">
 					<span v-show="item.bill==1">淘宝订单</span>
@@ -18,7 +18,7 @@
 			</div>
 		</div>
 			<div class="tab-swiper" v-show="index==1">
-				<p class="tip f28 c9">目前您的消费总计为{{total_pay}}元</p>
+				<p class="tip f28 c9">目前您领券节省总计为{{total_pay}}元</p>
 				<div class="list" v-for="(item,index) in dataList" :key="index">
 					<h5 class="f32 c3 list-title">
 					<span v-show="item.bill==1">淘宝订单</span>
@@ -38,8 +38,6 @@
 <script>
 	import { Tab, TabItem,Loading} from 'vux'
 	const list = () => ['累计消费', '累计节省']
-	const url = 'http://xlk.dxvke.com/'
-//  const url =''
 	export default {
 		components: {
 			Tab,
@@ -64,7 +62,7 @@
 			getBillList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/billList',
+					url: this.http+'/api/billList',
 					params:{page:this.page,limit:this.limit,type:this.index + 1}
 				}).then((res) => {
 					this.showLoading = false
@@ -122,6 +120,10 @@
 			},
 		},
 		created:function(){
+			this.getBillList()
+		},
+		activated:function(){
+			this.dataList=[]
 			this.getBillList()
 		}
 	}

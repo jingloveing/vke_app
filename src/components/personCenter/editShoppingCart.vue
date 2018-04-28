@@ -45,7 +45,6 @@
 
 <script>
 	import { XNumber, XSwitch, TransferDom, Actionsheet} from 'vux'
-	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Realize',
 		components: {

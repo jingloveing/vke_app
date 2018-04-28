@@ -21,8 +21,6 @@
 
 <script>
 	import { Group, Cell, XButton, XSwitch } from 'vux'
-	const url='http://xlk.dxvke.com/'
-//  const url=''
 	export default {
 		components: {
 			Group,
@@ -45,7 +43,7 @@
 			getStart: function(type) {
 				this.$http({
 					method: 'get',
-					url: url+'/api/accreditInfo',
+					url: this.http+'/api/accreditInfo',
 					//					params:{type:type}
 				}).then((res) => {
 					if(res.data.code == '200') {

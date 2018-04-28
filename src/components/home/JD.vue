@@ -90,7 +90,6 @@
 </template>
 <script>
 	import { XHeader, Swiper } from 'vux'
-	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Home',
 		components: {
@@ -114,7 +113,7 @@
 			getBannerList: function() {
 				this.$http({
 					method: 'POST',
-					url: url+'/api/index_banner'
+					url: this.http+'/api/index_banner'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const imgList = res.data.data.index_banner
@@ -133,7 +132,7 @@
 			getTypeList: function() {
 				this.$http({
 					method: 'POST',
-					url: url+'/api/index_type'
+					url: this.http+'/api/index_type'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const typeList = res.data.data.goods_type_up
@@ -148,7 +147,7 @@
 				const self = this
 				this.$http({
 					method: 'POST',
-					url: url+'/api/index_goods',
+					url: this.http+'/api/index_goods',
 					data: {
 						page: this.pageIndex,
 						limit: this.limit

@@ -83,8 +83,6 @@
 <script>
 	import { XHeader, Swiper } from 'vux'
 	import { swiper, swiperSlide } from 'vue-awesome-swiper'
-	const url='http://xlk.dxvke.com/'
-//  const url=''
 	export default {
 		name: 'BrandSite',
 		components: {
@@ -121,7 +119,7 @@
 			getBannerList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/merchantIndexBanner'
+					url: this.http+'/api/merchantIndexBanner'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const imgList = res.data.data
@@ -141,7 +139,7 @@
 			getMerchantList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/merchantList'
+					url: this.http+'/api/merchantList'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.merchantList = res.data.data
@@ -156,7 +154,7 @@
 			getMerchantView: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/merchantView',
+					url: this.http+'/api/merchantView',
 					params:{
 						page:this.page,
 						limit:this.limit

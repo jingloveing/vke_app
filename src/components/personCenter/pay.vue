@@ -44,7 +44,6 @@
 
 <script>
 	import { XNumber, XSwitch, Loading } from 'vux'
-	const url='http://xlk.dxvke.com/'
 	export default {
 		components: {
 			XNumber,
@@ -76,7 +75,7 @@
 			getAddress: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/defaultAddress',
+					url:this.http+'/api/defaultAddress',
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.address = res.data.data
@@ -89,7 +88,7 @@
 			//      创建订单
 			creatOrder: function() {
 				this.showLoading = true
-				this.$http.post(url+'/api/createOrder', {
+				this.$http.post(this.http+'/api/createOrder', {
 					type: 1,
 					address_id: this.address.id,
 					product_list:[{product_id:this.$route.query.id,number:this.data.number}]

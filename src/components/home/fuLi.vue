@@ -49,7 +49,6 @@
 </template>
 <script>
 	import { Tab, TabItem, Swiper, XHeader, Loading } from 'vux'
-const url='http://xlk.dxvke.com/'
 //  const url = ''
 	const list = () => ['价格优先', '销量优先', '券额优先', '最新商品']
 	export default {
@@ -87,7 +86,7 @@ const url='http://xlk.dxvke.com/'
 			getBannerList: function() {
 				this.$http({
 					method: 'get',
-					url: url+'/api/indexBanner',
+					url: this.http+'/api/indexBanner',
 					params:{type:this.type}
 				}).then((res) => {
 					if(res.data.code == '200') {
@@ -102,7 +101,7 @@ const url='http://xlk.dxvke.com/'
 //				this.showLoading = true
 				this.$http({
 					method: 'get',
-					url: url+'/api/tbStoreList',
+					url: this.http+'/api/tbStoreList',
 					params: {
 						type: this.$route.query.type,
 						order: this.order,

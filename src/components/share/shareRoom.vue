@@ -190,7 +190,6 @@
 
 <script>
 	import { XHeader, Swiper, Tab, TabItem, Loading, } from 'vux'
-	const url = 'http://xlk.dxvke.com'
 	const list1 = () => ['高佣金', '高券额']
 	const list2 = () => ['今日更新', '昨日更新']
 	//	const url = ''
@@ -235,7 +234,7 @@
 			getLevel: function() {
 				this.$http({
 					method: 'get',
-					url: url + '/api/getMemberLevel'
+					url: this.http + '/api/getMemberLevel'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.level_id = res.data.data.level_id
@@ -261,7 +260,7 @@
 			getBannerList: function() {
 				this.$http({
 					method: 'get',
-					url: url + '/api/oneShareBanner'
+					url: this.http + '/api/oneShareBanner'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const imgList = res.data.data
@@ -281,7 +280,7 @@
 			getList() {
 				this.$http({
 					method: 'get',
-					url: url + '/api/searchShareList',
+					url: this.http + '/api/searchShareList',
 					params: {
 						keywords: this.keywords,
 						type: this.type,
@@ -321,7 +320,7 @@
 			getCircleList: function() {
 				this.$http({
 					method: 'get',
-					url: url + '/api/getCircleList',
+					url: this.http + '/api/getCircleList',
 					params: {
 						type: this.type2,
 						page: this.page,
@@ -394,8 +393,14 @@
 				var self = this
 				this.page = 1
 				this.shareBanner = []
-				this.goodsList = []
-				this.getList()
+				if(this.active){
+					this.goodsList = []
+				    this.getList()
+				}else{
+					this.circleList=[]
+					this.getCircleList()
+				}
+				
 				this.getBannerList()
 				setTimeout(function() {
 					self.top = self.top - 10;
@@ -421,7 +426,7 @@
 				plus.nativeUI.showWaiting();
 				var self = this
 				var s = window.shares[id]
-				self.$http.post(url + '/api/getShareImage', {
+				self.$http.post(this.http + '/api/getShareImage', {
 					type: 3,
 					id: self.id,
 				}).then((res) => {
@@ -529,11 +534,11 @@
 			//申请升级长老
 			toUpgrage() {
 				var self = this
-				this.$http.post(url + "/api/applyUpgrade").then(
+				this.$http.post(this.http + "/api/applyUpgrade").then(
 					(res) => {
 						if(res.data.code == '200') {
 							this.$vux.confirm.show({
-								title: "恭喜您成功升级到'长老'，前往【一键分享】开始发单赚佣金吧！",
+								title: res.data.data.message,
 								onCancel() {
 
 								},
@@ -546,7 +551,7 @@
 							})
 						} else if(res.data.code == "400") {
 							this.$vux.confirm.show({
-								title: "您还未达到升级资格，前往【分享夺宝】继续扩充您的帮众数量吧~",
+								title: res.data.error,
 								onCancel() {
 
 								},

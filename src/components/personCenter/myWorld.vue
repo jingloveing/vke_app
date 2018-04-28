@@ -57,7 +57,6 @@
 
 <script>
 	import { Toast, Loading } from 'vux'
-	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Code',
 		components: {
@@ -86,7 +85,7 @@
 		methods: {
 			//获取个人推荐人数及信息
 			getCount() {
-				this.$http.get(url+'/api/inviteCount', {}).then((res) => {
+				this.$http.get(this.http+'/api/inviteCount', {}).then((res) => {
 					if(res.data.code == '200') {
 						this.data = res.data.data
 					} else {
@@ -98,7 +97,7 @@
 			},
 			//获取最新邀请粉丝信息
 			getInviteNew() {
-				this.$http.get(url+'/api/inviteNew', {}).then((res) => {
+				this.$http.get(this.http+'/api/inviteNew', {}).then((res) => {
 					if(res.data.code == '200') {
 						this.newInvite = res.data.data
 					} else {

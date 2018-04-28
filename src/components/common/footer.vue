@@ -6,7 +6,7 @@
       <img slot="icon" src="../../assets/home_red.png" v-show="$route.path == '/home'">
       <span slot="label">首页</span>
     </tabbar-item>
-    <tabbar-item link="/shareRoom" :selected="$route.path == '/liveRoom'">
+    <tabbar-item link="/shareRoom" :selected="$route.path == '/shareRoom'">
       <img slot="icon" src="../../assets/search_gray.png" v-show="$route.path !== '/shareRoom'">
       <img slot="icon" src="../../assets/search_red.png" v-show="$route.path == '/shareRoom'">
       <span slot="label">一键分享</span>

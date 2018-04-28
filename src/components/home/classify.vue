@@ -57,7 +57,6 @@
 //  import Vue from 'vue'
 //  import VueScroller from 'vue-scroller'
 //  Vue.use(VueScroller)
-const url='http://xlk.dxvke.com/'
 // const url =''
   export default {
     name: 'jiFen',
@@ -71,7 +70,6 @@ const url='http://xlk.dxvke.com/'
         totalCount:'',
         goodsList: [],
         cate_id:'',
-        typeList:[],
         subitemsExpanded: false,
         pageIndex:1,
         limit:10,
@@ -90,7 +88,7 @@ const url='http://xlk.dxvke.com/'
       getGoodsList:function(){
         this.$http({
           method:'get',
-          url:url+'/api/tbList',
+          url:this.http+'/api/tbList',
           params:{
             type:this.$route.query.id,page:this.pageIndex,limit:this.limit
           }
@@ -106,26 +104,23 @@ const url='http://xlk.dxvke.com/'
           }
         },(err)=>{})
       },
-      //      获取商品分类
-      getTypeList:function(){
-        const routerQuery = this.$route.query.id;
-        this.cate_id = routerQuery;
-        this.$http({
-          method:'POST',
-          url:url+'/api/goodslist_type',
-          data:{
-            cate_id:this.cate_id
-          }
-        }).then((res)=>{
-         if(res.data.code=='200'){
-           const typeList =res.data.data.allGoodsType
-           this.typeList = typeList
-           console.log(typeList)
-         }
-        },(err)=>{
-          console.log(err)
-        })
-      },
+//    //      获取商品分类
+//    getTypeList:function(){
+//      this.$http({
+//        method:'POST',
+//        url:this.http+'/api/goodslist_type',
+//        data:{
+//          cate_id:this.cate_id
+//        }
+//      }).then((res)=>{
+//       if(res.data.code=='200'){
+//         const typeList =res.data.data.allGoodsType
+//         this.typeList = typeList
+//       }
+//      },(err)=>{
+//        console.log(err)
+//      })
+//    },
       infinite(done){
         if(this.noData){
           setTimeout(()=>{
@@ -160,9 +155,15 @@ const url='http://xlk.dxvke.com/'
 
     },
     created:function(){
+        this.title=this.$route.query.title
+    	this.cate_id = this.$route.query.id;
+        this.getGoodsList();
+    },
+    activated:function(){
     	this.title=this.$route.query.title
-      this.getGoodsList();
-      this.getTypeList();
+    	this.cate_id = this.$route.query.id;
+    	this.goodsList=[]
+        this.getGoodsList();
     }
   }
 </script>

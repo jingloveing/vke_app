@@ -84,30 +84,10 @@
 				<div @click="show=!show" class="f32 c3" style="text-align: center;line-height: .96rem;border-top: .01rem solid #e5e5e5;">取消</div>
 			</div>
 		</transition>
-		<!--ios领券-->
-		<div v-show="show1" class="ios-tkl">
-			<div class="ios-tkl-bd">
-			</div>
-			<div class="ios-tkl-main">
-				<div class="ios-tkl-main-des">
-					<p class="ios-tkl-main-title">淘口令购买</p>
-					<input type="text" :value="command" class="ios-tkl-main-word" id="kouling">
-					<p class="des">在点击复制后，打开淘宝APP购买</p>
-					<p class="des">若一键复制失败，请长按虚线内文字</p>
-					<button class="m_btn" data-clipboard-target="#kouling">
-            一键复制
-          </button>
-				</div>
-				<img src="../../../static/images/cancel_img.png" alt="" @click="cancel1">
-			</div>
-		</div>
 	</div>
 </template>
 <script>
 	import { XHeader, Cell, CellBox, CellFormPreview, Group, Badge, Loading, Swiper, Toast, XNumber } from 'vux'
-	import Clipboard from 'clipboard'
-	const url = 'http://xlk.dxvke.com/'
-	//	const url = ""
 	export default {
 		components: {
 			Group,
@@ -131,7 +111,6 @@
 				toast: '',
 				showLoading: false,
 				show: false,
-				show1: false,
 				goodsDetail: {
 					product_name: '',
 					pict_url: [],
@@ -156,7 +135,7 @@
 				this.id = this.$route.query.id;
 				this.$http({
 					method: 'get',
-					url: url + '/api/productInfo',
+					url: this.http + '/api/productInfo',
 					params: {
 						id: this.$route.query.id,
 						type: this.$route.query.type
@@ -169,22 +148,6 @@
 					console.log(JSON.stringify(err))
 				})
 			},
-			//     淘口令
-			getCommand: function() {
-				var data={
-						coupon_url: this.goodsDetail.coupon_url,
-						pict_url: this.goodsDetail.pict_url,
-						product_name: this.goodsDetail.product_name
-				}
-				this.$http.post(url+'/api/productCreateCommand',data
-				).then((res) => {
-					if(res.data.code == '200') {
-						this.command = res.data.data.command
-					}
-				}, (err) => {
-					console.log(err)
-				})
-			},
 			//      收藏----取消收藏
 			toCollect() {
 				var data = {
@@ -192,7 +155,7 @@
 					type: 4
 				}
 				console.log(JSON.stringify(data))
-				this.$http.post(url + '/api/doCollect', data).then((res) => {
+				this.$http.post(this.http + '/api/doCollect', data).then((res) => {
 					if(res.data.code == '200') {
 						this.toast = res.data.data.message
 						this.showToast = true
@@ -216,38 +179,34 @@
 				location.href = 'http://www.dxvke.com/goodsDetail/?id=' + id
 			},
 			tobuy() {
-				var u = navigator.userAgent;
-				var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
-				var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-				if(isAndroid) {
-					this.$router.push({
-						name: 'TBQuan',
-						query: {
-							url: this.goodsDetail.click_url
-						}
-					})
-				}
-				if(isiOS) {
-					this.show1 = true
-					this.getCommand()
+				if(plus.os.name == "Android") {
+					var self = this
+					plus.runtime.openURL(self.goodsDetail.click_url, function(err) {
+
+					}, "com.taobao.taobao");
+				} else if(plus.os.name == "iOS") {
+					var self = this
+					plus.runtime.launchApplication({
+						action: self.goodsDetail.click_url.replace("https://", "taobao://")
+					}, function(e) {
+
+					});
 				}
 
 			},
 			toquan() {
-				var u = navigator.userAgent;
-				var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
-				var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-				if(isAndroid) {
-					this.$router.push({
-						name: 'TBQuan',
-						query: {
-							url: this.goodsDetail.coupon_url
-						}
-					})
-				}
-				if(isiOS) {
-					this.show1 = true
-					this.getCommand()
+				if(plus.os.name == "Android") {
+					var self = this
+					plus.runtime.openURL(self.goodsDetail.coupon_url, function(err) {
+
+					}, "com.taobao.taobao");
+				} else if(plus.os.name == "iOS") {
+					var self = this
+					plus.runtime.launchApplication({
+						action: self.goodsDetail.coupon_url.replace("https://", "taobao://")
+					}, function(e) {
+
+					});
 				}
 			},
 			//分享操作
@@ -256,7 +215,7 @@
 				console.log(id, ex)
 				var self = this
 				var s = window.shares[id]
-				self.$http.post(url + '/api/getShareImage', {
+				self.$http.post(this.http + '/api/getShareImage', {
 					type: 4,
 					id: self.$route.query.id,
 				}).then((res) => {
@@ -332,15 +291,7 @@
 		},
 		mounted: function() {
 			this.$nextTick(function() {
-				let self = this
-				const clipboard = new Clipboard('.m_btn')
-				clipboard.on('success', function(e) {
-					plus.nativeUI.toast("复制成功");
-					e.clearSelection();
-				});
-				clipboard.on('error', function(e) {
-					plus.nativeUI.toast("请选择“拷贝”进行复制");
-				});
+				
 			})
 		},
 	}

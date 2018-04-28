@@ -25,7 +25,6 @@
 
 <script>
 	import { XHeader} from 'vux'
-	const url='http://xlk.dxvke.com/'
 	export default {
 		name: 'Member',
 		components: {
@@ -43,7 +42,7 @@
 			getList() {
 				this.$http({
 					methods:'get',
-					url:url+'/api/myInviteList',
+					url:this.http+'/api/myInviteList',
 					params:{level:this.type}
 					}).then((res) => {
 					if(res.data.code == '200') {

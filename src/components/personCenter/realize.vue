@@ -110,8 +110,6 @@
 
 <script>
 	import { XHeader, XInput, XButton, Group,Toast} from 'vux'
-	const url='http://xlk.dxvke.com/'
-//  const url =''
 	export default {
 		name: 'Realize',
 		components: {
@@ -196,7 +194,7 @@
 //			},
              //执行挂单
 			doWithdraw() {
-				this.$http.post(url+'/api/doWithdraw', {
+				this.$http.post(this.http+'/api/doWithdraw', {
 					type:this.type,
 					acer:this.acer,
 					account:this.alipay,
@@ -224,7 +222,7 @@
 				})
 			},
 			getCode() {
-				this.$http.post(url + '/api/sendCode', {
+				this.$http.post(this.http + '/api/sendCode', {
 					telephone: this.tel,
 					type: 2
 				}).then((res) => {

@@ -92,23 +92,60 @@
 				<p>哈哈哈</p>
 			</div>
 		</div>-->
-		<router-link class="enjoy" to="/personCenter/goldStore/fansOffer">
-			<span class="f30 c3"><img src="../../../static/images/personCenter/enjoy_icon.png" alt="" class="icon"/>帮众贡献</span>
-			<span class="f28 c9 right">昨日总收益
-				{{yesterday.acer}}
-				<div>
-					<span v-show="yesterday.type==1">铜币</span>
-			<span v-show="yesterday.type==2">银</span>
-			<span v-show="yesterday.type==3">金</span>
-			<span v-show="yesterday.type==4">钻石</span>
-			<span v-show="yesterday.type==5">皇冠</span>
+		<div class="list" style="margin-bottom: .2rem;">
+			<router-link class="enjoy" to="/personCenter/goldStore/fansOffer">
+				<span class="f30 c3"><img src="../../../static/images/personCenter/enjoy_icon.png" alt="" class="icon"/>帮众贡献</span>
+				<span class="f28 c9 right">查看详情
+		<img src="../../../static/images/gt_white.png" alt="" class="enjoy-icon" /></span>
+		</router-link>
+		<ul>
+			<li>
+				<div class="header_list_num king" v-show="yesterday.type==5">
+					<img src="../../../static/images/personCenter/king.png" alt="" /> {{yesterday.acer}}
+				</div>
+				<div class="header_list_num jewel" v-show="yesterday.type==4">
+					<img src="../../../static/images/personCenter/jewel.png" alt="" /> {{yesterday.acer}}
+				</div>
+				<div class="header_list_num gold" v-show="yesterday.type==3">
+					<img src="../../../static/images/personCenter/gold_acer.png" alt="" /> {{yesterday.acer}}
+				</div>
+				<div class="header_list_num silver" v-show="yesterday.type==2">
+					<img src="../../../static/images/personCenter/silver.png" alt="" /> {{yesterday.acer}}
+				</div>
+				<div class="header_list_num coppers" v-show="yesterday.type==1">
+					<img src="../../../static/images/personCenter/coppers.png" alt="" /> {{yesterday.acer}}
+				</div>
+				<div class="header_list_num coppers" v-show="yesterday.type==0">
+					0
+				</div>
+				<p class="header_list_title">昨日贡献</p>
+			</li>
+			<li>
+				<div class="header_list_num king" v-show="mgj.type==5">
+					<img src="../../../static/images/personCenter/king.png" alt="" /> {{mgj.acer}}
+				</div>
+				<div class="header_list_num jewel" v-show="mgj.type==4">
+					<img src="../../../static/images/personCenter/jewel.png" alt="" /> {{mgj.acer}}
+				</div>
+				<div class="header_list_num gold" v-show="mgj.type==3">
+					<img src="../../../static/images/personCenter/gold_acer.png" alt="" /> {{mgj.acer}}
+				</div>
+				<div class="header_list_num silver" v-show="mgj.type==2">
+					<img src="../../../static/images/personCenter/silver.png" alt="" /> {{mgj.acer}}
+				</div>
+				<div class="header_list_num coppers" v-show="mgj.type==1">
+					<img src="../../../static/images/personCenter/coppers.png" alt="" /> {{mgj.acer}}
+				</div>
+				<div class="header_list_num coppers" v-show="mgj.type==0">
+					0
+				</div>
+				<p class="header_list_title">总贡献</p>
+			</li>
+		</ul>
 	</div>
-
-	<img src="../../../static/images/gt_white.png" alt="" class="enjoy-icon" /></span>
-	</router-link>
 	<div class="list">
 		<div class="f30 c3 title">
-			<img src="../../../static/images/personCenter/rule_icon.png" alt="" class="icon" />商城财报
+			<img src="../../../static/images/personCenter/reward.png" alt="" class="icon" />自购奖励
 		</div>
 		<ul>
 			<li>
@@ -155,17 +192,14 @@
 			</li>
 		</ul>
 	</div>
-	<router-link :to="{name:'Realize',query:{acer:chest_acer.acer,type:chest_acer.type}}">
-		<div style="margin: .7rem .5rem 0;">
-			<x-button type="default" class="f32 c3" @click.native="authLogout()" style="line-height: 1rem;">立即挂单</x-button>
-		</div>
-	</router-link>
+	<div style="margin: .7rem .5rem 0;">
+		<x-button type="default" class="f32 c3" @click.native="toRealize()">立即挂单</x-button>
+	</div>
 	</div>
 </template>
 
 <script>
-	import { Toast, Loading,XButton} from 'vux'
-	const url = 'http://xlk.dxvke.com/'
+	import { Toast, Loading, XButton } from 'vux'
 	export default {
 		components: {
 			Toast,
@@ -202,6 +236,10 @@
 					type: 0,
 					acer: 0
 				},
+				total_bang:{
+					type: 0,
+					acer: 0
+				},
 				showToast: false,
 				text: '',
 				showLoading: false,
@@ -211,16 +249,17 @@
 		methods: {
 			//获取用户财宝信息
 			getCount() {
-				this.$http.get(url + '/api/withdrawAcer').then((res) => {
+				this.$http.get(this.http + '/api/withdrawAcer').then((res) => {
 					if(res.data.code == '200') {
 						//						console.log(JSON.stringify(res.data.data))
 						this.chest_acer = res.data.data.chest_acer
 						this.withdraw_acer = res.data.data.withdraw_acer
 						this.withdraw_over = res.data.data.withdraw_over
 						this.total = res.data.data.total,
-							this.yesterday = res.data.data.yesterday,
-							this.jd = res.data.data.jd,
-							this.mgj = res.data.data.mgj
+						this.yesterday = res.data.data.yesterday,
+						this.jd = res.data.data.jd,
+						this.mgj = res.data.data.mgj
+						this.total_bang=res.data.data.total_bang
 					} else {
 
 					}
@@ -232,6 +271,15 @@
 					})
 				})
 			},
+			toRealize() {
+				this.$router.push({
+					name: 'Realize',
+					query: {
+						acer: this.chest_acer.acer,
+						type: this.chest_acer.type
+					}
+				})
+			}
 		},
 		mounted: function() {
 
@@ -339,7 +387,6 @@
 	
 	.enjoy {
 		background: white;
-		margin-bottom: .2rem;
 		line-height: 1rem;
 		display: flex;
 		align-items: center;

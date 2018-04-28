@@ -23,8 +23,6 @@
 
 <script>
 	import { Group, XInput, XButton, Toast } from 'vux'
-	const url = 'http://xlk.dxvke.com'
-	//  const url=''
 	export default {
 		components: {
 			Group,
@@ -46,7 +44,7 @@
 		},
 		methods: {
 			save() {
-				this.$http.post(url + '/api/bindTelephone', {
+				this.$http.post(this.http + '/api/bindTelephone', {
 					telephone: this.tel,
 					type: this.type,
 					code: this.code
@@ -69,7 +67,7 @@
 				})
 			},
 			Untying() {
-				this.$http.post(url + '/api/bindTelephone', {
+				this.$http.post(this.http + '/api/bindTelephone', {
 					telephone: this.tel,
 					type: this.type,
 					code: this.code
@@ -90,7 +88,7 @@
 				})
 			},
 			getCode() {
-				this.$http.post(url + '/api/sendCode', {
+				this.$http.post(this.http + '/api/sendCode', {
 					telephone: this.tel,
 					type: this.type
 				}).then((res) => {
@@ -110,7 +108,7 @@
 			login() {
 				console.log('登录')
 				var self = this
-				self.$http.post(url + '/api/login', {
+				self.$http.post(this.http + '/api/login', {
 					type: "1",
 					userInfo: plus.storage.getItem('userInfo'),
 					telephone: self.tel,
