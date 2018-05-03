@@ -10,7 +10,7 @@ import router from './router'
 //import BrandSite from '@/components/brandSite/brandSite'
 //import PersonCenter from '@/components/personCenter/personCenter'
 import '../static/css/main.css'
-import animate from 'animate.css'
+import 'animate.css/animate.css'
 import { ConfirmPlugin, AlertPlugin, ToastPlugin, LoadingPlugin } from 'vux'
 import VueScroller from 'vue-scroller'
 import VueAwesomeSwiper from "vue-awesome-swiper"

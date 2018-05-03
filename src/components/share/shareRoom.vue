@@ -80,7 +80,7 @@
 						</div>
 						<div style="overflow: hidden;">
 							<p class="f28" style="line-height: .46rem;color: #28a6ef;">#{{item.title}}#</p>
-							<p class="f28 c3" style="line-height: .46rem;">{{item.msg}}</p>
+							<p class="f28 c3" style="line-height: .46rem;" v-for="(i,index) in item.msg" :key="index">{{i}}</p>
 							<ul class="quan-list flex">
 								<li v-for="(item,index) in item.share_list" :key="index" @click="toDetail(item.id,index)">
 									<img :src="item.image" alt="" />
@@ -192,7 +192,6 @@
 	import { XHeader, Swiper, Tab, TabItem, Loading, } from 'vux'
 	const list1 = () => ['高佣金', '高券额']
 	const list2 = () => ['今日更新', '昨日更新']
-	//	const url = ''
 	export default {
 		name: 'shareRoom',
 		components: {
@@ -335,6 +334,15 @@
 							this.noData = true
 							this.$refs.myscroller.finishInfinite(2);
 						} else {
+							for(var i=0;i<res.data.data.list.length;i++){
+								var circleList=res.data.data.list[i].msg.split('\n')
+								for(var j=0;j<circleList.length;j++){
+									if(circleList[j]==""){
+										circleList.splice(j,1)
+									}
+								}
+								res.data.data.list[i].msg=circleList
+							}
 							this.circleList = this.circleList.concat(res.data.data.list)
 							if(this.$refs.myscroller){
 								this.$refs.myscroller.finishPullToRefresh()

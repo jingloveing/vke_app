@@ -121,22 +121,22 @@
 				<p class="header_list_title">昨日贡献</p>
 			</li>
 			<li>
-				<div class="header_list_num king" v-show="mgj.type==5">
-					<img src="../../../static/images/personCenter/king.png" alt="" /> {{mgj.acer}}
+				<div class="header_list_num king" v-show="total_bang.type==5">
+					<img src="../../../static/images/personCenter/king.png" alt="" /> {{total_bang.acer}}
 				</div>
-				<div class="header_list_num jewel" v-show="mgj.type==4">
-					<img src="../../../static/images/personCenter/jewel.png" alt="" /> {{mgj.acer}}
+				<div class="header_list_num jewel" v-show="total_bang.type==4">
+					<img src="../../../static/images/personCenter/jewel.png" alt="" /> {{total_bang.acer}}
 				</div>
-				<div class="header_list_num gold" v-show="mgj.type==3">
-					<img src="../../../static/images/personCenter/gold_acer.png" alt="" /> {{mgj.acer}}
+				<div class="header_list_num gold" v-show="total_bang.type==3">
+					<img src="../../../static/images/personCenter/gold_acer.png" alt="" /> {{total_bang.acer}}
 				</div>
-				<div class="header_list_num silver" v-show="mgj.type==2">
-					<img src="../../../static/images/personCenter/silver.png" alt="" /> {{mgj.acer}}
+				<div class="header_list_num silver" v-show="total_bang.type==2">
+					<img src="../../../static/images/personCenter/silver.png" alt="" /> {{total_bang.acer}}
 				</div>
-				<div class="header_list_num coppers" v-show="mgj.type==1">
-					<img src="../../../static/images/personCenter/coppers.png" alt="" /> {{mgj.acer}}
+				<div class="header_list_num coppers" v-show="total_bang.type==1">
+					<img src="../../../static/images/personCenter/coppers.png" alt="" /> {{total_bang.acer}}
 				</div>
-				<div class="header_list_num coppers" v-show="mgj.type==0">
+				<div class="header_list_num coppers" v-show="total_bang.type==0">
 					0
 				</div>
 				<p class="header_list_title">总贡献</p>

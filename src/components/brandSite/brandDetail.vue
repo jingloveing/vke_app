@@ -30,7 +30,7 @@
 			</div>
 		</div>
 		<div class="flex" style="background: white;margin-top: .16rem;height: .88rem;padding: 0 .3rem;justify-content: space-between;" @click="toquan()">
-			<span class="f24 c3">最高分享赚:<span class="f32" style="color: #ff5200;font-style: oblique;">{{goodsDetail.max_commission}}</span><span class="f24" style="color: #ff5200;">元</span></span>
+			<span class="f24 c3">最高分享赚:<span class="f32" style="color: #ff5200;font-style: oblique;"> {{goodsDetail.max_commission}}</span><span class="f24" style="color: #ff5200;">元</span></span>
 			<div>
 				<span class="f24 c9">立即申请</span>
 				<div class="r-arrow"></div>
@@ -260,7 +260,7 @@
 
 			},
 			toquan() {
-				
+				this.$router.push({path:'/upgrade'})
 
 			},
 			cancel1() {

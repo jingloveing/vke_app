@@ -248,7 +248,7 @@ textarea:-moz-placeholder{
 
 /*搜索框*/
 	.search {
-		width: 4.70rem;
+		/*width: 4.70rem;*/
 		height: .64rem;
 		line-height: .64rem;
 		font-size: .28rem;

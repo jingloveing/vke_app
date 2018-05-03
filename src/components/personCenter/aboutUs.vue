@@ -3,7 +3,7 @@
 		<div class="header">
 			<img src="../../../static/images/login/logo.png" alt="" />
 			<h5 class="c3">享利客</h5>
-			 <h6 class="c3">v1.0</h6>
+			 <h6 class="c3">v1.5</h6>
 		</div>
 		<div class="main">
 				<div class="main-m flex f28 c3">

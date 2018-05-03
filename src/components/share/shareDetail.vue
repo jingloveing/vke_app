@@ -7,8 +7,7 @@
 		<div style="height: .88rem;"></div>
 		<div class="tip f24 c9">商品图片已为朋友圈特别优化，建议将图片分享到<span>微信朋友圈</span></div>
 		<div class="f28 c3" style="background: white;padding: .26rem .26rem .34rem;">
-			<p>{{goods.msg}}</p>
-			<p>长按图片识别或扫描二维码，即可复制淘口令打开手机淘宝，领取优惠券购买</p>
+			<p v-for="(i,index) in goods.msg" :key="index">{{i}}</p>
 		</div>
 		<ul class="quan-list flex">
 			<li v-for="(item,index) in goods.share_list" :key="index" @click="showDetail(item.image)">
@@ -75,7 +74,7 @@
 			}
 		},
 		methods: {
-			//      获取分享轮播图
+			//      获取分享信息
 			getGoods: function() {
 				plus.nativeUI.showWaiting();
 				this.$http.post(this.http + '/api/getCircleShareInfo',{
@@ -84,6 +83,13 @@
 					plus.nativeUI.closeWaiting();
 					if(res.data.code == '200') {
 						this.goods=res.data.data
+						var msg=res.data.data.msg
+						this.goods.msg=msg.split('\n')
+						for(var i=0;i<this.goods.msg.length;i++){
+							if(this.goods.msg[i]==""){
+								this.goods.msg.splice(i,1)
+							}
+						}
 					}else{
 						plus.nativeUI.toast(res.data.error);
 					}
@@ -149,7 +155,7 @@
 			shareMessages(s, ex) {
 				var self = this
 				s.send({
-					content: self.goods.msg + "             长按图片识别或扫描二维码，即可复制淘口令打开手机淘宝，领取优惠券购买",
+					content: self.goods.msg,
 					pictures: pictures,
 					extra: {
 						scene: ex
@@ -189,7 +195,7 @@
 										pic_unloaded--;
 										if(pic_unloaded == 0) {
 											plus.nativeUI.closeWaiting();
-											msg.content = self.goods.msg + "             长按图片识别或扫描二维码，即可复制淘口令打开手机淘宝，领取优惠券购买"
+											msg.content = self.goods.msg
 											self.test_weixin_share_mul_pic(ev, ex, pictures);
 										}
 									} else {

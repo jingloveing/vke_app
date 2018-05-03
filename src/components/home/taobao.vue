@@ -55,7 +55,7 @@
                       <span class="juan_style_left">券</span>
 									<span class="juan_style_right">{{goods.coupon_number}}元</span>
 									</span>	
-									<div class="f20 income" v-show="goods.share_commission!=0">最高分享赚：{{goods.share_commission}}元</div>
+									<div class="f20 income" v-show="goods.share_commission!=0">最高分享赚：{{goods.max_commission}}元</div>
 								</div>
 								<div class="des_b">
 									<span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span style="font-size: .20rem;" v-show="goods.zk_final_price.corner!=='00'">.{{goods.zk_final_price.corner}}</span></span>

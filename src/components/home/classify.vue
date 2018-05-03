@@ -35,7 +35,7 @@
                       <span class="juan_style_left">券</span>
                       <span class="juan_style_right">{{goods.coupon_number}}元</span>
                     </span>
-                    <div class="f20 income" v-show="goods.share_commission!=0">最高分享赚：{{goods.share_commission}}元</div>
+                    <div class="f20 income" v-show="goods.share_commission!=0">最高分享赚：{{goods.max_commission}}元</div>
                <!-- <span class="return_num_style"  v-show="goods.fans_acer !==0">返{{goods.fans_acer}}元宝</span>-->
               </div>
               <div class="des_b">
