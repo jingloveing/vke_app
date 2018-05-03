@@ -75,6 +75,23 @@
 			}
 		},
 		methods: {
+			//      获取分享轮播图
+			getGoods: function() {
+				plus.nativeUI.showWaiting();
+				this.$http.post(this.http + '/api/getCircleShareInfo',{
+					id:this.$route.query.id
+				}).then((res) => {
+					plus.nativeUI.closeWaiting();
+					if(res.data.code == '200') {
+						this.goods=res.data.data
+					}else{
+						plus.nativeUI.toast(res.data.error);
+					}
+				}, (err) => {
+					plus.nativeUI.closeWaiting();
+					plus.nativeUI.toast("加载失败");
+				})
+			},
 			//分享操作
 			shareAction(id, ex) {
 				plus.nativeUI.showWaiting();
@@ -233,7 +250,7 @@
 			var self = this
 			this.token = plus.storage.getItem("token")
 			if(this.token) {
-				this.goods = JSON.parse(this.$route.query.item)
+				this.getGoods()
 
 			} else {
 				plus.nativeUI.toast("请登录");

@@ -26,11 +26,11 @@
 								{{goodList1.volume}}</span>件</span>
 								</p>-->
 								<div style="margin: .15rem 0rem;">
-                      <span class="juan_style">
+                      <span class="juan_style" style="margin-right: .04rem;">
                       <span class="juan_style_left">券</span>
                       <span class="juan_style_right">{{goodList1.coupon_number}}元</span>
                     </span>
-               <!-- <span class="return_num_style"  v-show="goodList1.fans_acer !==0">返{{goodList1.fans_acer}}元宝</span>-->
+               <div class="f20 income" v-show="goodList1.share_commission!=0">最高分享赚：{{goodList1.share_commission}}元</div>
               </div>
 								<p class="des_b" style="position: relative;margin-top: .1rem;">
 									<span class="price"><span style="font-size: .2rem;">￥</span>{{goodList1.zk_final_price.rmb}}<span v-show="goodList1.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{goodList1.zk_final_price.corner}}</span></span>
@@ -116,7 +116,9 @@
 							this.$refs.myscroller.finishInfinite(2);
 						} else {
 							this.goodList1=this.goodList1.concat(res.data.data.list)
-							this.$refs.myscroller.finishPullToRefresh()
+							if(this.$refs.myscroller){
+								this.$refs.myscroller.finishPullToRefresh()
+							}
 						}
 					} else {
 						
@@ -266,5 +268,17 @@
 		right: 0;
 		font-size: .24rem;
 		color: #999999;
+	}
+	.income {
+		height: .32rem;
+		/*line-height: .32rem;*/
+		display: inline-block;
+		padding: 0 .12rem;
+		border-radius: 1rem;
+		color: white;
+		background: -webkit-linear-gradient(left, #f51d46, #fe6d13);
+		background: -o-linear-gradient(left, #f51d46, #fe6d13);
+		background: -moz-linear-gradient(left, #f51d46, #fe6d13);
+		background: linear-gradient(left, #f51d46, #fe6d13);
 	}
 </style>

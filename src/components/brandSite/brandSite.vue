@@ -227,6 +227,9 @@
 			this.getMerchantView()
 			this.unMessage = plus.storage.getItem("unMessage")
 			
+		},
+		activated:function(){
+			
 		}
 	}
 </script>

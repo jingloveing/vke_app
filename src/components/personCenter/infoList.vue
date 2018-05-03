@@ -48,17 +48,17 @@
 			},
 		},
 		created: function() {
-			this.type = this.$route.query.type
-			this.getList()
+//			this.type = this.$route.query.type
+//			this.getList()
 		},
 		mounted: function() {
-			if(this.type == 1) {
-				this.title = '商品发货'
-			} else if(this.type == 2) {
-				this.title = '财宝入库'
-			} else {
-				this.title = '官方信件'
-			}
+//			if(this.type == 1) {
+//				this.title = '商品发货'
+//			} else if(this.type == 2) {
+//				this.title = '财宝入库'
+//			} else {
+//				this.title = '官方信件'
+//			}
 		},
 		activated: function() {
 			this.type = this.$route.query.type

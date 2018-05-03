@@ -40,7 +40,7 @@
 							</div>
 							<div class="flex" style="justify-content: space-between;align-items: flex-end;">
 								<div>
-									<div class="f20 income">预估赚：{{list.commission}}元</div>
+									<div class="f20 income">分享赚：{{list.commission}}元</div>
 									<div>
 										<span class="new_num"><span style="font-size: .24rem;">￥</span>{{list.zk_final_price.rmb}}<span style="font-size: .24rem;" v-show="list.zk_final_price.corner!=='00'">.{{list.zk_final_price.corner}}</span></span>
 										<del class="old_num">￥{{list.reserve_price.rmb}}<span v-show="list.reserve_price.corner!=='00'">.{{list.reserve_price.corner}}</span></del>
@@ -71,7 +71,7 @@
 										<p class="f28 c3">享利客优选</p>
 										<p class="f20" style="color: #d1d1d1;">{{item.update_time}}</p>
 									</div>
-									<span class="flex" @click="toShareDetail(item)">
+									<span class="flex" @click="toShareDetail(item.id)">
 										<img src="../../../static/images/shareRoom/share.png" alt="" style="width: .28rem;height: .28rem;" />
 										<span class="f24 c_f" style="margin-left: .08rem;">分享</span>
 									</span>
@@ -211,7 +211,7 @@
 				type: 0,
 				type2: 0,
 				page: 1,
-				limit: 20,
+				limit: 10,
 				noData: false,
 				shareBanner: [],
 				defaultImg: 'this.src="' + require('../../../static/images/default_img.png') + '"',
@@ -295,7 +295,9 @@
 							this.$refs.myscroller.finishInfinite(2);
 						} else {
 							this.goodsList = this.goodsList.concat(res.data.data.list)
-							this.$refs.myscroller.finishPullToRefresh()
+							if(this.$refs.myscroller){
+								this.$refs.myscroller.finishPullToRefresh()
+							}
 						}
 					} else {
 						this.noData = true
@@ -334,7 +336,9 @@
 							this.$refs.myscroller.finishInfinite(2);
 						} else {
 							this.circleList = this.circleList.concat(res.data.data.list)
-							this.$refs.myscroller.finishPullToRefresh()
+							if(this.$refs.myscroller){
+								this.$refs.myscroller.finishPullToRefresh()
+							}
 						}
 
 					} else {
@@ -468,11 +472,11 @@
 
 			},
 
-			toShareDetail(item) {
+			toShareDetail(id) {
 				this.$router.push({
 					name: 'ShareDetail',
 					query: {
-						item: JSON.stringify(item)
+						id: id
 					}
 				})
 			},
@@ -604,28 +608,28 @@
 
 		},
 		created: function() {
-			this.token = plus.storage.getItem('token')
-			if(this.token) {
-				this.level_id = plus.storage.getItem('level_id')
-				if(this.level_id) {
-					if(this.level_id !== 1) {
-						console.log('aaa')
-						this.level = true
-						this.showLoading = true
-						this.getBannerList()
-						this.getList()
-					} else {
-						console.log('bbb')
-						this.level = false
-					}
-				} else {
-					this.getLevel()
-				}
-
-			} else {
-				console.log('eee')
-				this.level = false
-			}
+//			this.token = plus.storage.getItem('token')
+//			if(this.token) {
+//				this.level_id = plus.storage.getItem('level_id')
+//				if(this.level_id) {
+//					if(this.level_id !== 1) {
+//						console.log('aaa')
+//						this.level = true
+//						this.showLoading = true
+//						this.getBannerList()
+//						this.getList()
+//					} else {
+//						console.log('bbb')
+//						this.level = false
+//					}
+//				} else {
+//					this.getLevel()
+//				}
+//
+//			} else {
+//				console.log('eee')
+//				this.level = false
+//			}
 		},
 		destroyed() {
 			//			window.removeEventListener('scroll', this.handleScroll)

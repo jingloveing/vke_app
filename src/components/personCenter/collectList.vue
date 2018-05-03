@@ -7,9 +7,7 @@
 			<div class="goods_list" v-show="index==0">
 				<ul class="goods">
 					<li v-for="(list,index) in goodsList" :key="index" @click="toDetail(list)">
-						<router-link to="">
-							<img :src="list.image" alt="" class="pic" :onerror="defaultImg">
-						</router-link>
+						<img :src="list.image" alt="" class="pic" :onerror="defaultImg">
 						<div class="content">
 							<p class="title" v-text="list.collect_name">产品标题产品标题</p>
 							<div>
@@ -114,7 +112,9 @@
 							this.$refs.myscroller.finishInfinite(2);
 						} else {
 							this.goodsList = this.goodsList.concat(res.data.data.list)
-							this.$refs.myscroller.finishPullToRefresh()
+							if(this.$refs.myscroller){
+								this.$refs.myscroller.finishPullToRefresh()
+							}
 						}
 					} else{
 						this.$refs.myscroller.finishInfinite();
@@ -180,11 +180,11 @@
 				this.getGoods()
 			},
 			toDetail(item){
-				if(item.product_class==1){
+				if(item.type==4){
 					//跳转到淘宝商品详情
 					this.$router.push({name:'TBDetail',query:{id:item.collect_id,type:4}})
 					
-				}else if(item.product_class==1){
+				}else if(item.type==3){
 					//跳转到店铺商品详情
 					this.$router.push({name:'BrandDetail',query:{id:item.collect_id,store_id:item.store_id}})
 					
@@ -201,7 +201,7 @@
 			this.getGoods()
 		},
 		activated:function(){
-			this.getGoods()
+//			this.getGoods()
 		}
 	}
 </script>

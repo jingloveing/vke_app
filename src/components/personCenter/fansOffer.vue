@@ -126,7 +126,10 @@
 							this.dataList = this.dataList.concat(res.data.data.list)
 							this.fansCount=res.data.data.fansCount
 							this.totalAcer=res.data.data.totalAcer
-							this.$refs.myscroller.finishPullToRefresh()
+							if(this.$refs.myscroller){
+								this.$refs.myscroller.finishPullToRefresh()
+							}
+							
 						}
 					} else {
 						this.noData = true
@@ -206,7 +209,7 @@
 
 		},
 		activated: function () {
-			this.getList()
+//			this.getList()
 		}
 	}
 </script>

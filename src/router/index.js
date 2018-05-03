@@ -15,6 +15,7 @@ import Setting from '@/components/personCenter/setting'
 import Accredit from '@/components/personCenter/accredit'
 import BindTel from '@/components/personCenter/bindTel'
 import Taobao from '@/components/home/taobao'
+import Pinduo from '@/components/Pinduo/Pinduo'
 import Fuli from '@/components/home/fuli'
 import Classify from '@/components/home/classify'
 import Search from '@/components/home/search'
@@ -59,6 +60,7 @@ import NewMogu from '@/components/home/new_mogu'
 import NewVip from '@/components/home/new_vip'
 //import JDDetail from '@/components/home/JDDetail'
 import TBDetail from '@/components/home/TBDetail'
+import PinDetail from '@/components/Pinduo/PinDetail'
 import BrandDetail from '@/components/brandSite/brandDetail'
 import SelfSupport from '@/components/home/selfSupport'
 import RefundList from '@/components/personCenter/refundList'
@@ -141,12 +143,20 @@ routes: [{
 		}
 	},
 	{
-		path: '/home/assortment/Classify',
-		name:'Classify',
-		component: Classify,
+		path: '/pinduo',
+		name:"Pinduo",
+		component: Pinduo,
 		meta:{
 			keepAlive: true
 		}
+	},
+	{
+		path: '/home/assortment/Classify',
+		name:'Classify',
+		component: Classify,
+//		meta:{
+//			keepAlive: true
+//		}
 	},
 	{
 		path: '/home/assortment/search',
@@ -188,9 +198,6 @@ routes: [{
 		path: '/brandSite/storeIndex',
 		name:'StoreIndex',
 		component: StoreIndex,
-//		meta:{
-//			keepAlive: true
-//		}
 	},
 	{
 		path: '/brandSite/storeIndex/storeClassify',
@@ -616,6 +623,15 @@ routes: [{
 		path: '/taobao/TBDetail',
 		name: 'TBDetail',
 		component: TBDetail,
+		meta: {
+			showHeader: true,
+			title:"商品详情"
+		}
+	},
+	{
+		path: '/pinduo/PinDetail',
+		name: 'PinDetail',
+		component: PinDetail,
 		meta: {
 			showHeader: true,
 			title:"商品详情"

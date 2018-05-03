@@ -16,7 +16,7 @@
 					</div>
 				</router-link>
 				<router-link class="nav-header-right" to="/home/assortment/searchPage">
-					<img src="../../../static/images/taobao_logo.png" alt="" style="width: .7rem; height: .5rem;"/>
+					<img src="../../../static/images/pinduo_logo.png" alt="" style="width: .7rem; height: .5rem;"/>
 				</router-link>
 			</div>
 		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top:.88rem;">
@@ -30,23 +30,9 @@
 				</ul>
 			</div>
 			<div class="main">
-				<div class="nav-bigger">
-					<router-link :to="{path:'/taobao/fuli',query:{type:1}}">
-						<img class="same" src="../../../static/images/yuanbaoShop_img.png" :onerror="defaultImg">
-					</router-link>
-					<router-link :to="{path:'/taobao/fuli',query:{type:2}}">
-						<img class="same" src="../../../static/images/xianbao_img.png" :onerror="defaultImg">
-					</router-link>
-					<router-link :to="{path:'/taobao/fuli',query:{type:3}}">
-						<img class="same" src="../../../static/images/zhinan_img.png" :onerror="defaultImg">
-					</router-link>
-					<router-link to="/taobao/newHand">
-						<img class="same" src="../../../static/images/fuli_img.png" :onerror="defaultImg">
-					</router-link>
-				</div>
 				<div class="main_goods">
 					<ul class="goods">
-						<router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'TBDetail',query:{id:goods.id,type:4}}" :key="index">
+						<router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'PinDetail',query:{id:goods.id,type:4}}" :key="index">
 							<img :src="goods.pict_url" alt="" :onerror="defaultImg" class="goods-pic">
 							<div class="content">
 								<div class="des">{{goods.title}}</div>
@@ -59,7 +45,6 @@
 								</div>
 								<div class="des_b">
 									<span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span style="font-size: .20rem;" v-show="goods.zk_final_price.corner!=='00'">.{{goods.zk_final_price.corner}}</span></span>
-									<!--<del style="font-size: .20rem;color: #999;" >￥{{goods.reserve_price.rmb}}<span v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span></del>-->
 									<span class="num">{{goods.volume}}件已售</span>
 								</div>
 							</div>
@@ -221,13 +206,7 @@
 		align-items: center;
 		/*margin-top: .2rem;*/
 		height: .88rem;
-		background: -webkit-linear-gradient(left, #ff8e00, #ff5200);
-		/* Safari 5.1 - 6.0 */
-		background: -o-linear-gradient(left, #ff8e00, #ff5200);
-		/* Opera 11.1 - 12.0 */
-		background: -moz-linear-gradient(left, #ff8e00, #ff5200);
-		/* Firefox 3.6 - 15 */
-		background: linear-gradient(left, #ff8e00, #ff5200);
+		background-color: #e02e24;
 		/* 标准的语法 */
 	}
 	
@@ -301,7 +280,7 @@
 	}
 	
 	.main {
-		/*margin-bottom: 1.06rem;*/
+		margin: .16rem 0 0;
 	}
 	
 	.goods {
@@ -349,7 +328,7 @@
 	
 	.price {
 		font-size: .32rem;
-		color: #f51d46;
+		color: #E02E24;
 	}
 	
 	.num {
@@ -370,5 +349,15 @@
 		background: -o-linear-gradient(left, #f51d46, #fe6d13);
 		background: -moz-linear-gradient(left, #f51d46, #fe6d13);
 		background: linear-gradient(left, #f51d46, #fe6d13);
+	}
+	.juan_style_left{
+		background-color: #E02E24;
+	}
+	.juan_style_right{
+		color: #E02E24;
+	}
+	.juan_style{
+		border: .02rem solid #E02E24;
+
 	}
 </style>

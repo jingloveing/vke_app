@@ -145,7 +145,7 @@
 
 		},
 		created: function() {
-			this.userInfo = JSON.parse(plus.storage.getItem('userInfo'))
+//			this.userInfo = JSON.parse(plus.storage.getItem('userInfo'))
 		},
 		activated: function () {
 			this.userInfo = JSON.parse(plus.storage.getItem('userInfo'))

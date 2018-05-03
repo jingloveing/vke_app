@@ -35,9 +35,9 @@
 						<img src="static/images/vip.png" :onerror="defaultImg">
 						<span>唯品会</span>
 					</router-link>
-					<router-link tag="li" to="">
+					<router-link tag="li" to="/pinduo">
 						<img src="static/images/vke_icon.png" :onerror="defaultImg">
-						<span>自营商城</span>
+						<span>拼多多</span>
 					</router-link>
 				</ul>
 			</div>
@@ -190,7 +190,7 @@
 				})
 			},
 			//      获取商品分类
-			getMerchantList: function(done) {
+			getMerchantList: function() {
 				this.$http({
 					method: 'get',
 					url: this.http + '/api/indexMerchant',
@@ -208,9 +208,6 @@
 							if(this.$refs.myscroller) {
 								this.$refs.myscroller.finishPullToRefresh()
 							}
-							if(done) {
-								done()
-							}
 							plus.storage.setItem("merchant", JSON.stringify(this.merchant))
 						}
 					} else {
@@ -226,7 +223,9 @@
 			},
 			//是否有新版本号
 			getUpdate(){
-				this.$http.get( this.http + '/api/checkAppUpgrade',{version:1.5}).then((res) => {
+				this.$http.get( this.http + '/api/checkAppUpgrade',{
+					params:{version:1.5}
+				}).then((res) => {
 					if(res.data.code == '200') {
 						this.upgrade=res.data.data.upgrade
 						this.updateUrl=res.data.data.url
@@ -247,7 +246,7 @@
 					let self = this; //this指向问题
 					setTimeout(() => {
 						self.pageIndex += 1
-						self.getMerchantList(done)
+						self.getMerchantList()
 						done()
 					}, 1500)
 				}
@@ -332,10 +331,10 @@
 			this.unMessage = plus.storage.getItem("unMessage")
 		},
 		activated:function(){
-			this.getBannerList()
-			this.getNews()
-			this.getMerchantList()
-			this.unMessage = plus.storage.getItem("unMessage")
+//			this.getBannerList()
+//			this.getNews()
+//			this.getMerchantList()
+//			this.unMessage = plus.storage.getItem("unMessage")
 		}
 	}
 </script>

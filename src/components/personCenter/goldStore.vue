@@ -285,7 +285,7 @@
 
 		},
 		created: function() {
-			this.getCount()
+//			this.getCount()
 		},
 		activated: function() {
 			this.getCount()

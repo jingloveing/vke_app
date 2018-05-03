@@ -10,29 +10,16 @@
 			</div>
 			<div class="detail">
 				<p class="name">{{goodsDetail.product_name}}</p>
-				<div class="flex" style="align-items: flex-end;">
-					<span class="prices"><span class="f28">券后: </span> <small>￥</small><span>{{goodsDetail.reserve_price.rmb}}</span><small v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</small></span>
-					<span class="f28" style="margin:0 0 .08rem .3rem;color: #fbac03;">分享预估赚：{{goodsDetail.share_commission}}元</span>
-					<!--<div class="f28 flex c9" style="margin:0 0 .08rem .3rem;">可返
-						<div class="header_list_num jewel" style="margin-left: .1rem;">
-							<img src="../../../static/images/personCenter/jewel.png" alt="" /> 8.86
-						</div>
-						<div class="header_list_num gold">
-                	   	   <img src="../../../static/images/personCenter/gold_acer.png" alt="" />
-                	       8.86
-                	     </div>
-                	     <div class="header_list_num silver">
-                	   	   <img src="../../../static/images/personCenter/silver.png" alt="" />
-                	       8.86
-                	     </div>
-                	     <div class="header_list_num coppers">
-                	   	   <img src="../../../static/images/personCenter/coppers.png" alt="" />
-                	       8.86
-                	     </div>
-					</div>-->
-				</div>
-				<div style="margin-left: .2rem;display: inline-block;">
-
+				<div class="flex" style="align-items: flex-end;justify-content: space-between;">
+					<div class="flex">
+						<span class="prices" style="margin-right: .2rem;"><span class="f28">券后: </span><small>￥</small><span>{{goodsDetail.reserve_price.rmb}}</span><small v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</small></span>
+						<span class="juan_style">
+                      <span class="juan_style_left">券</span>
+						<span class="juan_style_right">{{goodsDetail.coupon_number}}元</span>
+						</span>
+					</div>
+					<span class="f28" style="margin:0 0 .08rem .3rem;color: #ff5200;font-style: oblique;" v-show="goodsDetail.share_commission!=0">分享预估赚：{{goodsDetail.share_commission}}元</span>
+					
 				</div>
 				<div class="flex">
 					<span class="old_price">价格<del>￥{{goodsDetail.market_price.rmb}}<span
@@ -43,14 +30,12 @@
 			</div>
 		</div>
 		<div class="flex" style="background: white;margin-top: .16rem;height: .88rem;padding: 0 .3rem;justify-content: space-between;" @click="toquan()">
-			<div class="flex">
-				<div class="f24 tb-quan">
-					<div>优惠券</div>
-					<div>{{goodsDetail.coupon_number}}元</div>
-				</div>
-				<span class="f24 c9" style="margin-left: .2rem;">领取优惠券</span>
+			<span class="f24 c3">最高分享赚:<span class="f32" style="color: #ff5200;font-style: oblique;">{{goodsDetail.max_commission}}</span><span class="f24" style="color: #ff5200;">元</span></span>
+			<div>
+				<span class="f24 c9">立即申请</span>
+				<div class="r-arrow"></div>
 			</div>
-			<div class="r-arrow"></div>
+			
 		</div>
 		<cell title="商品图文详情(点击查看)" is-link :border-intent="false" :arrow-direction="showDetail ? 'up' : 'down'" @click.native="showDetail = !showDetail" class="pic_detail f28 c3" style="height: .88rem; box-sizing: border-box;"></cell>
 		<div class="slide" :class="showDetail?'animate':''" style="font-size: 0;">
@@ -68,7 +53,7 @@
 				<span v-text="goodsDetail.is_collect==1?'已收藏':'收藏'">收藏</span>
 			</div>
 			<div class="f_2 f2_l" @click="tobuy()">
-				<span>去购买</span>
+				<span>领券购买</span>
 			</div>
 		</div>
 		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
@@ -275,19 +260,7 @@
 
 			},
 			toquan() {
-				if(plus.os.name == "Android") {
-					var self = this
-					plus.runtime.openURL(self.goodsDetail.coupon_url, function(err) {
-
-					}, "com.taobao.taobao");
-				} else if(plus.os.name == "iOS") {
-					var self = this
-					plus.runtime.launchApplication({
-						action: self.goodsDetail.coupon_url.replace("https://", "taobao://")
-					}, function(e) {
-
-					});
-				}
+				
 
 			},
 			cancel1() {

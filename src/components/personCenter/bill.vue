@@ -73,7 +73,9 @@
 						} else {
 							this.dataList = this.dataList.concat(res.data.data.list)
 							this.total_pay=res.data.data.total_pay
-							this.$refs.myscroller.finishPullToRefresh()
+							if(this.$refs.myscroller){
+								this.$refs.myscroller.finishPullToRefresh()
+							}
 						}
 					}else{
 						this.noData = true
@@ -123,8 +125,7 @@
 			this.getBillList()
 		},
 		activated:function(){
-			this.dataList=[]
-			this.getBillList()
+//			this.getBillList()
 		}
 	}
 </script>

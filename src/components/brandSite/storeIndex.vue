@@ -70,10 +70,11 @@
 										<div class="content">
 											<div class="des">{{goods.product_name}}</div>
 											<div style="margin: .15rem 0;" class="flex">
-												<span class="juan_style" style="margin-right: .2rem;">
+												<span class="juan_style" style="margin-right: .04rem;">
                                                     <span class="juan_style_left">券</span>
 												<span class="juan_style_right">{{goods.coupon_number}}元</span>
 												</span>
+												 <div class="f20 income" v-show="goods.share_commission!=0">最高分享赚：{{goods.share_commission}}元</div>
 												<!--<div class="header_list_num jewel f22">
 												<img src="../../../static/images/personCenter/jewel.png" alt="" style="width: .22rem;height: .22rem;margin: 0 .1rem;" /> 8.86
 											</div>
@@ -370,6 +371,9 @@
 			this.getMerchantInfo()
 			this.getViewList()
 			this.getGoodsList()
+		},
+		activated:function(){
+			
 		}
 	}
 </script>
@@ -612,6 +616,18 @@
 	}
 	.storeTab{
 		font-size:0;
+	}
+	 .income {
+		height: .32rem;
+		/*line-height: .32rem;*/
+		display: inline-block;
+		padding: 0 .12rem;
+		border-radius: 1rem;
+		color: white;
+		background: -webkit-linear-gradient(left, #f51d46, #fe6d13);
+		background: -o-linear-gradient(left, #f51d46, #fe6d13);
+		background: -moz-linear-gradient(left, #f51d46, #fe6d13);
+		background: linear-gradient(left, #f51d46, #fe6d13);
 	}
 </style>
 <style>

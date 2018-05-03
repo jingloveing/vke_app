@@ -31,10 +31,11 @@
             <div class="content">
               <div class="des" v-text="goods.product_name">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
               <div style="margin: .15rem 0rem;">
-                      <span class="juan_style">
+                      <span class="juan_style" style="margin-right: .04rem;">
                       <span class="juan_style_left">券</span>
                       <span class="juan_style_right">{{goods.coupon_number}}元</span>
                       </span>
+                      <div class="f20 income" v-show="goods.share_commission!=0">最高分享赚：{{goods.share_commission}}元</div>
               </div>
               <div class="des_b">
                 <span class="price"><span style="font-size: .2rem;">￥</span>{{goods.reserve_price.rmb}}<span v-show="goods.reserve_price.corner!=='00'">.{{goods.reserve_price.corner}}</span></span>
@@ -281,6 +282,18 @@ params:{keywords:this.keywords,sort:this.sort,page:this.pageIndex,limit:this.lim
   .goHome>img{
     width: 22px;height: 22px;margin-top: 11px;margin-left: calc(((100% - 22px)/2) + 4px);
   }
+   .income {
+		height: .32rem;
+		/*line-height: .32rem;*/
+		display: inline-block;
+		padding: 0 .12rem;
+		border-radius: 1rem;
+		color: white;
+		background: -webkit-linear-gradient(left, #f51d46, #fe6d13);
+		background: -o-linear-gradient(left, #f51d46, #fe6d13);
+		background: -moz-linear-gradient(left, #f51d46, #fe6d13);
+		background: linear-gradient(left, #f51d46, #fe6d13);
+	}
 </style>
 <style>
 	.weui-search-bar{

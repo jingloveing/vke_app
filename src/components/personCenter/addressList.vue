@@ -100,6 +100,9 @@
 		},
 		mounted: function() {
 			
+		},
+		activated:function(){
+			 this.getAddressList()
 		}
 	}
 </script>

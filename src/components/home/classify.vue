@@ -31,10 +31,11 @@
             <div class="content">
               <div class="des" v-text="goods.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
               <div style="margin: .15rem 0rem;">
-                      <span class="juan_style">
+                      <span class="juan_style" style="margin-right: .04rem;">
                       <span class="juan_style_left">券</span>
                       <span class="juan_style_right">{{goods.coupon_number}}元</span>
                     </span>
+                    <div class="f20 income" v-show="goods.share_commission!=0">最高分享赚：{{goods.share_commission}}元</div>
                <!-- <span class="return_num_style"  v-show="goods.fans_acer !==0">返{{goods.fans_acer}}元宝</span>-->
               </div>
               <div class="des_b">
@@ -99,10 +100,14 @@
               this.$refs.myscroller.finishInfinite(2);
             }else{
               this.goodsList=this.goodsList.concat(res.data.data.list)
-              this.$refs.myscroller.finishPullToRefresh()
+             if(this.$refs.myscroller){
+								this.$refs.myscroller.finishPullToRefresh()
+							}
             }
           }
-        },(err)=>{})
+        },(err)=>{
+        	
+        })
       },
 //    //      获取商品分类
 //    getTypeList:function(){
@@ -160,10 +165,9 @@
         this.getGoodsList();
     },
     activated:function(){
-    	this.title=this.$route.query.title
-    	this.cate_id = this.$route.query.id;
-    	this.goodsList=[]
-        this.getGoodsList();
+//  	this.title=this.$route.query.title
+//  	this.cate_id = this.$route.query.id;
+//      this.getGoodsList();
     }
   }
 </script>
@@ -296,5 +300,17 @@
     margin-top: .1rem;
     margin-right: .15rem;
   }
+  .income {
+		height: .32rem;
+		/*line-height: .32rem;*/
+		display: inline-block;
+		padding: 0 .12rem;
+		border-radius: 1rem;
+		color: white;
+		background: -webkit-linear-gradient(left, #f51d46, #fe6d13);
+		background: -o-linear-gradient(left, #f51d46, #fe6d13);
+		background: -moz-linear-gradient(left, #f51d46, #fe6d13);
+		background: linear-gradient(left, #f51d46, #fe6d13);
+	}
 </style>
 

@@ -9,12 +9,15 @@
 			</div>
 			<div class="detail">
 				<p class="name">{{goodsDetail.product_name}}</p>
-				<div class="flex" style="align-items: flex-end;">
-					<span class="prices"><span class="f28">券后: </span><small>￥</small><span>{{goodsDetail.reserve_price.rmb}}</span><small v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</small></span>
-					<span class="f28" style="margin:0 0 .08rem .3rem;color: #fbac03;" v-show="goodsDetail.share_commission!=0">分享预估赚：{{goodsDetail.share_commission}}元</span>
-				</div>
-				<div style="margin-left: .2rem;display: inline-block;">
-
+				<div class="flex" style="align-items: flex-end;justify-content: space-between;">
+					<div class="flex">
+						<span class="prices"><span class="f28">券后: </span><small>￥</small><span>{{goodsDetail.reserve_price.rmb}}</span><small v-show="goodsDetail.reserve_price.corner!=='00'">.{{goodsDetail.reserve_price.corner}}</small></span>
+						<span class="juan_style">
+                      <span class="juan_style_left">券</span>
+						<span class="juan_style_right">{{goodsDetail.coupon_number}}元</span>
+						</span>
+					</div>
+					<span class="f28" style="margin:0 0 .08rem .3rem;color: #E02E24;font-style: oblique;" v-show="goodsDetail.share_commission!=0">分享预估赚：{{goodsDetail.share_commission}}元</span>
 				</div>
 				<div class="flex">
 					<span class="old_price">价格<del>￥{{goodsDetail.market_price.rmb}}<span
@@ -25,14 +28,12 @@
 			</div>
 		</div>
 		<div class="flex" style="background: white;margin-top: .16rem;height: .88rem;padding: 0 .3rem;justify-content: space-between;" @click="toquan()">
-			<div class="flex">
-				<div class="f24 tb-quan">
-					<div>优惠券</div>
-					<div>{{goodsDetail.coupon_number}}元</div>
-				</div>
-				<span class="f24 c9" style="margin-left: .2rem;">领取优惠券</span>
+			<span class="f24 c3">最高分享赚:<span class="f32" style="color: #E02E24;font-style: oblique;">{{goodsDetail.max_commission}}</span><span class="f24" style="color: #E02E24;">元</span></span>
+			<div>
+				<span class="f24 c9">立即申请</span>
+				<div class="r-arrow"></div>
 			</div>
-			<div class="r-arrow"></div>
+			
 		</div>
 		<cell title="商品图文详情(点击查看)" is-link :border-intent="false" :arrow-direction="showDetail ? 'up' : 'down'" @click.native="showDetail = !showDetail" class="pic_detail f28 c3" style="height: .88rem; box-sizing: border-box;"></cell>
 		<div class="slide" :class="showDetail?'animate':''" style="font-size: 0;">
@@ -45,12 +46,12 @@
 				<span>首页</span>
 			</div>
 			<div class="f_1 " @click="toCollect()">
-				<x-icon type="ios-heart" size="22" style="padding-top:.16rem ;fill: #ff5200;" v-show="goodsDetail.is_collect==1"></x-icon>
-				<x-icon type="ios-heart-outline" size="22" style="padding-top:.16rem ;fill: #ff5200;" v-show="goodsDetail.is_collect==0||!goodsDetail.is_collect"></x-icon>
+				<x-icon type="ios-heart" size="22" style="padding-top:.16rem ;fill: #E02E24;" v-show="goodsDetail.is_collect==1"></x-icon>
+				<x-icon type="ios-heart-outline" size="22" style="padding-top:.16rem ;fill: #E02E24;" v-show="goodsDetail.is_collect==0||!goodsDetail.is_collect"></x-icon>
 				<span v-text="goodsDetail.is_collect==1?'已收藏':'收藏'">收藏</span>
 			</div>
 			<div class="f_2 f2_l" @click="tobuy()">
-				<span>去购买</span>
+				<span>领券购买</span>
 			</div>
 		</div>
 		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
@@ -77,7 +78,6 @@
 							<img src="../../../static/images/share/weiboshare.png" alt="" />
 							<span class="f28 c3">微博</span>
 						</div>
-
 
 					</div>
 				</div>
@@ -195,19 +195,7 @@
 
 			},
 			toquan() {
-				if(plus.os.name == "Android") {
-					var self = this
-					plus.runtime.openURL(self.goodsDetail.coupon_url, function(err) {
-
-					}, "com.taobao.taobao");
-				} else if(plus.os.name == "iOS") {
-					var self = this
-					plus.runtime.launchApplication({
-						action: self.goodsDetail.coupon_url.replace("https://", "taobao://")
-					}, function(e) {
-
-					});
-				}
+				
 			},
 			//分享操作
 			shareAction(id, ex) {
@@ -282,6 +270,7 @@
 			},
 		},
 		created: function() {
+			//			this.getDetail()
 			this.token = plus.storage.getItem("token")
 			if(this.token) {
 				this.getDetail()
@@ -293,7 +282,7 @@
 		},
 		mounted: function() {
 			this.$nextTick(function() {
-				
+
 			})
 		},
 	}
@@ -323,7 +312,7 @@
 	
 	.prices {
 		font-size: .46rem;
-		color: #ff5200;
+		color: #E02E24;
 	}
 	
 	.prices small {
@@ -435,7 +424,7 @@
 	.f2_l {
 		height: 100%;
 		line-height: .98rem;
-		background: #ff5200;
+		background: #E02E24;
 	}
 	
 	.footer>div {
@@ -577,5 +566,14 @@
 		-webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
 		transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
 	}
-	
+	.juan_style_left{
+		background-color: #E02E24;
+	}
+	.juan_style_right{
+		color: #E02E24;
+	}
+	.juan_style{
+		border: .02rem solid #E02E24;
+        margin-left: .2rem;
+	}
 </style>

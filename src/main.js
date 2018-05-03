@@ -129,7 +129,7 @@ new Vue({
 Vue.http.interceptors.push((request, next) => {
 	//登录成功后将后台返回的TOKEN在本地存下来,每次请求从sessionStorage中拿到存储的TOKEN值  
 	let token = plus.storage.getItem("token")
-//	       let token='eyJ0eXAiOiJKV1QiLCJhbGciOiJTSEEyNTYifQ==.eyJpc3MiOiJKV1QgRlJFRURPTSIsImlhdCI6MTUyNDQ2MTk3OSwiYXVkIjoiTEoiLCJqdGkiOm51bGwsImRhdGEiOnsidXNlcl9pZCI6MTE2LCJ1c2VyX25hbWUiOiJGcmVlZG9tIn19.0dbc92e961b0eb57b711328c5f90b46d8d2cfac6d79f261a73fb967b5f681429'
+//	       let token='eyJ0eXAiOiJKV1QiLCJhbGciOiJTSEEyNTYifQ==.eyJpc3MiOiJKV1QgRlJFRURPTSIsImlhdCI6MTUxNjg2Mzg3NiwiYXVkIjoiTEoiLCJqdGkiOm51bGwsImRhdGEiOnsidXNlcl9pZCI6MSwidXNlcl9uYW1lIjoiZnJlZWRvbSJ9fQ==.2e20945c06282cc6edd693dac3c3b6a5746269cccdac9f6465b7dc3296325076'
 	if(token) {
 		//如果请求时TOKEN存在,就为每次请求的headers中设置好TOKEN,后台根据headers中的TOKEN判断是否放行      
 		request.headers.set("token", token);
