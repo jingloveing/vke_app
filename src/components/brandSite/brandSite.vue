@@ -65,7 +65,7 @@
 							<!--<span class="old_price">￥12<span>.12</span></span>-->
 							</p>
 							</span>
-							<div class="ticket">券100元</div>
+							<div class="ticket">券{{list.coupon_number}}元</div>
 						</router-link>
 					</swiper-slide>
 					<swiper-slide>

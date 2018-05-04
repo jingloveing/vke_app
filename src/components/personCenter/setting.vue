@@ -1,15 +1,15 @@
 <template>
 	<div>
-		<group class="myOrder" style="margin-bottom: .2rem;">
+		<group class="myOrder" style="margin: .2rem 0;border-top: .02rem solid #e5e5e5;">
 			<cell title="宝库设防" is-link link="/personCenter/setting/accredit"></cell>
 		</group>
-		<group class="myOrder" style="margin-bottom: .2rem;border-top: .01rem solid #e5e5e5;">
+		<group class="myOrder" style="margin-bottom: .2rem;border-top: .02rem solid #e5e5e5;">
 			<div @click="clear()">
 				<cell title="清理缓存" is-link></cell>
 			</div>
 			<!--<x-switch title="非wifi网络不自动播放" :value-map="['0', '1']" v-model="value"></x-switch>-->
 		</group>
-		<group class="myOrder" style="margin-bottom: .4rem;border-top: .01rem solid #e5e5e5;">
+		<group class="myOrder" style="margin-bottom: .4rem;border-top: .02rem solid #e5e5e5;">
 			<cell title="上书弹劾" is-link link="/personCenter/setting/feedback"></cell>
 			<cell title="江湖规矩" is-link link="/rule"></cell>
 			<cell title="自报家门" is-link link="/aboutUs"></cell>

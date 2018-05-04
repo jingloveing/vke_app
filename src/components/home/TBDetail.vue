@@ -568,5 +568,9 @@
 		-webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
 		transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
 	}
-	
+	.share-btn {
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
 </style>

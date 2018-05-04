@@ -146,6 +146,7 @@
 		border-bottom: .14rem solid transparent;
 		border-image: url(../../../static/images/personCenter/bottom_line.png) 14 round;
 		box-sizing: border-box;
+		border-top: none;
 	}
 	
 	.user-left {

@@ -6,13 +6,13 @@
 			<div class="searchDiv">
 		    <router-link to="/taobao/newHand">
 		    	<div class="left">
-				<img src="../../../static/images/newhand_icon.png" class="logo" alt="" />
-			</div>
+				   <img src="../../../static/images/newhand_icon.png" class="logo" alt="" />
+			    </div>
 		    </router-link>
 			<router-link to="/home/indexSearch" style="width: calc((100% - 1.94rem));">
 				<div class="search">
 					<img src="static/images/search_gray.png" alt="" class="search_icon" />
-					<span>搜索商品名/关键字 领券实惠购</span>
+					搜索商品名/关键字 领券实惠购
 				</div>
 			</router-link>
 			<router-link class="right" to="/personCenter/info">
@@ -246,7 +246,7 @@
 			getUpdate() {
 				this.$http.get(this.http + '/api/checkAppUpgrade', {
 					params: {
-						version: 1.5
+						version: '1.5.1'
 					}
 				}).then((res) => {
 					if(res.data.code == '200') {
@@ -371,10 +371,8 @@
 			}
 		},
 		mounted: function() {
-			this.$nextTick(function() {
-						setTimeout(this.getInfoMsg(), 3000)
-						setTimeout(this.getUpdate(), 3000)
-				})
+				setTimeout(this.getInfoMsg(), 3000)
+				setTimeout(this.getUpdate(), 3000)
 				},
 				created: function() {
 					//			this.getUpdate()

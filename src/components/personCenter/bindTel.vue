@@ -3,7 +3,8 @@
 		<p class="f28 c9" style="line-height: 1rem;padding-left: .26rem;" v-show="type==3||type==1">为了您的账号安全，请绑定手机号</p>
 		<p class="f28 c9" style="line-height: 1rem;padding-left: .26rem;" v-show="type==4">注意：解除绑定后，将无法更好为您保护账号的安全</p>
 		<group class="myOrder" style="margin-bottom: .4rem;">
-			<x-input title="" mask="99999999999" v-model="tel" :max="13" is-type="china-mobile" placeholder="输入手机号"></x-input>
+			<x-input title="" mask="99999999999" v-model="tel" :max="13" is-type="china-mobile" placeholder="输入手机号" v-show="type!==4"></x-input>
+			<x-input title="" mask="99999999999" v-model="tel" :max="13" is-type="china-mobile" placeholder="输入手机号" v-show="type==4" disabled="disabled"></x-input>
 			<div style="position: relative;border-bottom: .01rem solid #e5e5e5;">
 				<x-input :max="6" v-model="code" type="number" placeholder="验证码" style="width: 60%;border-bottom: none;"></x-input>
 				<button class="f36 c_f code_btn" @click="getCode()" id="send-code">{{texts}}</button>
