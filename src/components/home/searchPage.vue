@@ -153,10 +153,18 @@ ul li{
     margin: 0 .2rem .2rem 0;
   }
   .searchDiv{
-    background-color: #f4f4f4;padding: .1rem .1rem .1rem;font-size: 0;
+    background: -webkit-linear-gradient(left, #8721b5, #db3283);
+		/* Safari 5.1 - 6.0 */
+		background: -o-linear-gradient(left, #8721b5, #db3283);
+		/* Opera 11.1 - 12.0 */
+		background: -moz-linear-gradient(left, #8721b5, #db3283);
+		/* Firefox 3.6 - 15 */
+		background: linear-gradient(left, #8721b5, #db3283);
+		/* 标准的语法 */
+		padding: .5rem .1rem .1rem;font-size: 0;
   }
   .searchDiv>img{
-    width: .4rem;height: .4rem;vertical-align: middle;position: absolute;top: .22rem;left: .2rem;
+    width: .4rem;height: .4rem;vertical-align: middle;position: absolute;top: .62rem;left: .2rem;
   }
   .searchDiv>form{
     width: 80%;display: inline-block;margin-right: .6rem;
@@ -165,6 +173,6 @@ ul li{
     width: 100%;outline: none;padding:.1rem .1rem .1rem .6rem;border:none;line-height: .44rem;font-size: .28rem;border-radius: .5rem;
   }
   .searchDiv>.cancel_btn{
-    display: inline-block;text-align: center;font-size: .28rem;color: #333;margin-left: .2rem;
+    display: inline-block;text-align: center;font-size: .28rem;color: white;margin-left: .2rem;
   }
 </style>

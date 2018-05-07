@@ -2,7 +2,7 @@
 	<div>
 		<x-header :left-options="{backText: ''}" :title="title" style="background-color: #f9f9f9;">
 		</x-header>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
 			<div style="width: 100%;">
 			<div style="height: 1.8rem;">
 				<img :src="image" alt="" style="width: 100%;height: 100%;" :onerror="defaultImg"/>

@@ -285,8 +285,8 @@ routes: [{
 		name: 'GoldStore',
 		component: GoldStore,
 		meta: {
-			showHeader: true,
-			title:"小金库",
+//			showHeader: true,
+//			title:"小金库",
 			keepAlive: true
 		}
 	},
@@ -294,10 +294,10 @@ routes: [{
 		path: '/personCenter/underWay',
 		name: 'UnderWay',
 		component: UnderWay,
-		meta: {
-			showHeader: true,
-			title:"镖局押运"
-		}
+//		meta: {
+//			showHeader: true,
+//			title:"镖局押运"
+//		}
 	},
 	{
 		path: '/personCenter/share',
@@ -314,8 +314,8 @@ routes: [{
 		name: 'MyWorld',
 		component: MyWorld,
 		meta: {
-			showHeader: true,
-			title:"我的江湖",
+//			showHeader: true,
+//			title:"我的江湖",
 			keepAlive: true
 		}
 	},
@@ -399,10 +399,10 @@ routes: [{
 		path: '/personCenter/goldStore/fansOffer',
 		name: 'FansOffer',
 		component: FansOffer,
-		meta: {
-			showHeader: true,
-			title:"帮众贡献",
-		}
+//		meta: {
+//			showHeader: true,
+//			title:"帮众贡献",
+//		}
 	},
 	{
 		path: '/personCenter/goldStore/realize',
@@ -614,19 +614,19 @@ routes: [{
 		path: '/brandDetail',
 		name: 'BrandDetail',
 		component: BrandDetail,
-		meta: {
-			showHeader: true,
-			title:"商品详情"
-		}
+//		meta: {
+//			showHeader: true,
+//			title:"商品详情"
+//		}
 	},
 	{
 		path: '/taobao/TBDetail',
 		name: 'TBDetail',
 		component: TBDetail,
-		meta: {
-			showHeader: true,
-			title:"商品详情"
-		}
+//		meta: {
+//			showHeader: true,
+//			title:"商品详情"
+//		}
 	},
 	{
 		path: '/pinduo/PinDetail',
@@ -704,8 +704,8 @@ routes: [{
 		name: 'Upgrade',
 		component: Upgrade,
 		meta: {
-			showHeader: true,
-			title:"升级地位",
+//			showHeader: true,
+//			title:"升级地位",
 			keepAlive: true
 		}
 	},

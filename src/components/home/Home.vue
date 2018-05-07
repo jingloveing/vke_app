@@ -2,24 +2,23 @@
 	<div>
 		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">
 			<div style="position: relative;">
-				<swiper auto :list="bannerList" style="width:100%;" height="3.48rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" loop class="index-swiper"></swiper>
-			<div class="searchDiv">
-		    <router-link to="/taobao/newHand">
-		    	<div class="left">
-				   <img src="../../../static/images/newhand_icon.png" class="logo" alt="" />
-			    </div>
-		    </router-link>
-			<router-link to="/home/indexSearch" style="width: calc((100% - 1.94rem));">
-				<div class="search">
-					<img src="static/images/search_gray.png" alt="" class="search_icon" />
-					搜索商品名/关键字 领券实惠购
+				<swiper auto :list="bannerList" style="width:100%;" height="3.88rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" loop class="index-swiper"></swiper>
+				<div class="searchDiv">
+					<router-link to="/taobao/newHand">
+						<div class="left">
+							<img src="../../../static/images/newhand_icon.png" class="logo" alt="" />
+						</div>
+					</router-link>
+					<router-link to="/home/indexSearch" style="width: calc((100% - 1.94rem));">
+						<div class="search">
+							<img src="static/images/search_gray.png" alt="" class="search_icon" /> 搜索商品名/关键字 领券实惠购
+						</div>
+					</router-link>
+					<router-link class="right" to="/personCenter/info">
+						<img src="../../../static/images/news_icon.png" alt="" class="info" />
+						<span class="info_num" v-show="unMessage && unMessage !=='0'">{{unMessage}}</span>
+					</router-link>
 				</div>
-			</router-link>
-			<router-link class="right" to="/personCenter/info">
-				<img src="../../../static/images/news_icon.png" alt="" class="info" />
-				<span class="info_num" v-show="unMessage && unMessage !=='0'">{{unMessage}}</span>
-			</router-link>
-		</div>
 			</div>
 			<div style=" margin-top: -.3rem;z-index: 99999;position: relative;">
 				<ul class="nav-small">
@@ -291,6 +290,7 @@
 					return;
 				} else {
 					let self = this; //this指向问题
+					
 					setTimeout(() => {
 						self.pageIndex += 1
 						self.getMerchantList()
@@ -368,26 +368,21 @@
 			},
 			cancel2() {
 				this.showInfo = 0
-			}
+			},
+			
+			
 		},
 		mounted: function() {
-				setTimeout(this.getInfoMsg(), 3000)
-				setTimeout(this.getUpdate(), 3000)
-				},
-				created: function() {
-					//			this.getUpdate()
-					this.getBannerList()
-					this.getNews()
-					this.getMerchantList()
-					this.unMessage = plus.storage.getItem("unMessage")
-				},
-				activated: function() {
-					//			this.getBannerList()
-					//			this.getNews()
-					//			this.getMerchantList()
-					//			this.unMessage = plus.storage.getItem("unMessage")
-				}
+			setTimeout(this.getInfoMsg(), 3000)
+			setTimeout(this.getUpdate(), 3000)
+		},
+		created: function() {
+			this.getBannerList()
+			this.getNews()
+			this.getMerchantList()
+			this.unMessage = plus.storage.getItem("unMessage")
 		}
+	}
 </script>
 <style scoped>
 	.nav-small {
@@ -445,7 +440,7 @@
 	.searchDiv {
 		width: 100%;
 		position: absolute;
-		top: 0;
+		top: .44rem;
 		z-index: 9999999;
 		height: .88rem;
 		line-height: .88rem;
@@ -720,6 +715,3 @@
 		bottom: .25rem!important;
 	}
 </style>
-<!--"statusbar":{
-    		"immersed":true
-    	},-->

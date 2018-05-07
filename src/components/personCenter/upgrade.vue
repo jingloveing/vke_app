@@ -2,6 +2,7 @@
 	<div>
 		<div style="background: white;height: calc(100vh - .88rem);">
 			<div class="upgrade-banner">
+				<x-icon type="ios-arrow-left" size="30" style="fill: white;width: .86rem;position: absolute;top: .4rem;left: 0;" @click="goback()"></x-icon>
 				<img src="../../../static/images/personCenter/upgrade-banner.jpg" alt="" class="banner" v-show="userInfo.level_id==1"/>
 				<img src="../../../static/images/personCenter/upgrade-banner2.jpg" alt="" class="banner" v-show="(userInfo.level_id==2)||(userInfo.level_id==3)"/>
 				<router-link class="banner-btn" to="/personCenter/myPrerogative">我的特权 > </router-link>
@@ -131,6 +132,9 @@
 				this.$router.push({
 					name: 'GoodsDetail'
 				})
+			},
+			goback() {
+				history.back(-1);
 			}
 		},
 		created: function() {
@@ -153,16 +157,15 @@
 	
 	.banner {
 		width: 100%;
-		height: 2.36rem;
+		height: 3.64rem;
 	}
 	
 	.banner-btn {
 		position: absolute;
 		font-size: .24rem;
 		color: rgba(255, 255, 255, .5);
-		;
 		right: 0rem;
-		top: 0rem;
+		top: .4rem;
 		padding: .22rem .26rem;
 	}
 	

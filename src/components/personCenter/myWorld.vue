@@ -1,7 +1,9 @@
 <template>
 	<div>
+		<x-header :left-options="{backText: ''}" title="我的江湖" class="header"></x-header>
+		<div style="height: 1.28rem;"></div>
 		<div style="position: relative;margin-bottom: 1.5rem;">
-			<div class="header">
+			<div class="header-nav">
 				<p class="f30">帮众总数:{{data.total}}人</p>
 			</div>
 			<div class="header_main">
@@ -56,12 +58,13 @@
 </template>
 
 <script>
-	import { Toast, Loading } from 'vux'
+	import { Toast, Loading ,XHeader} from 'vux'
 	export default {
 		name: 'Code',
 		components: {
 			Toast,
-			Loading
+			Loading,
+			XHeader
 		},
 		data() {
 			return {
@@ -120,7 +123,12 @@
 </script>
 
 <style scoped="scoped">
-	.header {
+	.header{
+		padding-top: .4rem;
+		border: none;
+		background: #9A7BFF;
+	}
+	.header-nav {
 		text-align: center;
 		width: 100%;
 		height: 2.68rem;

@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<x-header :left-options="{backText: ''}" title="分享商品" class="header"></x-header>
-		<div style="position: fixed;z-index: 99999;right: 0;top: .0rem;height: .88rem;line-height: .88rem;" @click="show=!show">
+		<div style="position: fixed;z-index: 99999;right: 0;top: .4rem;height: .88rem;line-height: .88rem;" @click="show=!show">
 			<img src="../../../static/images/share_icon.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;padding: .1rem .26rem;" />
 		</div>
-		<div style="height: .88rem;"></div>
+		<div style="height: 1.28rem;"></div>
 		<div class="tip f24 c9">商品图片已为朋友圈特别优化，建议将图片分享到<span>微信朋友圈</span></div>
 		<div class="f28 c3" style="background: white;padding: .26rem .26rem .34rem;">
 			<p v-for="(i,index) in goods.words" :key="index">{{i}}</p>
@@ -272,6 +272,7 @@
 
 <style scoped="scoped">
 	.header {
+		padding-top: .4rem;
 		border: none;
 		background: -webkit-linear-gradient(left, #8721b5, #db3283);
 		/* Safari 5.1 - 6.0 */

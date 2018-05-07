@@ -68,8 +68,15 @@ ul{
 }
 .vux-header{
 	width: 100%;
-	background-color:#f9f9f9;
-	padding: 0;
+	background: -webkit-linear-gradient(left, #8721b5, #db3283);
+		/* Safari 5.1 - 6.0 */
+		background: -o-linear-gradient(left, #8721b5, #db3283);
+		/* Opera 11.1 - 12.0 */
+		background: -moz-linear-gradient(left, #8721b5, #db3283);
+		/* Firefox 3.6 - 15 */
+		background: linear-gradient(left, #8721b5, #db3283);
+		/* 标准的语法 */
+	padding-top: .4rem;
 	/*border-bottom: .01rem solid #e5e5e5;*/
 	position: fixed;
 	top: 0;
@@ -84,14 +91,14 @@ ul{
     text-align: center;
     font-size: .36rem;
     font-weight: 400;
-    color: #333!important;
+    color:white!important;
 }
 .vux-header .vux-header-left .left-arrow:before{
-	border: 1px solid #333;
+	border: 1px solid white;
 	border-width: 1px 0 0 1px;
 	width: .24rem;
 	height: .24rem;
-	top: .16rem;
+	top: .56rem;
 	left: .14rem;
 }
 .vux-header .vux-header-right{

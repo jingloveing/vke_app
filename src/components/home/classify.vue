@@ -23,7 +23,7 @@
     <!--</div>-->
     <x-header :left-options="{backText: ''}" :title="title" style="background-color: #f9f9f9;">
 		</x-header>
-    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
+    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
       <div class="main_goods">
         <ul class="goods">
           <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :to="{name:'TBDetail',query:{id:goods.id,type:4}}" :key="index">

@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<x-header :left-options="{backText: ''}" title="我的特权" class="header"></x-header>
+		<div style="height: 1.28rem;"></div>
 		<div class="header-main">
 			<div>
 				<img src="../../../static/images/fans/leve1.png" alt="" class="user_order" v-show="userInfo.level_id!==2&&userInfo.level_id!==3" />
@@ -122,7 +123,6 @@
 	
 	.header-main {
 		height: 2.84rem;
-		margin-top: .88rem;
 		text-align: center;
 		background: -webkit-linear-gradient(left, #8721b5, #db3283);
 		/* Safari 5.1 - 6.0 */

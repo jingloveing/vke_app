@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<x-header :left-options="{backText: ''}" :title="$route.meta.title" v-show="$route.meta.showHeader"></x-header>
-		<div style="height: .88rem;" v-show="$route.meta.showHeader"></div>
+		<div style="height: 1.28rem;" v-show="$route.meta.showHeader"></div>
 		<keep-alive>
 			<router-view v-if="$route.meta.keepAlive"></router-view>
 		</keep-alive>

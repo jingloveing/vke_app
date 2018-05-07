@@ -3,7 +3,7 @@
 		<tab :line-width=2 active-color='#9a7bff' v-model="index" custom-bar-width=".8rem" style="height: .88rem;line-height: .88rem;">
 			<tab-item class="vux-center" v-for="(item, index) in list" :key="index" @on-item-click="change(item,index)">{{item}}</tab-item>
 		</tab>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.76rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 2.16rem;">
 			<div class="goods_list" v-show="index==0">
 				<ul class="goods">
 					<li v-for="(list,index) in goodsList" :key="index" @click="toDetail(list)">

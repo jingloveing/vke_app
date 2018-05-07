@@ -2,7 +2,7 @@
 	<div>
 		<x-header title="唯品会" :left-options="{showBack: false}">
 		</x-header>
-		<x-icon type="ios-arrow-left" size="30" style="fill: #666;width: .91rem;position: fixed;left: 0;top: .2rem;z-index: 9999;" @click="goHome()"></x-icon>
+		<x-icon type="ios-arrow-left" size="30" style="fill: white;width: .91rem;position: fixed;left: 0;top: .6rem;z-index: 9999;" @click="goHome()"></x-icon>
 		<!--<iframe src="https://m.vip.com/index.html?f=CPS#!hash" id="Iframe" frameborder="0" scrolling="" style="border:0px;" width="100%" height=""></iframe>-->
 		<div class="return flex" @click="goHome()">
 			<img src="../../../static/images/return_icon.png" alt="" />
@@ -34,7 +34,7 @@
 				plus.nativeUI.showWaiting();
 				var self = this
 				this.webview = plus.webview.create("https://m.vip.com/index.html?f=CPS#!hash", 'new', {
-					top: "45px",
+					top: "65px",
 					bottom: "0",
 				});
 				this.webview.addEventListener('close', function() {

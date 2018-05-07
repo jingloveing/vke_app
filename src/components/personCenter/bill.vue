@@ -3,7 +3,7 @@
 		<tab :line-width=2 active-color='#9a7bff' v-model="index" custom-bar-width="1.5rem">
 			<tab-item class="vux-center" v-for="(item, index) in list2" :key="index" @on-item-click="change(item,index)">{{item}}</tab-item>
 		</tab>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.76rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 2.16rem;">
 		<div class="tab-swiper" v-show="index==0">
 			<p class="tip f28 c9">目前您的消费总计为{{total_pay}}元</p>
 			<div class="list" v-for="(item,index) in dataList" :key="index">

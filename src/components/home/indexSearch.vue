@@ -1,11 +1,11 @@
 <template>
 	<div class="indexSearch">
-		<x-header :left-options="{backText: ''}"></x-header>
-		<button-tab v-model="index" class="nav">
-			<button-tab-item @on-item-click="consoleIndex(3)">淘宝商品</button-tab-item>
-			<button-tab-item @on-item-click="consoleIndex(2)">品牌商品</button-tab-item>
-		</button-tab>
-		<div style="height: .88rem;"></div>
+		<x-header :left-options="{backText: ''}" class="header"></x-header>
+		<div class="nav flex">
+			<div class="active tab-items">淘宝</div>
+			<div class="tab-items">拼多多</div>
+		</div>
+		<div style="height: 1.28rem;"></div>
 		<div class="searchDiv">
 			<img src="../../../static/images/personCenter/search_img.png" alt="">
 			<form action="">
@@ -28,13 +28,11 @@
 </template>
 
 <script>
-	import { XHeader, ButtonTab, ButtonTabItem, Loading } from 'vux'
+	import { XHeader, Loading } from 'vux'
 	export default {
 		name: 'Realize',
 		components: {
 			XHeader,
-			ButtonTab,
-			ButtonTabItem,
 			Loading
 		},
 		data() {
@@ -121,12 +119,6 @@
 					}
 				})
 			},
-			//点击头部事件
-			consoleIndex(type) {
-				this.key=''
-				this.type=type
-				console.log(this.type)
-			}
 		},
 		created: function() {
 			this.getHotList()
@@ -146,6 +138,23 @@
 						}
 					})
 				};
+			var tab = document.getElementsByClassName('tab-items')
+			for(var i = 0; i < tab.length; i++) {
+				tab[i].index = i
+				tab[i].onclick = function() {
+					if(self.index==0){
+						self.key=''
+				        self.type=3
+					}else if(self.index==1){
+						self.key=''
+				        self.type=2
+					}
+					for(var j = 0; j < tab.length; j++) {
+						tab[j].classList.remove('active')
+					}
+					tab[this.index].classList.add('active')
+				}
+			}
 			})
 		},
 		activated:function(){
@@ -156,6 +165,17 @@
 </script>
 
 <style scoped="scoped">
+	.header{
+		padding-top: .4rem;
+		border: none;
+		background: -webkit-linear-gradient(left, #8721b5, #db3283);
+		/* Safari 5.1 - 6.0 */
+		background: -o-linear-gradient(left, #8721b5, #db3283);
+		/* Opera 11.1 - 12.0 */
+		background: -moz-linear-gradient(left, #8721b5, #db3283);
+		/* Firefox 3.6 - 15 */
+		background: linear-gradient(left, #8721b5, #db3283);
+	}
 	.hot_list {
 		margin: 0 .3rem;
 	}
@@ -214,47 +234,18 @@
 		margin-left: .2rem;
 	}
 	.nav {
-		width: 3.34rem;
+		width: 2.2rem;
 		position: fixed;
-		top: 0;
+		color: rgba(255,255,255,0.5);
+		font-size: .36rem;
 		z-index: 99999;
-		left: calc((100% - 3.34rem)/2);
-		top: calc((.88rem - .6rem)/2);
+		left: calc((100% - 2.2rem)/2);
+		top: calc((.88rem - .6rem)/2 + .4rem);
+		justify-content: space-between;
+		align-items: center;
 	}
-	
-</style>
-<style>
-	.nav.vux-button-group>a.vux-button-group-current {
-		color: #FFF;
-		background: #9a7bff;
-	}
-	
-	.nav.vux-button-group>a.vux-button-tab-item-last:after {
-		border: .01rem solid #9a7bff;
-		border-top-right-radius: .06rem;
-		border-bottom-right-radius: .06rem;
-	}
-	
-	.nav.vux-button-group>a.vux-button-tab-item-first:after {
-		border: .01rem solid #9a7bff;
-		border-top-left-radius: .06rem;
-		border-bottom-left-radius: .06rem;
-	}
-	
-	.nav.vux-button-group>a {
-		height: .6rem;
-		line-height: .6rem;
-		color: #9A7BFF;
-		font-size: .26rem;
-	}
-	
-	.nav.vux-button-group>a.vux-button-tab-item-last {
-		border-top-right-radius: .06rem;
-		border-bottom-right-radius: .06rem;
-	}
-	
-	.nav.vux-button-group>a.vux-button-tab-item-first {
-		border-top-left-radius: .06rem;
-		border-bottom-left-radius: .06rem;
+	.nav .active{
+		border-bottom: .02rem solid white;
+		color: white;
 	}
 </style>

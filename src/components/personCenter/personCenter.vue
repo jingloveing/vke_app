@@ -367,7 +367,7 @@
 <style scoped="scoped">
 	.header {
 		width: 100%;
-		height: 4rem;
+		height: 4.4rem;
 		background: -webkit-linear-gradient(left, #8721b5, #db3283);
 		/* Safari 5.1 - 6.0 */
 		background: -o-linear-gradient(left, #8721b5, #db3283);
@@ -376,7 +376,7 @@
 		/* Firefox 3.6 - 15 */
 		background: linear-gradient(left, #8721b5, #db3283);
 		/* 标准的语法 */
-		padding: .44rem .24rem .94rem;
+		padding: .84rem .24rem .94rem;
 		box-sizing: border-box;
 		text-align: center;
 		position: relative;
@@ -387,7 +387,7 @@
 		line-height: 100%;
 		position: absolute;
 		right: 0rem;
-		top: 0rem;
+		top: .4rem;
 	}
 	
 	.info {
@@ -417,7 +417,7 @@
 		height: .4rem;
 		position: absolute;
 		left: .04rem;
-		top: .04rem;
+		top: .44rem;
 		padding: .2rem;
 	}
 	

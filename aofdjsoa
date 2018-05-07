@@ -1,0 +1,185 @@
+[33mcommit 9df5a9cd507310a4200085e0cdf7c05ec7dd992c[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Fri May 4 17:49:25 2018 +0800
+
+    2018-05-04
+
+[33mcommit 418b20278b722ba81cfc7421088c9c34112b8985[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Thu May 3 18:38:49 2018 +0800
+
+    首页头部更新，新增消息提示框
+
+[33mcommit 090f2b8e75ac8ed95ab3a7ebcf1b5e96998a7b56[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Thu May 3 09:06:44 2018 +0800
+
+    新增拼多多页面
+
+[33mcommit f67d4ba791098e4a050ceba050bd6c8ede15dd6a[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Sat Apr 28 19:28:06 2018 +0800
+
+    版本1.5
+
+[33mcommit ef0d530a7d20b5b632a112c69a98c687fd6395b7[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Fri Apr 27 18:32:48 2018 +0800
+
+    2018-4-27
+
+[33mcommit 17b6dd57d3b494f9394a201191d7ea92b5dfaa76[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Thu Apr 26 17:22:37 2018 +0800
+
+    ios添加淘口令，页面出现空白
+
+[33mcommit f3d37248ec55e4ea2c2a00a77bfdb0f7c7629f55[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Thu Apr 26 09:08:17 2018 +0800
+
+    改版一键分享专区
+
+[33mcommit d5e3144460904e5c019666c4205932c715d9165e[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Thu Mar 29 17:05:36 2018 +0800
+
+    完善版本1
+
+[33mcommit 64e3f31fc08bc34b7c1ebbb923e727cb779004b5[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Mon Mar 26 19:42:33 2018 +0800
+
+    分享
+
+[33mcommit 9cdd90f03c906782a09f7590388725852c576e31[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Thu Mar 22 18:58:12 2018 +0800
+
+    保存图片，设置个人信息
+
+[33mcommit d7da9be618d974ea8acc930ee751871e41c356eb[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Tue Mar 20 18:52:27 2018 +0800
+
+    账单，验证码
+
+[33mcommit cee795b5e60f9fb41c4f2c6dfd5c2386f339e342[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Fri Mar 16 18:54:36 2018 +0800
+
+    登录授权
+
+[33mcommit f4f1554556acfe40450e3a7719d7af92dddde2b4[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Thu Mar 15 18:54:53 2018 +0800
+
+    登录
+
+[33mcommit 849df63894490e767ac213c6442b254cfb066691[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Mon Mar 12 18:37:08 2018 +0800
+
+    首页上拉加载下拉刷新
+
+[33mcommit 71f6d319c6dcae0c0926a3a95501cfdebfc2b21d[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Fri Mar 9 18:29:04 2018 +0800
+
+    个人中心接口
+
+[33mcommit 1634398a75f086624d75619c8f6347e7addc4b40[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Wed Mar 7 18:45:52 2018 +0800
+
+    个人中心接口
+
+[33mcommit b2efc90b9e3d817878c8c4bd801935b882242b4e[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Tue Mar 6 19:01:42 2018 +0800
+
+    规则说明页面完善
+
+[33mcommit 9b06e1f3560af4bcce5b861956634f80ff8258f2[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Fri Mar 2 18:45:31 2018 +0800
+
+    分享
+
+[33mcommit e8f5bc130321a8a542bea6e86502b1d8e0846b7a[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Thu Mar 1 18:29:31 2018 +0800
+
+    退款退货
+
+[33mcommit f1f87b9aa182c915ae065461b6420ef23ce11eab[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Wed Feb 28 18:59:03 2018 +0800
+
+    商品详情页
+
+[33mcommit 8c0ecc41af9ea6869cb99b5211ba0da9ecdce82a[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Tue Feb 27 09:23:20 2018 +0800
+
+    购物车
+
+[33mcommit e8627c8442901d591c7d544f92663c0770651976[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Sun Feb 25 18:07:17 2018 +0800
+
+    2018-02-25
+
+[33mcommit 5bbc06133b323c96e8e058c3e528c1ba4d9f6af7[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Sun Feb 4 17:22:35 2018 +0800
+
+    3
+
+[33mcommit 9d4972171218b5ddfb8df40be672239f46c26ee7[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Sun Feb 4 17:15:11 2018 +0800
+
+    2018-02-04
+
+[33mcommit a77c587883cca2192d6a3faa7f439fca5c3cf901[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Sat Feb 3 18:28:35 2018 +0800
+
+    直播间
+
+[33mcommit f0e54d73a959a583abd828df13fa4103c410f9e0[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Thu Feb 1 18:30:48 2018 +0800
+
+    2018-02-01
+
+[33mcommit a5616236570beeff1916f2d5ee4a8536a9223d2f[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Wed Jan 31 18:27:34 2018 +0800
+
+    2018-01-31
+
+[33mcommit 9708dd8c0639b52105f30679af24ed4383361d6f[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Tue Jan 30 18:30:19 2018 +0800
+
+    2018-01-30
+
+[33mcommit cf7112ce7b9fb6410ecf8e093c2be770f61fad5a[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Fri Jan 26 18:16:01 2018 +0800
+
+    2018-01-26
+
+[33mcommit 74dd18cd521108c3bb30b602fe7910c8955dcfe4[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Thu Jan 25 18:20:09 2018 +0800
+
+    2018-01-25
+
+[33mcommit fd7c0fce90e336a73f14490764b2d13d9d277e27[m
+Author: jingloveing <1172881783@qq.com>
+Date:   Wed Jan 24 17:51:05 2018 +0800
+
+    初次提交

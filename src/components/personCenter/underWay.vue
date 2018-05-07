@@ -1,6 +1,8 @@
 <template>
 	<div>
-		<div class="header">
+		<x-header :left-options="{backText: ''}" title="镖局押运" class="header"></x-header>
+		<div style="height: 1.28rem;"></div>
+		<div class="nav">
 			<p class="f24">押运财宝总值</p>
 			<p style="font-size: .52rem;display: flex;justify-content: center;align-items: center;">{{data.acer}}<span style="font-size: .4rem;" v-show="data.type"><span v-show="data.type==1">铜币</span>
 				<span v-show="data.type==2">银</span>
@@ -13,7 +15,7 @@
 		<tab :line-width=2 active-color='#9a7bff' v-model="index" custom-bar-width="1rem">
 			<tab-item class="vux-center" v-for="(item, index) in list2" @on-item-click="change(item,index)" :key="index">{{item}}</tab-item>
 		</tab>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 4.44rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 4.84rem;">
 			<div class="tab-swiper" v-show="index==0">
 				<div class="title">
 					<span class="f30 c3">帮众贡献押运中财宝总计</span>
@@ -161,12 +163,13 @@
 </template>
 
 <script>
-	import { Tab, TabItem, } from 'vux'
+	import { Tab, TabItem,XHeader} from 'vux'
 	const list = () => ['帮众', '京东', '蘑菇街']
 	export default {
 		components: {
 			Tab,
 			TabItem,
+			XHeader
 		},
 		data() {
 			return {
@@ -279,7 +282,7 @@
 </script>
 
 <style scoped="scoped">
-	.header {
+	.nav {
 		text-align: center;
 		width: 100%;
 		height: 2.68rem;
@@ -290,7 +293,11 @@
 		padding-top: .7rem;
 		box-sizing: border-box;
 	}
-	
+	.header{
+		padding-top: .4rem;
+		border: none;
+		background: #9A7BFF;
+	}
 	.title {
 		height: 1.14rem;
 		background: white;

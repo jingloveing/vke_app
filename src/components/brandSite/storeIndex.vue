@@ -381,7 +381,7 @@
 <style scoped="scoped">
 	.header {
 		/*padding-top: .4rem;*/
-		height: 2.18rem;
+		height: 2.58rem;
 		background-image: url(../../../static/images/store_bd.jpg);
 		background-size: 100% 100%;
 		color: white;
@@ -395,6 +395,7 @@
 		align-items: center;
 		/*margin-top: .2rem;*/
 		height: .88rem;
+		padding-top: .4rem;
 	}
 	
 	.nav-header-right {

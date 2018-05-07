@@ -1,11 +1,15 @@
 <template>
 	<div v-show="token">
-		<div style="position: fixed;z-index: 99999;right: 0;top: .0rem;height: .88rem;line-height: .88rem;" @click="show=!show">
-			<img src="../../../static/images/share_black_icon.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;padding: .1rem .26rem;" />
-		</div>
+
 		<div>
 			<div class="pic">
-				<swiper auto loop :list="goodsDetail.pict_url" style="width:100%;" height="7.5rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" :onerror="defaultImg"></swiper>
+				<div @click="goback()" style="position: fixed;left: .2rem;top: .4rem;z-index: 99999;">
+					<img src="../../../static/images/back_icon.png" alt="" style="width: .6rem;height:.6rem;" />
+				</div>
+				<swiper auto loop :list="goodsDetail.pict_url" style="width:100%;" height="7.5rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" :onerror="defaultImg" class="goods-pic"></swiper>
+				<div style="position: fixed;z-index: 99999;right: .06rem;top: .4rem;" @click="show=!show">
+					<img src="../../../static/images/share2_icon.png" alt="" style="width: .74rem;height: .68rem;vertical-align: middle;" />
+				</div>
 			</div>
 			<div class="detail">
 				<p class="name">{{goodsDetail.product_name}}</p>
@@ -80,7 +84,6 @@
 							<img src="../../../static/images/share/weiboshare.png" alt="" />
 							<span class="f28 c3">微博</span>
 						</div>
-
 
 					</div>
 				</div>
@@ -198,7 +201,9 @@
 
 			},
 			toquan() {
-				this.$router.push({path:'/upgrade'})
+				this.$router.push({
+					path: '/upgrade'
+				})
 			},
 			//分享操作
 			shareAction(id, ex) {
@@ -271,6 +276,9 @@
 				document.body.style.overflow = 'scroll';
 				this.show1 = false
 			},
+			goback() {
+				history.back(-1);
+			},
 		},
 		created: function() {
 			this.token = plus.storage.getItem("token")
@@ -284,7 +292,7 @@
 		},
 		mounted: function() {
 			this.$nextTick(function() {
-				
+
 			})
 		},
 	}
@@ -568,9 +576,19 @@
 		-webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
 		transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
 	}
+	
 	.share-btn {
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 	}
+</style>
+<style type="text/css">
+	.goods-pic.vux-slider>.vux-indicator>a>.vux-icon-dot.active {
+		background-color: rgba(255,255,255,0) !important;
+	}
+	.goods-pic.vux-slider>.vux-indicator>a>.vux-icon-dot {
+		border: none;
+	}
+	
 </style>

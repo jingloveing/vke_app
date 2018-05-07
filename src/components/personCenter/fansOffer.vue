@@ -1,7 +1,9 @@
 <template>
 	<div>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
-			<div class="header">
+		<x-header :left-options="{backText: ''}" title="帮众贡献" class="header"></x-header>
+		<div style="height: 1.28rem;"></div>
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
+			<div class="header-nav">
 				<p class="f24">帮众贡献财宝总值</p>
 				<p style="font-size: .52rem;display: flex;justify-content: center;align-items: center;">{{totalAcer.acer}}<span style="font-size: .4rem;">
 					<span v-show="totalAcer.type==1">铜币</span>
@@ -76,11 +78,12 @@
 
 <script>
 	var list = ["今日", "昨日", "本月", "全部"]
-	import { DatetimeView, } from 'vux'
+	import { DatetimeView,XHeader } from 'vux'
 	export default {
 		name: 'Realize',
 		components: {
-			DatetimeView
+			DatetimeView,
+			XHeader
 		},
 		data() {
 			return {
@@ -215,7 +218,12 @@
 </script>
 
 <style scoped="scoped">
-	.header {
+	.header{
+		padding-top: .4rem;
+		border: none;
+		background: #FDC71B;
+	}
+	.header-nav {
 		text-align: center;
 		width: 100%;
 		height: 2.68rem;

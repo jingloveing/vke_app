@@ -1,7 +1,9 @@
 <template>
 	<div>
+		<x-header :left-options="{backText: ''}" title="小金库" class="header"></x-header>
+		<div style="height: 1.28rem;"></div>
 		<div style="position: relative;margin-bottom: 1.5rem;">
-			<div class="header">
+			<div class="header-nav">
 				<p class="f24">财宝总值</p>
 				<p style="font-size: .52rem;display: flex;justify-content: center;align-items: center;">{{total.acer}}<span style="font-size: .4rem;">
 					<span v-show="total.type==1">铜币</span>
@@ -193,18 +195,19 @@
 		</ul>
 	</div>
 	<div style="margin: .7rem .5rem 0;">
-		<x-button type="default" class="f32 c3" @click.native="toRealize()">立即挂单</x-button>
+		<x-button class="f32 c3" @click.native="toRealize()">立即挂单</x-button>
 	</div>
 	</div>
 </template>
 
 <script>
-	import { Toast, Loading, XButton } from 'vux'
+	import { Toast, Loading, XButton ,XHeader} from 'vux'
 	export default {
 		components: {
 			Toast,
 			Loading,
-			XButton
+			XButton,
+			XHeader
 		},
 		data() {
 			return {
@@ -294,7 +297,12 @@
 </script>
 
 <style scoped="scoped">
-	.header {
+	.header{
+		padding-top: .4rem;
+		border: none;
+		background: #FDC71B;
+	}
+	.header-nav {
 		text-align: center;
 		width: 100%;
 		height: 2.68rem;
@@ -302,7 +310,7 @@
 		background-size: 100% 100%;
 		background-repeat: no-repeat;
 		color: white;
-		padding-top: .7rem;
+		padding-top: .3rem;
 		box-sizing: border-box;
 	}
 	

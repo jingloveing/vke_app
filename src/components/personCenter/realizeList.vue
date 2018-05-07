@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
 		<div style="position: relative;">
 			<div class="select">
 				<div style="display: flex;align-items: center;" v-on:click="showMenu=!showMenu">

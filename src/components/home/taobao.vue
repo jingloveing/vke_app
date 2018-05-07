@@ -19,7 +19,7 @@
 					<img src="../../../static/images/taobao_logo.png" alt="" style="width: .7rem; height: .5rem;"/>
 				</router-link>
 			</div>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top:.88rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top:1.28rem;">
 			<swiper auto loop :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
 			<div>
 				<ul class="nav-small">
@@ -212,7 +212,7 @@
 		
 	}
 	.nav-header {
-		padding-top: .0rem;
+		padding-top: .4rem;
 		width: 100%;
 		position: fixed;
 		top: 0;

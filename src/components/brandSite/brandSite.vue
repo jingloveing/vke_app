@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<x-header :left-options="{showBack: false}" title="品牌现场" class="header">
+		<!--<x-header :left-options="{showBack: false}" title="品牌现场" class="header">
 			<a slot="right">
 				<router-link to="/personCenter/info">
 					<div class="right">
@@ -9,9 +9,9 @@
 					</div>
 				</router-link>
 			</a>
-		</x-header>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
-		<swiper auto loop :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
+		</x-header>-->
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller">
+		<swiper auto loop :list="demoList" style="width:100%;" height="3.58rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
 		<div style="background: white;">
 			<div class="main_title">
 				<img src="../../../static/images/brandSite_icon.png" alt="" />
@@ -236,6 +236,7 @@
 
 <style scoped="scoped">
 	.header {
+		padding-top: .4rem;
 		border: none;
 		background: -webkit-linear-gradient(left, #8721b5, #db3283);
 		/* Safari 5.1 - 6.0 */
@@ -252,7 +253,7 @@
 		line-height: 100%;
 		position: absolute;
 		right: -.2rem;
-		top: .0rem;
+		top: .4rem;
 	}
 	
 	.info {

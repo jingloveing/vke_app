@@ -1,18 +1,14 @@
 <template>
 	<div>
-		<x-header :left-options="{backText: ''}" title="库存挂单" style="background-color: #f9f9f9;">
+		<x-header :left-options="{backText: ''}" title="库存挂单" class="header">
 			<a slot="right">
-				<router-link to="/personCenter/goldStore/realizeList" style="color: #9A7BFF;font-size: .32rem;">
+				<router-link to="/personCenter/goldStore/realizeList" style="color: white;font-size: .32rem;margin-top: .4rem;">
 					挂单记录
 				</router-link>	
 			</a>
 		</x-header>
-		<div style="height: .88rem;"></div>
-		<div class="header" style="position: relative;">
-			<router-link to="/cashRule" class="f24 flex" style="position: absolute;right: .26rem;top: .26rem;z-index: 888;color: white;">
-				<img src="../../../static/images/rule_icon.png" alt=""  style="width: .28rem;height: .28rem;margin-right: .1rem;"/>
-				<span>挂单规则</span>
-			</router-link>
+		<div style="height: 1.28rem;"></div>
+		<div class="header-nav" style="position: relative;">
 			<p class="f24">可挂单财宝</p>
 			<p style="font-size: .52rem;display: flex;justify-content: center;align-items: center;">{{this.$route.query.acer}}<span style="font-size: .4rem;">
 				<span v-show="this.$route.query.type==1">铜币</span>
@@ -21,6 +17,9 @@
 					<span v-show="this.$route.query.type==4">钻石</span>
 					<span v-show="this.$route.query.type==5">皇冠</span>
 			</span></p>
+			<router-link to="/cashRule" class="f24" style="color: white;">
+				<span style="border-bottom: .02rem solid white;">挂单规则</span>
+			</router-link>
 		</div>
 		<div class="account">
 			<p class="tip f30 c3">挂单账户选择</p>
@@ -100,9 +99,9 @@
 			<p class="tip f30 c3">财宝(单位：铜币)</p>
 			<x-input placeholder="请输入挂单财宝数" novalidate :show-clear="false" v-model="acer"></x-input>
 		</div>
-		<div style="height: .96rem;"></div>
-		<div style="position:fixed;bottom: 0;width: 100%;height: .96rem;">
-			<x-button action-type="button" style="width: 100%;height: 100%;border-radius: 0;" class="f32" @click.native="doWithdraw()">确认挂单</x-button>
+		<!--<div style="height: .96rem;"></div>-->
+		<div style="margin: .7rem .5rem 0;">
+			<x-button class="f32" @click.native="doWithdraw()">确认挂单</x-button>
 		</div>
 		<toast v-model="showToast" type="text" :time="800" is-show-mask position="middle">{{toast}}</toast>
 	</div>
@@ -269,7 +268,12 @@
 </script>
 
 <style scoped="scoped">
-	.header {
+	.header{
+		padding-top: .4rem;
+		border: none;
+		background: #FDC71B;
+	}
+	.header-nav {
 		text-align: center;
 		width: 100%;
 		height: 2.68rem;
@@ -277,7 +281,7 @@
 		background-size: 100% 100%;
 		background-repeat: no-repeat;
 		color: white;
-		padding-top: .7rem;
+		padding-top: .3rem;
 		box-sizing: border-box;
 		margin-bottom: .2rem;
 	}

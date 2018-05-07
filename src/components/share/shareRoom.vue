@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" v-show="level">
-			<swiper auto loop :list="shareBanner" style="width:100%;" height="3.28rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
+			<swiper auto loop :list="shareBanner" style="width:100%;" height="3.68rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
 			<div class="tab1 flex c6" id="tab1">
 				<div class="flex tab1-tab active">
 					<img src="../../../static/images/share/hot.png" alt="" v-show="active" />
@@ -129,7 +129,7 @@
 		<div v-show="!level" class="rule">
 			<x-header :left-options="{showBack: false}" title="一键分享规则" style="background-color: #f9f9f9;">
 			</x-header>
-			<div style="height: .88rem;"></div>
+			<div style="height: 1.28rem;"></div>
 			<img src="../../../static/images/shareRoom/share_header.jpg" alt="" style="width: 100%;height: 3.84rem;" />
 			<div class="rule-tip">项目介绍</div>
 			<div class="contents">
