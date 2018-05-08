@@ -38,12 +38,10 @@
 						<img src="static/images/vip.png" :onerror="defaultImg">
 						<span>唯品会</span>
 					</router-link>
-					<!--<router-link tag="li" to="/pinduo">-->
-					<li>
+					<router-link tag="li" to="/pinduo">
 						<img src="static/images/vke_icon.png" :onerror="defaultImg">
 						<span>拼多多</span>
-					</li>
-					<!--</router-link>-->
+					</router-link>
 				</ul>
 			</div>
 			<div class="news_main">
@@ -350,17 +348,21 @@
 				})
 			},
 			toUpdate() {
-				if(plus.os.name == "Android") {
-					var self = this
+				var self = this
 					plus.runtime.openURL(self.updateUrl, function(err) {
 
 					});
-				} else if(plus.os.name == "iOS") {
-					var self = this
-					plus.runtime.openURL(self.updateUrl, function(err) {
-
-					});
-				}
+//				if(plus.os.name == "Android") {
+//					var self = this
+//					plus.runtime.openURL(self.updateUrl, function(err) {
+//
+//					});
+//				} else if(plus.os.name == "iOS") {
+//					var self = this
+//					plus.runtime.openURL(self.updateUrl, function(err) {
+//
+//					});
+//				}
 
 			},
 			cancel() {

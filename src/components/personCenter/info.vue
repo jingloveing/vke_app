@@ -6,7 +6,8 @@
 	 		</div>
 	 		<div class="list_right">
 	 		    <p class="title">商品发货<span class="time">{{message.deliver.create_time}}</span></p>
-	 		    <p class="name">{{message.deliver.title}}<span class="origin" v-show="message.deliver.is_read==0"></span></p>
+	 		    <p class="name" v-show="message.deliver.title!==''">{{message.deliver.title}}<span class="origin" v-show="message.deliver.is_read==0"></span></p>
+	 		    <p class="name" v-show="message.deliver.title==''">暂无消息</p>
 	 		</div>
 	 	</router-link>
 	 	<router-link class="list" :to="{name:'InfoList',query:{type:2}}">
@@ -15,7 +16,8 @@
 	 		</div>
 	 		<div class="list_right">
 	 		    <p class="title">财宝入库<span class="time">{{message.wealth.create_time}}</span></p>
-	 		    <p class="name">{{message.wealth.title}}<span class="origin" v-show="message.wealth.is_read==0"></span></p>
+	 		    <p class="name" v-show="message.wealth.title!==''">{{message.wealth.title}}<span class="origin" v-show="message.wealth.is_read==0"></span></p>
+	 		    <p class="name" v-show="message.wealth.title==''">暂无消息</p>
 	 		</div>
 	 	</router-link>
 	 	<router-link class="list" :to="{name:'InfoList',query:{type:3}}">
@@ -24,8 +26,9 @@
 	 		</div>
 	 		<div class="list_right">
 	 		    <p class="title">官方信件<span class="time">{{message.offical.create_time}}</span></p>
-	 		    <p class="name">{{message.offical.title}}<span class="origin" v-show="message.offical.is_read==0"></span>
+	 		    <p class="name" v-show="message.offical.title !==''">{{message.offical.title}}<span class="origin" v-show="message.offical.is_read==0"></span>
 	 		    </p>
+	 		    <p class="name" v-show="message.offical.title==''">暂无消息</p>
 	 		</div>
 	 	</router-link>
 	 </div>
@@ -41,15 +44,15 @@
     return {
        message:{
        	deliver:{
-       		title:null,
+       		title:'',
        		is_read:null
        	},
        	wealth:{
-       		title:null,
+       		title:'',
        		is_read:null
        	},
        	offical:{
-       		title:null,
+       		title:'',
        		is_read:null
        	}
        }
@@ -74,7 +77,10 @@
   },
   mounted:function(){
   	 
-  }
+  },
+  activated:function(){
+			this.getMessage()
+ }
 }
 </script>
 

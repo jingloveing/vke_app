@@ -21,12 +21,12 @@
         <!--</div>-->
       <!--</div>-->
     <!--</div>-->
-    <x-header :left-options="{backText: ''}" :title="title" class="header">
+    <x-header :left-options="{backText: ''}" :title="title" style="background: #e02e24;">
 		</x-header>
     <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
       <div class="main_goods">
         <ul class="goods">
-          <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :to="{name:'TBDetail',query:{id:goods.id,type:4}}" :key="index">
+          <router-link tag="li" class="goods_list" v-for="(goods,index) in goodsList" :to="{name:'PinDetail',query:{id:goods.id}}" :key="index">
             <img :src="goods.pict_url" alt="" :onerror="defaultImg">
             <div class="content">
               <div class="des" v-text="goods.title">产品介绍产品介绍产品介绍产品介绍产品介绍</div>
@@ -89,7 +89,7 @@
       getGoodsList:function(){
         this.$http({
           method:'get',
-          url:this.http+'/api/tbList',
+          url:this.http+'/api/pddProductList',
           params:{
             type:this.$route.query.id,page:this.pageIndex,limit:this.limit
           }
@@ -172,9 +172,6 @@
   }
 </script>
 <style scoped>
-	.header{
-		background: linear-gradient(left, #ff8e00, #ff5200);
-	}
   /* 分类菜单*/
   li{
     list-style: none;

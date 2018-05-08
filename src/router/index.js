@@ -18,6 +18,7 @@ import Taobao from '@/components/home/taobao'
 import Pinduo from '@/components/Pinduo/Pinduo'
 import Fuli from '@/components/home/fuli'
 import Classify from '@/components/home/classify'
+import PinClassify from '@/components/Pinduo/pinClassify'
 import Search from '@/components/home/search'
 import SearchPage from '@/components/home/searchPage'
 import SearchResult from '@/components/home/searchResult'
@@ -154,6 +155,14 @@ routes: [{
 		path: '/home/assortment/Classify',
 		name:'Classify',
 		component: Classify,
+//		meta:{
+//			keepAlive: true
+//		}
+	},
+	{
+		path: '/home/assortment/PinClassify',
+		name:'PinClassify',
+		component: PinClassify,
 //		meta:{
 //			keepAlive: true
 //		}
@@ -633,8 +642,8 @@ routes: [{
 		name: 'PinDetail',
 		component: PinDetail,
 		meta: {
-			showHeader: true,
-			title:"商品详情"
+//			showHeader: true,
+//			title:"商品详情"
 		}
 	},
 	{
@@ -647,8 +656,8 @@ routes: [{
 		name: 'NewHand',
 		component: NewHand,
 		meta: {
-			showHeader: true,
-			title:"新手秒懂",
+//			showHeader: true,
+//			title:"新手秒懂",
 			keepAlive: true
 		}
 	},

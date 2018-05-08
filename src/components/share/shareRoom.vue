@@ -40,7 +40,7 @@
 							</div>
 							<div class="flex" style="justify-content: space-between;align-items: flex-end;">
 								<div>
-									<div class="f20 income">分享赚：{{list.commission}}元</div>
+									<div class="f20 income">分享赚: {{list.commission}}元</div>
 									<div>
 										<span class="new_num"><span style="font-size: .24rem;">￥</span>{{list.zk_final_price.rmb}}<span style="font-size: .24rem;" v-show="list.zk_final_price.corner!=='00'">.{{list.zk_final_price.corner}}</span></span>
 										<del class="old_num">￥{{list.reserve_price.rmb}}<span v-show="list.reserve_price.corner!=='00'">.{{list.reserve_price.corner}}</span></del>

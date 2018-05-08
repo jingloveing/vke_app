@@ -74,7 +74,7 @@
                                                     <span class="juan_style_left">券</span>
 												<span class="juan_style_right">{{goods.coupon_number}}元</span>
 												</span>
-												 <div class="f20 income" v-show="goods.share_commission!=0">最高分享赚：{{goods.max_commission}}元</div>
+												 <div class="f20 income" v-show="goods.share_commission!=0">最高分享赚: {{goods.max_commission}}元</div>
 												<!--<div class="header_list_num jewel f22">
 												<img src="../../../static/images/personCenter/jewel.png" alt="" style="width: .22rem;height: .22rem;margin: 0 .1rem;" /> 8.86
 											</div>

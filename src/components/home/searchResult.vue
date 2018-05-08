@@ -1,8 +1,8 @@
 <template>
   <div style="background-color: white;">
-   <div style="position: fixed;z-index: 999999;width: 100%;background:#f9f9f9;height: .88rem;">
+   <div class="search-header">
      <div class="goHome" @click="goHome()">
-       <x-icon type="ios-arrow-left" size="30" style="fill: #333;width: .86rem;margin-top: 6px;"></x-icon>
+       <x-icon type="ios-arrow-left" size="30" style="fill: white;width: .86rem;margin-top: 6px;"></x-icon>
      </div>
      
      <div @click="onFocus()">
@@ -12,7 +12,7 @@
                ref="search"  style="width: 90%;margin-left: 10%;"></search>
      </div>
    </div>
-    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: .88rem;">
+    <scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
     <div id="results" style="overflow: hidden;">
       <tab :line-width=0 active-color='#9a7bff' v-model="index" custom-bar-width="1.2rem" bar-active-color="#9a7bff">
         <tab-item class="vux-center" v-for="(item, index) in list" @on-item-click="change(index)" :key="index">{{item}}
@@ -192,9 +192,11 @@ params:{keywords:this.keywords,sort:this.sort,page:this.pageIndex,limit:this.lim
       	if(type==2){
       		//品牌店铺
 		this.$router.push({name:'BrandDetail',query:{id:id,type:type,store_id:store_id}})
-      	}else{
+      	}else if(type==3){
       		//淘宝
       		this.$router.push({name:'TBDetail',query:{id:id,type:type}})
+      	}else if(type==5){
+      		this.$router.push({name:'PinDetail',query:{id:id}})
       	}
       }
     },
@@ -206,6 +208,12 @@ params:{keywords:this.keywords,sort:this.sort,page:this.pageIndex,limit:this.lim
   }
 </script>
 <style scoped>
+	.search-header{
+		padding-top: .4rem;
+		position: fixed;z-index: 999999;width: 100%;
+		height: .88rem;
+		background: linear-gradient(left, #8721b5, #db3283);
+	}
   .hot_list{
     margin: 0 .3rem;
   }
@@ -276,7 +284,7 @@ params:{keywords:this.keywords,sort:this.sort,page:this.pageIndex,limit:this.lim
     margin-right: .15rem;
   }
   .goHome{
-    background-color: #f9f9f9;height: 44px;width: 10%;position: absolute;
+    height: 44px;width: 10%;position: absolute;
     box-sizing: border-box;
   }
   .goHome>img{
@@ -297,7 +305,7 @@ params:{keywords:this.keywords,sort:this.sort,page:this.pageIndex,limit:this.lim
 </style>
 <style>
 	.weui-search-bar{
-		background-color: #f9f9f9!important;
+		background-color: rgba(255,255,255,0)!important;
 	}
 	.weui-search-bar:before{
 		border-top: none!important;
@@ -309,6 +317,9 @@ params:{keywords:this.keywords,sort:this.sort,page:this.pageIndex,limit:this.lim
 		border-radius: .5rem!important;
 	}
 	.weui-search-bar__form{
-		background: #f9f9f9!important;
+		background: rgba(255,255,255,0)!important;
+	}
+	.weui-search-bar__cancel-btn{
+		color: white!important;
 	}
 </style>

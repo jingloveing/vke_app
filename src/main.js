@@ -30,6 +30,7 @@ FastClick.attach(document.body)
 
 Vue.config.productionTip = false
 Vue.prototype.http='http://xlk.dxvke.com'
+//Vue.prototype.http='http://192.168.1.101'
 /* eslint-disable no-new */
 new Vue({
 	router,
@@ -37,7 +38,7 @@ new Vue({
 	created() {
 		var self = this
 		document.addEventListener("plusready", function() {
-			plus.navigator.setStatusBarBackground("#9A7BFF");
+//			plus.navigator.setStatusBarBackground("#9A7BFF");
 			// 扩展API加载完毕，现在可以正常调用扩展API
 			plus.oauth.getServices(function(services) {
 				window.auths = services;

@@ -21,7 +21,7 @@
 						<span class="juan_style_right">{{goodsDetail.coupon_number}}元</span>
 						</span>
 					</div>
-					<span class="f28" style="margin:0 0 .08rem .3rem;color: #ff5200;font-style: oblique;" v-show="goodsDetail.share_commission!=0">分享预估赚：{{goodsDetail.share_commission}}元</span>
+					<span class="f28" style="margin:0 0 .08rem .3rem;color: #ff5200;font-style: oblique;" v-show="goodsDetail.share_commission!=0">分享预估赚: {{goodsDetail.share_commission}}元</span>
 
 				</div>
 				<div class="flex">
@@ -40,8 +40,8 @@
 			</div>
 
 		</div>
-		<cell title="商品图文详情(点击查看)" is-link :border-intent="false" :arrow-direction="showDetail ? 'up' : 'down'" @click.native="showDetail = !showDetail" class="pic_detail f28 c3" style="height: .88rem; box-sizing: border-box;"></cell>
-		<div class="slide" :class="showDetail?'animate':''" style="font-size: 0;">
+		<div class="slide">
+			<p class="f28 c3" style="padding: 10px 15px;">商品图文详情(点击查看)</p>
 			<img :src="img" alt="" v-for="img in goodsDetail.small_images" :onerror="defaultImg">
 		</div>
 		<div style="height: .98rem;"></div>
@@ -107,7 +107,7 @@
 		},
 		data() {
 			return {
-				showDetail: false,
+//				showDetail: false,
 				showActionsheet: true,
 				collect: true,
 				showToast: false,
@@ -368,12 +368,10 @@
 	}
 	
 	.slide {
-		overflow: hidden;
-		max-height: 0;
-		transition: max-height .5s cubic-bezier(0, 1, 0, 1) -.1s;
 		background-color: white;
+		font-size: 0;
+		margin-top: .16rem;
 	}
-	
 	.slide img {
 		width: 100%;
 	}

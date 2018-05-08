@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<x-header :left-options="{backText: ''}" :title="title" style="background-color: #f9f9f9;">
+		<x-header :left-options="{backText: ''}" :title="title" class="header">
 		</x-header>
 		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
 			<div style="width: 100%;">
@@ -30,7 +30,7 @@
                       <span class="juan_style_left">券</span>
                       <span class="juan_style_right">{{goodList1.coupon_number}}元</span>
                     </span>
-               <div class="f20 income" v-show="goodList1.share_commission!=0">最高分享赚：{{goodList1.max_commission}}元</div>
+               <div class="f20 income" v-show="goodList1.share_commission!=0">最高分享赚: {{goodList1.max_commission}}元</div>
               </div>
 								<p class="des_b" style="position: relative;margin-top: .1rem;">
 									<span class="price"><span style="font-size: .2rem;">￥</span>{{goodList1.zk_final_price.rmb}}<span v-show="goodList1.zk_final_price.corner!=='00'" style="font-size: .2rem;">.{{goodList1.zk_final_price.corner}}</span></span>
@@ -187,6 +187,9 @@
 <style lang="less" scoped>
 	@import '~vux/src/styles/1px.less';
 	@import '~vux/src/styles/center.less';
+	.header{
+		background: linear-gradient(left, #ff8e00, #ff5200);
+	}
 	ul {
 		font-size: 0;
 		overflow: hidden;

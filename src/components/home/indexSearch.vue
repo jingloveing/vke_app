@@ -142,12 +142,14 @@
 			for(var i = 0; i < tab.length; i++) {
 				tab[i].index = i
 				tab[i].onclick = function() {
-					if(self.index==0){
+					if(this.index==0){
 						self.key=''
 				        self.type=3
-					}else if(self.index==1){
+				        console.log(self.type)
+					}else if(this.index==1){
 						self.key=''
-				        self.type=2
+				        self.type=5
+				        console.log(self.type)
 					}
 					for(var j = 0; j < tab.length; j++) {
 						tab[j].classList.remove('active')

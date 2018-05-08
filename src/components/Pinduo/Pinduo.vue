@@ -9,7 +9,7 @@
 		</x-header>-->
 		<div class="nav-header">
 				<x-icon type="ios-arrow-left" size="30" style="fill: white;width: .86rem;" @click="goback()"></x-icon>
-				<router-link class="serach_p" :to="{path:'/home/assortment/searchPage',query:{type:4}}">
+				<router-link class="serach_p" :to="{path:'/home/assortment/searchPage',query:{type:5}}">
 					<div class="search">
 						<img src="../../../static/images/search_icon.png" alt="" class="search_icon" />
 						<span>输入商品名/关键字 领券实惠购</span>
@@ -19,11 +19,11 @@
 					<img src="../../../static/images/pinduo_logo.png" alt="" style="width: .7rem; height: .5rem;"/>
 				</router-link>
 			</div>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top:.88rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top:1.28rem;">
 			<swiper auto loop :list="demoList" style="width:100%;" height="2.6rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false"></swiper>
 			<div>
 				<ul class="nav-small">
-					<router-link tag="li" v-for="(type,index) in typeList" :to="{name:'Classify',query:{id:type.id,title:type.cate_name}}" :key="index">
+					<router-link tag="li" v-for="(type,index) in typeList" :to="{name:'PinClassify',query:{id:type.id,title:type.cate_name}}" :key="index">
 						<img :src="type.image_url" :onerror="defaultImg">
 						<span>{{type.cate_name}}</span>
 					</router-link>
@@ -32,7 +32,7 @@
 			<div class="main">
 				<div class="main_goods">
 					<ul class="goods">
-						<router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'PinDetail',query:{id:goods.id,type:4}}" :key="index">
+						<router-link tag="li" v-for="(goods,index) in goodsList" class="goods_list" :to="{name:'PinDetail',query:{id:goods.id}}" :key="index">
 							<img :src="goods.pict_url" alt="" :onerror="defaultImg" class="goods-pic">
 							<div class="content">
 								<div class="des">{{goods.title}}</div>
@@ -41,7 +41,7 @@
                       <span class="juan_style_left">券</span>
 									<span class="juan_style_right">{{goods.coupon_number}}元</span>
 									</span>	
-									<div class="f20 income" v-show="goods.share_commission!=0">最高分享赚：{{goods.max_commission}}元</div>
+									<div class="f20 income" v-show="goods.share_commission!=0">最高分享赚: {{goods.max_commission}}元</div>
 								</div>
 								<div class="des_b">
 									<span class="price"><span style="font-size: .2rem;">￥</span>{{goods.zk_final_price.rmb}}<span style="font-size: .20rem;" v-show="goods.zk_final_price.corner!=='00'">.{{goods.zk_final_price.corner}}</span></span>
@@ -84,7 +84,7 @@
 			getBannerList: function() {
 				this.$http({
 					method: 'get',
-					url: this.http+'/api/tbBanner'
+					url: this.http+'/api/pddBannerList'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const imgList = res.data.data
@@ -102,7 +102,7 @@
 			getTypeList: function() {
 				this.$http({
 					method: 'get',
-					url: this.http+'/api/tbCate'
+					url: this.http+'/api/getPddCateType'
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.typeList = res.data.data
@@ -116,7 +116,7 @@
 				const self = this
 				this.$http({
 					method: 'get',
-					url: this.http+'/api/tbList',
+					url: this.http+'/api/pddProductList',
 					params: {
 						page: this.pageIndex,
 						limit: this.limit,
@@ -197,7 +197,7 @@
 		
 	}
 	.nav-header {
-		padding-top: .0rem;
+		padding-top: .4rem;
 		width: 100%;
 		position: fixed;
 		top: 0;

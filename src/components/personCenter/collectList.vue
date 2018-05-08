@@ -12,7 +12,8 @@
 							<p class="title" v-text="list.collect_name">产品标题产品标题</p>
 							<div>
 								<div style="margin-bottom: .1rem;">
-									<span class="type taobao">淘宝</span>
+									<span class="type taobao" v-show="list.type==4">淘宝</span>
+									<span class="type pin" v-show="list.type==5">拼多多</span>
 									<!--<span class="type JD">京东</span>
                 <span class="type mogujie">蘑菇街</span>
                 <span class="type vipshop">唯品会</span>
@@ -39,6 +40,7 @@
 						<div class="brand-main">
 							<div class="brand-main-left">
 									<p class="f32 c3" style="width:5rem;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" v-text="list.collect_name"></p>
+									<p class="f24 c6">商品{{list.product_count}}件</p>
 									<!--<span class="type taobao">淘宝</span>-->
 									<!--<span class="type JD">京东</span>
                 <span class="type mogujie">蘑菇街</span>
@@ -188,6 +190,9 @@
 					//跳转到店铺商品详情
 					this.$router.push({name:'BrandDetail',query:{id:item.collect_id,store_id:item.store_id}})
 					
+				}else if(item.type==5){
+					//跳转到拼多多商品详情
+					this.$router.push({name:'PinDetail',query:{id:item.collect_id}})
 				}
 			},
 			toStore(item){
@@ -281,7 +286,10 @@
 		color: #ff8000;
 		border: .01rem solid #ff8000;
 	}
-	
+	.pin{
+		color: #e02e24;
+		border: .01rem solid #e02e24;
+	}
 	.JD {
 		color: #f73515;
 		border: .01rem solid #f73515;

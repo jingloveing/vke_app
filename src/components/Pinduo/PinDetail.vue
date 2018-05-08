@@ -1,11 +1,14 @@
 <template>
 	<div v-show="token">
-		<div style="position: fixed;z-index: 99999;right: 0;top: .0rem;height: .88rem;line-height: .88rem;" @click="show=!show">
-			<img src="../../../static/images/share_black_icon.png" alt="" style="width: .4rem;height: .4rem;vertical-align: middle;padding: .1rem .26rem;" />
-		</div>
 		<div>
 			<div class="pic">
-				<swiper auto loop :list="goodsDetail.pict_url" style="width:100%;" height="7.5rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" :onerror="defaultImg"></swiper>
+				<div @click="goback()" style="position: fixed;left: .2rem;top: .4rem;z-index: 99999;">
+					<img src="../../../static/images/back_icon.png" alt="" style="width: .6rem;height:.6rem;" />
+				</div>
+				<swiper auto loop :list="goodsDetail.small_images" style="width:100%;" height="7.5rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" :onerror="defaultImg"></swiper>
+				<div style="position: fixed;z-index: 99999;right: .06rem;top: .4rem;" @click="show=!show">
+					<img src="../../../static/images/share2_icon.png" alt="" style="width: .74rem;height: .68rem;vertical-align: middle;" />
+				</div>
 			</div>
 			<div class="detail">
 				<p class="name">{{goodsDetail.product_name}}</p>
@@ -17,7 +20,7 @@
 						<span class="juan_style_right">{{goodsDetail.coupon_number}}元</span>
 						</span>
 					</div>
-					<span class="f28" style="margin:0 0 .08rem .3rem;color: #E02E24;font-style: oblique;" v-show="goodsDetail.share_commission!=0">分享预估赚：{{goodsDetail.share_commission}}元</span>
+					<span class="f28" style="margin:0 0 .08rem .3rem;color: #E02E24;font-style: oblique;" v-show="goodsDetail.share_commission!=0">分享预估赚: {{goodsDetail.share_commission}}元</span>
 				</div>
 				<div class="flex">
 					<span class="old_price">价格<del>￥{{goodsDetail.market_price.rmb}}<span
@@ -33,11 +36,15 @@
 				<span class="f24 c9">立即申请</span>
 				<div class="r-arrow"></div>
 			</div>
-			
+
 		</div>
-		<cell title="商品图文详情(点击查看)" is-link :border-intent="false" :arrow-direction="showDetail ? 'up' : 'down'" @click.native="showDetail = !showDetail" class="pic_detail f28 c3" style="height: .88rem; box-sizing: border-box;"></cell>
+		<!--<cell title="商品图文详情(点击查看)" is-link :border-intent="false" :arrow-direction="showDetail ? 'up' : 'down'" @click.native="showDetail = !showDetail" class="pic_detail f28 c3" style="height: .88rem; box-sizing: border-box;"></cell>
 		<div class="slide" :class="showDetail?'animate':''" style="font-size: 0;">
 			<img :src="img" alt="" v-for="img in goodsDetail.small_images" :onerror="defaultImg">
+		</div>-->
+		<div style="background: white;padding: 10px 15px;margin-top: .16rem;">
+			<p class="f28 c3">商品介绍</p>
+			<p class="f26 c6" style="margin: .1rem 0;">{{goodsDetail.item_description}}</p>
 		</div>
 		<div style="height: .98rem;"></div>
 		<div class="footer">
@@ -113,7 +120,6 @@
 				show: false,
 				goodsDetail: {
 					product_name: '',
-					pict_url: [],
 					small_images: [],
 					reserve_price: {
 						rmb: '',
@@ -138,7 +144,7 @@
 					url: this.http + '/api/productInfo',
 					params: {
 						id: this.$route.query.id,
-						type: this.$route.query.type
+						type: 5,
 					}
 				}).then((res) => {
 					if(res.data.code == '200') {
@@ -152,7 +158,7 @@
 			toCollect() {
 				var data = {
 					id: this.$route.query.id,
-					type: 4
+					type: 5
 				}
 				console.log(JSON.stringify(data))
 				this.$http.post(this.http + '/api/doCollect', data).then((res) => {
@@ -179,23 +185,15 @@
 				location.href = 'http://www.dxvke.com/goodsDetail/?id=' + id
 			},
 			tobuy() {
-				if(plus.os.name == "Android") {
-					var self = this
-					plus.runtime.openURL(self.goodsDetail.click_url, function(err) {
-
-					}, "com.taobao.taobao");
-				} else if(plus.os.name == "iOS") {
-					var self = this
-					plus.runtime.launchApplication({
-						action: self.goodsDetail.click_url.replace("https://", "taobao://")
-					}, function(e) {
+				var self = this
+				plus.runtime.openURL(self.goodsDetail.click_url, function(err) {
 
 					});
-				}
-
 			},
 			toquan() {
-				this.$router.push({path:'/upgrade'})
+				this.$router.push({
+					path: '/upgrade'
+				})
 			},
 			//分享操作
 			shareAction(id, ex) {
@@ -204,7 +202,7 @@
 				var self = this
 				var s = window.shares[id]
 				self.$http.post(this.http + '/api/getShareImage', {
-					type: 4,
+					type: 5,
 					id: self.$route.query.id,
 				}).then((res) => {
 					if(res.data.code == '200') {
@@ -268,9 +266,12 @@
 				document.body.style.overflow = 'scroll';
 				this.show1 = false
 			},
+			goback() {
+				history.back(-1);
+			},
 		},
 		created: function() {
-			//			this.getDetail()
+//						this.getDetail()
 			this.token = plus.storage.getItem("token")
 			if(this.token) {
 				this.getDetail()
@@ -566,14 +567,22 @@
 		-webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
 		transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
 	}
-	.juan_style_left{
+	
+	.juan_style_left {
 		background-color: #E02E24;
 	}
-	.juan_style_right{
+	
+	.juan_style_right {
 		color: #E02E24;
 	}
-	.juan_style{
+	
+	.juan_style {
 		border: .02rem solid #E02E24;
-        margin-left: .2rem;
+		margin-left: .2rem;
+	}
+	.share-btn {
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 	}
 </style>
