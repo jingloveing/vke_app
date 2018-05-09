@@ -205,11 +205,11 @@
 	}
 	
 	.searchDiv>img {
-		width: .4rem;
-		height: .4rem;
+		width: .28rem;
+		height: .28rem;
 		vertical-align: middle;
 		position: absolute;
-		top: .4rem;
+		top: .45rem;
 		left: .46rem;
 	}
 	
@@ -247,7 +247,7 @@
 		align-items: center;
 	}
 	.nav .active{
-		border-bottom: .02rem solid white;
+		border-bottom: .03rem solid white;
 		color: white;
 	}
 </style>

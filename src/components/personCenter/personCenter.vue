@@ -212,12 +212,15 @@
 					}
 				}, (err) => {
 //					console.log(JSON.stringify(err))
-					this.userInfo = JSON.parse(plus.storage.getItem('userInfo'))
+                    plus.nativeUI.toast("加载失败");
+//					this.userInfo = JSON.parse(plus.storage.getItem('userInfo'))
 				})
 			},
 			//获取登录类型
 			getLoginType: function() {
-				this.$http.get(this.http + '/api/getLoginType', {}).then((res) => {
+				this.$http.get(this.http + '/api/getLoginType', {
+					params:{version:'1.5.2'}
+					}).then((res) => {
 					if(res.data.code == '200') {
 						this.login_type=res.data.data.login_type
 					} else{

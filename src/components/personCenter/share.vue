@@ -12,8 +12,8 @@
 				</swiper>
 			</div>
 			<div style="display: flex;justify-content: space-between;align-items: center;margin: .64rem .98rem 0;">
-				<x-button class="share-btn" @click.native="show=!show">分享</x-button>
-				<x-button class="share-btn" @click.native="save()">保存图片</x-button>
+				<x-button class="share-btn" @click.native="show=!show" style="border: none;">分享</x-button>
+				<x-button class="share-btn" @click.native="save()" style="border: none;">保存图片</x-button>
 			</div>
 		</div>
 		<div style="width: 100%;height: 100vh;background:black;opacity: .5;position: fixed;top: 0;" v-show="show" @click="show=!show">

@@ -21,7 +21,7 @@
 						<span class="juan_style_right">{{goodsDetail.coupon_number}}元</span>
 						</span>
 					</div>
-					<span class="f28" style="margin:0 0 .08rem .3rem;color: #E02E24;font-style: oblique;" v-show="goodsDetail.share_commission!=0">分享预估赚: {{goodsDetail.share_commission}}元</span>
+					<span class="f28" style="margin:0 0 .08rem .3rem;color: #ff5200;font-style: oblique;" v-show="goodsDetail.share_commission!=0">分享预估赚: {{goodsDetail.share_commission}}元</span>
 				</div>
 				<div style="margin-left: .2rem;display: inline-block;">
 
@@ -46,7 +46,7 @@
 			<img :src="img" alt="" v-for="img in goodsDetail.small_images" :onerror="defaultImg">
 		</div>-->
 		<div class="slide">
-			<p class="f28 c3" style="padding: 10px 15px;">商品图文详情(点击查看)</p>
+			<p class="f28 c3" style="padding: 10px 15px;">商品图文详情</p>
 			<img :src="img" alt="" v-for="img in goodsDetail.small_images" :onerror="defaultImg">
 		</div>
 		<div style="height: .98rem;"></div>

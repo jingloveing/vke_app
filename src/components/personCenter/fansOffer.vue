@@ -1,8 +1,7 @@
 <template>
 	<div>
 		<x-header :left-options="{backText: ''}" title="帮众贡献" class="header"></x-header>
-		<div style="height: 1.28rem;"></div>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
+		<div style="position: fixed;top: 1.28rem;z-index: 9999999;width: 100%;background:white;">
 			<div class="header-nav">
 				<p class="f24">帮众贡献财宝总值</p>
 				<p style="font-size: .52rem;display: flex;justify-content: center;align-items: center;">{{totalAcer.acer}}<span style="font-size: .4rem;">
@@ -30,6 +29,9 @@
 				</div>
 			</div>
 
+		</div>
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="padding-top: 4.84rem;box-sizing: border-box;">
+			
 			<div class="list" v-for="(item,index) in dataList" :key="index">
 				<div>
 					<span>{{item.update_time}}</span>
@@ -137,11 +139,13 @@
 					} else {
 						this.noData = true
 						this.$refs.myscroller.finishInfinite(2);
+						plus.nativeUI.toast("加载失败");
 					}
 				}, (err) => {
 					this.noData = true
 					this.$refs.myscroller.finishInfinite(2);
 					console.log(err)
+					plus.nativeUI.toast("加载失败");
 				})
 			},
 			select(item,index) {

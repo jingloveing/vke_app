@@ -41,7 +41,7 @@
 
 		</div>
 		<div class="slide">
-			<p class="f28 c3" style="padding: 10px 15px;">商品图文详情(点击查看)</p>
+			<p class="f28 c3" style="padding: 10px 15px;">商品图文详情</p>
 			<img :src="img" alt="" v-for="img in goodsDetail.small_images" :onerror="defaultImg">
 		</div>
 		<div style="height: .98rem;"></div>

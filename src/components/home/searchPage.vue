@@ -161,10 +161,12 @@ ul li{
 		/* Firefox 3.6 - 15 */
 		background: linear-gradient(left, #8721b5, #db3283);
 		/* 标准的语法 */
-		padding: .5rem .1rem .1rem;font-size: 0;
+		padding: .5rem .1rem .1rem .28rem;font-size: 0;
+		height: 1.28rem;
+    box-sizing: border-box;
   }
   .searchDiv>img{
-    width: .4rem;height: .4rem;vertical-align: middle;position: absolute;top: .62rem;left: .2rem;
+    width: .28rem;height: .28rem;vertical-align: middle;position: absolute;top: .66rem;left: .5rem;
   }
   .searchDiv>form{
     width: 80%;display: inline-block;margin-right: .6rem;

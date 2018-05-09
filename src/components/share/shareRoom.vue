@@ -16,7 +16,7 @@
 				<div class="searchDiv" style="background: white;">
 					<img src="../../../static/images/personCenter/search_img.png" alt="">
 					<form action="">
-						<input type="text" placeholder="输入商品名称/关键字" v-model="keywords">
+						<input type="text" placeholder="输入商品名称/关键字" v-model="keywords" class="input-key">
 						<span class="to-search f24 flex" @click="toSearch()">搜索</span>
 					</form>
 
@@ -582,10 +582,13 @@
 			}
 		},
 		mounted: function() {
-			//			this.offsetTop1 = document.getElementById('tip1').offsetTop
-			//			this.offsetTop2 = document.getElementById('tip2').offsetTop
-			//			console.log(this.offsetTop1)
-			//			window.addEventListener('scroll', this.handleScroll)
+			var oForm = document.getElementsByTagName("form")[0];
+				var self = this
+				oForm.onsubmit = function(e) {
+					e.preventDefault();
+					     document.getElementsByClassName('input-key')[0].blur()
+						self.toSearch()
+				};
 			var tab = document.getElementsByClassName('tab1-tab')
 			var tab1 = document.getElementById('tab1')
 			for(var i = 0; i < tab.length; i++) {

@@ -32,6 +32,32 @@ Vue.config.productionTip = false
 Vue.prototype.http='http://xlk.dxvke.com'
 //Vue.prototype.http='http://192.168.1.101'
 /* eslint-disable no-new */
+
+/******************拦截器设置请参考这部分(开始)******************/
+Vue.http.interceptors.push((request, next) => {
+	//登录成功后将后台返回的TOKEN在本地存下来,每次请求从sessionStorage中拿到存储的TOKEN值  
+		let token = localStorage.getItem("token")
+//	       let token='eyJ0eXAiOiJKV1QiLCJhbGciOiJTSEEyNTYifQ==.eyJpc3MiOiJKV1QgRlJFRURPTSIsImlhdCI6MTUxNjg2Mzg3NiwiYXVkIjoiTEoiLCJqdGkiOm51bGwsImRhdGEiOnsidXNlcl9pZCI6MSwidXNlcl9uYW1lIjoiZnJlZWRvbSJ9fQ==.2e20945c06282cc6edd693dac3c3b6a5746269cccdac9f6465b7dc3296325076'
+	if(token) {
+		//如果请求时TOKEN存在,就为每次请求的headers中设置好TOKEN,后台根据headers中的TOKEN判断是否放行      
+		request.headers.set("token", token);
+		request.headers.set("version", '1.5.2');
+	}
+	next((response) => {
+		if(response.status === 401) {
+			// 当 Token 已经失效时，清空所有保存在 localStorage 的数据
+			plus.storage.removeItem("token");
+			localStorage.removeItem("token")
+			plus.storage.removeItem("userInfo");
+		}
+		return response;
+	});
+
+});
+/******************拦截器设置请参考这部分(结束)******************/
+
+
+
 new Vue({
 	router,
 	render: h => h(App),
@@ -126,23 +152,3 @@ new Vue({
 	}
 }).$mount('#app-box')
 
-/******************拦截器设置请参考这部分(开始)******************/
-Vue.http.interceptors.push((request, next) => {
-	//登录成功后将后台返回的TOKEN在本地存下来,每次请求从sessionStorage中拿到存储的TOKEN值  
-	let token = plus.storage.getItem("token")
-//	       let token='eyJ0eXAiOiJKV1QiLCJhbGciOiJTSEEyNTYifQ==.eyJpc3MiOiJKV1QgRlJFRURPTSIsImlhdCI6MTUxNjg2Mzg3NiwiYXVkIjoiTEoiLCJqdGkiOm51bGwsImRhdGEiOnsidXNlcl9pZCI6MSwidXNlcl9uYW1lIjoiZnJlZWRvbSJ9fQ==.2e20945c06282cc6edd693dac3c3b6a5746269cccdac9f6465b7dc3296325076'
-	if(token) {
-		//如果请求时TOKEN存在,就为每次请求的headers中设置好TOKEN,后台根据headers中的TOKEN判断是否放行      
-		request.headers.set("token", token);
-	}
-	next((response) => {
-		if(response.status === 400 || response.status === 401) {
-			// 当 Token 已经失效时，清空所有保存在 localStorage 的数据
-			plus.storage.removeItem("token");
-			plus.storage.removeItem("userInfo");
-		}
-		return response;
-	});
-
-});
-/******************拦截器设置请参考这部分(结束)******************/

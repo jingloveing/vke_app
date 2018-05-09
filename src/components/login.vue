@@ -60,6 +60,7 @@
 										type: 'success',
 									})
 									plus.storage.setItem("token", res.data.data.token);
+									localStorage.setItem("token", res.data.data.token)
 									plus.storage.setItem("unMessage", res.data.data.unMessage);
 									self.$router.push({
 										name: 'PersonCenter'
@@ -100,6 +101,7 @@
 								type: 'success',
 							})
 							plus.storage.setItem("token", res.data.data.token);
+							localStorage.setItem("token", res.data.data.token)
 							plus.storage.setItem("unMessage", res.data.data.unMessage);
 							self.$router.push({
 								name: 'PersonCenter'

@@ -188,7 +188,7 @@
 				var self = this
 				plus.runtime.openURL(self.goodsDetail.click_url, function(err) {
 
-					});
+				});
 			},
 			toquan() {
 				this.$router.push({
@@ -271,7 +271,7 @@
 			},
 		},
 		created: function() {
-//						this.getDetail()
+			//						this.getDetail()
 			this.token = plus.storage.getItem("token")
 			if(this.token) {
 				this.getDetail()
@@ -580,6 +580,7 @@
 		border: .02rem solid #E02E24;
 		margin-left: .2rem;
 	}
+	
 	.share-btn {
 		flex-direction: column;
 		align-items: center;

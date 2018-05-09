@@ -94,10 +94,10 @@ ul{
     color:white!important;
 }
 .vux-header .vux-header-left .left-arrow:before{
-	border: 1px solid white;
-	border-width: 1px 0 0 1px;
-	width: .24rem;
-	height: .24rem;
+	border: 2px solid white;
+	border-width: 2px 0 0 2px;
+	width: .22rem;
+	height: .22rem;
 	top: .56rem;
 	left: .14rem;
 }
@@ -165,8 +165,8 @@ ul{
     color: white!important;
 }
 .header.vux-header .vux-header-left .left-arrow:before{
-	border: 1px solid white;
-	border-width: 1px 0 0 1px;
+	border: 2px solid white;
+	border-width: 2px 0 0 2px;
 }
 
 

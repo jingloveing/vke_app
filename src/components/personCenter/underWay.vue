@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<x-header :left-options="{backText: ''}" title="镖局押运" class="header"></x-header>
-		<div style="height: 1.28rem;"></div>
-		<div class="nav">
+		<div style="position: fixed;top: 1.28rem;z-index: 9999999;width: 100%;">
+			<div class="nav">
 			<p class="f24">押运财宝总值</p>
 			<p style="font-size: .52rem;display: flex;justify-content: center;align-items: center;">{{data.acer}}<span style="font-size: .4rem;" v-show="data.type"><span v-show="data.type==1">铜币</span>
 				<span v-show="data.type==2">银</span>
@@ -15,7 +15,8 @@
 		<tab :line-width=2 active-color='#9a7bff' v-model="index" custom-bar-width="1rem">
 			<tab-item class="vux-center" v-for="(item, index) in list2" @on-item-click="change(item,index)" :key="index">{{item}}</tab-item>
 		</tab>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 4.84rem;">
+		</div>
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="padding-top: 4.84rem;box-sizing: border-box;">
 			<div class="tab-swiper" v-show="index==0">
 				<div class="title">
 					<span class="f30 c3">帮众贡献押运中财宝总计</span>
@@ -199,9 +200,12 @@
 				}).then((res) => {
 					if(res.data.code == '200') {
 						this.data = res.data.data
+					}else{
+						plus.nativeUI.toast("加载失败");
 					}
 				}, (err) => {
 					console.log(err)
+					plus.nativeUI.toast("加载失败");
 				})
 			},
 			//      获取押运列表
@@ -227,11 +231,13 @@
 					} else {
 						this.noData = true
 						this.$refs.myscroller.finishInfinite(2);
+						plus.nativeUI.toast("加载失败");
 					}
 				}, (err) => {
 					this.noData = true
 					this.$refs.myscroller.finishInfinite(2);
 					console.log(err)
+					plus.nativeUI.toast("加载失败");
 				})
 			},
 			infinite(done) {
@@ -292,6 +298,7 @@
 		color: white;
 		padding-top: .7rem;
 		box-sizing: border-box;
+		
 	}
 	.header{
 		padding-top: .4rem;

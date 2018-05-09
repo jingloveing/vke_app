@@ -163,7 +163,7 @@
 	.banner-btn {
 		position: absolute;
 		font-size: .24rem;
-		color: rgba(255, 255, 255, .5);
+		color: rgba(255, 255, 255, .7);
 		right: 0rem;
 		top: .4rem;
 		padding: .22rem .26rem;

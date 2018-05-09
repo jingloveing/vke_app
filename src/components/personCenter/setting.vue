@@ -40,8 +40,10 @@
 		},
 		methods: {
 			clear() {
+				var token=localStorage.getItem("token")
 				plus.cache.clear(function() {
 					plus.nativeUI.toast("缓存清理成功");
+					localStorage.setItem("token",token)
 				});
 			},
 			// 注销所有登录授权认证服务
@@ -53,6 +55,7 @@
 						slef.$router.go(-1)
 						plus.storage.removeItem('token')
 						plus.storage.removeItem('userInfo')
+						localStorage.removeItem("token")
 					}, function(e) {
 						slef.$vux.toast.show({
 							text: "退出失败",
@@ -64,6 +67,7 @@
 					slef.$router.go(-1)
 					plus.storage.removeItem('token')
 					plus.storage.removeItem('userInfo')
+					localStorage.removeItem("token")
 				}
 
 			}

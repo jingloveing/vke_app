@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<tab :line-width=2 active-color='#9a7bff' v-model="index" custom-bar-width="1.5rem">
+		<tab :line-width=2 active-color='#9a7bff' v-model="index" custom-bar-width="1.5rem" style="position: fixed;top: 1.28rem;width: 100%;background: white;z-index: 9999999;">
 			<tab-item class="vux-center" v-for="(item, index) in list2" :key="index" @on-item-click="change(item,index)">{{item}}</tab-item>
 		</tab>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 2.16rem;">
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="padding-top: 2.16rem;box-sizing: border-box;">
 		<div class="tab-swiper" v-show="index==0">
 			<p class="tip f28 c9">目前您的消费总计为{{total_pay}}元</p>
 			<div class="list" v-for="(item,index) in dataList" :key="index">
@@ -13,6 +13,7 @@
 					<span v-show="item.bill==3">蘑菇街</span>
 					<span v-show="item.bill==4">唯品会</span>
 					<span v-show="item.bill==5">享利客商城</span>
+					<span v-show="item.bill==6">拼多多</span>
 					<span><span class="f24">￥</span>{{item.money}}</span></h5>
 				<p class="f24 c9">{{item.create_time}}</p>
 			</div>
@@ -26,6 +27,7 @@
 					<span v-show="item.bill==3">蘑菇街</span>
 					<span v-show="item.bill==4">唯品会</span>
 					<span v-show="item.bill==5">享利客商城</span>
+					<span v-show="item.bill==6">拼多多</span>
 						<span><span class="f24">￥</span>{{item.money}}</span></h5>
 					<p class="f24 c9">{{item.create_time}}</p>
 				</div>
@@ -70,6 +72,7 @@
 						if(res.data.data.list.length == 0) {
 							this.noData = true
 							this.$refs.myscroller.finishInfinite(2);
+							this.total_pay=res.data.data.total_pay
 						} else {
 							this.dataList = this.dataList.concat(res.data.data.list)
 							this.total_pay=res.data.data.total_pay
@@ -79,13 +82,14 @@
 						}
 					}else{
 						this.noData = true
-							this.$refs.myscroller.finishInfinite(2);
+						this.$refs.myscroller.finishInfinite(2);
+						plus.nativeUI.toast("加载失败");
 					}
 				}, (err) => {
 					this.showLoading = false
 					this.noData = true
-							this.$refs.myscroller.finishInfinite(2);
-					console.log(err)
+					this.$refs.myscroller.finishInfinite(2);
+					plus.nativeUI.toast("加载失败");
 				})
 			},
 			infinite(done) {
@@ -117,7 +121,7 @@
 				this.showLoading = true
 				this.dataList = []
 				this.page=1
-				this.order=index+1
+				this.index=index
 				this.getBillList()
 			},
 		},

@@ -243,7 +243,7 @@
 			getUpdate() {
 				this.$http.get(this.http + '/api/checkAppUpgrade', {
 					params: {
-						version: '1.5.1'
+						version: '1.5.2'
 					}
 				}).then((res) => {
 					if(res.data.code == '200') {
@@ -383,7 +383,7 @@
 			this.getNews()
 			this.getMerchantList()
 			this.unMessage = plus.storage.getItem("unMessage")
-		}
+		},
 	}
 </script>
 <style scoped>

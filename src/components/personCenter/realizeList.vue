@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="margin-top: 1.28rem;">
-		<div style="position: relative;">
+		<div style="position: fixed;top: 1.28rem;width: 100%;background: white;z-index: 999999;">
+			<div style="position: relative;">
 			<div class="select">
 				<div style="display: flex;align-items: center;" v-on:click="showMenu=!showMenu">
 					<span class="f32 c3">{{typeModel}}</span><img src="../../../static/images/down.png" alt="" class="down_icon" />
@@ -9,13 +9,17 @@
 				<!--<div @click="selectDate()" style="line-height: .92rem;width: .5rem;padding-right: .26rem;text-align: right;vertical-align: middle;">
 					<img src="../../../static/images/personCenter/date_icon.png" alt="" class="date" />
 				</div>-->
-			</div>
-			<div class="down-menu" v-show="showMenu">
+				<div class="down-menu" v-show="showMenu">
 				<ul>
 					<li v-for="(item,index) in list" @click="select(item,index)" :key="index">{{item}}</li>
 				</ul>
 			</div>
+			</div>
+			</div>
 		</div>
+		<scroller :on-infinite="infinite" :on-refresh="refresh" ref="myscroller" style="padding-top: 2.2rem;box-sizing: border-box;">
+			
+		
 		<div class="list" v-for="(item,index) in dataList" :key="idnex">
 			<div>
 				<span>
@@ -117,12 +121,14 @@
 						}
 					}else{
 						this.noData = true
-							this.$refs.myscroller.finishInfinite(2);
+						this.$refs.myscroller.finishInfinite(2);
+						plus.nativeUI.toast("加载失败");
 					}
 				}, (err) => {
 					this.noData = true
 					this.$refs.myscroller.finishInfinite(2);
 					console.log(err)
+					plus.nativeUI.toast("加载失败");
 				})
 			},
 			select(item,index) {

@@ -300,7 +300,7 @@
 	.header{
 		padding-top: .4rem;
 		border: none;
-		background:#e02e24;
+		background:#FDC71B;
 	}
 	.header-nav {
 		text-align: center;
