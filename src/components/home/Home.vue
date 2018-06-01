@@ -175,7 +175,10 @@
 			getBannerList: function() {
 				this.$http({
 					method: 'get',
-					url: this.http + '/api/indexBanner'
+					url: this.http + '/api/indexBanner',
+					params:{
+						version:'1.6.0'
+					}
 				}).then((res) => {
 					if(res.data.code == '200') {
 						const imgList = res.data.data
@@ -186,10 +189,13 @@
 						this.bannerList = bannerList
 						plus.storage.setItem("bannerList", JSON.stringify(this.bannerList))
 
+					}else{
+						plus.nativeUI.toast(res.data.error);
 					}
 				}, (err) => {
-					this.bannerList = JSON.parse(plus.storage.getItem("bannerList"))
 					console.log(JSON.stringify(err))
+					this.bannerList = JSON.parse(plus.storage.getItem("bannerList"))
+					
 				})
 			},
 			//      获取享利快报
@@ -243,7 +249,7 @@
 			getUpdate() {
 				this.$http.get(this.http + '/api/checkAppUpgrade', {
 					params: {
-						version: '1.5.2'
+						version: '1.6.0'
 					}
 				}).then((res) => {
 					if(res.data.code == '200') {
@@ -314,7 +320,6 @@
 					type: 2,
 				}).then((res) => {
 					if(res.data.code == '200') {
-						console.log(JSON.stringify(res.data.data))
 						this.$router.push({
 							name: 'NewJD',
 							query: {
@@ -352,17 +357,6 @@
 					plus.runtime.openURL(self.updateUrl, function(err) {
 
 					});
-//				if(plus.os.name == "Android") {
-//					var self = this
-//					plus.runtime.openURL(self.updateUrl, function(err) {
-//
-//					});
-//				} else if(plus.os.name == "iOS") {
-//					var self = this
-//					plus.runtime.openURL(self.updateUrl, function(err) {
-//
-//					});
-//				}
 
 			},
 			cancel() {
@@ -384,6 +378,9 @@
 			this.getMerchantList()
 			this.unMessage = plus.storage.getItem("unMessage")
 		},
+		activated: function (){
+			
+		}
 	}
 </script>
 <style scoped>

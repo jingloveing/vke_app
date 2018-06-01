@@ -29,34 +29,9 @@ Vue.use(ConfirmPlugin)
 FastClick.attach(document.body)
 
 Vue.config.productionTip = false
-Vue.prototype.http='http://xlk.dxvke.com'
+Vue.prototype.http = 'http://xlk.dxvke.com'
 //Vue.prototype.http='http://192.168.1.101'
 /* eslint-disable no-new */
-
-/******************拦截器设置请参考这部分(开始)******************/
-Vue.http.interceptors.push((request, next) => {
-	//登录成功后将后台返回的TOKEN在本地存下来,每次请求从sessionStorage中拿到存储的TOKEN值  
-		let token = localStorage.getItem("token")
-//	       let token='eyJ0eXAiOiJKV1QiLCJhbGciOiJTSEEyNTYifQ==.eyJpc3MiOiJKV1QgRlJFRURPTSIsImlhdCI6MTUxNjg2Mzg3NiwiYXVkIjoiTEoiLCJqdGkiOm51bGwsImRhdGEiOnsidXNlcl9pZCI6MSwidXNlcl9uYW1lIjoiZnJlZWRvbSJ9fQ==.2e20945c06282cc6edd693dac3c3b6a5746269cccdac9f6465b7dc3296325076'
-	if(token) {
-		//如果请求时TOKEN存在,就为每次请求的headers中设置好TOKEN,后台根据headers中的TOKEN判断是否放行      
-		request.headers.set("token", token);
-		request.headers.set("version", '1.5.2');
-	}
-	next((response) => {
-		if(response.status === 401) {
-			// 当 Token 已经失效时，清空所有保存在 localStorage 的数据
-			plus.storage.removeItem("token");
-			localStorage.removeItem("token")
-			plus.storage.removeItem("userInfo");
-		}
-		return response;
-	});
-
-});
-/******************拦截器设置请参考这部分(结束)******************/
-
-
 
 new Vue({
 	router,
@@ -64,7 +39,7 @@ new Vue({
 	created() {
 		var self = this
 		document.addEventListener("plusready", function() {
-//			plus.navigator.setStatusBarBackground("#9A7BFF");
+			//			plus.navigator.setStatusBarBackground("#9A7BFF");
 			// 扩展API加载完毕，现在可以正常调用扩展API
 			plus.oauth.getServices(function(services) {
 				window.auths = services;
@@ -97,10 +72,10 @@ new Vue({
 			plus.key.addEventListener('backbutton', function() {
 				webview.canBack(function(e) {
 					if(e.canBack) {
-						if(self.$route.path=='/home'||self.$route.path=='/shareRoom'||self.$route.path=='/brandSite'||self.$route.path=='/PersonCenter'){
+						if(self.$route.path == '/home' || self.$route.path == '/shareRoom' || self.$route.path == '/brandSite' || self.$route.path == '/PersonCenter') {
 							//首页返回键处理
-						//处理逻辑：1秒内，连续两次按返回键，则退出应用；
-//						plus.key.addEventListener('backbutton', function() {
+							//处理逻辑：1秒内，连续两次按返回键，则退出应用；
+							//						plus.key.addEventListener('backbutton', function() {
 							//首次按键，提示‘再按一次退出应用’
 							if(!first) {
 								first = new Date().getTime();
@@ -113,37 +88,37 @@ new Vue({
 									plus.runtime.quit();
 								}
 							}
-//						}, false);
-						}else{
+							//						}, false);
+						} else {
 							var service_comfirm = plus.webview.getWebviewById("new");
-						plus.webview.close(service_comfirm, "none");
-						var view = plus.nativeObj.View.getViewById('test')
-						if(view){
-							view.clear()
-						}else{
-							
+							plus.webview.close(service_comfirm, "none");
+							var view = plus.nativeObj.View.getViewById('test')
+							if(view) {
+								view.clear()
+							} else {
+
+							}
+							webview.back();
 						}
-						webview.back();
-						}
-						
+
 					} else {
 						//首页返回键处理
 						//处理逻辑：1秒内，连续两次按返回键，则退出应用；
-//						var first = null;
-//						plus.key.addEventListener('backbutton', function() {
-							//首次按键，提示‘再按一次退出应用’
-							if(!first) {
-								first = new Date().getTime();
-								plus.nativeUI.toast('再按一次退出应用', "享利客");
-								setTimeout(function() {
-									first = null;
-								}, 2000);
-							} else {
-								if(new Date().getTime() - first < 1500) {
-									plus.runtime.quit();
-								}
+						//						var first = null;
+						//						plus.key.addEventListener('backbutton', function() {
+						//首次按键，提示‘再按一次退出应用’
+						if(!first) {
+							first = new Date().getTime();
+							plus.nativeUI.toast('再按一次退出应用', "享利客");
+							setTimeout(function() {
+								first = null;
+							}, 2000);
+						} else {
+							if(new Date().getTime() - first < 1500) {
+								plus.runtime.quit();
 							}
-//						}, false);
+						}
+						//						}, false);
 					}
 				})
 			});
@@ -152,3 +127,35 @@ new Vue({
 	}
 }).$mount('#app-box')
 
+/******************拦截器设置请参考这部分(开始)******************/
+Vue.http.interceptors.push((request, next) => {
+	let token = plus.storage.getItem("token")
+	request.headers.set("version", '1.6.0');
+	if(token) {
+		//如果请求时TOKEN存在,就为每次请求的headers中设置好TOKEN,后台根据headers中的TOKEN判断是否放行      
+		request.headers.set("token", token);
+	}
+	next((response) => {
+		if(response.body.code == '601') {
+			// 当 Token 已经失效时，清空所有保存在 localStorage 的数据
+			// 注销所有登录授权认证服务
+			var s = window.auths[0];
+			var slef = this
+			if(s.authResult) {
+				s.logout(function(e) {
+					plus.storage.removeItem('token')
+					plus.storage.removeItem('userInfo')
+				}, function(e) {
+
+				});
+
+			} else {
+				plus.storage.removeItem('token')
+				plus.storage.removeItem('userInfo')
+			}
+		}
+		return response;
+	});
+
+});
+/******************拦截器设置请参考这部分(结束)******************/

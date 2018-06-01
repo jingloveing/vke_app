@@ -2,8 +2,8 @@
 	<div>
 		<div>
 			<div class="pic">
-				<div @click="goback()" style="position: fixed;left: .2rem;top: .4rem;z-index: 99999;" >
-					<img src="../../../static/images/back_icon.png" alt="" style="width: .6rem;height:.6rem;"/>
+				<div @click="goback()" style="position: fixed;left: .2rem;top: .4rem;z-index: 99999;">
+					<img src="../../../static/images/back_icon.png" alt="" style="width: .6rem;height:.6rem;" />
 				</div>
 				<swiper auto loop :list="goodsDetail.pict_url" style="width:100%;" height="7.5rem" dots-class="custom-bottom" dots-position="center" :show-desc-mask="false" :onerror="defaultImg" class="goods-pic"></swiper>
 				<div style="position: fixed;z-index: 99999;right: .06rem;top: .4rem;" @click="show=!show">
@@ -107,7 +107,7 @@
 		},
 		data() {
 			return {
-//				showDetail: false,
+				//				showDetail: false,
 				showActionsheet: true,
 				collect: true,
 				showToast: false,
@@ -247,19 +247,31 @@
 				});
 			},
 			tobuy() {
-				if(plus.os.name == "Android") {
-					var self = this
-					plus.runtime.openURL(self.goodsDetail.click_url, function(err) {
+				var self =this
+				this.$http.post(this.http + '/api/toBuy', {
+					type: 1,
+					id: self.$route.query.id
+				}).then((res) => {
+					if(res.data.code == '200') {
+						if(plus.os.name == "Android") {
+							var self = this
+							plus.runtime.openURL(self.goodsDetail.click_url, function(err) {
 
-					}, "com.taobao.taobao");
-				} else if(plus.os.name == "iOS") {
-					var self = this
-					plus.runtime.launchApplication({
-						action: self.goodsDetail.click_url.replace("https://", "taobao://")
-					}, function(e) {
+							}, "com.taobao.taobao");
+						} else if(plus.os.name == "iOS") {
+							var self = this
+							plus.runtime.launchApplication({
+								action: self.goodsDetail.click_url.replace("https://", "taobao://")
+							}, function(e) {
 
-					});
-				}
+							});
+						}
+					} else {
+						console.log('失败')
+					}
+				}, (err) => {
+					console.log(JSON.stringify(err))
+				})
 
 			},
 			toquan() {
@@ -286,7 +298,6 @@
 				this.$router.go(-1)
 
 			}
-			
 
 		},
 		mounted: function() {
@@ -372,6 +383,7 @@
 		font-size: 0;
 		margin-top: .16rem;
 	}
+	
 	.slide img {
 		width: 100%;
 	}
@@ -591,8 +603,9 @@
 </style>
 <style type="text/css">
 	.goods-pic.vux-slider>.vux-indicator>a>.vux-icon-dot.active {
-		background-color: rgba(255,255,255,0) !important;
+		background-color: rgba(255, 255, 255, 0) !important;
 	}
+	
 	.goods-pic.vux-slider>.vux-indicator>a>.vux-icon-dot {
 		border: none;
 	}

@@ -17,14 +17,14 @@
 				</div>
 			</div>
 			<div class="empty" v-show="list.length==0"><img src="../../../static/images/empty/no_member.png" />
-			<p class="empty-word">暂无帮众</p>
+				<p class="empty-word">暂无帮众</p>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-	import { XHeader} from 'vux'
+	import { XHeader } from 'vux'
 	export default {
 		name: 'Member',
 		components: {
@@ -32,19 +32,21 @@
 		},
 		data() {
 			return {
-               title:'旗下帮主',
-               type:'',
-               list:[]
+				title: '旗下帮主',
+				type: '',
+				list: []
 			}
 		},
 		methods: {
-            //获取某个等级下的粉丝数量
+			//获取某个等级下的粉丝数量
 			getList() {
 				this.$http({
-					methods:'get',
-					url:this.http+'/api/myInviteList',
-					params:{level:this.type}
-					}).then((res) => {
+					methods: 'get',
+					url: this.http + '/api/myInviteList',
+					params: {
+						level: this.type
+					}
+				}).then((res) => {
 					if(res.data.code == '200') {
 						this.list = res.data.data
 					} else {
@@ -56,17 +58,17 @@
 			},
 		},
 		created: function() {
-            this.type=this.$route.query.type
-            this.getList()
+			this.type = this.$route.query.type
+			this.getList()
 		},
 		mounted: function() {
-            if(this.type==3){
-            	this.title='旗下帮主'
-            }else if(this.type==2){
-            	this.title='旗下长老'
-            }else{
-            	this.title='旗下帮众'
-            }
+			if(this.type == 3) {
+				this.title = '旗下帮主'
+			} else if(this.type == 2) {
+				this.title = '旗下长老'
+			} else {
+				this.title = '旗下帮众'
+			}
 		}
 	}
 </script>
@@ -112,10 +114,12 @@
 		font-size: .26rem;
 		color: #999;
 	}
-	.list{
+	
+	.list {
 		border-top: .01rem solid #e5e5e5;
 	}
-	.list:nth-child(1){
-		border-top:none;
+	
+	.list:nth-child(1) {
+		border-top: none;
 	}
 </style>

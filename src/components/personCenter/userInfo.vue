@@ -79,22 +79,15 @@
 				var fmt = cmr.supportedImageFormats[0];
 				var self = this
 				cmr.captureImage(function(path) {
-					plus.io.resolveLocalFileSystemURL(path, function(entry) {
-						self.userInfo.head_image = entry.toLocalURL()
-						self.data = {
-							head_image: entry.toLocalURL()
-						}
-						self.editInfo()
-					}, function(e) {});
-						
+					self.createUpload(path) 
 					},
 					function(error) {
 						alert("Capture image failed: " + error.message);
 					}, {
 						resolution: res,
 						format: fmt,
-						index:1,
-						filename:"_doc/camera/"
+						index: 1,
+						filename: "_doc/camera/"
 					}
 				);
 			},
@@ -103,16 +96,35 @@
 				// 从相册中选择图片
 				var self = this
 				plus.gallery.pick(function(path) {
-					self.userInfo.head_image = path
-					self.data = {
-						head_image: path
-					}
-					self.editInfo()
+					self.createUpload(path)
 				}, function(e) {
 
 				}, {
 					filter: "image"
 				});
+			},
+			createUpload(path) {
+				var self = this
+				var task = plus.uploader.createUpload(self.http + '/api/memberHeadImage', {
+						method: "POST"
+					},
+					function(t, status) {
+						// 上传完成
+						if(status == 200) {
+							self.userInfo.head_image = JSON.parse(t.responseText).data.image
+							self.data = {
+								head_image: JSON.parse(t.responseText).data.image
+							}
+							self.editInfo()
+						} else {
+							plus.nativeUI.toast(t.responseText.data.error);
+						}
+					}
+				);
+				task.addFile(path, {
+					key: "image"
+				});
+				task.start();
 			},
 			//设置头像
 			click1(key) {
@@ -145,9 +157,9 @@
 
 		},
 		created: function() {
-//			this.userInfo = JSON.parse(plus.storage.getItem('userInfo'))
+			//			this.userInfo = JSON.parse(plus.storage.getItem('userInfo'))
 		},
-		activated: function () {
+		activated: function() {
 			this.userInfo = JSON.parse(plus.storage.getItem('userInfo'))
 		}
 	}

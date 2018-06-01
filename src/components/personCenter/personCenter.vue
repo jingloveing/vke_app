@@ -219,7 +219,7 @@
 			//获取登录类型
 			getLoginType: function() {
 				this.$http.get(this.http + '/api/getLoginType', {
-					params:{version:'1.5.2'}
+					params:{version:'1.6.0'}
 					}).then((res) => {
 					if(res.data.code == '200') {
 						this.login_type=res.data.data.login_type
@@ -313,6 +313,7 @@
 		created: function() {
 			this.getLoginType()
 			this.token = plus.storage.getItem('token')
+			console.log(this.token)
 			if(this.token){
 				this.getUserInfo()
 			}else{
