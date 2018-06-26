@@ -125,9 +125,9 @@
 
 			</group>
 			<group class="cell">
-				<cell title="通过享利客购物会不会被商家调包廉价产品以次充好？" is-link :border-intent="false" :arrow-direction="show10 ? 'up' : 'down'" @click.native="show10 = !show10" class="f26 c3 title"></cell>
+				<cell title="通过享利客购物会不会被商家调包廉价产品以次充好？" is-link :border-intent="false" :arrow-direction="show11 ? 'up' : 'down'" @click.native="show11 = !show11" class="f26 c3 title"></cell>
 
-				<div class="slide f26 c6" :class="show10?'animate':''">
+				<div class="slide f26 c6" :class="show11?'animate':''">
 					<div style="padding-bottom: .5rem;line-height: .42rem;">
 						<p>不会出现该类情况的，您通过享利客领券购买的任何第三方平台或商家的产品一定是您在该购物平台看中的同一个宝贝（例如：天猫某商家内看中的某款宝贝）</p>
 						<p>通过享利客购买全网各大平台均支持该平台的7天无理由退换货等售后保障，如发现产品不好或者不喜欢，请第一时间联系购买商家客服</p>
@@ -137,9 +137,9 @@
 
 			</group>
 			<group class="cell">
-				<cell title="关于淘宝天猫平台购物返利问题公告？" is-link :border-intent="false" :arrow-direction="show11 ? 'up' : 'down'" @click.native="show11 = !show11" class="f26 c3 title"></cell>
+				<cell title="关于淘宝天猫平台购物返利问题公告？" is-link :border-intent="false" :arrow-direction="show12 ? 'up' : 'down'" @click.native="show12 = !show12" class="f26 c3 title"></cell>
 
-				<div class="slide f26 c6" :class="show11?'animate':''">
+				<div class="slide f26 c6" :class="show12?'animate':''">
 					<div style="padding-bottom: .5rem;line-height: .42rem;">
 						<p>由于阿里方面反对做返利，所以在享利客平台内领券淘宝／天猫购物均无法获得任何现金或非现金的返佣；仅能通过领券抵现等形式进行优惠服务</p>
 						<p>通过享利客进行其他第三方平台购物可享受优惠券+返佣等奖励政策</p>
@@ -150,9 +150,9 @@
 
 			</group>
 			<group class="cell">
-				<cell title="代理长老与正式长老的区别？" is-link :border-intent="false" :arrow-direction="show11 ? 'up' : 'down'" @click.native="show11 = !show11" class="f26 c3 title"></cell>
+				<cell title="代理长老与正式长老的区别？" is-link :border-intent="false" :arrow-direction="show13 ? 'up' : 'down'" @click.native="show13 = !show13" class="f26 c3 title"></cell>
 
-				<div class="slide f26 c6" :class="show11?'animate':''">
+				<div class="slide f26 c6" :class="show13?'animate':''">
 					<div style="padding-bottom: .5rem;line-height: .42rem;">
 						<p>代理长老与正式长老享受同等尊享权益
 代理长老：转入正式长老须有3个月的考核期；详见【代理长老考核规则】
@@ -162,9 +162,9 @@
 				</div>
 			</group>
 			<group class="cell">
-				<cell title="代理长老考核规则？" is-link :border-intent="false" :arrow-direction="show12 ? 'up' : 'down'" @click.native="show12 = !show12" class="f26 c3 title"></cell>
+				<cell title="代理长老考核规则？" is-link :border-intent="false" :arrow-direction="show14 ? 'up' : 'down'" @click.native="show14 = !show14" class="f26 c3 title"></cell>
 
-				<div class="slide f26 c6" :class="show12?'animate':''">
+				<div class="slide f26 c6" :class="show14?'animate':''">
 					<div style="padding-bottom: .5rem;line-height: .42rem;">
 						<p>权益获取：旗下拥有150位直属江湖好友（帮众）即可申请成为长老，享受长老高佣等一切权益</p>	
 						<p>代理转正式考核标准：</p>
@@ -214,6 +214,8 @@
 				show10: false,
 				show11: false,
 				show12: false,
+				show13: false,
+				show14: false,
 			}
 		}
 	}
